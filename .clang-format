@@ -1,0 +1,6 @@
+﻿---
+BasedOnStyle: Mozilla
+AlwaysBreakAfterDefinitionReturnType: None
+AlwaysBreakAfterReturnType: None
+BreakConstructorInitializers: AfterColon
+...

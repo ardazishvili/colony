@@ -1,0 +1,44 @@
+#ifndef GAME_H
+#define GAME_H
+
+#include <vector>
+#include <memory>
+
+#include "VehicleGroup.h"
+#include "Control.h"
+
+using Tanks = std::vector<std::shared_ptr<Tank>>;
+using Structures = std::vector<std::shared_ptr<BuildableStructure>>;
+
+class Tank;
+class AbstractStructureBuilder;
+
+class Game {
+public:
+  Game() = default;
+  void tick();
+  void addTank(std::shared_ptr<Tank> tank);
+  void addStructure(std::shared_ptr<BuildableStructure> buildable);
+  void setControl(std::unique_ptr<Control> control);
+
+  Tank* getTank(const glm::vec2& mousePoint, bool select = false);
+  VehicleGroup getTanks(glm::vec4 area);
+  Buildable* getStructure(const glm::vec2& mousePoint);
+  void showDebug();
+  void clearPanel(Panel::Type type);
+  bool panelIsEmpty(Panel::Type type);
+
+private:
+  void displayTanks();
+  void displayShells();
+  void displayStructures();
+  void displayControl();
+
+  Tanks _tanks;
+  Structures _structures;
+  std::unique_ptr<Control> _control;
+  Tank* _selectedTank = nullptr;
+  Buildable* _selectedStructure = nullptr;
+};
+
+#endif
