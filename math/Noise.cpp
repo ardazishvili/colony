@@ -11,24 +11,23 @@ float smoothstep(float t)
   return t * t * (3 - 2 * t);
 }
 
-Noise::Noise(unsigned int seed, unsigned int period) :
-  _period(period), _mask(period - 1)
+Noise::Noise(unsigned int seed) : _mask(PERIOD - 1)
 {
   std::mt19937 generator(seed);
   std::uniform_real_distribution<float> dReal;
   auto getRandomReal = std::bind(dReal, generator);
 
-  for (unsigned int i = 0; i < period; ++i) {
-    _r.push_back(getRandomReal());
-    _pTable.push_back(i);
+  for (unsigned int i = 0; i < PERIOD; ++i) {
+    _r[i] = getRandomReal();
+    _pTable[i] = i;
   }
 
   std::uniform_int_distribution<unsigned int> dInt;
   auto getRandomInt = std::bind(dInt, generator);
-  for (unsigned int i = 0; i < period; ++i) {
+  for (unsigned int i = 0; i < PERIOD; ++i) {
     auto randomMappedInt = getRandomInt() & _mask;
     std::swap(_pTable[i], _pTable[randomMappedInt]);
-    _pTable[i + _period] = _pTable[i];
+    _pTable[i + PERIOD] = _pTable[i];
   }
 }
 

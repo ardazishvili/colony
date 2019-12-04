@@ -8,7 +8,7 @@
 class Noise
 {
 public:
-  Noise(unsigned int seed, unsigned int period);
+  Noise(unsigned int seed);
   float eval(glm::vec2 p);
   float fractal(glm::vec2 p,
                 float frequency,
@@ -17,10 +17,10 @@ public:
                 unsigned int numLayers = 5);
 
 private:
-  unsigned int _period;
+  static const unsigned int PERIOD{ 256 };
   unsigned int _mask;
-  std::vector<float> _r;
-  std::vector<float> _pTable;
+  float _r[PERIOD];
+  int _pTable[PERIOD * 2];
 };
 
 #endif

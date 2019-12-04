@@ -306,11 +306,11 @@ void Meshes::initSurface(float bottomLeftX,
   _meshesData[0].baseIndex = 0;
   _meshesData[0].name = "surface";
 
-  _vertices.reserve(::pow(divisions + 1, 2) * 3);
+  _vertices.reserve(::pow(divisions + 1, 2));
   float xStep = (topRightX - bottomLeftX) / divisions;
   float yStep = (topRightY - bottomLeftY) / divisions;
 
-  auto noise = Noise(777, 256);
+  auto noise = Noise(777);
   for (int i = 0; i < divisions + 1; ++i) {
     for (int j = 0; j < divisions + 1; ++j) {
       Vertex vertex;
@@ -319,8 +319,9 @@ void Meshes::initSurface(float bottomLeftX,
       /* vertex.position.z = 0.0f; */
       /* vertex.position.z = */
       /*   noise.eval(glm::vec2(vertex.position.x, vertex.position.y)); */
-      vertex.position.z = noise.fractal(
+      auto nv = noise.fractal(
         glm::vec2(vertex.position.x, vertex.position.y), 1.0, 1.8, 0.35);
+      vertex.position.z = nv;
 
       vertex.texCoords.x = j % 2;
       vertex.texCoords.y = (i + 1) % 2;
