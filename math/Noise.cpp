@@ -1,16 +1,14 @@
 #include <functional>
 #include <random>
 
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/compatibility.hpp>
+
 #include "Noise.h"
 
 float smoothstep(float t)
 {
   return t * t * (3 - 2 * t);
-}
-
-float lerp(float v0, float v1, float t)
-{
-  return (1 - t) * v0 + t * v1;
 }
 
 Noise::Noise(unsigned int seed, unsigned int period) :
@@ -54,9 +52,28 @@ float Noise::eval(glm::vec2 p)
   auto& cell_10 = _r[_pTable[_pTable[x1] + y0]];
   auto& cell_11 = _r[_pTable[_pTable[x1] + y1]];
 
-  auto xInterpolated0 = lerp(cell_00, cell_10, smoothedDeltaX);
-  auto xInterpolated1 = lerp(cell_01, cell_11, smoothedDeltaX);
+  auto xInterpolated0 = glm::lerp(cell_00, cell_10, smoothedDeltaX);
+  auto xInterpolated1 = glm::lerp(cell_01, cell_11, smoothedDeltaX);
 
-  auto yInterpolated = lerp(xInterpolated0, xInterpolated1, smoothedDeltaY);
+  auto yInterpolated =
+    glm::lerp(xInterpolated0, xInterpolated1, smoothedDeltaY);
   return yInterpolated;
+}
+
+float Noise::fractal(glm::vec2 p,
+                     float frequency,
+                     float frequencyFactor,
+                     float amplitudeFactor,
+                     unsigned int numLayers)
+{
+  auto res = 0.0f;
+  auto fp = p * frequency;
+  float amplitude = 1.0f;
+  for (unsigned int l = 0; l < numLayers; ++l) {
+    res += eval(fp) * amplitude;
+    fp *= frequencyFactor;
+    amplitude *= amplitudeFactor;
+  }
+
+  return res;
 }

@@ -317,8 +317,10 @@ void Meshes::initSurface(float bottomLeftX,
       vertex.position.x = bottomLeftX + static_cast<float>(i) * xStep;
       vertex.position.y = bottomLeftY + static_cast<float>(j) * yStep;
       /* vertex.position.z = 0.0f; */
-      vertex.position.z =
-        noise.eval(glm::vec2(vertex.position.x, vertex.position.y));
+      /* vertex.position.z = */
+      /*   noise.eval(glm::vec2(vertex.position.x, vertex.position.y)); */
+      vertex.position.z = noise.fractal(
+        glm::vec2(vertex.position.x, vertex.position.y), 1.0, 1.8, 0.35);
 
       vertex.texCoords.x = j % 2;
       vertex.texCoords.y = (i + 1) % 2;
