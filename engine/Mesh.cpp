@@ -1,4 +1,5 @@
 #include "Mesh.h"
+#include "../math/Noise.h"
 
 bool Meshes::initModel(const aiScene* scene, const string& Filename)
 {
@@ -308,12 +309,16 @@ void Meshes::initSurface(float bottomLeftX,
   _vertices.reserve(::pow(divisions + 1, 2) * 3);
   float xStep = (topRightX - bottomLeftX) / divisions;
   float yStep = (topRightY - bottomLeftY) / divisions;
+
+  auto noise = Noise(777, 256);
   for (int i = 0; i < divisions + 1; ++i) {
     for (int j = 0; j < divisions + 1; ++j) {
       Vertex vertex;
       vertex.position.x = bottomLeftX + static_cast<float>(i) * xStep;
       vertex.position.y = bottomLeftY + static_cast<float>(j) * yStep;
-      vertex.position.z = 0.0f;
+      /* vertex.position.z = 0.0f; */
+      vertex.position.z =
+        noise.eval(glm::vec2(vertex.position.x, vertex.position.y));
 
       vertex.texCoords.x = j % 2;
       vertex.texCoords.y = (i + 1) % 2;

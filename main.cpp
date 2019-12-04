@@ -122,11 +122,11 @@ int main(int argc, char** argv)
   glEnable(GL_DEPTH_TEST);
   auto light = Light(
     glm::vec3(1.2f, 0.0f, 5.0f), lampShader, camera, screenWidth, screenHeight);
-  /* glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); */
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   createTank(game, phongShader, glm::vec2(-0.2f, -3.6f));
   createTank(game, phongShader, glm::vec2(-2.5f, -2.5f));
   createTank(game, phongShader, glm::vec2(-5.0f, -5.0f));
-  auto surface = Surface(phongShader, -10.0f, -10.0f, 10.0f, 10.0f, 20);
+  auto surface = Surface(phongShader, -10.0f, -10.0f, 10.0f, 10.0f, 128);
   auto tankFactory =
     std::make_shared<TankFactory>(phongShader, glm::vec2(2.0f, 2.0f));
   game.addStructure(tankFactory);
@@ -158,7 +158,7 @@ int main(int argc, char** argv)
     phongShader.configure(
       light.position(), camera.reference(), view, projection);
     surface.render();
-    eventManager->tick();
+    /* eventManager->tick(); */
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

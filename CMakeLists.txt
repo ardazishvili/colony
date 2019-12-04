@@ -63,6 +63,8 @@ add_executable(colony
 		logic/TankFactoryBuilder.h
 		logic/VehicleGroup.cpp
 		logic/VehicleGroup.h
+    math/Noise.h
+    math/Noise.cpp
 		view/HqView.cpp
 		view/HqView.h
 		view/ShellView.cpp

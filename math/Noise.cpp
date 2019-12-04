@@ -1,0 +1,62 @@
+#include <functional>
+#include <random>
+
+#include "Noise.h"
+
+float smoothstep(float t)
+{
+  return t * t * (3 - 2 * t);
+}
+
+float lerp(float v0, float v1, float t)
+{
+  return (1 - t) * v0 + t * v1;
+}
+
+Noise::Noise(unsigned int seed, unsigned int period) :
+  _period(period), _mask(period - 1)
+{
+  std::mt19937 generator(seed);
+  std::uniform_real_distribution<float> dReal;
+  auto getRandomReal = std::bind(dReal, generator);
+
+  for (unsigned int i = 0; i < period; ++i) {
+    _r.push_back(getRandomReal());
+    _pTable.push_back(i);
+  }
+
+  std::uniform_int_distribution<unsigned int> dInt;
+  auto getRandomInt = std::bind(dInt, generator);
+  for (unsigned int i = 0; i < period; ++i) {
+    auto randomMappedInt = getRandomInt() & _mask;
+    std::swap(_pTable[i], _pTable[randomMappedInt]);
+    _pTable[i + _period] = _pTable[i];
+  }
+}
+
+float Noise::eval(glm::vec2 p)
+{
+  int xi = std::floor(p.x);
+  float deltaX = p.x - xi;
+  float smoothedDeltaX = smoothstep(deltaX);
+
+  int yi = std::floor(p.y);
+  float deltaY = p.y - yi;
+  float smoothedDeltaY = smoothstep(deltaY);
+
+  int x0 = xi & _mask;
+  int x1 = (x0 + 1) & _mask;
+  int y0 = yi & _mask;
+  int y1 = (y0 + 1) & _mask;
+
+  auto& cell_00 = _r[_pTable[_pTable[x0] + y0]];
+  auto& cell_01 = _r[_pTable[_pTable[x0] + y1]];
+  auto& cell_10 = _r[_pTable[_pTable[x1] + y0]];
+  auto& cell_11 = _r[_pTable[_pTable[x1] + y1]];
+
+  auto xInterpolated0 = lerp(cell_00, cell_10, smoothedDeltaX);
+  auto xInterpolated1 = lerp(cell_01, cell_11, smoothedDeltaX);
+
+  auto yInterpolated = lerp(xInterpolated0, xInterpolated1, smoothedDeltaY);
+  return yInterpolated;
+}
