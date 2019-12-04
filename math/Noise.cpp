@@ -1,4 +1,5 @@
 #include <functional>
+#include <iostream>
 #include <random>
 
 #define GLM_ENABLE_EXPERIMENTAL
@@ -14,11 +15,13 @@ float smoothstep(float t)
 Noise::Noise(unsigned int seed) : _mask(PERIOD - 1)
 {
   std::mt19937 generator(seed);
-  std::uniform_real_distribution<float> dReal;
-  auto getRandomReal = std::bind(dReal, generator);
+  std::uniform_real_distribution<float> dReal(0, 2 * M_PI);
+  auto getRandomAngle = std::bind(dReal, generator);
 
   for (unsigned int i = 0; i < PERIOD; ++i) {
-    _r[i] = getRandomReal();
+    float phi = getRandomAngle();
+    _gradients[i] = glm::vec2(::cos(phi), ::sin(phi));
+    _gradients[i] = glm::normalize(_gradients[i]);
     _pTable[i] = i;
   }
 
@@ -46,13 +49,20 @@ float Noise::eval(glm::vec2 p)
   int y0 = yi & _mask;
   int y1 = (y0 + 1) & _mask;
 
-  auto& cell_00 = _r[_pTable[_pTable[x0] + y0]];
-  auto& cell_01 = _r[_pTable[_pTable[x0] + y1]];
-  auto& cell_10 = _r[_pTable[_pTable[x1] + y0]];
-  auto& cell_11 = _r[_pTable[_pTable[x1] + y1]];
+  auto& cell_00 = _gradients[_pTable[_pTable[x0] + y0]];
+  auto& cell_01 = _gradients[_pTable[_pTable[x0] + y1]];
+  auto& cell_10 = _gradients[_pTable[_pTable[x1] + y0]];
+  auto& cell_11 = _gradients[_pTable[_pTable[x1] + y1]];
 
-  auto xInterpolated0 = glm::lerp(cell_00, cell_10, smoothedDeltaX);
-  auto xInterpolated1 = glm::lerp(cell_01, cell_11, smoothedDeltaX);
+  auto p00 = glm::vec2(deltaX, deltaY);
+  auto p01 = glm::vec2(deltaX, deltaY - 1);
+  auto p10 = glm::vec2(deltaX - 1, deltaY);
+  auto p11 = glm::vec2(deltaX - 1, deltaY - 1);
+
+  auto xInterpolated0 =
+    glm::lerp(glm::dot(cell_00, p00), glm::dot(cell_10, p10), smoothedDeltaX);
+  auto xInterpolated1 =
+    glm::lerp(glm::dot(cell_01, p01), glm::dot(cell_11, p11), smoothedDeltaX);
 
   auto yInterpolated =
     glm::lerp(xInterpolated0, xInterpolated1, smoothedDeltaY);

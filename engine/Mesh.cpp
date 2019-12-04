@@ -1,5 +1,7 @@
-#include "Mesh.h"
+#include "../imgui/imgui.h"
+
 #include "../math/Noise.h"
+#include "Mesh.h"
 
 bool Meshes::initModel(const aiScene* scene, const string& Filename)
 {
@@ -310,18 +312,32 @@ void Meshes::initSurface(float bottomLeftX,
   float xStep = (topRightX - bottomLeftX) / divisions;
   float yStep = (topRightY - bottomLeftY) / divisions;
 
+  ImGui::Begin("surface");
+  static float frequency = 0.3;
+  static float frequencyFactor = 2.0;
+  static float amplitudeFactor = 0.7;
+  ImGui::SetWindowPos(ImVec2(0, 0));
+  ImGui::SetWindowSize(ImVec2(500, 300));
+  ImGui::SliderFloat("frequency slider", &frequency, 0.0f, 1.5f);
+  ImGui::SliderFloat("frequencyFactor slider", &frequencyFactor, 0.0f, 3.0f);
+  ImGui::SliderFloat("amplitudeFactor slider", &amplitudeFactor, 0.3f, 1.5f);
+  ImGui::End();
   auto noise = Noise(777);
+  auto min = 0.0f;
+  auto max = 0.0f;
   for (int i = 0; i < divisions + 1; ++i) {
     for (int j = 0; j < divisions + 1; ++j) {
       Vertex vertex;
       vertex.position.x = bottomLeftX + static_cast<float>(i) * xStep;
       vertex.position.y = bottomLeftY + static_cast<float>(j) * yStep;
-      /* vertex.position.z = 0.0f; */
-      /* vertex.position.z = */
-      /*   noise.eval(glm::vec2(vertex.position.x, vertex.position.y)); */
-      auto nv = noise.fractal(
-        glm::vec2(vertex.position.x, vertex.position.y), 1.0, 1.8, 0.35);
-      vertex.position.z = nv;
+      auto nv = noise.fractal(glm::vec2(vertex.position.x, vertex.position.y),
+                              frequency,
+                              frequencyFactor,
+                              amplitudeFactor);
+      /* vertex.position.z = nv; */
+      vertex.position.z = ::max(nv, 0.0f);
+      min = ::min(min, nv);
+      max = ::max(max, nv);
 
       vertex.texCoords.x = j % 2;
       vertex.texCoords.y = (i + 1) % 2;
@@ -333,6 +349,8 @@ void Meshes::initSurface(float bottomLeftX,
       _vertices.push_back(vertex);
     }
   }
+  std::cout << " min= " << min << std::endl;
+  std::cout << " max= " << max << std::endl;
   _indices.reserve(::pow(divisions, 2) * 2 * 3);
   int width = divisions + 1;
   for (int i = 0; i < divisions; ++i) {

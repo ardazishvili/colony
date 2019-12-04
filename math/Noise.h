@@ -19,7 +19,7 @@ public:
 private:
   static const unsigned int PERIOD{ 256 };
   unsigned int _mask;
-  float _r[PERIOD];
+  glm::vec2 _gradients[PERIOD];
   int _pTable[PERIOD * 2];
 };
 

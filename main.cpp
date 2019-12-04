@@ -123,17 +123,21 @@ int main(int argc, char** argv)
   auto light = Light(
     glm::vec3(1.2f, 0.0f, 5.0f), lampShader, camera, screenWidth, screenHeight);
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-  createTank(game, phongShader, glm::vec2(-0.2f, -3.6f));
-  createTank(game, phongShader, glm::vec2(-2.5f, -2.5f));
-  createTank(game, phongShader, glm::vec2(-5.0f, -5.0f));
-  auto surface = Surface(phongShader, -10.0f, -10.0f, 10.0f, 10.0f, 128);
-  auto tankFactory =
-    std::make_shared<TankFactory>(phongShader, glm::vec2(2.0f, 2.0f));
-  game.addStructure(tankFactory);
-  tankFactory->commit();
+  /* createTank(game, phongShader, glm::vec2(-0.2f, -3.6f)); */
+  /* createTank(game, phongShader, glm::vec2(-2.5f, -2.5f)); */
+  /* createTank(game, phongShader, glm::vec2(-5.0f, -5.0f)); */
+  /* auto tankFactory = */
+  /*   std::make_shared<TankFactory>(phongShader, glm::vec2(2.0f, 2.0f)); */
+  /* game.addStructure(tankFactory); */
+  /* tankFactory->commit(); */
+  ImGui_ImplOpenGL3_NewFrame();
+  ImGui_ImplGlfw_NewFrame();
+  ImGui::NewFrame();
 
   eventManager =
     std::make_unique<EventManager>(window, game, camera, phongShader);
+  ImGui::Render();
+  ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
     processInput(window);
@@ -157,6 +161,8 @@ int main(int argc, char** argv)
     phongShader.use();
     phongShader.configure(
       light.position(), camera.reference(), view, projection);
+
+    auto surface = Surface(phongShader, -7.0f, -7.0f, 7.0f, 7.0f, 128);
     surface.render();
     /* eventManager->tick(); */
 
