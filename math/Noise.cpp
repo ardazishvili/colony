@@ -36,17 +36,11 @@ float quinticDeriv(float t)
 
 Noise::Noise(unsigned int seed) : _mask(PERIOD - 1)
 {
-  std::mt19937 generator(seed);
-  std::uniform_real_distribution<float> dReal(0, 2 * M_PI);
-  auto getRandomAngle = std::bind(dReal, generator);
-
   for (unsigned int i = 0; i < PERIOD; ++i) {
-    float phi = getRandomAngle();
-    _gradients[i] = glm::vec2(::cos(phi), ::sin(phi));
-    _gradients[i] = glm::normalize(_gradients[i]);
     _pTable[i] = i;
   }
 
+  std::mt19937 generator(seed);
   std::uniform_int_distribution<unsigned int> dInt;
   auto getRandomInt = std::bind(dInt, generator);
   for (unsigned int i = 0; i < PERIOD; ++i) {
@@ -112,7 +106,7 @@ float Noise::fractal(glm::vec2 p,
     amplitude *= amplitudeFactor;
   }
 
-  /* derivs = glm::normalize(derivs); */
+  derivs = glm::normalize(derivs);
   return res;
 }
 

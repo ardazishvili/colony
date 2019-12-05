@@ -20,16 +20,19 @@ public:
   glm::vec3 reference() const;
   glm::vec3 up() const;
   float getPitch() const;
+  void setEyeZ(float z);
 
 private:
   void updatePosition();
   void updateFront();
+  void updateAngles();
 
   glm::vec3 _position;
-  float _yaw{ 90.0f };
+  glm::vec3 _lookAt;
   glm::vec3 _front;
-  float _pitch;
   glm::vec3 _up;
+  float _yaw{ 90.0f };
+  float _pitch;
   float _speed;
   float _deltaTime{ 0.0 };
   float _lastFrame{ 0.0 };
@@ -38,6 +41,7 @@ private:
   float _lastY{ 300 };
   bool _firstMouse{ true };
   float _camRadius;
+  float _rotationSpeed{ 2.0f };
 };
 
 #endif

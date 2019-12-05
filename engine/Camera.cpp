@@ -5,16 +5,9 @@
 #include <iostream>
 
 Camera::Camera(glm::vec3 position, glm::vec3 lookAt, glm::vec3 up) :
-  _position(position), _up(up)
+  _position(position), _lookAt(lookAt), _up(up)
 {
-  float a = ::abs(position.z - lookAt.z);
-  auto rCamPosition = ::sqrt(::pow(position.x, 2) + ::pow(position.y, 2));
-  auto rLookAt = ::sqrt(::pow(lookAt.x, 2) + ::pow(lookAt.y, 2));
-  float b = ::abs(rCamPosition - rLookAt);
-
-  _pitch = -glm::degrees(::atan(a / b));
-  _camRadius = b;
-
+  updateAngles();
   updateFront();
 }
 
@@ -38,13 +31,13 @@ void Camera::moveBackward()
 
 void Camera::moveLeft()
 {
-  _yaw -= 1.0f;
+  _yaw -= 1.0f * _rotationSpeed;
   updatePosition();
 }
 
 void Camera::moveRight()
 {
-  _yaw += 1.0f;
+  _yaw += 1.0f * _rotationSpeed;
   updatePosition();
 }
 
@@ -128,4 +121,22 @@ void Camera::updatePosition()
   _position.x = -::sin(glm::radians(_yaw + 90)) * _camRadius;
   _position.y = ::cos(glm::radians(_yaw + 90)) * _camRadius;
   updateFront();
+}
+
+void Camera::setEyeZ(float z)
+{
+  _position.z = z;
+  updateAngles();
+  updateFront();
+}
+
+void Camera::updateAngles()
+{
+  float a = ::abs(_position.z - _lookAt.z);
+  auto rCamPosition = ::sqrt(::pow(_position.x, 2) + ::pow(_position.y, 2));
+  auto rLookAt = ::sqrt(::pow(_lookAt.x, 2) + ::pow(_lookAt.y, 2));
+  float b = ::abs(rCamPosition - rLookAt);
+
+  _pitch = -glm::degrees(::atan(a / b));
+  _camRadius = b;
 }

@@ -15,7 +15,7 @@ public:
                 float frequency,
                 float frequencyFactor,
                 float amplitudeFactor,
-                unsigned int numLayers = 5);
+                unsigned int numLayers = 1);
 
 private:
   uint8_t hash(const int& x, const int& y) const;

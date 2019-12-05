@@ -152,6 +152,14 @@ int main(int argc, char** argv)
     glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    ImGui::Begin("camera");
+    static float camera_z = 15.0;
+    ImGui::SetWindowPos(ImVec2(0, 210));
+    ImGui::SetWindowSize(ImVec2(500, 100));
+    ImGui::SliderFloat("camera z", &camera_z, -20.0f, 20.0f);
+    ImGui::End();
+    camera.setEyeZ(camera_z);
+
     ImGui::Begin("light");
     static float x = 1.2;
     static float y = 0.0;
@@ -179,7 +187,7 @@ int main(int argc, char** argv)
                            -7.0f,
                            7.0f,
                            7.0f,
-                           128,
+                           256,
                            "/home/roman/repos/colony/assets/light_grey.png");
     surface.render();
     /* eventManager->tick(); */

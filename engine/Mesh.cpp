@@ -315,7 +315,7 @@ void Meshes::initSurface(float bottomLeftX,
   ImGui::Begin("surface");
   static float frequency = 0.3;
   static float frequencyFactor = 2.0;
-  static float amplitudeFactor = 0.7;
+  static float amplitudeFactor = 0.3;
   ImGui::SetWindowPos(ImVec2(0, 0));
   ImGui::SetWindowSize(ImVec2(500, 100));
   ImGui::SliderFloat("frequency slider", &frequency, 0.0f, 1.5f);
@@ -333,8 +333,7 @@ void Meshes::initSurface(float bottomLeftX,
                               derivs,
                               frequency,
                               frequencyFactor,
-                              amplitudeFactor,
-                              5);
+                              amplitudeFactor);
       vertex.position.z = nv;
       /* vertex.position.z = ::max(nv, 0.0f); */
 
