@@ -73,11 +73,6 @@ float Noise::eval(glm::vec2 p, glm::vec2& derivs)
   int y0 = yi & _mask;
   int y1 = (y0 + 1) & _mask;
 
-  auto& cell_00 = _gradients[hash(x0, y0)];
-  auto& cell_01 = _gradients[hash(x0, y1)];
-  auto& cell_10 = _gradients[hash(x1, y0)];
-  auto& cell_11 = _gradients[hash(x1, y1)];
-
   auto p00 = glm::vec2(deltaX, deltaY);
   auto p01 = glm::vec2(deltaX, deltaY - 1);
   auto p10 = glm::vec2(deltaX - 1, deltaY);

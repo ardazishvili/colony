@@ -323,8 +323,6 @@ void Meshes::initSurface(float bottomLeftX,
   ImGui::SliderFloat("amplitudeFactor slider", &amplitudeFactor, 0.3f, 1.5f);
   ImGui::End();
   auto noise = Noise(777);
-  auto min = 0.0f;
-  auto max = 0.0f;
   for (int i = 0; i < divisions + 1; ++i) {
     for (int j = 0; j < divisions + 1; ++j) {
       Vertex vertex;
@@ -337,7 +335,8 @@ void Meshes::initSurface(float bottomLeftX,
                               frequencyFactor,
                               amplitudeFactor,
                               5);
-      vertex.position.z = ::max(nv, 0.0f);
+      vertex.position.z = nv;
+      /* vertex.position.z = ::max(nv, 0.0f); */
 
       vertex.texCoords.x = j % 2;
       vertex.texCoords.y = (i + 1) % 2;
