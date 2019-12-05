@@ -42,7 +42,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
   currentX = xpos;
   currentY = ypos;
   eventManager->handleMouseMove(window, xpos, ypos);
-  /* camera.tilt(xpos, ypos); */
+  camera.tilt(xpos, ypos);
 }
 
 void keyboard_callback(GLFWwindow* window,
@@ -156,7 +156,7 @@ int main(int argc, char** argv)
     static float x = 1.2;
     static float y = 0.0;
     static float z = 5.0;
-    ImGui::SetWindowPos(ImVec2(0, 200));
+    ImGui::SetWindowPos(ImVec2(0, 100));
     ImGui::SetWindowSize(ImVec2(500, 100));
     ImGui::SliderFloat("light x", &x, -10.0f, 10.0f);
     ImGui::SliderFloat("light y", &y, -10.0f, 10.0f);
@@ -164,6 +164,33 @@ int main(int argc, char** argv)
     ImGui::End();
     light.setPosition(glm::vec3(x, y, z));
 
+    /* ImGui::Begin("camera"); */
+    /* static float camera_x = 0.0; */
+    /* static float camera_y = -15.0; */
+    /* static float camera_z = 15.0; */
+    /* static float camera_yaw = 90.0; */
+    /* static float camera_pitch = -45.0; */
+    /* static float camera_front_x = 0.0; */
+    /* static float camera_front_y = 0.7; */
+    /* static float camera_front_z = -0.7; */
+    /* ImGui::SetWindowPos(ImVec2(0, 200)); */
+    /* ImGui::SetWindowSize(ImVec2(500, 230)); */
+    /* ImGui::SliderFloat("camera x", &camera_x, -15.0f, 15.0f); */
+    /* ImGui::SliderFloat("camera y", &camera_y, -15.0f, 15.0f); */
+    /* ImGui::SliderFloat("camera z", &camera_z, -15.0f, 15.0f); */
+    /* ImGui::SliderFloat("camera yaw", &camera_yaw, -180.0f, 180.0f); */
+    /* ImGui::SliderFloat("camera pitch", &camera_pitch, -180.0f, 180.0f); */
+    /* ImGui::SliderFloat("camera front x", &camera_front_x, -M_PI, M_PI); */
+    /* ImGui::SliderFloat("camera front y", &camera_front_y, -M_PI, M_PI); */
+    /* ImGui::SliderFloat("camera front z", &camera_front_z, -M_PI, M_PI); */
+    /* ImGui::End(); */
+
+    /* camera._yaw = camera_yaw; */
+    /* camera._pitch = camera_pitch; */
+    /* camera._front = glm::vec3(camera_front_x, camera_front_y,
+     * camera_front_z); */
+    /* camera.updateFront(); */
+    /* camera._position = glm::vec3(camera_x, camera_y, camera_z); */
     glm::mat4 view = glm::lookAt(camera.eye(), camera.reference(), camera.up());
     glm::mat4 projection = glm::perspective(
       glm::radians(camera.fov()), screenWidth / screenHeight, 0.01f, 1000.0f);

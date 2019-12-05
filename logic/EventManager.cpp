@@ -102,6 +102,7 @@ void EventManager::handleKeyPress(GLFWwindow* window,
     if (key == GLFW_KEY_D) {
       _camera.moveRight();
     }
+  } else if (action == GLFW_PRESS) {
   }
 }
 

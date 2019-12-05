@@ -3,7 +3,8 @@
 
 #include <glm/glm.hpp>
 
-class Camera {
+class Camera
+{
 public:
   Camera() = delete;
   Camera(glm::vec3 positionVector, glm::vec3 lookAtVector, glm::vec3 upVector);
@@ -21,20 +22,22 @@ public:
   float getPitch() const;
 
 private:
+  void updatePosition();
   void updateFront();
 
   glm::vec3 _position;
+  float _yaw{ 90.0f };
   glm::vec3 _front;
+  float _pitch;
   glm::vec3 _up;
   float _speed;
-  float _deltaTime { 0.0 };
-  float _lastFrame { 0.0 };
-  float _fov { 45.0f };
-  float _yaw { -90.0f };
-  float _pitch;
-  float _lastX { 400 };
-  float _lastY { 300 };
-  bool _firstMouse { true };
+  float _deltaTime{ 0.0 };
+  float _lastFrame{ 0.0 };
+  float _fov{ 45.0f };
+  float _lastX{ 400 };
+  float _lastY{ 300 };
+  bool _firstMouse{ true };
+  float _camRadius;
 };
 
 #endif

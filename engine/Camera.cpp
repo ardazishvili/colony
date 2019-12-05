@@ -4,17 +4,16 @@
 
 #include <iostream>
 
-Camera::Camera(glm::vec3 positionVector,
-	       glm::vec3 lookAtVector,
-	       glm::vec3 upVector) :
-	_position(positionVector),
-	_up(upVector)
+Camera::Camera(glm::vec3 position, glm::vec3 lookAt, glm::vec3 up) :
+  _position(position), _up(up)
 {
-  float wDiff = ::abs(positionVector.z - lookAtVector.z);
-  float yDiff = ::abs(positionVector.y - lookAtVector.y);
-  
-  _pitch = glm::degrees(::atan(wDiff / yDiff));
-  std::cout << "_pitch= " << _pitch << std::endl;
+  float a = ::abs(position.z - lookAt.z);
+  auto rCamPosition = ::sqrt(::pow(position.x, 2) + ::pow(position.y, 2));
+  auto rLookAt = ::sqrt(::pow(lookAt.x, 2) + ::pow(lookAt.y, 2));
+  float b = ::abs(rCamPosition - rLookAt);
+
+  _pitch = -glm::degrees(::atan(a / b));
+  _camRadius = b;
 
   updateFront();
 }
@@ -39,18 +38,19 @@ void Camera::moveBackward()
 
 void Camera::moveLeft()
 {
-  
-  _position -= glm::normalize(glm::cross(_front, _up)) * _speed;
+  _yaw -= 1.0f;
+  updatePosition();
 }
 
 void Camera::moveRight()
 {
-  _position += glm::normalize(glm::cross(_front, _up)) * _speed;
+  _yaw += 1.0f;
+  updatePosition();
 }
 
 void Camera::tilt(double x, double y)
 {
-  if ( _firstMouse ) {
+  if (_firstMouse) {
     _lastX = x;
     _lastY = y;
     _firstMouse = false;
@@ -64,7 +64,7 @@ void Camera::tilt(double x, double y)
   xOffset *= sensitivity;
   yOffset *= sensitivity;
 
-  _yaw += xOffset;
+  _yaw -= xOffset;
   _pitch += yOffset;
 
   if (_pitch > 89.0f) {
@@ -76,16 +76,17 @@ void Camera::tilt(double x, double y)
 
   updateFront();
   std::cout << "_pitch= " << _pitch << std::endl;
+  std::cout << "_yaw= " << _yaw << std::endl;
 }
 
 void Camera::zoom(double factor)
 {
-  if(_fov >= 1.0f && _fov <= 45.0f)
-  	_fov -= factor;
-  if(_fov <= 1.0f)
-  	_fov = 1.0f;
-  if(_fov >= 45.0f)
-  	_fov = 45.0f;
+  if (_fov >= 1.0f && _fov <= 45.0f)
+    _fov -= factor;
+  if (_fov <= 1.0f)
+    _fov = 1.0f;
+  if (_fov >= 45.0f)
+    _fov = 45.0f;
 }
 
 float Camera::fov() const
@@ -112,12 +113,19 @@ void Camera::updateFront()
 {
   glm::vec3 front;
   front.x = ::cos(glm::radians(_pitch)) * ::cos(glm::radians(_yaw));
-  front.y = ::sin(glm::radians(_pitch));
-  front.z = ::cos(glm::radians(_pitch)) * ::sin(glm::radians(_yaw));
+  front.y = ::cos(glm::radians(_pitch)) * ::sin(glm::radians(_yaw));
+  front.z = ::sin(glm::radians(_pitch));
   _front = glm::normalize(front);
 }
 
 float Camera::getPitch() const
 {
   return _pitch;
+}
+
+void Camera::updatePosition()
+{
+  _position.x = -::sin(glm::radians(_yaw + 90)) * _camRadius;
+  _position.y = ::cos(glm::radians(_yaw + 90)) * _camRadius;
+  updateFront();
 }
