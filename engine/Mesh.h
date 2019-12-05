@@ -54,13 +54,6 @@ public:
 
   void render();
   bool initModel(const aiScene* pScene, const string& Filename);
-  void initSurface(
-    float bottomLeftX,
-    float bottomLeftY,
-    float topRightX,
-    float topRightY,
-    int divisions,
-    std::string texturePath = "/home/roman/repos/opengl/assets/grey.png");
   void loadTexture(const std::string& filename, TexturePackType type);
   void setActiveTexturesPack(TexturePackType type);
   void animate(Shader& shader, Animation::Type type, float percent);

@@ -12,6 +12,8 @@ add_executable(colony
 		engine/Light.h
 		engine/Mesh.cpp
 		engine/Mesh.h
+    engine/SurfaceMesh.h
+    engine/SurfaceMesh.cpp
 		engine/Model.cpp
 		engine/Model.h
 		engine/ModelLoader.cpp
