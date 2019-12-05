@@ -122,7 +122,7 @@ int main(int argc, char** argv)
   glEnable(GL_DEPTH_TEST);
   auto light = Light(
     glm::vec3(1.2f, 0.0f, 5.0f), lampShader, camera, screenWidth, screenHeight);
-  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  /* glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); */
   /* createTank(game, phongShader, glm::vec2(-0.2f, -3.6f)); */
   /* createTank(game, phongShader, glm::vec2(-2.5f, -2.5f)); */
   /* createTank(game, phongShader, glm::vec2(-5.0f, -5.0f)); */
@@ -151,6 +151,18 @@ int main(int argc, char** argv)
     glViewport(0, 0, display_w, display_h);
     glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    ImGui::Begin("light");
+    static float x = 1.2;
+    static float y = 0.0;
+    static float z = 5.0;
+    ImGui::SetWindowPos(ImVec2(0, 200));
+    ImGui::SetWindowSize(ImVec2(500, 100));
+    ImGui::SliderFloat("light x", &x, -10.0f, 10.0f);
+    ImGui::SliderFloat("light y", &y, -10.0f, 10.0f);
+    ImGui::SliderFloat("light z", &z, -10.0f, 100.0f);
+    ImGui::End();
+    light.setPosition(glm::vec3(x, y, z));
 
     glm::mat4 view = glm::lookAt(camera.eye(), camera.reference(), camera.up());
     glm::mat4 projection = glm::perspective(

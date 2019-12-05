@@ -5,22 +5,24 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Shader.h"
 #include "Camera.h"
+#include "Shader.h"
 
-class Light {
+class Light
+{
 public:
   Light(glm::vec3 position,
-	Shader& _shader,
-       	Camera& camera,
-	float screenWidth,
-	float screenHeight);
+        Shader& _shader,
+        Camera& camera,
+        float screenWidth,
+        float screenHeight);
   ~Light();
-  void render();  
+  void render();
   glm::vec3 position();
-                  
-private:          
-  void init();    
+  void setPosition(glm::vec3 position);
+
+private:
+  void init();
 
   glm::vec3 _position;
   unsigned int _vao;

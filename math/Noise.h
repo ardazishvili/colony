@@ -9,8 +9,9 @@ class Noise
 {
 public:
   Noise(unsigned int seed);
-  float eval(glm::vec2 p);
+  float eval(glm::vec2 p, glm::vec2& derivs);
   float fractal(glm::vec2 p,
+                glm::vec2& derivs,
                 float frequency,
                 float frequencyFactor,
                 float amplitudeFactor,

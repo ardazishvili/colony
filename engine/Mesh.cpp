@@ -317,7 +317,7 @@ void Meshes::initSurface(float bottomLeftX,
   static float frequencyFactor = 2.0;
   static float amplitudeFactor = 0.7;
   ImGui::SetWindowPos(ImVec2(0, 0));
-  ImGui::SetWindowSize(ImVec2(500, 300));
+  ImGui::SetWindowSize(ImVec2(500, 100));
   ImGui::SliderFloat("frequency slider", &frequency, 0.0f, 1.5f);
   ImGui::SliderFloat("frequencyFactor slider", &frequencyFactor, 0.0f, 3.0f);
   ImGui::SliderFloat("amplitudeFactor slider", &amplitudeFactor, 0.3f, 1.5f);
@@ -330,27 +330,27 @@ void Meshes::initSurface(float bottomLeftX,
       Vertex vertex;
       vertex.position.x = bottomLeftX + static_cast<float>(i) * xStep;
       vertex.position.y = bottomLeftY + static_cast<float>(j) * yStep;
+      glm::vec2 derivs;
       auto nv = noise.fractal(glm::vec2(vertex.position.x, vertex.position.y),
+                              derivs,
                               frequency,
                               frequencyFactor,
-                              amplitudeFactor);
-      /* vertex.position.z = nv; */
+                              amplitudeFactor,
+                              5);
       vertex.position.z = ::max(nv, 0.0f);
-      min = ::min(min, nv);
-      max = ::max(max, nv);
 
       vertex.texCoords.x = j % 2;
       vertex.texCoords.y = (i + 1) % 2;
 
-      vertex.normal.x = 0.0f;
-      vertex.normal.y = 0.0f;
-      vertex.normal.z = 1.0f;
+      if (vertex.position.z != 0.0f) {
+        vertex.normal = glm::vec3(-derivs.x, -derivs.y, 1);
+      } else {
+        vertex.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+      }
 
       _vertices.push_back(vertex);
     }
   }
-  std::cout << " min= " << min << std::endl;
-  std::cout << " max= " << max << std::endl;
   _indices.reserve(::pow(divisions, 2) * 2 * 3);
   int width = divisions + 1;
   for (int i = 0; i < divisions; ++i) {
