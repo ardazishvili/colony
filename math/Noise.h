@@ -18,6 +18,8 @@ public:
                 unsigned int numLayers = 5);
 
 private:
+  uint8_t hash(const int& x, const int& y) const;
+
   static const unsigned int PERIOD{ 256 };
   unsigned int _mask;
   glm::vec2 _gradients[PERIOD];
