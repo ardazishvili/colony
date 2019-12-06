@@ -32,7 +32,7 @@ private:
   Camera& _camera;
   Game& _game;
   Shader& _shader;
-  Surface _selectionSurface;
+  /* Surface _selectionSurface; */
   glm::vec2 _selectionSurfaceBottonLeft;
   bool _selectionActive{ false };
   Tank* _tankSelected{ nullptr };

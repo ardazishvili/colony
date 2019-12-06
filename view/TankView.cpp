@@ -25,11 +25,12 @@ TankView::TankView(Shader& shader, glm::vec2 position, float tankTypeScaling) :
   _texturesType = TexturePackType::Initial;
   _hasAnimation = true;
   _healthBar.setOffsetZ(0.7);
-  /* _healthBar.setTexture("/home/roman/repos/opengl/assets/red.png"); */
+  _healthBar.setTexture("/home/roman/repos/opengl/assets/red.png");
 }
 
 void TankView::draw()
 {
+  _shader.use();
   updateGun();
   auto percent = _currentGunAngle / 360.0f;
   if (_currentGunAngle == 0) {

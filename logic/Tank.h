@@ -5,23 +5,26 @@
 
 #include <list>
 
-#include "BuildableUnit.h"
 #include "../Timer.h"
 #include "../view/TankView.h"
+#include "BuildableUnit.h"
 
 class Game;
 
 using Shells = std::list<Shell>;
 
-enum class HealthLevel {
+enum class HealthLevel
+{
   Low,
   Medium,
   High
 };
 
-class Tank : public BuildableUnit {
+class Tank : public BuildableUnit
+{
 public:
-  enum class Type {
+  enum class Type
+  {
     Light,
     Medium,
     Heavy
@@ -65,24 +68,24 @@ private:
   void updateHealthBar() override;
 
   float _speed;
-  glm::vec2 _moveIncrement {0, 0};
+  glm::vec2 _moveIncrement{ 0, 0 };
   Type _type;
   Shell::Size _shellSize;
   Shells _shells;
   Buildable* _target;
   glm::vec2 _destination;
   Timer _clock;
-  std::chrono::milliseconds _shellLoadTime { 200 };
+  std::chrono::milliseconds _shellLoadTime{ 200 };
 
-  //TODO
-  Shader _shader;
+  // TODO
+  Shader& _shader;
   TankView _view;
 };
 
 std::shared_ptr<Tank> createTank(Game& game,
-				 Shader& shader,
-				 glm::vec2 position,
-				 Tank::Type type = Tank::Type::Light,
-				 HealthLevel health = HealthLevel::High,
-				 Shell::Size shellSize = Shell::Size::Small);
+                                 Shader& shader,
+                                 glm::vec2 position,
+                                 Tank::Type type = Tank::Type::Light,
+                                 HealthLevel health = HealthLevel::High,
+                                 Shell::Size shellSize = Shell::Size::Small);
 #endif

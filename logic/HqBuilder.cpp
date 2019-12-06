@@ -1,15 +1,12 @@
 #include <iostream>
 
-#include "HqBuilder.h"
-#include "Hq.h"
 #include "../globals.h"
+#include "Hq.h"
+#include "HqBuilder.h"
 
-HqBuilder::HqBuilder(Shader& shader) :
-	_shader(shader)
-{
-}
+HqBuilder::HqBuilder(Shader& shader) : _shader(shader) {}
 
-void HqBuilder::create() 
+void HqBuilder::create()
 {
   std::cout << "hq builder create" << std::endl;
   auto structure = std::make_shared<Hq>(_shader, glm::vec2());
@@ -23,6 +20,4 @@ MenuTextures HqBuilder::getPreviewType()
   return MenuTextures::Hq;
 }
 
-HqBuilder::~HqBuilder()
-{
-}
+HqBuilder::~HqBuilder() {}

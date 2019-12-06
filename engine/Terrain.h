@@ -7,7 +7,7 @@
 class Terrain
 {
 public:
-  Terrain(Shader shader,
+  Terrain(Shader& shader,
           float bottomLeftX,
           float bottomLeftY,
           float topRightX,
@@ -23,7 +23,7 @@ public:
   glm::vec4 getArea() const; // bottom left x, y; top right x, y
 
 private:
-  Shader _shader;
+  Shader& _shader;
   TerrainMesh _mesh;
   glm::vec3 _offset{ glm::vec3(0.0f) };
   float _pitchAngle{ 0.0f };

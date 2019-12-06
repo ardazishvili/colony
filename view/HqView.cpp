@@ -19,7 +19,7 @@ HqView::HqView(Shader& shader, glm::vec2 position) :
   _model = modelLoader->models()[Models::Hq];
   _model->setActiveTexturesPack(TexturePackType::PreBuild);
   _healthBar.setOffsetZ(1.3f);
-  /* _healthBar.setTexture("/home/roman/repos/opengl/assets/red.png"); */
+  _healthBar.setTexture("/home/roman/repos/opengl/assets/red.png");
 }
 
 void HqView::draw()
@@ -30,8 +30,9 @@ void HqView::draw()
   model = glm::rotate(model, glm::radians(_angle), glm::vec3(0.0f, 0.0f, 1.0f));
   _shader.setTransformation("model", glm::value_ptr(model));
   _model->setActiveTexturesPack(_texturesType);
+  _shader.use();
   _model->render();
-  showHealthBar();
+  /* showHealthBar(); */
 }
 
 bool HqView::contain(glm::vec2 point) const

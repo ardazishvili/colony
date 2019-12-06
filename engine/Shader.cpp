@@ -4,7 +4,7 @@
 
 #include "Shader.h"
 
-#define ARRAY_SIZE_IN_ELEMENTS(a) (sizeof(a)/sizeof(a[0]))
+#define ARRAY_SIZE_IN_ELEMENTS(a) (sizeof(a) / sizeof(a[0]))
 
 Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 {
@@ -43,14 +43,15 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
     glGetShaderInfoLog(vertex, 512, NULL, infoLog);
     std::cout << "SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
   }
-  
+
   unsigned int fragment = glCreateShader(GL_FRAGMENT_SHADER);
   glShaderSource(fragment, 1, &fragmentShaderCode, nullptr);
   glCompileShader(fragment);
   glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
   if (!success) {
     glGetShaderInfoLog(fragment, 512, NULL, infoLog);
-    std::cout << "SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
+    std::cout << "SHADER::FRAGMENT::COMPILATION_FAILED\n"
+              << infoLog << std::endl;
   }
 
   _id = glCreateProgram();
@@ -90,39 +91,38 @@ void Shader::setFloat(const std::string& name, float value) const
 
 void Shader::setColor(const std::string& name, float value) const
 {
-  glUniform4f(glGetUniformLocation(_id, name.c_str()),
-	      0.0, value, 0.0f, 1.0f);
+  glUniform4f(glGetUniformLocation(_id, name.c_str()), 0.0, value, 0.0f, 1.0f);
 }
 
 void Shader::setTransformation(const std::string& name,
-	       		       const GLfloat* matrix) const
+                               const GLfloat* matrix) const
 {
-  glUniformMatrix4fv(glGetUniformLocation(_id, name.c_str()),
-		     1,
-		     GL_FALSE,
-		     matrix);
+  glUniformMatrix4fv(
+    glGetUniformLocation(_id, name.c_str()), 1, GL_FALSE, matrix);
 }
 
-void Shader::setVec3(const std::string& name, float f1, float f2, float f3) const
+void Shader::setVec3(const std::string& name,
+                     float f1,
+                     float f2,
+                     float f3) const
 {
-  glUniform3f(glGetUniformLocation(_id, name.c_str()),
-	      f1, f2, f3);
+  glUniform3f(glGetUniformLocation(_id, name.c_str()), f1, f2, f3);
 }
 
 void Shader::setVec3(const std::string& name, glm::vec3& value) const
 {
-  glUniform3fv(glGetUniformLocation(_id, name.c_str()),
-	      1, &value[0]);
+  glUniform3fv(glGetUniformLocation(_id, name.c_str()), 1, &value[0]);
 }
 
-void Shader::setMat4(const std::string &name, const glm::mat4 &mat) const
+void Shader::setMat4(const std::string& name, const glm::mat4& mat) const
 {
-    glUniformMatrix4fv(glGetUniformLocation(_id, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+  glUniformMatrix4fv(
+    glGetUniformLocation(_id, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
 
 void Shader::init()
 {
-  for (unsigned int i = 0 ; i < ARRAY_SIZE_IN_ELEMENTS(m_boneLocation) ; i++) {
+  for (unsigned int i = 0; i < ARRAY_SIZE_IN_ELEMENTS(m_boneLocation); i++) {
     char Name[128];
     memset(Name, 0, sizeof(Name));
     snprintf(Name, sizeof(Name), "gBones[%d]", i);
@@ -130,25 +130,19 @@ void Shader::init()
   }
 }
 
-void Shader::setBoneTransform(unsigned int index,
-	       		       const glm::mat4& matrix)
+void Shader::setBoneTransform(unsigned int index, const glm::mat4& matrix)
 {
-  /* std::cout << "Setting bone transform" << std::endl; */
   assert(index < MAX_BONES);
-  glUniformMatrix4fv(m_boneLocation[index],
-		     1,
-		     GL_TRUE,
-		     glm::value_ptr(matrix));
+  glUniformMatrix4fv(m_boneLocation[index], 1, GL_TRUE, glm::value_ptr(matrix));
 }
 
 GLint Shader::getUniformLocation(const char* name)
 {
-  /* std::cout << "Getting Uniform location: " << name << std::endl; */
-    GLuint location = glGetUniformLocation(_id, name);
+  GLuint location = glGetUniformLocation(_id, name);
 
-    if (location == GL_INVALID_VALUE || location == GL_INVALID_OPERATION) {
-        fprintf(stderr, "Unable to get the location of uniform '%s'\n", name);
-    }
+  if (location == GL_INVALID_VALUE || location == GL_INVALID_OPERATION) {
+    fprintf(stderr, "Unable to get the location of uniform '%s'\n", name);
+  }
 
-    return location;
+  return location;
 }

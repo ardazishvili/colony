@@ -24,18 +24,18 @@ EventManager::EventManager(GLFWwindow* window,
                            Camera& camera,
                            Shader& shader) :
   _window(window),
-  _camera(camera), _game(game), _shader(shader),
-  _selectionSurface(shader, 0.0f, 0.0f, 1.0f, 1.0f, 1)
+  _camera(camera), _game(game), _shader(shader)
+/* _selectionSurface(shader, 0.0f, 0.0f, 1.0f, 1.0f, 1) */
 {
   _game.setControl(std::make_unique<Control>(shader));
-  _selectionSurface.setOffsetZ(0.04f);
+  /* _selectionSurface.setOffsetZ(0.04f); */
 }
 
 void EventManager::tick()
 {
-  if (_selectionActive) {
-    _selectionSurface.render();
-  }
+  /* if (_selectionActive) { */
+  /* _selectionSurface.render(); */
+  /* } */
   _game.tick();
 }
 
@@ -122,8 +122,8 @@ void EventManager::handleMouseMove(GLFWwindow* window, double xpos, double ypos)
     _structureToBuild->setPosition(glm::vec2(position.x, position.y));
   }
   if (_selectionActive) {
-    _selectionSurface.setScaleXY(c.x - _selectionSurfaceBottonLeft.x,
-                                 c.y - _selectionSurfaceBottonLeft.y);
+    /* _selectionSurface.setScaleXY(c.x - _selectionSurfaceBottonLeft.x, */
+    /*                              c.y - _selectionSurfaceBottonLeft.y); */
   }
 }
 
@@ -141,10 +141,10 @@ void EventManager::handleMousePressed(int button, int action)
 void EventManager::handleMouseReleased()
 {
   std::cout << "mouse released" << std::endl;
-  auto area = _selectionSurface.getArea();
-  if (area.x != area.z || area.y != area.w) {
-    _tanksSelected = _game.getTanks(area);
-  }
+  /* auto area = _selectionSurface.getArea(); */
+  /* if (area.x != area.z || area.y != area.w) { */
+  /*   _tanksSelected = _game.getTanks(area); */
+  /* } */
 
   _selectionActive = false;
 }
@@ -153,8 +153,8 @@ void EventManager::handleMousePressedLeft()
 {
   auto c = unProject(currentX, currentY);
   _selectionActive = true;
-  _selectionSurface.setScaleXY(0, 0);
-  _selectionSurface.setOffsetXY(c.x, c.y);
+  /* _selectionSurface.setScaleXY(0, 0); */
+  /* _selectionSurface.setOffsetXY(c.x, c.y); */
   _selectionSurfaceBottonLeft = glm::vec2(c.x, c.y);
   _tanksSelected.clear();
 

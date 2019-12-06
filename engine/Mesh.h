@@ -57,6 +57,13 @@ public:
   void loadTexture(const std::string& filename, TexturePackType type);
   void setActiveTexturesPack(TexturePackType type);
   void animate(Shader& shader, Animation::Type type, float percent);
+  void initSurface(
+    float bottomLeftX,
+    float bottomLeftY,
+    float topRightX,
+    float topRightY,
+    int divisions,
+    std::string texturePath = "/home/roman/repos/opengl/assets/grey.png");
 
 private:
   void initMesh(unsigned int MeshIndex, const aiMesh* paiMesh);

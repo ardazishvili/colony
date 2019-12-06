@@ -1,6 +1,6 @@
 #include "Terrain.h"
 
-Terrain::Terrain(Shader shader,
+Terrain::Terrain(Shader& shader,
                  float bottomLeftX,
                  float bottomLeftY,
                  float topRightX,
@@ -17,6 +17,8 @@ Terrain::Terrain(Shader shader,
 
 void Terrain::render()
 {
+  _shader.use();
+  _shader.configure();
   auto model = glm::mat4(1.0f);
   model = glm::translate(model, _offset);
   model =
@@ -26,7 +28,6 @@ void Terrain::render()
   model = glm::scale(model, glm::vec3(_xScaleFactor, _yScaleFactor, 1.0f));
   _shader.setTransformation("model", glm::value_ptr(model));
   _shader.setBool("animated", false);
-  _shader.use();
   _mesh.render();
 }
 

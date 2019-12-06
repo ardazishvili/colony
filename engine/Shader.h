@@ -3,12 +3,13 @@
 #include <GL/glew.h>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include <string>
 #include <fstream>
-#include <sstream>
 #include <iostream>
+#include <sstream>
+#include <string>
 
-class Shader {
+class Shader
+{
 public:
   static const unsigned int MAX_BONES = 100;
   Shader(const GLchar* vertexPath, const GLchar* fragmentPath);
@@ -22,11 +23,12 @@ public:
   void setVec3(const std::string& name, float f1, float f2, float f3) const;
   void setVec3(const std::string& name, glm::vec3& value) const;
   void setTransformation(const std::string& name, const GLfloat* matrix) const;
-  void setMat4(const std::string &name, const glm::mat4 &mat) const;
- 
+  void setMat4(const std::string& name, const glm::mat4& mat) const;
+
   GLint getUniformLocation(const char* name);
-  void setBoneTransform(unsigned int index,
-  	       			const glm::mat4& matrix);
+  void setBoneTransform(unsigned int index, const glm::mat4& matrix);
+  virtual void configure() = 0;
+
 private:
   unsigned int _id;
   GLuint m_boneLocation[MAX_BONES];

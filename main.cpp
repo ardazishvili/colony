@@ -116,29 +116,31 @@ int main(int argc, char** argv)
   PhongShader textureShader(
     "/home/roman/repos/colony/shaders/vertex_objects.vs",
     "/home/roman/repos/colony/shaders/fragment_objects.fs");
-  Shader lampShader("/home/roman/repos/colony/shaders/vertex_light.vs",
-                    "/home/roman/repos/colony/shaders/fragment_light.fs");
+  PhongShader lampShader("/home/roman/repos/colony/shaders/vertex_light.vs",
+                         "/home/roman/repos/colony/shaders/fragment_light.fs");
   modelLoader = std::make_unique<ModelLoader>(textureShader);
   modelLoader->load();
 
   glEnable(GL_DEPTH_TEST);
-  auto light = Light(
+  light = std::make_unique<Light>(
     glm::vec3(1.2f, 0.0f, 5.0f), lampShader, camera, screenWidth, screenHeight);
-  /* glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); */
-  /* createTank(game, phongShader, glm::vec2(-0.2f, -3.6f)); */
-  /* createTank(game, phongShader, glm::vec2(-2.5f, -2.5f)); */
-  /* createTank(game, phongShader, glm::vec2(-5.0f, -5.0f)); */
-  /* auto tankFactory = */
-  /*   std::make_shared<TankFactory>(phongShader, glm::vec2(2.0f, 2.0f)); */
-  /* game.addStructure(tankFactory); */
-  /* tankFactory->commit(); */
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   ImGui_ImplOpenGL3_NewFrame();
   ImGui_ImplGlfw_NewFrame();
   ImGui::NewFrame();
 
+  createTank(game, textureShader, glm::vec2(-0.2f, -3.6f));
+  /* createTank(game, phongShader, glm::vec2(-2.5f, -2.5f)); */
+  /* createTank(game, phongShader, glm::vec2(-5.0f, -5.0f)); */
+  /* auto tankFactory = */
+  /*   std::make_shared<TankFactory>(textureShader, glm::vec2(2.0f, 2.0f)); */
+  /* game.addStructure(tankFactory); */
+  /* tankFactory->commit(); */
+
   eventManager =
     std::make_unique<EventManager>(window, game, camera, textureShader);
-  auto terrain = Terrain(colorShader, -10.0f, -10.0f, 10.0f, 10.0f, 256);
+  /* auto terrain = Terrain(colorShader, -00.0f, -00.0f, 10.0f, 10.0f, 256); */
+  auto surface = Surface(textureShader, -10.0f, -10.0f, 10.0f, 10.0f, 256);
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
   while (!glfwWindowShouldClose(window)) {
@@ -174,7 +176,7 @@ int main(int argc, char** argv)
     ImGui::SliderFloat("light y", &y, -10.0f, 10.0f);
     ImGui::SliderFloat("light z", &z, -10.0f, 100.0f);
     ImGui::End();
-    light.setPosition(glm::vec3(x, y, z));
+    light->setPosition(glm::vec3(x, y, z));
 
     glm::mat4 view = glm::lookAt(camera.eye(), camera.reference(), camera.up());
     glm::mat4 projection = glm::perspective(
@@ -183,11 +185,15 @@ int main(int argc, char** argv)
     gProjection = projection;
 
     /* colorShader.use(); */
-    colorShader.configure(
-      light.position(), camera.reference(), view, projection);
-    textureShader.configure(
-      light.position(), camera.reference(), view, projection);
+    /* colorShader.configure( */
+    /*   light->position(), camera.reference(), view, projection); */
+    /* textureShader.configure( */
+    /*   light->position(), camera.reference(), view, projection); */
+    colorShader.configure();
+    textureShader.configure();
 
+    /* surface.render(); */
+    auto terrain = Terrain(colorShader, -10.0f, -10.0f, 10.0f, 10.0f, 256);
     terrain.render();
     eventManager->tick();
 

@@ -2,6 +2,7 @@
 #define GLOBALS_H
 
 #include "engine/Camera.h"
+#include "engine/Light.h"
 #include "engine/ModelLoader.h"
 #include "logic/EventManager.h"
 #include "logic/Game.h"
@@ -16,6 +17,7 @@ extern float screenHeight;
 extern std::unique_ptr<ModelLoader> modelLoader;
 extern Camera camera;
 extern Game game;
+extern std::unique_ptr<Light> light;
 extern std::unique_ptr<EventManager> eventManager;
 
 #endif

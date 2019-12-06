@@ -1,35 +1,34 @@
 #include "../imgui/imgui.h"
 
-#include "Game.h"
-#include "EventManager.h"
 #include "../globals.h"
+#include "EventManager.h"
+#include "Game.h"
 
-#include <iostream>
 #include <iomanip>
+#include <iostream>
 
 void Game::tick()
 {
-  for (auto& tank : _tanks) {
-    if (tank->isDestroyed()) {
-      tank->stopShooting();
-    }
+  /* for (auto& tank : _tanks) { */
+  /*   if (tank->isDestroyed()) { */
+  /*     tank->stopShooting(); */
+  /*   } */
 
-    if (tank->isShooting()) {
-      tank->shootTarget();
-    }
+  /*   if (tank->isShooting()) { */
+  /*     tank->shootTarget(); */
+  /*   } */
 
-    if(tank->isMoving()) {
-      tank->move();
-    }
-  }
+  /*   if (tank->isMoving()) { */
+  /*     tank->move(); */
+  /*   } */
+  /* } */
 
-  
   displayTanks();
-  displayShells();
-  displayStructures();
-  displayControl();
+  /* displayShells(); */
+  /* displayStructures(); */
+  /* displayControl(); */
 
-  showDebug();
+  /* showDebug(); */
 }
 
 void Game::addTank(std::shared_ptr<Tank> tank)
@@ -56,14 +55,14 @@ void Game::displayTanks()
 
 void Game::displayShells()
 {
-  for(auto& tank : _tanks) {
+  for (auto& tank : _tanks) {
     tank->updateShells();
   }
 }
 
 void Game::displayStructures()
 {
-  for(auto& structure : _structures) {
+  for (auto& structure : _structures) {
     structure->display();
   }
 }
@@ -75,17 +74,17 @@ void Game::displayControl()
 
 Tank* Game::getTank(const glm::vec2& mousePoint, bool select)
 {
-  if(select) {
-    for(auto& tank : _tanks) {
+  if (select) {
+    for (auto& tank : _tanks) {
       if (!tank->isUnderFire()) {
         tank->deselect();
       }
     }
   }
-  for(auto& tank : _tanks) {
+  for (auto& tank : _tanks) {
     if (tank->isUnderCursor(mousePoint) && !tank->isDestroyed()) {
-      if(select){
-	tank->select();
+      if (select) {
+        tank->select();
       }
       _selectedTank = tank.get();
       return tank.get();
@@ -98,12 +97,12 @@ Tank* Game::getTank(const glm::vec2& mousePoint, bool select)
 
 VehicleGroup Game::getTanks(glm::vec4 area)
 {
-  for(auto& tank : _tanks) {
+  for (auto& tank : _tanks) {
     tank->deselect();
   }
 
   auto result = VehicleGroup();
-  for(auto& tank : _tanks) {
+  for (auto& tank : _tanks) {
     if (tank->isInsideArea(area) && !tank->isDestroyed()) {
       tank->select();
       result.add(tank.get());
@@ -121,8 +120,8 @@ Buildable* Game::getStructure(const glm::vec2& mousePoint)
     }
   }
 
-  for(auto& structure : _structures) {
-    if(structure->isUnderCursor(mousePoint) && !structure->isDestroyed()) {
+  for (auto& structure : _structures) {
+    if (structure->isUnderCursor(mousePoint) && !structure->isDestroyed()) {
       _selectedStructure = structure.get();
       structure->select();
       _control->populateUnitPanel(*this, _selectedStructure);
@@ -137,18 +136,17 @@ Buildable* Game::getStructure(const glm::vec2& mousePoint)
 
 void Game::showDebug()
 {
-  auto flags = ImGuiWindowFlags_NoTitleBar |
-               ImGuiWindowFlags_NoResize |
-      	 ImGuiWindowFlags_NoMove |
-      	 ImGuiWindowFlags_NoScrollbar |
-      	 ImGuiWindowFlags_NoSavedSettings |
-      	 ImGuiWindowFlags_NoInputs;
+  auto flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize |
+               ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar |
+               ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs;
   ImGui::Begin("3dCoordinates", NULL, flags);
   ImGui::SetWindowPos(ImVec2(0, screenHeight - 22));
   ImGui::SetWindowSize(ImVec2(250, 22));
   auto pos = EventManager::unProject(currentX, currentY);
   std::stringstream ss;
-  ss << "x:" << std::setw(5) << std::setprecision(2) << pos.x << "; y:"<< std::setw(5) << std::setprecision(2) << pos.y << "; z: " << pos.z;
+  ss << "x:" << std::setw(5) << std::setprecision(2) << pos.x
+     << "; y:" << std::setw(5) << std::setprecision(2) << pos.y
+     << "; z: " << pos.z;
   ImGui::Text(ss.str().c_str());
   ImGui::End();
 }

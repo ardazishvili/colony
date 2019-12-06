@@ -3,20 +3,22 @@
 
 #include <GL/glew.h>
 
+#include "../view/TankFactoryView.h"
 #include "BuildableStructure.h"
 #include "Tank.h"
-#include "../view/TankFactoryView.h"
 
 class Game;
 
-class TankFactory : public BuildableStructure {
+class TankFactory : public BuildableStructure
+{
 public:
   TankFactory() = delete;
   TankFactory(Shader& shader, glm::vec2 position);
 
-  void createTank(Game& game, Tank::Type tankType,
-			      HealthLevel healthLevel,
-			      Shell::Size shellSize);
+  void createTank(Game& game,
+                  Tank::Type tankType,
+                  HealthLevel healthLevel,
+                  Shell::Size shellSize);
   void display() override;
   bool isUnderCursor(const glm::vec2& mousePoint) override;
   void select() override;
@@ -31,14 +33,14 @@ public:
 
 private:
   void updateHealthBar() override;
-  void addUnitBuilder(Game& game, 
-		  UnitBuilders& builders,
-		  Tank::Type type,
-		  HealthLevel healthLevel,
-		  Shell::Size shellSize);
+  void addUnitBuilder(Game& game,
+                      UnitBuilders& builders,
+                      Tank::Type type,
+                      HealthLevel healthLevel,
+                      Shell::Size shellSize);
 
   TankFactoryView _view;
-  Shader _shader;
+  Shader& _shader;
   static const int TANK_FACTORY_HP;
 };
 

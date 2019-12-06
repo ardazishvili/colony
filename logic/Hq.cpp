@@ -4,8 +4,7 @@
 const int Hq::HQ_HP = 500;
 
 Hq::Hq(Shader& shader, glm::vec2 position) :
-	_shader(shader),
-	_view(shader, position)
+  _shader(shader), _view(shader, position)
 {
   _health = HQ_HP;
   _maxHealth = _health;
@@ -45,13 +44,14 @@ void Hq::takeDamage(Shell::Size shellSize)
   if (_status != Status::Destroyed) {
     _status = Status::UnderFire;
     _view.setTexture(Status::UnderFire);
-    _health = std::max(0.0f, _health - Shell::SHELL_DAMAGE_MAP.find(shellSize)->second);
+    _health =
+      std::max(0.0f, _health - Shell::SHELL_DAMAGE_MAP.find(shellSize)->second);
     if (_health == 0) {
       _status = Status::Destroyed;
       _view.setTexture(Status::Destroyed);
     }
     updateHealthBar();
-  } 
+  }
 }
 
 glm::vec2 Hq::position()
@@ -67,7 +67,8 @@ UnitBuilders Hq::getUnitBuilders(Game& game)
 StructureBuilders Hq::getStructureBuilders()
 {
   StructureBuilders builders = StructureBuilders();
-  std::unique_ptr<AbstractStructureBuilder> builder = std::make_unique<TankFactoryBuilder>(_shader);
+  std::unique_ptr<AbstractStructureBuilder> builder =
+    std::make_unique<TankFactoryBuilder>(_shader);
   builders.push_back(std::move(builder));
   return builders;
 }
