@@ -136,6 +136,7 @@ int main(int argc, char** argv)
 
   eventManager =
     std::make_unique<EventManager>(window, game, camera, phongShader);
+  auto surface = Surface(phongShader, -5.0f, -5.0f, 5.0f, 5.0f, 4);
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
   while (!glfwWindowShouldClose(window)) {
@@ -190,7 +191,6 @@ int main(int argc, char** argv)
     /* _indices.push_back((i * width) + j + width); */
     /* _indices.push_back((i * width) + j + width + 1); */
 
-    auto surface = Surface(phongShader, -7.0f, -7.0f, 7.0f, 7.0f, 256);
     surface.render();
     /* eventManager->tick(); */
 
