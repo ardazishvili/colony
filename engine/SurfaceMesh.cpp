@@ -85,15 +85,12 @@ void SurfaceMesh::initSurface(float bottomLeftX,
   _v.reserve(::pow(divisions + 1, 2));
   float xStep = (topRightX - bottomLeftX) / divisions;
   float yStep = (topRightY - bottomLeftY) / divisions;
-  std::cout << "divisions= " << divisions << std::endl;
-  std::cout << "xStep= " << xStep << std::endl;
-  std::cout << "yStep= " << xStep << std::endl;
 
   ImGui::Begin("surface");
   static float frequency = 0.3;
   static float frequencyFactor = 2.0;
-  static float amplitudeFactor = 0.3;
-  static bool nh = false;
+  static float amplitudeFactor = 0.6;
+  static bool nh = true;
   ImGui::SetWindowPos(ImVec2(0, 0));
   ImGui::SetWindowSize(ImVec2(500, 110));
   ImGui::SliderFloat("frequency slider", &frequency, 0.0f, 1.5f);
@@ -111,26 +108,21 @@ void SurfaceMesh::initSurface(float bottomLeftX,
       vertex.p.x = bottomLeftX + static_cast<float>(i) * xStep;
       vertex.p.y = bottomLeftY + static_cast<float>(j) * yStep;
       glm::vec2 derivs;
-      /* auto nv = noise.fractal(glm::vec2(vertex.p.x, vertex.p.y), */
-      /*                         derivs, */
-      /*                         frequency, */
-      /*                         frequencyFactor, */
-      /*                         amplitudeFactor, */
-      /*                         5); */
-      auto nv = -(vertex.p.x * vertex.p.x + vertex.p.y * vertex.p.y) / 30.0f;
-      std::cout << "nv= " << nv << std::endl;
+      auto nv = noise.fractal(glm::vec2(vertex.p.x, vertex.p.y),
+                              derivs,
+                              frequency,
+                              frequencyFactor,
+                              amplitudeFactor,
+                              5);
       max = std::max(max, nv);
-      /* if (!nh) { */
-      min = std::min(min, nv);
-      vertex.p.z = nv;
-      /* } else { */
-      /* vertex.p.z = ::max(nv, 0.0f); */
-      /* } */
+      if (!nh) {
+        min = std::min(min, nv);
+        vertex.p.z = nv;
+      } else {
+        vertex.p.z = ::max(nv, 0.0f);
+      }
       vertex.normal = glm::vec3(0.0f);
 
-      std::cout << "vertex.p.x= " << vertex.p.x << std::endl;
-      std::cout << "vertex.p.y= " << vertex.p.y << std::endl;
-      std::cout << "vertex.p.z= " << vertex.p.z << std::endl;
       _v.push_back(vertex);
       if (j != 0 && j != (width - 1)) {
         _v.push_back(vertex);
@@ -139,9 +131,7 @@ void SurfaceMesh::initSurface(float bottomLeftX,
   }
   auto augmentedWidth = divisions + 1 + (divisions + 1 - 2);
   for (int i = 0; i < width - 1; ++i) {
-    std::cout << std::endl << "i= " << i << std::endl;
     for (int j = 0; j < augmentedWidth; ++j) {
-      std::cout << "j= " << j << "; ";
       glm::vec3 p0(0);
       glm::vec3 p1(0);
       glm::vec3 p2(0);
@@ -185,23 +175,13 @@ void SurfaceMesh::initSurface(float bottomLeftX,
       auto v1 = p1 - p0;
       auto v2 = p2 - p0;
 
-      std::cout << std::endl;
-      std::cout << "v1= (" << v1.x << ", " << v1.y << ", " << v1.z << ")"
-                << std::endl;
-      std::cout << "v2= (" << v2.x << ", " << v2.y << ", " << v2.z << ")"
-                << std::endl;
       _v[augmentedWidth * i + j].normal = glm::cross(v1, v2);
       p0 = glm::vec3(0);
       p1 = glm::vec3(0);
       p2 = glm::vec3(0);
-      std::cout << "n[" << i << "][" << j << "]= ("
-                << _v[augmentedWidth * i + j].normal.x << ", "
-                << _v[augmentedWidth * i + j].normal.y << ", "
-                << _v[augmentedWidth * i + j].normal.z << ")" << std::endl;
     }
   }
   auto amplitude = max - min;
-  std::cout << std::endl << "augmentedWidth= " << augmentedWidth << std::endl;
   for (int i = 0; i < width; ++i) {
     for (int j = 0; j < augmentedWidth; ++j) {
       RgbColor a, b;
@@ -214,15 +194,11 @@ void SurfaceMesh::initSurface(float bottomLeftX,
         a = colorMapping[0.5f];
         b = colorMapping[1.0f];
       }
-      /* _v[augmentedWidth * i + j].color.x = glm::lerp(a.r, b.r, h) / 255.0; */
-      /* _v[augmentedWidth * i + j].color.y = glm::lerp(a.g, b.g, h) / 255.0; */
-      /* _v[augmentedWidth * i + j].color.z = glm::lerp(a.b, b.b, h) / 255.0; */
-      _v[augmentedWidth * i + j].color.x = 50 / 255.0;
-      _v[augmentedWidth * i + j].color.y = 168 / 255.0;
-      _v[augmentedWidth * i + j].color.z = 82 / 255.0;
+      _v[augmentedWidth * i + j].color.x = glm::lerp(a.r, b.r, h) / 255.0;
+      _v[augmentedWidth * i + j].color.y = glm::lerp(a.g, b.g, h) / 255.0;
+      _v[augmentedWidth * i + j].color.z = glm::lerp(a.b, b.b, h) / 255.0;
     }
   }
-  std::cout << " max= " << max << std::endl;
   _indices.reserve(::pow(divisions, 2) * 2 * 3);
   for (int i = 0; i < divisions; ++i) {
     for (int j = 0; j < divisions; ++j) {
