@@ -82,29 +82,55 @@ void SurfaceMesh::initSurface(float bottomLeftX,
   _meshesData[0].baseIndex = 0;
   _meshesData[0].name = "surface";
 
-  _v.reserve(::pow(divisions + 1, 2));
+  _v.reserve((divisions + 1) * 2 * divisions);
   float xStep = (topRightX - bottomLeftX) / divisions;
   float yStep = (topRightY - bottomLeftY) / divisions;
 
-  ImGui::Begin("surface");
+  ImGui::Begin("surface_mountain");
   static float frequency = 0.3;
   static float frequencyFactor = 2.0;
   static float amplitudeFactor = 0.6;
-  static bool nh = true;
   ImGui::SetWindowPos(ImVec2(0, 0));
   ImGui::SetWindowSize(ImVec2(500, 110));
   ImGui::SliderFloat("frequency slider", &frequency, 0.0f, 1.5f);
   ImGui::SliderFloat("frequencyFactor slider", &frequencyFactor, 0.0f, 3.0f);
-  ImGui::SliderFloat("amplitudeFactor slider", &amplitudeFactor, 0.3f, 1.5f);
-  ImGui::Checkbox("no negative height", &nh);
+  ImGui::SliderFloat("amplitudeFactor slider", &amplitudeFactor, 0.1f, 1.5f);
+  ImGui::End();
+  ImGui::Begin("surface_plain");
+  static float frequency_plain = 0.077;
+  static float frequencyFactor_plain = 3.0;
+  static float amplitudeFactor_plain = 0.366;
+  ImGui::SetWindowPos(ImVec2(0, 340));
+  ImGui::SetWindowSize(ImVec2(500, 110));
+  ImGui::SliderFloat("frequency slider", &frequency_plain, 0.0f, 1.5f);
+  ImGui::SliderFloat(
+    "frequencyFactor slider", &frequencyFactor_plain, 0.0f, 3.0f);
+  ImGui::SliderFloat(
+    "amplitudeFactor slider", &amplitudeFactor_plain, 0.1f, 1.5f);
   ImGui::End();
   auto noise = Noise(777);
   auto max = 0.0f;
   auto min = 0.0f;
   int width = divisions + 1;
+  std::vector<float> plainZ;
+  float x, y;
   for (int i = 0; i < width; ++i) {
     for (int j = 0; j < width; ++j) {
-      VertexNoColor vertex;
+      auto dummy = glm::vec2();
+      x = bottomLeftX + static_cast<float>(i) * xStep;
+      y = bottomLeftY + static_cast<float>(j) * yStep;
+      auto nv_plain = noise.fractal(glm::vec2(x, y),
+                                    dummy,
+                                    frequency_plain,
+                                    frequencyFactor_plain,
+                                    amplitudeFactor_plain,
+                                    5);
+      plainZ.push_back(nv_plain);
+    }
+  }
+  for (int i = 0; i < width; ++i) {
+    for (int j = 0; j < width; ++j) {
+      VertexColor vertex;
       vertex.p.x = bottomLeftX + static_cast<float>(i) * xStep;
       vertex.p.y = bottomLeftY + static_cast<float>(j) * yStep;
       glm::vec2 derivs;
@@ -114,13 +140,9 @@ void SurfaceMesh::initSurface(float bottomLeftX,
                               frequencyFactor,
                               amplitudeFactor,
                               5);
-      max = std::max(max, nv);
-      if (!nh) {
-        min = std::min(min, nv);
-        vertex.p.z = nv;
-      } else {
-        vertex.p.z = ::max(nv, 0.0f);
-      }
+      vertex.p.z = ::max(nv, plainZ.at(i * width + j));
+      min = std::min(min, vertex.p.z);
+      max = std::max(max, vertex.p.z);
       vertex.normal = glm::vec3(0.0f);
 
       _v.push_back(vertex);
@@ -135,64 +157,40 @@ void SurfaceMesh::initSurface(float bottomLeftX,
       glm::vec3 p0(0);
       glm::vec3 p1(0);
       glm::vec3 p2(0);
-      if (i % 2 == 0) {
-        if (j % 4 == 0) {
-          p1 = _v.at(augmentedWidth * i + j + 1 + augmentedWidth).p;
-          p2 = _v.at(augmentedWidth * i + j).p;
-          p0 = _v.at(augmentedWidth * i + j + augmentedWidth).p;
-        } else if (j % 4 == 1) {
-          p1 = _v.at(augmentedWidth * i + j - 1).p;
-          p2 = _v.at(augmentedWidth * i + j + augmentedWidth).p;
-          p0 = _v.at(augmentedWidth * i + j).p;
-        } else if (j % 4 == 2) {
-          p1 = _v.at(augmentedWidth * i + j + augmentedWidth).p;
-          p2 = _v.at(augmentedWidth * i + j + 1).p;
-          p0 = _v.at(augmentedWidth * i + j).p;
-        } else if (j % 4 == 3) {
-          p1 = _v.at(augmentedWidth * i + j).p;
-          p2 = _v.at(augmentedWidth * i + j - 1 + augmentedWidth).p;
-          p0 = _v.at(augmentedWidth * i + j + augmentedWidth).p;
-        }
-      } else if (i % 2 == 1) {
-        if (j % 4 == 0) {
-          p1 = _v.at(augmentedWidth * i + j + augmentedWidth).p;
-          p2 = _v.at(augmentedWidth * i + j + 1).p;
-          p0 = _v.at(augmentedWidth * i + j).p;
-        } else if (j % 4 == 1) {
-          p1 = _v.at(augmentedWidth * i + j).p;
-          p2 = _v.at(augmentedWidth * i + j - 1 + augmentedWidth).p;
-          p0 = _v.at(augmentedWidth * i + j + augmentedWidth).p;
-        } else if (j % 4 == 2) {
-          p1 = _v.at(augmentedWidth * i + j + 1 + augmentedWidth).p;
-          p2 = _v.at(augmentedWidth * i + j).p;
-          p0 = _v.at(augmentedWidth * i + j + augmentedWidth).p;
-        } else if (j % 4 == 3) {
-          p1 = _v.at(augmentedWidth * i + j - 1).p;
-          p2 = _v.at(augmentedWidth * i + j + augmentedWidth).p;
-          p0 = _v.at(augmentedWidth * i + j).p;
-        }
+      if (((i % 2) * 2 + j) % 4 == 0) {
+        p1 = _v.at(augmentedWidth * i + j + 1 + augmentedWidth).p;
+        p2 = _v.at(augmentedWidth * i + j).p;
+        p0 = _v.at(augmentedWidth * i + j + augmentedWidth).p;
+      } else if (((i % 2) * 2 + j) % 4 == 1) {
+        p1 = _v.at(augmentedWidth * i + j - 1).p;
+        p2 = _v.at(augmentedWidth * i + j + augmentedWidth).p;
+        p0 = _v.at(augmentedWidth * i + j).p;
+      } else if (((i % 2) * 2 + j) % 4 == 2) {
+        p1 = _v.at(augmentedWidth * i + j + augmentedWidth).p;
+        p2 = _v.at(augmentedWidth * i + j + 1).p;
+        p0 = _v.at(augmentedWidth * i + j).p;
+      } else if (((i % 2) * 2 + j) % 4 == 3) {
+        p1 = _v.at(augmentedWidth * i + j).p;
+        p2 = _v.at(augmentedWidth * i + j - 1 + augmentedWidth).p;
+        p0 = _v.at(augmentedWidth * i + j + augmentedWidth).p;
       }
-      auto v1 = p1 - p0;
-      auto v2 = p2 - p0;
 
-      _v[augmentedWidth * i + j].normal = glm::cross(v1, v2);
-      p0 = glm::vec3(0);
-      p1 = glm::vec3(0);
-      p2 = glm::vec3(0);
+      _v[augmentedWidth * i + j].normal = glm::cross(p1 - p0, p2 - p0);
     }
   }
   auto amplitude = max - min;
   for (int i = 0; i < width; ++i) {
     for (int j = 0; j < augmentedWidth; ++j) {
       RgbColor a, b;
-      auto h = _v[augmentedWidth * i + j].p.z / amplitude;
-      if (h <= amplitude * 0.5) {
+      auto h = (_v[augmentedWidth * i + j].p.z - min) / amplitude;
+      if (h <= amplitude * 0.4) {
         a = colorMapping[0.0f];
         b = colorMapping[0.5f];
         h *= 2;
       } else {
         a = colorMapping[0.5f];
         b = colorMapping[1.0f];
+        h = (h - 0.5) * 2;
       }
       _v[augmentedWidth * i + j].color.x = glm::lerp(a.r, b.r, h) / 255.0;
       _v[augmentedWidth * i + j].color.y = glm::lerp(a.g, b.g, h) / 255.0;
@@ -225,26 +223,26 @@ void SurfaceMesh::initSurface(float bottomLeftX,
 
   glBindBuffer(GL_ARRAY_BUFFER, _vertexVbo);
   glBufferData(
-    GL_ARRAY_BUFFER, sizeof(VertexNoColor) * _v.size(), &_v[0], GL_STATIC_DRAW);
+    GL_ARRAY_BUFFER, sizeof(VertexColor) * _v.size(), &_v[0], GL_STATIC_DRAW);
   glEnableVertexAttribArray(0);
   glVertexAttribPointer(
-    0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexNoColor), (void*)0);
+    0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexColor), (void*)0);
 
   glEnableVertexAttribArray(1);
   glVertexAttribPointer(1,
                         3,
                         GL_FLOAT,
                         GL_FALSE,
-                        sizeof(VertexNoColor),
-                        (void*)offsetof(VertexNoColor, color));
+                        sizeof(VertexColor),
+                        (void*)offsetof(VertexColor, color));
 
   glEnableVertexAttribArray(2);
   glVertexAttribPointer(2,
                         3,
                         GL_FLOAT,
                         GL_FALSE,
-                        sizeof(VertexNoColor),
-                        (void*)offsetof(VertexNoColor, normal));
+                        sizeof(VertexColor),
+                        (void*)offsetof(VertexColor, normal));
 
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indicesEbo);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER,

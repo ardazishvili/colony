@@ -3,7 +3,7 @@
 
 #include "Mesh.h"
 
-struct VertexNoColor
+struct VertexColor
 {
   glm::vec3 p;
   glm::vec3 normal;
@@ -25,7 +25,7 @@ public:
 
 private:
   std::vector<Meshes::MeshMetadata> _meshesData;
-  std::vector<VertexNoColor> _v;
+  std::vector<VertexColor> _v;
   std::vector<unsigned int> _indices;
   GLuint _vao;
   GLuint _vertexVbo;
