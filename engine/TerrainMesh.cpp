@@ -3,7 +3,7 @@
 #include "../imgui/imgui.h"
 
 #include "../math/Noise.h"
-#include "SurfaceMesh.h"
+#include "TerrainMesh.h"
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/compatibility.hpp>
@@ -20,7 +20,7 @@ std::map<HeightPart, RgbColor> colorMapping = { { 0.0f, { 113, 128, 143 } },
                                                 { 0.5f, { 237, 227, 143 } },
                                                 { 1.0f, { 242, 127, 115 } } };
 
-SurfaceMesh::SurfaceMesh()
+TerrainMesh::TerrainMesh()
 {
   _vao = 0;
   _vertexVbo = 0;
@@ -34,12 +34,12 @@ SurfaceMesh::SurfaceMesh()
   glGenBuffers(1, &_indicesEbo);
 }
 
-SurfaceMesh::~SurfaceMesh()
+TerrainMesh::~TerrainMesh()
 {
   deinit();
 }
 
-void SurfaceMesh::deinit()
+void TerrainMesh::deinit()
 {
   if (_vertexVbo != 0) {
     glDeleteBuffers(1, &_vertexVbo);
@@ -52,7 +52,7 @@ void SurfaceMesh::deinit()
   }
 }
 
-void SurfaceMesh::render()
+void TerrainMesh::render()
 {
   glBindVertexArray(_vao);
 
@@ -68,7 +68,7 @@ void SurfaceMesh::render()
   glBindVertexArray(0);
 }
 
-void SurfaceMesh::initSurface(float bottomLeftX,
+void TerrainMesh::initTerrain(float bottomLeftX,
                               float bottomLeftY,
                               float topRightX,
                               float topRightY,

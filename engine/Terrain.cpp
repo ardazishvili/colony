@@ -1,6 +1,6 @@
-#include "Surface.h"
+#include "Terrain.h"
 
-Surface::Surface(Shader shader,
+Terrain::Terrain(Shader shader,
                  float bottomLeftX,
                  float bottomLeftY,
                  float topRightX,
@@ -9,13 +9,13 @@ Surface::Surface(Shader shader,
   _shader(shader),
   _bottomLeft(bottomLeftX, bottomLeftY), _topRight(topRightX, topRightY)
 {
-  _mesh.initSurface(
+  _mesh.initTerrain(
     0, 0, topRightX - bottomLeftX, topRightY - bottomLeftY, divisions);
   _offset.x = bottomLeftX;
   _offset.y = bottomLeftY;
 }
 
-void Surface::render()
+void Terrain::render()
 {
   auto model = glm::mat4(1.0f);
   model = glm::translate(model, _offset);
@@ -30,33 +30,33 @@ void Surface::render()
   _mesh.render();
 }
 
-void Surface::setOffsetZ(float offset)
+void Terrain::setOffsetZ(float offset)
 {
   _offset.z = offset;
 }
 
-void Surface::setPitchAngle(float angle)
+void Terrain::setPitchAngle(float angle)
 {
   _pitchAngle = angle;
 }
 
-void Surface::setYawAngle(float angle)
+void Terrain::setYawAngle(float angle)
 {
   _yawAngle = angle;
 }
 
-void Surface::setOffsetXY(float x, float y)
+void Terrain::setOffsetXY(float x, float y)
 {
   _offset.x = x;
   _offset.y = y;
 }
 
-void Surface::setScaleX(float factor)
+void Terrain::setScaleX(float factor)
 {
   _xScaleFactor = factor;
 }
 
-glm::vec4 Surface::getArea() const
+glm::vec4 Terrain::getArea() const
 {
   return glm::vec4(::min(_offset.x, _offset.x + _xScaleFactor),
                    ::min(_offset.y, _offset.y + _yScaleFactor),
@@ -64,7 +64,7 @@ glm::vec4 Surface::getArea() const
                    ::max(_offset.y, _offset.y + _yScaleFactor));
 }
 
-void Surface::setScaleXY(float xFactor, float yFactor)
+void Terrain::setScaleXY(float xFactor, float yFactor)
 {
   _xScaleFactor = xFactor;
   _yScaleFactor = yFactor;

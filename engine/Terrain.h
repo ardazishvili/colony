@@ -1,13 +1,13 @@
-#ifndef SURFACE_H
-#define SURFACE_H
+#ifndef TERRAIN_H
+#define TERRAIN_H
 
 #include "Shader.h"
-#include "SurfaceMesh.h"
+#include "TerrainMesh.h"
 
-class Surface
+class Terrain
 {
 public:
-  Surface(Shader shader,
+  Terrain(Shader shader,
           float bottomLeftX,
           float bottomLeftY,
           float topRightX,
@@ -24,7 +24,7 @@ public:
 
 private:
   Shader _shader;
-  SurfaceMesh _mesh;
+  TerrainMesh _mesh;
   glm::vec3 _offset{ glm::vec3(0.0f) };
   float _pitchAngle{ 0.0f };
   float _yawAngle{ 0.0f };

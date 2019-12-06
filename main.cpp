@@ -15,7 +15,7 @@
 #include "engine/Light.h"
 #include "engine/Mesh.h"
 #include "engine/PhongShader.h"
-#include "engine/Surface.h"
+#include "engine/Terrain.h"
 
 #include "logic/EventManager.h"
 #include "logic/Game.h"
@@ -138,7 +138,7 @@ int main(int argc, char** argv)
 
   eventManager =
     std::make_unique<EventManager>(window, game, camera, textureShader);
-  auto surface = Surface(colorShader, -10.0f, -10.0f, 10.0f, 10.0f, 256);
+  auto terrain = Terrain(colorShader, -10.0f, -10.0f, 10.0f, 10.0f, 256);
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
   while (!glfwWindowShouldClose(window)) {
@@ -188,7 +188,7 @@ int main(int argc, char** argv)
     textureShader.configure(
       light.position(), camera.reference(), view, projection);
 
-    surface.render();
+    terrain.render();
     eventManager->tick();
 
     ImGui::Render();

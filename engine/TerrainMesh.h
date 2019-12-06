@@ -1,5 +1,5 @@
-#ifndef SURFACE_MESH_H
-#define SURFACE_MESH_H
+#ifndef TERRAIN_MESH_H
+#define TERRAIN_MESH_H
 
 #include "Mesh.h"
 
@@ -10,13 +10,13 @@ struct VertexColor
   glm::vec3 color;
 };
 
-class SurfaceMesh
+class TerrainMesh
 {
 public:
-  SurfaceMesh();
-  ~SurfaceMesh();
+  TerrainMesh();
+  ~TerrainMesh();
   void render();
-  void initSurface(float bottomLeftX,
+  void initTerrain(float bottomLeftX,
                    float bottomLeftY,
                    float topRightX,
                    float topRightY,

@@ -12,8 +12,8 @@ add_executable(colony
 		engine/Light.h
 		engine/Mesh.cpp
 		engine/Mesh.h
-    engine/SurfaceMesh.h
-    engine/SurfaceMesh.cpp
+    engine/TerrainMesh.h
+    engine/TerrainMesh.cpp
 		engine/Model.cpp
 		engine/Model.h
 		engine/ModelLoader.cpp
@@ -22,8 +22,8 @@ add_executable(colony
 		engine/PhongShader.h
 		engine/Shader.cpp
 		engine/Shader.h
-		engine/Surface.cpp
-		engine/Surface.h
+		engine/Terrain.cpp
+		engine/Terrain.h
 		engine/Texture.cpp
 		engine/Texture.h
 		globals.cpp
