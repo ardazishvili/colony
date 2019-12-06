@@ -24,13 +24,13 @@ std::map<Tank::Type, float> speedMap = { { Tank::Type::Light, 0.05f },
                                          { Tank::Type::Heavy, 0.02f } };
 
 Tank::Tank(Shader& shader,
-           glm::vec2 position,
+           glm::vec3 position,
            Type type,
            HealthLevel healthLevel,
            Shell::Size sh) :
   _speed(speedMap[type]),
   _view(shader, position, tankSizeMap[type]), _shader(shader), _type(type),
-  _shellSize(sh), _destination(-1, -1)
+  _shellSize(sh), _destination(-1, -1, -1)
 {
   _health = healthLevelMap[healthLevel] * tankHitPointsMap[type];
   _maxHealth = _health;
@@ -54,7 +54,7 @@ void Tank::move()
   }
 }
 
-void Tank::startMoving(glm::vec2 endPoint)
+void Tank::startMoving(glm::vec3 endPoint)
 {
   _destination = endPoint;
   float dy = _destination.y - _view.position().y;
@@ -71,12 +71,12 @@ void Tank::startMoving(glm::vec2 endPoint)
 
 void Tank::stopMoving()
 {
-  _destination = glm::vec2(-1, -1);
+  _destination = glm::vec3(-1, -1, -1);
 }
 
 bool Tank::isMoving()
 {
-  return _destination != glm::vec2(-1, -1);
+  return _destination != glm::vec3(-1, -1, -1);
 }
 
 void Tank::shootTarget()
@@ -137,12 +137,12 @@ void Tank::updateShells()
   }
 }
 
-glm::vec2 Tank::position()
+glm::vec3 Tank::position()
 {
   return _view.position();
 }
 
-bool Tank::isUnderCursor(const glm::vec2& point)
+bool Tank::isUnderCursor(const glm::vec3& point)
 {
   return _view.contain(point);
 }
@@ -246,7 +246,7 @@ StructureBuilders Tank::getStructureBuilders()
 
 std::shared_ptr<Tank> createTank(Game& game,
                                  Shader& shader,
-                                 glm::vec2 position,
+                                 glm::vec3 position,
                                  Tank::Type type,
                                  HealthLevel health,
                                  Shell::Size shellSize)

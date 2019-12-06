@@ -1,4 +1,4 @@
-#include <iostream>
+
 #include <math.h>
 
 #include <glm/glm.hpp>
@@ -124,12 +124,12 @@ int main(int argc, char** argv)
   glEnable(GL_DEPTH_TEST);
   light = std::make_unique<Light>(
     glm::vec3(1.2f, 0.0f, 5.0f), lampShader, camera, screenWidth, screenHeight);
-  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  /* glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); */
   ImGui_ImplOpenGL3_NewFrame();
   ImGui_ImplGlfw_NewFrame();
   ImGui::NewFrame();
 
-  createTank(game, textureShader, glm::vec2(-0.2f, -3.6f));
+  createTank(game, textureShader, glm::vec3(-0.2f, -3.6f, 1.0f));
   /* createTank(game, phongShader, glm::vec2(-2.5f, -2.5f)); */
   /* createTank(game, phongShader, glm::vec2(-5.0f, -5.0f)); */
   /* auto tankFactory = */
@@ -139,8 +139,7 @@ int main(int argc, char** argv)
 
   eventManager =
     std::make_unique<EventManager>(window, game, camera, textureShader);
-  /* auto terrain = Terrain(colorShader, -00.0f, -00.0f, 10.0f, 10.0f, 256); */
-  auto surface = Surface(textureShader, -10.0f, -10.0f, 10.0f, 10.0f, 256);
+  auto terrain = Terrain(colorShader, -10.0f, -10.0f, 10.0f, 10.0f, 256);
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
   while (!glfwWindowShouldClose(window)) {
@@ -184,16 +183,9 @@ int main(int argc, char** argv)
     gView = view;
     gProjection = projection;
 
-    /* colorShader.use(); */
-    /* colorShader.configure( */
-    /*   light->position(), camera.reference(), view, projection); */
-    /* textureShader.configure( */
-    /*   light->position(), camera.reference(), view, projection); */
     colorShader.configure();
     textureShader.configure();
 
-    /* surface.render(); */
-    auto terrain = Terrain(colorShader, -10.0f, -10.0f, 10.0f, 10.0f, 256);
     terrain.render();
     eventManager->tick();
 

@@ -3,10 +3,11 @@
 
 #include "Buildable.h"
 
-class BuildableUnit : public Buildable {
+class BuildableUnit : public Buildable
+{
 public:
   virtual void startShooting(Buildable* other) = 0;
-  virtual void startMoving(glm::vec2 endPoint) = 0;
+  virtual void startMoving(glm::vec3 endPoint) = 0;
 };
 
 #endif

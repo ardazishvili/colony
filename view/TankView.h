@@ -11,11 +11,11 @@
 class TankView : public View
 {
 public:
-  TankView(Shader& shader, glm::vec2 position, float tankTypeScaling);
+  TankView(Shader& shader, glm::vec3 position, float tankTypeScaling);
   void draw();
-  bool contain(glm::vec2 point) const;
-  glm::vec2 position();
-  void move(glm::vec2 moveIncrement);
+  bool contain(glm::vec3 point) const;
+  glm::vec3 position();
+  void move(glm::vec3 moveIncrement);
   void rotateBody(float degreeAngle);
   void rotateGun(float degreeAngle);
   void setTexture(Status status);

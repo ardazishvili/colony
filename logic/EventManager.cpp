@@ -119,7 +119,7 @@ void EventManager::handleMouseMove(GLFWwindow* window, double xpos, double ypos)
     if (::abs(position.x) > 10.0f || ::abs(position.y) > 10.0f) {
       position = glm::vec3(10.0f, 10.0f, 0.0f);
     }
-    _structureToBuild->setPosition(glm::vec2(position.x, position.y));
+    _structureToBuild->setPosition(position);
   }
   if (_selectionActive) {
     /* _selectionSurface.setScaleXY(c.x - _selectionSurfaceBottonLeft.x, */

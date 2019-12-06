@@ -32,13 +32,13 @@ public:
 
   Tank() = delete;
   Tank(Shader& shader,
-       glm::vec2 position,
+       glm::vec3 position,
        Type type = Type::Light,
        HealthLevel healthLevel = HealthLevel::High,
        Shell::Size shellSize = Shell::Size::Small);
 
   void display() override;
-  bool isUnderCursor(const glm::vec2& point) override;
+  bool isUnderCursor(const glm::vec3& point) override;
   bool isInsideArea(glm::vec4 area);
   void select() override;
   void deselect() override;
@@ -47,7 +47,7 @@ public:
   StructureBuilders getStructureBuilders() override;
 
   void move();
-  void startMoving(glm::vec2 endPoint) override;
+  void startMoving(glm::vec3 endPoint) override;
   void stopMoving();
   bool isMoving();
 
@@ -57,7 +57,7 @@ public:
   bool isShooting();
 
   void updateShells();
-  glm::vec2 position() override;
+  glm::vec3 position() override;
 
 private:
   float getTargetAngle();
@@ -68,12 +68,12 @@ private:
   void updateHealthBar() override;
 
   float _speed;
-  glm::vec2 _moveIncrement{ 0, 0 };
+  glm::vec3 _moveIncrement{ 0, 0, 0 };
   Type _type;
   Shell::Size _shellSize;
   Shells _shells;
   Buildable* _target;
-  glm::vec2 _destination;
+  glm::vec3 _destination;
   Timer _clock;
   std::chrono::milliseconds _shellLoadTime{ 200 };
 
@@ -84,7 +84,7 @@ private:
 
 std::shared_ptr<Tank> createTank(Game& game,
                                  Shader& shader,
-                                 glm::vec2 position,
+                                 glm::vec3 position,
                                  Tank::Type type = Tank::Type::Light,
                                  HealthLevel health = HealthLevel::High,
                                  Shell::Size shellSize = Shell::Size::Small);

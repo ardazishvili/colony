@@ -1,9 +1,8 @@
 #include "ShellView.h"
 #include "../globals.h"
 
-ShellView::ShellView(Shader& shader, glm::vec3 position)
-  : _shader(shader)
-  , _position(position)
+ShellView::ShellView(Shader& shader, glm::vec3 position) :
+  _shader(shader), _position(position)
 {
   _model = modelLoader->models()[Models::Shell];
 }

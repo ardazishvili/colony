@@ -3,7 +3,7 @@
 
 const int Hq::HQ_HP = 500;
 
-Hq::Hq(Shader& shader, glm::vec2 position) :
+Hq::Hq(Shader& shader, glm::vec3 position) :
   _shader(shader), _view(shader, position)
 {
   _health = HQ_HP;
@@ -15,7 +15,7 @@ void Hq::display()
   _view.draw();
 }
 
-bool Hq::isUnderCursor(const glm::vec2& mousePoint)
+bool Hq::isUnderCursor(const glm::vec3& mousePoint)
 {
   return _view.contain(mousePoint);
 }
@@ -54,7 +54,7 @@ void Hq::takeDamage(Shell::Size shellSize)
   }
 }
 
-glm::vec2 Hq::position()
+glm::vec3 Hq::position()
 {
   return _view.position();
 }
@@ -78,7 +78,7 @@ void Hq::setAngle(float angle)
   _view.rotate(angle);
 }
 
-void Hq::setPosition(glm::vec2 position)
+void Hq::setPosition(glm::vec3 position)
 {
   _view.move(position);
 }

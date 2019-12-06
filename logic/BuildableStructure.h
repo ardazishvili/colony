@@ -3,19 +3,22 @@
 
 #include "Buildable.h"
 
-enum class BuildStage {
+enum class BuildStage
+{
   SetPosition,
   SetAngle,
   Done
 };
 
-class BuildableStructure : public Buildable {
+class BuildableStructure : public Buildable
+{
 public:
-  virtual void setPosition(glm::vec2 position) = 0;
+  virtual void setPosition(glm::vec3 position) = 0;
   virtual void setAngle(float angle) = 0;
   virtual void commit() = 0;
+
 protected:
-  BuildStage _stage { BuildStage::SetPosition };
+  BuildStage _stage{ BuildStage::SetPosition };
 };
 
 #endif

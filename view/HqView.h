@@ -10,12 +10,12 @@
 class HqView : public View
 {
 public:
-  HqView(Shader& shader, glm::vec2 position);
+  HqView(Shader& shader, glm::vec3 position);
   void draw();
-  bool contain(glm::vec2 point) const;
-  glm::vec2 position();
+  bool contain(glm::vec3 point) const;
+  glm::vec3 position();
   void rotate(float degreeAngle);
-  void move(glm::vec2 position);
+  void move(glm::vec3 position);
   void setTexture(Status status);
   void setHealthBarScaleFactor(float factor);
   float angle() const;

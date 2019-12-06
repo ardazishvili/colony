@@ -11,8 +11,8 @@ float TankView::TANK_HEALTH_BAR_WIDTH = 0.8;
 float TankView::TANK_HEALTH_BAR_HEIGHT = 0.08;
 std::map<Status, unsigned int> tankTexturesMap;
 
-TankView::TankView(Shader& shader, glm::vec2 position, float tankTypeScaling) :
-  _shader(shader), _position(position, 0.0f),
+TankView::TankView(Shader& shader, glm::vec3 position, float tankTypeScaling) :
+  _shader(shader), _position(position),
   _healthBar(_shader,
              position.x,
              position.y,
@@ -52,21 +52,22 @@ void TankView::draw()
   showHealthBar();
 }
 
-bool TankView::contain(glm::vec2 point) const
+bool TankView::contain(glm::vec3 point) const
 {
   const auto radius = 0.38f;
   const auto distance =
-    ::sqrt(::pow(_position.x - point.x, 2) + ::pow(_position.y - point.y, 2));
+    ::sqrt(::pow(_position.x - point.x, 2) + ::pow(_position.y - point.y, 2) +
+           ::pow(_position.z - point.z, 2));
 
   return distance < radius;
 }
 
-glm::vec2 TankView::position()
+glm::vec3 TankView::position()
 {
-  return glm::vec2(_position.x, _position.y);
+  return glm::vec3(_position.x, _position.y, _position.z);
 }
 
-void TankView::move(glm::vec2 moveIncrement)
+void TankView::move(glm::vec3 moveIncrement)
 {
   _position.x += moveIncrement.x;
   _position.y += moveIncrement.y;

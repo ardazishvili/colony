@@ -1,13 +1,11 @@
-#include <map>
 #include <iostream>
+#include <map>
 
 #include "Shell.h"
 
-std::map<Shell::Size, float> shellSizeMap = {
-  { Shell::Size::Small, 2.0f },
-  { Shell::Size::Medium, 3.0f },
-  { Shell::Size::Big, 4.0f }
-};
+std::map<Shell::Size, float> shellSizeMap = { { Shell::Size::Small, 2.0f },
+                                              { Shell::Size::Medium, 3.0f },
+                                              { Shell::Size::Big, 4.0f } };
 
 const std::map<Shell::Size, int> Shell::SHELL_DAMAGE_MAP = {
   { Shell::Size::Small, 2 },
@@ -15,30 +13,25 @@ const std::map<Shell::Size, int> Shell::SHELL_DAMAGE_MAP = {
   { Shell::Size::Big, 6 },
 };
 
-
 Shell::Shell(Shader& shader,
-	     glm::vec3 position,
-	     float angle, 
-	     float distance, 
-	     Size size) :
-	_view(shader, position),
-	_angle(angle),
-	_distance(distance),
-	_size(size)
-{ 
+             glm::vec3 position,
+             float angle,
+             float distance,
+             Size size) :
+  _view(shader, position),
+  _angle(angle), _distance(distance), _size(size)
+{
   _speed = 0.35f;
 }
 
-Shell::~Shell()
-{
-}
+Shell::~Shell() {}
 
 void Shell::update()
 {
   float x = _speed * ::sin(_angle);
   float y = -_speed * ::cos(_angle);
   float distance = ::sqrt(::pow(x, 2) + ::pow(y, 2));
-  if(_distance - distance <= 0) {
+  if (_distance - distance <= 0) {
     _done = true;
     return;
   }

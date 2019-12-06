@@ -9,26 +9,26 @@
 
 void Game::tick()
 {
-  /* for (auto& tank : _tanks) { */
-  /*   if (tank->isDestroyed()) { */
-  /*     tank->stopShooting(); */
-  /*   } */
+  for (auto& tank : _tanks) {
+    if (tank->isDestroyed()) {
+      tank->stopShooting();
+    }
 
-  /*   if (tank->isShooting()) { */
-  /*     tank->shootTarget(); */
-  /*   } */
+    if (tank->isShooting()) {
+      tank->shootTarget();
+    }
 
-  /*   if (tank->isMoving()) { */
-  /*     tank->move(); */
-  /*   } */
-  /* } */
+    if (tank->isMoving()) {
+      tank->move();
+    }
+  }
 
   displayTanks();
-  /* displayShells(); */
-  /* displayStructures(); */
-  /* displayControl(); */
+  displayShells();
+  displayStructures();
+  displayControl();
 
-  /* showDebug(); */
+  showDebug();
 }
 
 void Game::addTank(std::shared_ptr<Tank> tank)
@@ -72,7 +72,7 @@ void Game::displayControl()
   _control->display();
 }
 
-Tank* Game::getTank(const glm::vec2& mousePoint, bool select)
+Tank* Game::getTank(const glm::vec3& mousePoint, bool select)
 {
   if (select) {
     for (auto& tank : _tanks) {
@@ -112,7 +112,7 @@ VehicleGroup Game::getTanks(glm::vec4 area)
   return result;
 }
 
-Buildable* Game::getStructure(const glm::vec2& mousePoint)
+Buildable* Game::getStructure(const glm::vec3& mousePoint)
 {
   for (auto& structure : _structures) {
     if (!structure->isUnderFire()) {

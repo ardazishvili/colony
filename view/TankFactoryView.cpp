@@ -4,8 +4,8 @@
 float TankFactoryView::TANK_FACTORY_HEALTH_BAR_WIDTH = 1.2f;
 float TankFactoryView::TANK_FACTORY_HEALTH_BAR_HEIGHT = 0.15f;
 
-TankFactoryView::TankFactoryView(Shader& shader, glm::vec2 position) :
-  _shader(shader), _position(position, 2.37f),
+TankFactoryView::TankFactoryView(Shader& shader, glm::vec3 position) :
+  _shader(shader), _position(position),
   _healthBar(_shader,
              position.x - 0.3,
              position.y,
@@ -32,7 +32,7 @@ void TankFactoryView::draw()
   showHealthBar();
 }
 
-bool TankFactoryView::contain(glm::vec2 point) const
+bool TankFactoryView::contain(glm::vec3 point) const
 {
   const auto radius = 1.41f / 2;
   const auto distance =
@@ -41,9 +41,9 @@ bool TankFactoryView::contain(glm::vec2 point) const
   return distance < radius;
 }
 
-glm::vec2 TankFactoryView::position()
+glm::vec3 TankFactoryView::position()
 {
-  return glm::vec2(_position.x, _position.y);
+  return glm::vec3(_position.x, _position.y, _position.z);
 }
 
 void TankFactoryView::setTexture(Status status)
@@ -67,9 +67,9 @@ void TankFactoryView::rotate(float degreeAngle)
 {
   _angle = degreeAngle + 180;
 }
-void TankFactoryView::move(glm::vec2 position)
+void TankFactoryView::move(glm::vec3 position)
 {
-  _position = glm::vec3(position, 2.37f);
+  _position = glm::vec3(position);
   _healthBar.setOffsetXY(position.x, position.y);
 }
 

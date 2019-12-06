@@ -17,7 +17,7 @@ void VehicleGroup::startShooting(Buildable* target)
   }
 }
 
-void VehicleGroup::startMoving(glm::vec2 destination)
+void VehicleGroup::startMoving(glm::vec3 destination)
 {
   for (auto& vehicle : _selected) {
     vehicle->startMoving(destination);

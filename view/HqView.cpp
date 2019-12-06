@@ -6,8 +6,8 @@ unsigned int hqSetAngleTexture;
 float HqView::HQ_HEALTH_BAR_WIDTH = 1.2f;
 float HqView::HQ_HEALTH_BAR_HEIGHT = 0.15f;
 
-HqView::HqView(Shader& shader, glm::vec2 position) :
-  _shader(shader), _position(position, 0.6f),
+HqView::HqView(Shader& shader, glm::vec3 position) :
+  _shader(shader), _position(position),
   _healthBar(_shader,
              position.x - 0.3,
              position.y,
@@ -35,7 +35,7 @@ void HqView::draw()
   /* showHealthBar(); */
 }
 
-bool HqView::contain(glm::vec2 point) const
+bool HqView::contain(glm::vec3 point) const
 {
   const auto radius = 1.5f / 2; // TODO adjust
   const auto distance =
@@ -44,9 +44,9 @@ bool HqView::contain(glm::vec2 point) const
   return distance < radius;
 }
 
-glm::vec2 HqView::position()
+glm::vec3 HqView::position()
 {
-  return glm::vec2(_position.x, _position.y);
+  return glm::vec3(_position.x, _position.y, _position.z);
 }
 
 void HqView::setTexture(Status status)
@@ -71,9 +71,9 @@ void HqView::rotate(float degreeAngle)
   _angle = degreeAngle + 180;
 }
 
-void HqView::move(glm::vec2 position)
+void HqView::move(glm::vec3 position)
 {
-  _position = glm::vec3(position, 0.6f);
+  _position = glm::vec3(position);
   _healthBar.setOffsetXY(position.x, position.y);
 }
 

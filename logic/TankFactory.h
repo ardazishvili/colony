@@ -13,22 +13,22 @@ class TankFactory : public BuildableStructure
 {
 public:
   TankFactory() = delete;
-  TankFactory(Shader& shader, glm::vec2 position);
+  TankFactory(Shader& shader, glm::vec3 position);
 
   void createTank(Game& game,
                   Tank::Type tankType,
                   HealthLevel healthLevel,
                   Shell::Size shellSize);
   void display() override;
-  bool isUnderCursor(const glm::vec2& mousePoint) override;
+  bool isUnderCursor(const glm::vec3& mousePoint) override;
   void select() override;
   void deselect() override;
   void takeDamage(Shell::Size shellSize) override;
-  glm::vec2 position() override;
+  glm::vec3 position() override;
   UnitBuilders getUnitBuilders(Game& game) override;
   StructureBuilders getStructureBuilders() override;
   void setAngle(float angle) override;
-  void setPosition(glm::vec2 position) override;
+  void setPosition(glm::vec3 position) override;
   void commit() override;
 
 private:
