@@ -138,23 +138,6 @@ void SurfaceMesh::initSurface(float bottomLeftX,
     }
   }
   auto augmentedWidth = divisions + 1 + (divisions + 1 - 2);
-  for (int i = 0; i < width; ++i) {
-    for (int j = 0; j < augmentedWidth; ++j) {
-      std::cout << "v[" << i << "][" << j << "]= ("
-                << _v[augmentedWidth * i + j].p.x << ", "
-                << _v[augmentedWidth * i + j].p.y << ", "
-                << _v[augmentedWidth * i + j].p.z << ")" << std::endl;
-    }
-  }
-  std::cout << "_v.size()= " << _v.size() << std::endl;
-  /* std::cout << "vsdfsdf=(" << _v[(augmentedWidth + 1) * 0 + 0 + 1].p.x << ",
-   * " */
-  /*           << _v[(augmentedWidth + 1) * 0 + 0 + 1].p.y << ", " */
-  /*           << _v[(augmentedWidth + 1) * 0 + 0 + 1].p.z << ")" << std::endl;
-   */
-  /* std::cout << "v00=(" << _v[1].p.x << ", " << _v[1].p.y << ", " << _v[1].p.z
-   */
-  /*           << ")" << std::endl; */
   for (int i = 0; i < width - 1; ++i) {
     std::cout << std::endl << "i= " << i << std::endl;
     for (int j = 0; j < augmentedWidth; ++j) {
@@ -199,18 +182,22 @@ void SurfaceMesh::initSurface(float bottomLeftX,
           p0 = _v.at(augmentedWidth * i + j).p;
         }
       }
-      _v[augmentedWidth * i + j].normal = glm::cross(p1 - p0, p2 - p0);
+      auto v1 = p1 - p0;
+      auto v2 = p2 - p0;
+
+      std::cout << std::endl;
+      std::cout << "v1= (" << v1.x << ", " << v1.y << ", " << v1.z << ")"
+                << std::endl;
+      std::cout << "v2= (" << v2.x << ", " << v2.y << ", " << v2.z << ")"
+                << std::endl;
+      _v[augmentedWidth * i + j].normal = glm::cross(v1, v2);
+      p0 = glm::vec3(0);
+      p1 = glm::vec3(0);
+      p2 = glm::vec3(0);
       std::cout << "n[" << i << "][" << j << "]= ("
                 << _v[augmentedWidth * i + j].normal.x << ", "
                 << _v[augmentedWidth * i + j].normal.y << ", "
                 << _v[augmentedWidth * i + j].normal.z << ")" << std::endl;
-    }
-  }
-  for (int i = 0; i < width; ++i) {
-    for (int j = 0; j < augmentedWidth; ++j) {
-      /* assert(_v[augmentedWidth * i + j].normal.x != 0); */
-      /* assert(_v[augmentedWidth * i + j].normal.y != 0); */
-      /* assert(_v[augmentedWidth * i + j].normal.z != 0); */
     }
   }
   auto amplitude = max - min;
@@ -241,21 +228,21 @@ void SurfaceMesh::initSurface(float bottomLeftX,
     for (int j = 0; j < divisions; ++j) {
       auto j2 = j * 2;
       if (((i % 2) + j) % 2 == 0) {
-        _indices.push_back((i * augmentedWidth) + j2);
-        _indices.push_back((i * augmentedWidth) + j2 + augmentedWidth);
-        _indices.push_back((i * augmentedWidth) + j2 + augmentedWidth + 1);
+        _indices.push_back(i * augmentedWidth + j2);
+        _indices.push_back(i * augmentedWidth + j2 + augmentedWidth);
+        _indices.push_back(i * augmentedWidth + j2 + augmentedWidth + 1);
 
-        _indices.push_back((i * augmentedWidth) + j2 + 1);
-        _indices.push_back((i * augmentedWidth) + j2);
-        _indices.push_back((i * augmentedWidth) + j2 + augmentedWidth + 1);
+        _indices.push_back(i * augmentedWidth + j2 + 1);
+        _indices.push_back(i * augmentedWidth + j2);
+        _indices.push_back(i * augmentedWidth + j2 + augmentedWidth + 1);
       } else {
-        _indices.push_back((i * augmentedWidth) + j2);
-        _indices.push_back((i * augmentedWidth) + j2 + augmentedWidth);
-        _indices.push_back((i * augmentedWidth) + j2 + 1);
+        _indices.push_back(i * augmentedWidth + j2);
+        _indices.push_back(i * augmentedWidth + j2 + augmentedWidth);
+        _indices.push_back(i * augmentedWidth + j2 + 1);
 
-        _indices.push_back((i * augmentedWidth) + j2 + 1);
-        _indices.push_back((i * augmentedWidth) + j2 + augmentedWidth);
-        _indices.push_back((i * augmentedWidth) + j2 + augmentedWidth + 1);
+        _indices.push_back(i * augmentedWidth + j2 + 1);
+        _indices.push_back(i * augmentedWidth + j2 + augmentedWidth);
+        _indices.push_back(i * augmentedWidth + j2 + augmentedWidth + 1);
       }
     }
   }

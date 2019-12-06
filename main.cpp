@@ -152,7 +152,7 @@ int main(int argc, char** argv)
     glViewport(0, 0, display_w, display_h);
     glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    /* glProvokingVertex(GL_FIRST_VERTEX_CONVENTION); */
+    glProvokingVertex(GL_FIRST_VERTEX_CONVENTION);
 
     ImGui::Begin("camera");
     static float camera_z = 15.0;
