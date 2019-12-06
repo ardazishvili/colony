@@ -26,6 +26,7 @@ void Surface::render()
   model = glm::scale(model, glm::vec3(_xScaleFactor, _yScaleFactor, 1.0f));
   _shader.setTransformation("model", glm::value_ptr(model));
   _shader.setBool("animated", false);
+  _shader.use();
   _mesh.render();
 }
 

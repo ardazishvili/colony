@@ -21,7 +21,7 @@ using namespace std;
 class Model
 {
 public:
-  Model() = default;
+  Model(Shader& shader);
 
   bool load(const string& Filename);
 
@@ -38,6 +38,7 @@ private:
   Assimp::Importer _importer;
 
   Meshes _meshes;
+  Shader& _shader;
 };
 
 #endif

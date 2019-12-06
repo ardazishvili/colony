@@ -103,8 +103,6 @@ int main(int argc, char** argv)
     return 1;
   }
 
-  modelLoader = std::make_unique<ModelLoader>();
-  modelLoader->load();
   glm::vec4 clear_color = glm::vec4(1.0f, 1.0f, 1.0f, 1.00f);
   glViewport(0, 0, screenWidth, screenHeight);
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
@@ -113,11 +111,15 @@ int main(int argc, char** argv)
   glfwSetMouseButtonCallback(window, mouse_button_callback);
   glfwSetKeyCallback(window, keyboard_callback);
 
-  PhongShader phongShader(
-    "/home/roman/repos/colony/shaders/vertex_color.vs",
+  PhongShader colorShader("/home/roman/repos/colony/shaders/vertex_color.vs",
+                          "/home/roman/repos/colony/shaders/fragment_color.fs");
+  PhongShader textureShader(
+    "/home/roman/repos/colony/shaders/vertex_objects.vs",
     "/home/roman/repos/colony/shaders/fragment_objects.fs");
   Shader lampShader("/home/roman/repos/colony/shaders/vertex_light.vs",
                     "/home/roman/repos/colony/shaders/fragment_light.fs");
+  modelLoader = std::make_unique<ModelLoader>(textureShader);
+  modelLoader->load();
 
   glEnable(GL_DEPTH_TEST);
   auto light = Light(
@@ -135,8 +137,8 @@ int main(int argc, char** argv)
   ImGui::NewFrame();
 
   eventManager =
-    std::make_unique<EventManager>(window, game, camera, phongShader);
-  auto surface = Surface(phongShader, -10.0f, -10.0f, 10.0f, 10.0f, 256);
+    std::make_unique<EventManager>(window, game, camera, textureShader);
+  auto surface = Surface(colorShader, -10.0f, -10.0f, 10.0f, 10.0f, 256);
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
   while (!glfwWindowShouldClose(window)) {
@@ -180,16 +182,11 @@ int main(int argc, char** argv)
     gView = view;
     gProjection = projection;
 
-    phongShader.use();
-    phongShader.configure(
+    /* colorShader.use(); */
+    colorShader.configure(
       light.position(), camera.reference(), view, projection);
-    /* _indices.push_back((i * width) + j); */
-    /* _indices.push_back((i * width) + j + 1); */
-    /* _indices.push_back((i * width) + j + width); */
-
-    /* _indices.push_back((i * width) + j + 1); */
-    /* _indices.push_back((i * width) + j + width); */
-    /* _indices.push_back((i * width) + j + width + 1); */
+    textureShader.configure(
+      light.position(), camera.reference(), view, projection);
 
     surface.render();
     eventManager->tick();

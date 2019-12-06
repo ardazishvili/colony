@@ -30,13 +30,13 @@ uniform Light light;
 uniform Material material;
 uniform vec3 viewPos;
 
-flat out vec3 normals_colour;
+out vec3 color;
 
 
 vec3 calculateLighting() {
-  fragPos = vec3(model * vec4(position, 1.0));
-  normal = mat3(transpose(inverse(model))) * normals;
-  texCoords = textureCoordinates;
+  vec3 fragPos = vec3(model * vec4(position, 1.0));
+  vec3 normal = mat3(transpose(inverse(model))) * normals;
+  vec2 texCoords = textureCoordinates;
 
   vec3 ambient = light.ambient * vec3(texture(material.diffuse, texCoords));
 
@@ -67,5 +67,5 @@ void main()
     PosL = vec4(position, 1.0);
   }
   gl_Position = projection * view * model * PosL;
-  normals_colour = calculateLighting();
+  color = calculateLighting();
 }

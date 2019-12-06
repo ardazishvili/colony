@@ -6,6 +6,8 @@
 
 #include <GLFW/glfw3.h>
 
+Model::Model(Shader& shader) : _shader(shader) {}
+
 bool Model::load(const string& file)
 {
   _scene =
@@ -36,6 +38,7 @@ bool Model::init(const aiScene* pScene, const string& Filename)
 
 void Model::render()
 {
+  _shader.use();
   _meshes.render();
 }
 

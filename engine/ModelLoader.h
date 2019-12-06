@@ -6,14 +6,16 @@
 
 #include "Model.h"
 
-enum class Models {
+enum class Models
+{
   Shell,
   Tank,
   TankFactory,
   Hq
 };
 
-enum class MenuTextures {
+enum class MenuTextures
+{
   Hq,
   TankFactory,
   TankLight,
@@ -23,14 +25,16 @@ enum class MenuTextures {
 
 using ModelsMapping = std::map<Models, std::shared_ptr<Model>>;
 using MenuTexturesMapping = std::map<MenuTextures, std::shared_ptr<Texture>>;
-class ModelLoader {
+class ModelLoader
+{
 public:
-  ModelLoader() = default;
+  ModelLoader(Shader& shader);
   void load();
   ModelsMapping models();
   MenuTexturesMapping menuTextures();
 
 private:
+  Shader& _shader;
   ModelsMapping _models;
   MenuTexturesMapping _menuTextures;
 };
