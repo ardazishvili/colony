@@ -5,18 +5,12 @@ Surface::Surface(Shader shader,
                  float bottomLeftY,
                  float topRightX,
                  float topRightY,
-                 int divisions,
-                 std::string texturePath)
-  : _shader(shader)
-  , _bottomLeft(bottomLeftX, bottomLeftY)
-  , _topRight(topRightX, topRightY)
+                 int divisions) :
+  _shader(shader),
+  _bottomLeft(bottomLeftX, bottomLeftY), _topRight(topRightX, topRightY)
 {
-  _mesh.initSurface(0,
-                    0,
-                    topRightX - bottomLeftX,
-                    topRightY - bottomLeftY,
-                    divisions,
-                    texturePath);
+  _mesh.initSurface(
+    0, 0, topRightX - bottomLeftX, topRightY - bottomLeftY, divisions);
   _offset.x = bottomLeftX;
   _offset.y = bottomLeftY;
 }
@@ -38,11 +32,6 @@ void Surface::render()
 void Surface::setOffsetZ(float offset)
 {
   _offset.z = offset;
-}
-
-void Surface::setTexture(const std::string& filename)
-{
-  _mesh.loadTexture(filename, TexturePackType::Initial);
 }
 
 void Surface::setPitchAngle(float angle)

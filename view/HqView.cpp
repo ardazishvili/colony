@@ -6,21 +6,20 @@ unsigned int hqSetAngleTexture;
 float HqView::HQ_HEALTH_BAR_WIDTH = 1.2f;
 float HqView::HQ_HEALTH_BAR_HEIGHT = 0.15f;
 
-HqView::HqView(Shader& shader, glm::vec2 position)
-  : _shader(shader)
-  , _position(position, 0.6f)
-  , _healthBar(_shader,
-               position.x - 0.3,
-               position.y,
-               _position.x + HQ_HEALTH_BAR_WIDTH,
-               _position.y + HQ_HEALTH_BAR_HEIGHT,
-               1)
+HqView::HqView(Shader& shader, glm::vec2 position) :
+  _shader(shader), _position(position, 0.6f),
+  _healthBar(_shader,
+             position.x - 0.3,
+             position.y,
+             _position.x + HQ_HEALTH_BAR_WIDTH,
+             _position.y + HQ_HEALTH_BAR_HEIGHT,
+             1)
 {
   _texturesType = TexturePackType::PreBuild;
   _model = modelLoader->models()[Models::Hq];
   _model->setActiveTexturesPack(TexturePackType::PreBuild);
   _healthBar.setOffsetZ(1.3f);
-  _healthBar.setTexture("/home/roman/repos/opengl/assets/red.png");
+  /* _healthBar.setTexture("/home/roman/repos/opengl/assets/red.png"); */
 }
 
 void HqView::draw()

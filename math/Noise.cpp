@@ -2,9 +2,6 @@
 #include <iostream>
 #include <random>
 
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/compatibility.hpp>
-
 #include "Noise.h"
 
 float smoothstep(float t)
@@ -100,6 +97,6 @@ float Noise::fractal(glm::vec2 p,
     amplitude *= amplitudeFactor;
   }
 
-  derivs = glm::normalize(derivs);
+  /* derivs = glm::normalize(derivs); */
   return res;
 }

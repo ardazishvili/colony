@@ -12,14 +12,12 @@ public:
           float bottomLeftY,
           float topRightX,
           float topRightY,
-          int divisions,
-          std::string texturePath = "/home/roman/repos/opengl/assets/grey.png");
+          int divisions);
   void render();
   void setOffsetZ(float offset);
   void setOffsetXY(float x, float y);
   void setPitchAngle(float angle);
   void setYawAngle(float angle);
-  void setTexture(const std::string& filename);
   void setScaleX(float factor);
   void setScaleXY(float xFactor, float yFactor);
   glm::vec4 getArea() const; // bottom left x, y; top right x, y

@@ -11,22 +11,21 @@ float TankView::TANK_HEALTH_BAR_WIDTH = 0.8;
 float TankView::TANK_HEALTH_BAR_HEIGHT = 0.08;
 std::map<Status, unsigned int> tankTexturesMap;
 
-TankView::TankView(Shader& shader, glm::vec2 position, float tankTypeScaling)
-  : _shader(shader)
-  , _position(position, 0.0f)
-  , _healthBar(_shader,
-               position.x,
-               position.y,
-               _position.x + TANK_HEALTH_BAR_WIDTH,
-               _position.y + TANK_HEALTH_BAR_HEIGHT,
-               1)
-  , _tankSizeScaleFactor(tankTypeScaling)
+TankView::TankView(Shader& shader, glm::vec2 position, float tankTypeScaling) :
+  _shader(shader), _position(position, 0.0f),
+  _healthBar(_shader,
+             position.x,
+             position.y,
+             _position.x + TANK_HEALTH_BAR_WIDTH,
+             _position.y + TANK_HEALTH_BAR_HEIGHT,
+             1),
+  _tankSizeScaleFactor(tankTypeScaling)
 {
   _model = modelLoader->models()[Models::Tank];
   _texturesType = TexturePackType::Initial;
   _hasAnimation = true;
   _healthBar.setOffsetZ(0.7);
-  _healthBar.setTexture("/home/roman/repos/opengl/assets/red.png");
+  /* _healthBar.setTexture("/home/roman/repos/opengl/assets/red.png"); */
 }
 
 void TankView::draw()

@@ -25,13 +25,7 @@ EventManager::EventManager(GLFWwindow* window,
                            Shader& shader) :
   _window(window),
   _camera(camera), _game(game), _shader(shader),
-  _selectionSurface(shader,
-                    0.0f,
-                    0.0f,
-                    1.0f,
-                    1.0f,
-                    1,
-                    "/home/roman/repos/opengl/assets/lime.png")
+  _selectionSurface(shader, 0.0f, 0.0f, 1.0f, 1.0f, 1)
 {
   _game.setControl(std::make_unique<Control>(shader));
   _selectionSurface.setOffsetZ(0.04f);

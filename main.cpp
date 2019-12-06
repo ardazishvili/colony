@@ -114,10 +114,10 @@ int main(int argc, char** argv)
   glfwSetKeyCallback(window, keyboard_callback);
 
   PhongShader phongShader(
-    "/home/roman/repos/opengl/shaders/vertex_objects.vs",
-    "/home/roman/repos/opengl/shaders/fragment_objects.fs");
-  Shader lampShader("/home/roman/repos/opengl/shaders/vertex_light.vs",
-                    "/home/roman/repos/opengl/shaders/fragment_light.fs");
+    "/home/roman/repos/colony/shaders/vertex_color.vs",
+    "/home/roman/repos/colony/shaders/fragment_objects.fs");
+  Shader lampShader("/home/roman/repos/colony/shaders/vertex_light.vs",
+                    "/home/roman/repos/colony/shaders/fragment_light.fs");
 
   glEnable(GL_DEPTH_TEST);
   auto light = Light(
@@ -151,6 +151,7 @@ int main(int argc, char** argv)
     glViewport(0, 0, display_w, display_h);
     glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    /* glProvokingVertex(GL_FIRST_VERTEX_CONVENTION); */
 
     ImGui::Begin("camera");
     static float camera_z = 15.0;
@@ -164,7 +165,7 @@ int main(int argc, char** argv)
     static float x = 1.2;
     static float y = 0.0;
     static float z = 5.0;
-    ImGui::SetWindowPos(ImVec2(0, 100));
+    ImGui::SetWindowPos(ImVec2(0, 110));
     ImGui::SetWindowSize(ImVec2(500, 100));
     ImGui::SliderFloat("light x", &x, -10.0f, 10.0f);
     ImGui::SliderFloat("light y", &y, -10.0f, 10.0f);
@@ -181,14 +182,15 @@ int main(int argc, char** argv)
     phongShader.use();
     phongShader.configure(
       light.position(), camera.reference(), view, projection);
+    /* _indices.push_back((i * width) + j); */
+    /* _indices.push_back((i * width) + j + 1); */
+    /* _indices.push_back((i * width) + j + width); */
 
-    auto surface = Surface(phongShader,
-                           -7.0f,
-                           -7.0f,
-                           7.0f,
-                           7.0f,
-                           256,
-                           "/home/roman/repos/colony/assets/light_grey.png");
+    /* _indices.push_back((i * width) + j + 1); */
+    /* _indices.push_back((i * width) + j + width); */
+    /* _indices.push_back((i * width) + j + width + 1); */
+
+    auto surface = Surface(phongShader, -7.0f, -7.0f, 7.0f, 7.0f, 256);
     surface.render();
     /* eventManager->tick(); */
 
