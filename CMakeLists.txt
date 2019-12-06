@@ -10,12 +10,14 @@ add_executable(colony
 		engine/Camera.h
 		engine/Light.cpp
 		engine/Light.h
-		engine/Mesh.cpp
-		engine/Mesh.h
+		engine/ModelMesh.cpp
+		engine/ModelMesh.h
     engine/Surface.h
     engine/Surface.cpp
     engine/TerrainMesh.h
     engine/TerrainMesh.cpp
+    engine/PlainMesh.h
+    engine/PlainMesh.cpp
 		engine/Model.cpp
 		engine/Model.h
 		engine/ModelLoader.cpp

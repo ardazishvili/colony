@@ -14,7 +14,7 @@
 #include "Shader.h"
 #include "Texture.h"
 
-#include "Mesh.h"
+#include "ModelMesh.h"
 
 using namespace std;
 
@@ -37,7 +37,7 @@ private:
   const aiScene* _scene;
   Assimp::Importer _importer;
 
-  Meshes _meshes;
+  ModelMesh _meshes;
   Shader& _shader;
 };
 

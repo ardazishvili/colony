@@ -1,7 +1,7 @@
 #ifndef TERRAIN_MESH_H
 #define TERRAIN_MESH_H
 
-#include "Mesh.h"
+#include "ModelMesh.h"
 
 struct VertexColor
 {
@@ -24,7 +24,6 @@ public:
   void deinit();
 
 private:
-  std::vector<Meshes::MeshMetadata> _meshesData;
   std::vector<VertexColor> _v;
   std::vector<unsigned int> _indices;
   GLuint _vao;

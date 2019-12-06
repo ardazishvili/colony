@@ -55,16 +55,7 @@ void TerrainMesh::deinit()
 void TerrainMesh::render()
 {
   glBindVertexArray(_vao);
-
-  for (unsigned int i = 0; i < _meshesData.size(); i++) {
-    glDrawElementsBaseVertex(
-      GL_TRIANGLES,
-      _meshesData[i].numIndices,
-      GL_UNSIGNED_INT,
-      (void*)(sizeof(unsigned int) * _meshesData[i].baseIndex),
-      _meshesData[i].baseVertex);
-  }
-
+  glDrawElements(GL_TRIANGLES, _v.size() * 3, GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);
 }
 
@@ -74,14 +65,6 @@ void TerrainMesh::initTerrain(float bottomLeftX,
                               float topRightY,
                               int divisions)
 {
-  _meshesData.resize(1);
-
-  _meshesData[0].materialIndex = 0;
-  _meshesData[0].numIndices = ::pow(divisions, 2) * 2 * 3;
-  _meshesData[0].baseVertex = 0;
-  _meshesData[0].baseIndex = 0;
-  _meshesData[0].name = "surface";
-
   _v.reserve((divisions + 1) * 2 * divisions);
   float xStep = (topRightX - bottomLeftX) / divisions;
   float yStep = (topRightY - bottomLeftY) / divisions;
@@ -157,19 +140,20 @@ void TerrainMesh::initTerrain(float bottomLeftX,
       glm::vec3 p0(0);
       glm::vec3 p1(0);
       glm::vec3 p2(0);
-      if (((i % 2) * 2 + j) % 4 == 0) {
+      auto rectangleTypeNum = ((i % 2) * 2 + j) % 4;
+      if (rectangleTypeNum == 0) {
         p1 = _v.at(augmentedWidth * i + j + 1 + augmentedWidth).p;
         p2 = _v.at(augmentedWidth * i + j).p;
         p0 = _v.at(augmentedWidth * i + j + augmentedWidth).p;
-      } else if (((i % 2) * 2 + j) % 4 == 1) {
+      } else if (rectangleTypeNum == 1) {
         p1 = _v.at(augmentedWidth * i + j - 1).p;
         p2 = _v.at(augmentedWidth * i + j + augmentedWidth).p;
         p0 = _v.at(augmentedWidth * i + j).p;
-      } else if (((i % 2) * 2 + j) % 4 == 2) {
+      } else if (rectangleTypeNum == 2) {
         p1 = _v.at(augmentedWidth * i + j + augmentedWidth).p;
         p2 = _v.at(augmentedWidth * i + j + 1).p;
         p0 = _v.at(augmentedWidth * i + j).p;
-      } else if (((i % 2) * 2 + j) % 4 == 3) {
+      } else if (rectangleTypeNum == 3) {
         p1 = _v.at(augmentedWidth * i + j).p;
         p2 = _v.at(augmentedWidth * i + j - 1 + augmentedWidth).p;
         p0 = _v.at(augmentedWidth * i + j + augmentedWidth).p;

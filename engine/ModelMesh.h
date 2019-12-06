@@ -1,5 +1,5 @@
-#ifndef MESH_H
-#define MESH_H
+#ifndef MODEL_MESH_H
+#define MODEL_MESH_H
 
 #include <GL/glew.h>
 
@@ -29,11 +29,11 @@ enum class TexturePackType
 };
 
 using Textures = std::vector<std::shared_ptr<Texture>>;
-class Meshes
+class ModelMesh
 {
 public:
-  Meshes();
-  ~Meshes();
+  ModelMesh();
+  ~ModelMesh();
 
   struct MeshMetadata
   {
@@ -57,13 +57,6 @@ public:
   void loadTexture(const std::string& filename, TexturePackType type);
   void setActiveTexturesPack(TexturePackType type);
   void animate(Shader& shader, Animation::Type type, float percent);
-  void initSurface(
-    float bottomLeftX,
-    float bottomLeftY,
-    float topRightX,
-    float topRightY,
-    int divisions,
-    std::string texturePath = "/home/roman/repos/opengl/assets/grey.png");
 
 private:
   void initMesh(unsigned int MeshIndex, const aiMesh* paiMesh);

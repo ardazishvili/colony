@@ -13,7 +13,7 @@
 #include <GLFW/glfw3.h>
 
 #include "engine/Light.h"
-#include "engine/Mesh.h"
+/* #include "engine/Mesh.h" */
 #include "engine/PhongShader.h"
 #include "engine/Terrain.h"
 
@@ -130,7 +130,7 @@ int main(int argc, char** argv)
   ImGui::NewFrame();
 
   createTank(game, textureShader, glm::vec3(-0.2f, -3.6f, 1.0f));
-  /* createTank(game, phongShader, glm::vec2(-2.5f, -2.5f)); */
+  createTank(game, textureShader, glm::vec3(-2.5f, -2.5f, 1.0f));
   /* createTank(game, phongShader, glm::vec2(-5.0f, -5.0f)); */
   /* auto tankFactory = */
   /*   std::make_shared<TankFactory>(textureShader, glm::vec2(2.0f, 2.0f)); */

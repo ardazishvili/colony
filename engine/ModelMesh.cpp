@@ -1,6 +1,6 @@
-#include "Mesh.h"
+#include "ModelMesh.h"
 
-bool Meshes::initModel(const aiScene* scene, const string& Filename)
+bool ModelMesh::initModel(const aiScene* scene, const string& Filename)
 {
   _meshesData.resize(scene->mNumMeshes);
   _initialTextures.resize(scene->mNumMaterials);
@@ -72,7 +72,7 @@ bool Meshes::initModel(const aiScene* scene, const string& Filename)
   return (glGetError() == GL_NO_ERROR);
 }
 
-void Meshes::initMesh(unsigned int meshIndex, const aiMesh* mesh)
+void ModelMesh::initMesh(unsigned int meshIndex, const aiMesh* mesh)
 {
   const aiVector3D zeroes(0.0f, 0.0f, 0.0f);
 
@@ -99,7 +99,7 @@ void Meshes::initMesh(unsigned int meshIndex, const aiMesh* mesh)
   }
 }
 
-void Meshes::loadBones(unsigned int meshIndex, const aiMesh* mesh)
+void ModelMesh::loadBones(unsigned int meshIndex, const aiMesh* mesh)
 {
   for (unsigned int i = 0; i < mesh->mNumBones; i++) {
     unsigned int index = 0;
@@ -125,7 +125,7 @@ void Meshes::loadBones(unsigned int meshIndex, const aiMesh* mesh)
   }
 }
 
-bool Meshes::initMaterials(const aiScene* pScene, const string& Filename)
+bool ModelMesh::initMaterials(const aiScene* pScene, const string& Filename)
 {
   string::size_type SlashIndex = Filename.find_last_of("/");
   string Dir;
@@ -173,7 +173,7 @@ bool Meshes::initMaterials(const aiScene* pScene, const string& Filename)
   return res;
 }
 
-void Meshes::deinit()
+void ModelMesh::deinit()
 {
   if (_vertexVbo != 0) {
     glDeleteBuffers(1, &_vertexVbo);
@@ -186,7 +186,7 @@ void Meshes::deinit()
   }
 }
 
-void Meshes::render()
+void ModelMesh::render()
 {
   glBindVertexArray(_vao);
 
@@ -220,7 +220,7 @@ void Meshes::render()
   glBindVertexArray(0);
 }
 
-Meshes::Meshes() : _animation(_bonesData, _boneMapping, _numBones)
+ModelMesh::ModelMesh() : _animation(_bonesData, _boneMapping, _numBones)
 {
   _vao = 0;
   _vertexVbo = 0;
@@ -235,12 +235,12 @@ Meshes::Meshes() : _animation(_bonesData, _boneMapping, _numBones)
   glGenBuffers(1, &_indicesEbo);
 }
 
-Meshes::~Meshes()
+ModelMesh::~ModelMesh()
 {
   deinit();
 }
 
-void Meshes::loadTexture(const std::string& filename, TexturePackType type)
+void ModelMesh::loadTexture(const std::string& filename, TexturePackType type)
 {
   if (type == TexturePackType::OnSelection) {
     _onSelectionTextures.clear();
@@ -284,12 +284,12 @@ void Meshes::loadTexture(const std::string& filename, TexturePackType type)
   }
 }
 
-void Meshes::setActiveTexturesPack(TexturePackType type)
+void ModelMesh::setActiveTexturesPack(TexturePackType type)
 {
   _texturesType = type;
 }
 
-void Meshes::animate(Shader& shader, Animation::Type type, float percent)
+void ModelMesh::animate(Shader& shader, Animation::Type type, float percent)
 {
 
   if (_hasAnimation) {
@@ -297,98 +297,3 @@ void Meshes::animate(Shader& shader, Animation::Type type, float percent)
   }
 }
 
-void Meshes::initSurface(float bottomLeftX,
-                         float bottomLeftY,
-                         float topRightX,
-                         float topRightY,
-                         int divisions,
-                         std::string texturePath)
-{
-  _meshesData.resize(1);
-  _initialTextures.resize(1);
-
-  _meshesData[0].materialIndex = 0;
-  _meshesData[0].numIndices = ::pow(divisions, 2) * 2 * 3;
-  _meshesData[0].baseVertex = 0;
-  _meshesData[0].baseIndex = 0;
-  _meshesData[0].name = "surface";
-
-  _vertices.reserve(::pow(divisions + 1, 2) * 3);
-  float xStep = (topRightX - bottomLeftX) / divisions;
-  float yStep = (topRightY - bottomLeftY) / divisions;
-  for (int i = 0; i < divisions + 1; ++i) {
-    for (int j = 0; j < divisions + 1; ++j) {
-      Vertex vertex;
-      vertex.position.x = bottomLeftX + static_cast<float>(i) * xStep;
-      vertex.position.y = bottomLeftY + static_cast<float>(j) * yStep;
-      vertex.position.z = 0.0f;
-
-      vertex.texCoords.x = j % 2;
-      vertex.texCoords.y = (i + 1) % 2;
-
-      vertex.normal.x = 0.0f;
-      vertex.normal.y = 0.0f;
-      vertex.normal.z = 1.0f;
-
-      _vertices.push_back(vertex);
-    }
-  }
-  _indices.reserve(::pow(divisions, 2) * 2 * 3);
-  int width = divisions + 1;
-  for (int i = 0; i < divisions; ++i) {
-    for (int j = 0; j < divisions; ++j) {
-      _indices.push_back((i * width) + j);
-      _indices.push_back((i * width) + j + 1);
-      _indices.push_back((i * width) + j + width);
-
-      _indices.push_back((i * width) + j + 1);
-      _indices.push_back((i * width) + j + width);
-      _indices.push_back((i * width) + j + width + 1);
-    }
-  }
-
-  _initialTextures[0] =
-    std::make_shared<Texture>(GL_TEXTURE_2D, texturePath.c_str());
-
-  if (!_initialTextures[0]->load()) {
-    printf("Error loading texture '%s'\n", texturePath.c_str());
-  } else {
-    printf("%d - loaded texture '%s'\n", 0, texturePath.c_str());
-  }
-
-  glBindBuffer(GL_ARRAY_BUFFER, _vertexVbo);
-  glBufferData(GL_ARRAY_BUFFER,
-               sizeof(Vertex) * _vertices.size(),
-               &_vertices[0],
-               GL_STATIC_DRAW);
-  glEnableVertexAttribArray(0);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
-
-  glEnableVertexAttribArray(2);
-  glVertexAttribPointer(
-    2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
-
-  glEnableVertexAttribArray(1);
-  glVertexAttribPointer(1,
-                        2,
-                        GL_FLOAT,
-                        GL_FALSE,
-                        sizeof(Vertex),
-                        (void*)offsetof(Vertex, texCoords));
-
-  glEnableVertexAttribArray(3);
-  glVertexAttribIPointer(
-    3, 4, GL_INT, sizeof(Vertex), (void*)offsetof(Vertex, IDs));
-
-  glEnableVertexAttribArray(4);
-  glVertexAttribPointer(
-    4, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Weights));
-
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indicesEbo);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-               sizeof(_indices[0]) * _indices.size(),
-               &_indices[0],
-               GL_STATIC_DRAW);
-
-  glBindVertexArray(0);
-}
