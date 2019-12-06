@@ -24,7 +24,7 @@ TankView::TankView(Shader& shader, glm::vec3 position, float tankTypeScaling) :
   _model = modelLoader->models()[Models::Tank];
   _texturesType = TexturePackType::Initial;
   _hasAnimation = true;
-  _healthBar.setOffsetZ(0.7);
+  _healthBar.setOffsetZ(position.z + 0.8);
   _healthBar.setTexture("/home/roman/repos/opengl/assets/red.png");
 }
 
@@ -136,7 +136,7 @@ void TankView::showHealthBar()
 {
   _healthBar.setOffsetXY(_position.x - 0.25, _position.y);
   _healthBar.setScaleX(_healthBarScaleFactor);
-  _healthBar.setPitchAngle(camera.getPitch());
+  _healthBar.setPitchAngle(-camera.getPitch());
   _healthBar.render();
 }
 
