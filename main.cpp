@@ -1,4 +1,3 @@
-
 #include <math.h>
 
 #include <glm/glm.hpp>
@@ -13,7 +12,6 @@
 #include <GLFW/glfw3.h>
 
 #include "engine/Light.h"
-/* #include "engine/Mesh.h" */
 #include "engine/PhongShader.h"
 #include "engine/Terrain.h"
 

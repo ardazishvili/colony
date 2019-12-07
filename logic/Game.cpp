@@ -26,6 +26,7 @@ void Game::tick()
   displayTanks();
   displayShells();
   displayStructures();
+  displayPlants();
   displayControl();
 
   showDebug();
@@ -39,6 +40,11 @@ void Game::addTank(std::shared_ptr<Tank> tank)
 void Game::addStructure(std::shared_ptr<BuildableStructure> buildable)
 {
   _structures.push_back(buildable);
+}
+
+void Game::addPlant(std::shared_ptr<Plant> plant)
+{
+  _plants.push_back(plant);
 }
 
 void Game::setControl(std::unique_ptr<Control> control)
@@ -64,6 +70,13 @@ void Game::displayStructures()
 {
   for (auto& structure : _structures) {
     structure->display();
+  }
+}
+
+void Game::displayPlants()
+{
+  for (auto& plant : _plants) {
+    plant->render();
   }
 }
 

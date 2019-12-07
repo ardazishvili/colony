@@ -69,6 +69,8 @@ add_executable(colony
 		logic/TankFactoryBuilder.h
 		logic/VehicleGroup.cpp
 		logic/VehicleGroup.h
+    logic/Plant.h
+    logic/Plant.cpp
     math/Noise.h
     math/Noise.cpp
 		view/HqView.cpp
@@ -81,6 +83,8 @@ add_executable(colony
 		view/TankView.h
 		view/View.cpp
 		view/View.h
+    view/PlantView.h
+    view/PlantView.cpp
     engine/Vertex.cpp
     engine/Vertex.h
     main.cpp 

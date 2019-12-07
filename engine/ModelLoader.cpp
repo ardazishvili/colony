@@ -42,6 +42,10 @@ void ModelLoader::load()
                        TexturePackType::Destroyed);
   _models.emplace(Models::Hq, std::move(hqModel));
 
+  auto plantModel = std::make_unique<Model>(_shader);
+  plantModel->load("/home/roman/repos/colony/assets/plant.dae");
+  _models.emplace(Models::Plant, std::move(plantModel));
+
   auto tfTexture = std::make_shared<Texture>(
     GL_TEXTURE_2D, "/home/roman/repos/opengl/assets/Garage.png");
   tfTexture->load();

@@ -80,6 +80,11 @@ void EventManager::handleKeyPress(GLFWwindow* window,
         _structureToBuild = nullptr;
       }
     }
+    if (key == GLFW_KEY_P) {
+      auto plant =
+        std::make_shared<Plant>(_shader, unProject(currentX, currentY));
+      _game.addPlant(plant);
+    }
     if (key == GLFW_KEY_ESCAPE) {
       glfwSetWindowShouldClose(_window, true);
     }
