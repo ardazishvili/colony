@@ -127,8 +127,8 @@ int main(int argc, char** argv)
   ImGui_ImplGlfw_NewFrame();
   ImGui::NewFrame();
 
-  createTank(game, textureShader, glm::vec3(-0.2f, -3.6f, 1.0f));
-  createTank(game, textureShader, glm::vec3(-2.5f, -2.5f, 1.0f));
+  /* createTank(game, textureShader, glm::vec3(-0.2f, -3.6f, 1.0f)); */
+  /* createTank(game, textureShader, glm::vec3(-2.5f, -2.5f, 1.0f)); */
   /* createTank(game, phongShader, glm::vec2(-5.0f, -5.0f)); */
   /* auto tankFactory = */
   /*   std::make_shared<TankFactory>(textureShader, glm::vec2(2.0f, 2.0f)); */
@@ -137,7 +137,7 @@ int main(int argc, char** argv)
 
   eventManager =
     std::make_unique<EventManager>(window, game, camera, textureShader);
-  auto terrain = Terrain(colorShader, -10.0f, -10.0f, 10.0f, 10.0f, 256);
+  auto terrain = Terrain(colorShader, -30.0f, -30.0f, 30.0f, 30.0f, 256 * 5);
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
   while (!glfwWindowShouldClose(window)) {
@@ -155,24 +155,28 @@ int main(int argc, char** argv)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glProvokingVertex(GL_FIRST_VERTEX_CONVENTION);
 
-    ImGui::Begin("camera");
-    static float camera_z = 15.0;
-    ImGui::SetWindowPos(ImVec2(0, 210));
-    ImGui::SetWindowSize(ImVec2(500, 100));
-    ImGui::SliderFloat("camera z", &camera_z, -20.0f, 20.0f);
-    ImGui::End();
+    /* ImGui::Begin("camera"); */
+    /* static float camera_z = 15.0; */
+    static float camera_z = 11.3;
+    /* ImGui::SetWindowPos(ImVec2(0, 210)); */
+    /* ImGui::SetWindowSize(ImVec2(500, 100)); */
+    /* ImGui::SliderFloat("camera z", &camera_z, -20.0f, 20.0f); */
+    /* ImGui::End(); */
     camera.setEyeZ(camera_z);
 
-    ImGui::Begin("light");
-    static float x = 1.2;
-    static float y = 0.0;
-    static float z = 5.0;
-    ImGui::SetWindowPos(ImVec2(0, 110));
-    ImGui::SetWindowSize(ImVec2(500, 100));
-    ImGui::SliderFloat("light x", &x, -10.0f, 10.0f);
-    ImGui::SliderFloat("light y", &y, -10.0f, 10.0f);
-    ImGui::SliderFloat("light z", &z, -10.0f, 100.0f);
-    ImGui::End();
+    /* ImGui::Begin("light"); */
+    /* static float x = 1.2; */
+    /* static float y = 0.0; */
+    /* static float z = 5.0; */
+    static float x = -5.5;
+    static float y = 2.5;
+    static float z = 5.2;
+    /* ImGui::SetWindowPos(ImVec2(0, 110)); */
+    /* ImGui::SetWindowSize(ImVec2(500, 100)); */
+    /* ImGui::SliderFloat("light x", &x, -10.0f, 10.0f); */
+    /* ImGui::SliderFloat("light y", &y, -10.0f, 10.0f); */
+    /* ImGui::SliderFloat("light z", &z, -10.0f, 100.0f); */
+    /* ImGui::End(); */
     light->setPosition(glm::vec3(x, y, z));
 
     glm::mat4 view = glm::lookAt(camera.eye(), camera.reference(), camera.up());
@@ -185,7 +189,7 @@ int main(int argc, char** argv)
     textureShader.configure();
 
     terrain.render();
-    eventManager->tick();
+    /* eventManager->tick(); */
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
