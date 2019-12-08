@@ -166,6 +166,12 @@ int main(int argc, char** argv)
     ImGui::End();
     camera.setEyeZ(camera_z);
 
+    ImGui::Begin("models scale");
+    ImGui::SetWindowPos(ImVec2(0, 600));
+    ImGui::SetWindowSize(ImVec2(200, 50));
+    ImGui::SliderFloat("scale", &View::VIEW_SCALE, 0.0f, 1.0f);
+    ImGui::End();
+
     ImGui::Begin("light");
     static float x = 1.2;
     static float y = 0.0;

@@ -28,6 +28,7 @@ void HqView::draw()
   auto model = glm::mat4(1.0f);
   model = glm::translate(model, _position);
   model = glm::rotate(model, glm::radians(_angle), glm::vec3(0.0f, 0.0f, 1.0f));
+  model = glm::scale(model, glm::vec3(VIEW_SCALE));
   _shader.setTransformation("model", glm::value_ptr(model));
   _model->setActiveTexturesPack(_texturesType);
   _shader.use();

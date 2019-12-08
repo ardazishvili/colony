@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.79.0</authoring_tool>
     </contributor>
-    <created>2019-12-07T04:42:13</created>
-    <modified>2019-12-07T04:42:13</modified>
+    <created>2019-12-08T20:11:21</created>
+    <modified>2019-12-08T20:11:21</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -102,21 +102,21 @@
     </light>
   </library_lights>
   <library_images>
-    <image id="pink_png" name="pink_png">
-      <init_from>pink.png</init_from>
+    <image id="green_png" name="green_png">
+      <init_from>green.png</init_from>
     </image>
   </library_images>
   <library_effects>
     <effect id="Material_002-effect">
       <profile_COMMON>
-        <newparam sid="pink_png-surface">
+        <newparam sid="green_png-surface">
           <surface type="2D">
-            <init_from>pink_png</init_from>
+            <init_from>green_png</init_from>
           </surface>
         </newparam>
-        <newparam sid="pink_png-sampler">
+        <newparam sid="green_png-sampler">
           <sampler2D>
-            <source>pink_png-surface</source>
+            <source>green_png-surface</source>
           </sampler2D>
         </newparam>
         <technique sid="common">
@@ -128,7 +128,7 @@
               <color sid="ambient">0 0 0 1</color>
             </ambient>
             <diffuse>
-              <texture texture="pink_png-sampler"/>
+              <texture texture="green_png-sampler"/>
             </diffuse>
             <specular>
               <color sid="specular">0.125 0.125 0.125 1</color>

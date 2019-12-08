@@ -10,6 +10,8 @@
 class View
 {
 public:
+  static float VIEW_SCALE;
+
 protected:
   bool _hasAnimation{ false };
 };
