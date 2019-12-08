@@ -32,7 +32,7 @@ void HqView::draw()
   _model->setActiveTexturesPack(_texturesType);
   _shader.use();
   _model->render();
-  /* showHealthBar(); */
+  showHealthBar();
 }
 
 bool HqView::contain(glm::vec3 point) const

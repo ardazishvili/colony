@@ -10,7 +10,11 @@
 class EventManager
 {
 public:
-  EventManager(GLFWwindow* window, Game& game, Camera& camera, Shader& shader);
+  EventManager(GLFWwindow* window,
+               Game& game,
+               Camera& camera,
+               Shader& shader,
+               Terrain* terrain);
   void tick();
   void handleKeyPress(GLFWwindow* window,
                       int key,
@@ -42,6 +46,7 @@ private:
   std::shared_ptr<BuildableStructure> _structureToBuild{ nullptr };
   BuildStage _structureToBuildStage;
   Buildable* _structureUnderAttack{ nullptr };
+  Terrain* _terrain;
 };
 
 #endif

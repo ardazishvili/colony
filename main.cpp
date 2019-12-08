@@ -129,14 +129,8 @@ int main(int argc, char** argv)
 
   auto terrain = Terrain(colorShader, -10.0f, -10.0f, 10.0f, 10.0f, 256);
   game.addTerrain(&terrain);
-  eventManager =
-    std::make_unique<EventManager>(window, game, camera, textureShader);
-  /* auto x = 2; */
-  /* auto y = -2; */
-  auto x = 2;
-  auto y = -2;
-  auto z = terrain.getXYZ(glm::vec2(x, y)).z;
-  std::cout << "terrain.getXYZ(glm::vec2(x, y))= " << z << std::endl;
+  eventManager = std::make_unique<EventManager>(
+    window, game, camera, textureShader, &terrain);
 
   createTank(game, textureShader, terrain.getXYZ(glm::vec2(0.0, 0.0f)));
   createTank(game, textureShader, terrain.getXYZ(glm::vec2(1.0, -1.0f)));

@@ -93,7 +93,6 @@ void Game::displayPlants()
 
 void Game::displayBarriers()
 {
-  std::cout << "_barriers.size()= " << _barriers.size() << std::endl;
   for (auto& barrier : _barriers) {
     barrier->render();
   }

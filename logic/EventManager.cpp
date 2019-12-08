@@ -22,9 +22,10 @@ glm::vec3 EventManager::unProject(int xpos, int ypos)
 EventManager::EventManager(GLFWwindow* window,
                            Game& game,
                            Camera& camera,
-                           Shader& shader) :
+                           Shader& shader,
+                           Terrain* terrain) :
   _window(window),
-  _camera(camera), _game(game), _shader(shader)
+  _camera(camera), _game(game), _shader(shader), _terrain(terrain)
 /* _selectionSurface(shader, 0.0f, 0.0f, 1.0f, 1.0f, 1) */
 {
   _game.setControl(std::make_unique<Control>(shader));
@@ -129,7 +130,8 @@ void EventManager::handleMouseMove(GLFWwindow* window, double xpos, double ypos)
     if (::abs(position.x) > 10.0f || ::abs(position.y) > 10.0f) {
       position = glm::vec3(10.0f, 10.0f, 0.0f);
     }
-    _structureToBuild->setPosition(position);
+    _structureToBuild->setPosition(
+      _terrain->getXYZ(glm::vec2(position.x, position.y)));
   }
   if (_selectionActive) {
     /* _selectionSurface.setScaleXY(c.x - _selectionSurfaceBottonLeft.x, */
