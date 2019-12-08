@@ -13,7 +13,7 @@ public:
           float topRightX,
           float topRightY,
           int divisions,
-          std::string texturePath = "/home/roman/repos/opengl/assets/grey.png");
+          std::string texturePath = "/home/roman/repos/colony/assets/grey.png");
   void render();
   void setOffsetZ(float offset);
   void setOffsetXY(float x, float y);

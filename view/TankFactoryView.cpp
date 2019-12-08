@@ -17,7 +17,7 @@ TankFactoryView::TankFactoryView(Shader& shader, glm::vec3 position) :
   _model = modelLoader->models()[Models::TankFactory];
   _model->setActiveTexturesPack(TexturePackType::PreBuild);
   _healthBar.setOffsetZ(1.3f);
-  _healthBar.setTexture("/home/roman/repos/opengl/assets/red.png");
+  _healthBar.setTexture("/home/roman/repos/colony/assets/red.png");
 }
 
 void TankFactoryView::draw()

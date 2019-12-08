@@ -5,40 +5,40 @@ ModelLoader::ModelLoader(Shader& shader) : _shader(shader) {}
 void ModelLoader::load()
 {
   auto shellModel = std::make_unique<Model>(_shader);
-  shellModel->load("/home/roman/repos/opengl/shell.dae");
+  shellModel->load("/home/roman/repos/colony/assets/shell.dae");
   _models.emplace(Models::Shell, std::move(shellModel));
 
   auto tankModel = std::make_unique<Model>(_shader);
-  tankModel->load("/home/roman/repos/opengl/tank.dae");
-  tankModel->loadTexture("/home/roman/repos/opengl/assets/blue.png",
+  tankModel->load("/home/roman/repos/colony/assets/tank.dae");
+  tankModel->loadTexture("/home/roman/repos/colony/assets/blue.png",
                          TexturePackType::OnSelection);
-  tankModel->loadTexture("/home/roman/repos/opengl/assets/red.png",
+  tankModel->loadTexture("/home/roman/repos/colony/assets/red.png",
                          TexturePackType::UnderFire);
-  tankModel->loadTexture("/home/roman/repos/opengl/assets/black.png",
+  tankModel->loadTexture("/home/roman/repos/colony/assets/black.png",
                          TexturePackType::Destroyed);
   _models.emplace(Models::Tank, std::move(tankModel));
 
   auto tankFactoryModel = std::make_unique<Model>(_shader);
-  tankFactoryModel->load("/home/roman/repos/opengl/garage.dae");
-  tankFactoryModel->loadTexture("/home/roman/repos/opengl/assets/grey.png",
+  tankFactoryModel->load("/home/roman/repos/colony/assets/garage.dae");
+  tankFactoryModel->loadTexture("/home/roman/repos/colony/assets/grey.png",
                                 TexturePackType::PreBuild);
-  tankFactoryModel->loadTexture("/home/roman/repos/opengl/assets/blue.png",
+  tankFactoryModel->loadTexture("/home/roman/repos/colony/assets/blue.png",
                                 TexturePackType::OnSelection);
-  tankFactoryModel->loadTexture("/home/roman/repos/opengl/assets/red.png",
+  tankFactoryModel->loadTexture("/home/roman/repos/colony/assets/red.png",
                                 TexturePackType::UnderFire);
-  tankFactoryModel->loadTexture("/home/roman/repos/opengl/assets/black.png",
+  tankFactoryModel->loadTexture("/home/roman/repos/colony/assets/black.png",
                                 TexturePackType::Destroyed);
   _models.emplace(Models::TankFactory, std::move(tankFactoryModel));
 
   auto hqModel = std::make_unique<Model>(_shader);
-  hqModel->load("/home/roman/repos/opengl/hq.dae");
-  hqModel->loadTexture("/home/roman/repos/opengl/assets/grey.png",
+  hqModel->load("/home/roman/repos/colony/assets/hq.dae");
+  hqModel->loadTexture("/home/roman/repos/colony/assets/grey.png",
                        TexturePackType::PreBuild);
-  hqModel->loadTexture("/home/roman/repos/opengl/assets/blue.png",
+  hqModel->loadTexture("/home/roman/repos/colony/assets/blue.png",
                        TexturePackType::OnSelection);
-  hqModel->loadTexture("/home/roman/repos/opengl/assets/red.png",
+  hqModel->loadTexture("/home/roman/repos/colony/assets/red.png",
                        TexturePackType::UnderFire);
-  hqModel->loadTexture("/home/roman/repos/opengl/assets/black.png",
+  hqModel->loadTexture("/home/roman/repos/colony/assets/black.png",
                        TexturePackType::Destroyed);
   _models.emplace(Models::Hq, std::move(hqModel));
 
@@ -47,24 +47,24 @@ void ModelLoader::load()
   _models.emplace(Models::Plant, std::move(plantModel));
 
   auto tfTexture = std::make_shared<Texture>(
-    GL_TEXTURE_2D, "/home/roman/repos/opengl/assets/Garage.png");
+    GL_TEXTURE_2D, "/home/roman/repos/colony/assets/Garage.png");
   tfTexture->load();
   _menuTextures.emplace(MenuTextures::TankFactory, std::move(tfTexture));
 
   auto hqTexture = std::make_shared<Texture>(
-    GL_TEXTURE_2D, "/home/roman/repos/opengl/assets/Hq.png");
+    GL_TEXTURE_2D, "/home/roman/repos/colony/assets/Hq.png");
   hqTexture->load();
   _menuTextures.emplace(MenuTextures::Hq, std::move(hqTexture));
   auto lightTankTexture = std::make_shared<Texture>(
-    GL_TEXTURE_2D, "/home/roman/repos/opengl/assets/lightTank.png");
+    GL_TEXTURE_2D, "/home/roman/repos/colony/assets/lightTank.png");
   lightTankTexture->load();
   _menuTextures.emplace(MenuTextures::TankLight, std::move(lightTankTexture));
   auto mediumTankTexture = std::make_shared<Texture>(
-    GL_TEXTURE_2D, "/home/roman/repos/opengl/assets/mediumTank.png");
+    GL_TEXTURE_2D, "/home/roman/repos/colony/assets/mediumTank.png");
   mediumTankTexture->load();
   _menuTextures.emplace(MenuTextures::TankMedium, std::move(mediumTankTexture));
   auto heavyTankTexture = std::make_shared<Texture>(
-    GL_TEXTURE_2D, "/home/roman/repos/opengl/assets/heavyTank.png");
+    GL_TEXTURE_2D, "/home/roman/repos/colony/assets/heavyTank.png");
   heavyTankTexture->load();
   _menuTextures.emplace(MenuTextures::TankHeavy, std::move(heavyTankTexture));
 }
