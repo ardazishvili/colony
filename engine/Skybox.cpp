@@ -25,7 +25,16 @@ float skyVertices[] = {
   1.0f,  -1.0f, -1.0f, -1.0f, -1.0f, 1.0f,  1.0f,  -1.0f, 1.0f
 };
 
-Skybox::Skybox()
+std::vector<std::string> faces{
+  "/home/roman/repos/colony/assets/skybox/right.png",
+  "/home/roman/repos/colony/assets/skybox/left.png",
+  "/home/roman/repos/colony/assets/skybox/top.png",
+  "/home/roman/repos/colony/assets/skybox/bottom.png",
+  "/home/roman/repos/colony/assets/skybox/front.png",
+  "/home/roman/repos/colony/assets/skybox/back.png"
+};
+
+Skybox::Skybox(Shader& shader) : _shader(shader)
 {
   glGenVertexArrays(1, &_vao);
   glBindVertexArray(_vao);
@@ -35,18 +44,24 @@ Skybox::Skybox()
     GL_ARRAY_BUFFER, sizeof(skyVertices), &skyVertices, GL_STATIC_DRAW);
   glEnableVertexAttribArray(0);
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
+  loadCubemap();
 }
 
 void Skybox::render()
 {
+  glDepthFunc(GL_LEQUAL);
+  _shader.use();
+  _shader.configure();
   glBindVertexArray(_vao);
   glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_CUBE_MAP, _id);
   glDrawArrays(GL_TRIANGLES, 0, 36);
   glBindVertexArray(0);
+  glDepthFunc(GL_LESS);
 }
 
-void Skybox::loadCubemap(std::vector<std::string> faces)
+void Skybox::loadCubemap()
 {
   glGenTextures(1, &_id);
   glBindTexture(GL_TEXTURE_CUBE_MAP, _id);
@@ -56,13 +71,10 @@ void Skybox::loadCubemap(std::vector<std::string> faces)
     GLenum format;
     if (nrChannels == 1) {
       format = GL_RED;
-      std::cout << "format GL_RED= " << format << std::endl;
     } else if (nrChannels == 3) {
       format = GL_RGB;
-      std::cout << "format GL_RGB= " << format << std::endl;
     } else if (nrChannels == 4) {
       format = GL_RGBA;
-      std::cout << "format GL_RGBA= " << format << std::endl;
     }
     if (data) {
       glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,

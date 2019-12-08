@@ -4,14 +4,17 @@
 #include <string>
 #include <vector>
 
+#include "Shader.h"
+
 class Skybox
 {
 public:
-  Skybox();
-  void loadCubemap(std::vector<std::string> faces);
+  Skybox(Shader& shader);
+  void loadCubemap();
   void render();
 
 private:
+  Shader& _shader;
   unsigned int _vao;
   unsigned int _vbo;
   unsigned int _id;

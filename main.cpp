@@ -149,16 +149,7 @@ int main(int argc, char** argv)
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-  auto skybox = Skybox();
-  vector<std::string> faces{
-    "/home/roman/repos/colony/assets/skybox/right.png",
-    "/home/roman/repos/colony/assets/skybox/left.png",
-    "/home/roman/repos/colony/assets/skybox/top.png",
-    "/home/roman/repos/colony/assets/skybox/bottom.png",
-    "/home/roman/repos/colony/assets/skybox/front.png",
-    "/home/roman/repos/colony/assets/skybox/back.png"
-  };
-  skybox.loadCubemap(faces);
+  auto skybox = Skybox(skyboxShader);
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
     processInput(window);
@@ -214,11 +205,7 @@ int main(int argc, char** argv)
     textureShader.configure();
     eventManager->tick();
 
-    glDepthFunc(GL_LEQUAL);
-    skyboxShader.use();
-    skyboxShader.configure();
     skybox.render();
-    glDepthFunc(GL_LESS);
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
