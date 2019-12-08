@@ -46,6 +46,10 @@ void ModelLoader::load()
   plantModel->load("/home/roman/repos/colony/assets/plant.dae");
   _models.emplace(Models::Plant, std::move(plantModel));
 
+  auto barrierModel = std::make_unique<Model>(_shader);
+  barrierModel->load("/home/roman/repos/colony/assets/barrier.dae");
+  _models.emplace(Models::Barrier, std::move(barrierModel));
+
   auto tfTexture = std::make_shared<Texture>(
     GL_TEXTURE_2D, "/home/roman/repos/colony/assets/Garage.png");
   tfTexture->load();

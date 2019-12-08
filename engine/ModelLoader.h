@@ -12,7 +12,8 @@ enum class Models
   Tank,
   TankFactory,
   Hq,
-  Plant
+  Plant,
+  Barrier
 };
 
 enum class MenuTextures

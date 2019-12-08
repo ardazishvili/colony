@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "../engine/Terrain.h"
+#include "Barrier.h"
 #include "Control.h"
 #include "Plant.h"
 #include "VehicleGroup.h"
@@ -12,6 +13,7 @@
 using Tanks = std::vector<std::shared_ptr<Tank>>;
 using Structures = std::vector<std::shared_ptr<BuildableStructure>>;
 using Plants = std::vector<std::shared_ptr<Plant>>;
+using Barriers = std::vector<std::shared_ptr<Barrier>>;
 
 class Tank;
 class AbstractStructureBuilder;
@@ -24,6 +26,7 @@ public:
   void addTank(std::shared_ptr<Tank> tank);
   void addStructure(std::shared_ptr<BuildableStructure> buildable);
   void addPlant(std::shared_ptr<Plant> plant);
+  void addBarrier(std::shared_ptr<Barrier> barrier);
   void addTerrain(Terrain* terrain);
   void setControl(std::unique_ptr<Control> control);
 
@@ -39,11 +42,13 @@ private:
   void displayShells();
   void displayStructures();
   void displayPlants();
+  void displayBarriers();
   void displayControl();
 
   Tanks _tanks;
   Structures _structures;
   Plants _plants;
+  Barriers _barriers;
   std::unique_ptr<Control> _control;
   Tank* _selectedTank = nullptr;
   Buildable* _selectedStructure = nullptr;

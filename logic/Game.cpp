@@ -27,6 +27,7 @@ void Game::tick()
   displayShells();
   displayStructures();
   displayPlants();
+  displayBarriers();
   displayControl();
 
   showDebug();
@@ -45,6 +46,11 @@ void Game::addStructure(std::shared_ptr<BuildableStructure> buildable)
 void Game::addPlant(std::shared_ptr<Plant> plant)
 {
   _plants.push_back(plant);
+}
+
+void Game::addBarrier(std::shared_ptr<Barrier> barrier)
+{
+  _barriers.push_back(barrier);
 }
 
 void Game::addTerrain(Terrain* terrain)
@@ -82,6 +88,14 @@ void Game::displayPlants()
 {
   for (auto& plant : _plants) {
     plant->render();
+  }
+}
+
+void Game::displayBarriers()
+{
+  std::cout << "_barriers.size()= " << _barriers.size() << std::endl;
+  for (auto& barrier : _barriers) {
+    barrier->render();
   }
 }
 

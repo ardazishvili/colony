@@ -10,18 +10,12 @@ add_executable(colony
 		engine/Camera.h
 		engine/Light.cpp
 		engine/Light.h
-		engine/ModelMesh.cpp
-		engine/ModelMesh.h
-    engine/Surface.h
-    engine/Surface.cpp
-    engine/TerrainMesh.h
-    engine/TerrainMesh.cpp
-    engine/PlainMesh.h
-    engine/PlainMesh.cpp
 		engine/Model.cpp
 		engine/Model.h
 		engine/ModelLoader.cpp
 		engine/ModelLoader.h
+		engine/ModelMesh.cpp
+		engine/ModelMesh.h
 		engine/PhongShader.cpp
 		engine/PhongShader.h
 		engine/Shader.cpp
@@ -69,10 +63,6 @@ add_executable(colony
 		logic/TankFactoryBuilder.h
 		logic/VehicleGroup.cpp
 		logic/VehicleGroup.h
-    logic/Plant.h
-    logic/Plant.cpp
-    math/Noise.h
-    math/Noise.cpp
 		view/HqView.cpp
 		view/HqView.h
 		view/ShellView.cpp
@@ -83,11 +73,25 @@ add_executable(colony
 		view/TankView.h
 		view/View.cpp
 		view/View.h
-    view/PlantView.h
-    view/PlantView.cpp
+    engine/PlainMesh.cpp
+    engine/PlainMesh.h
+    engine/Surface.cpp
+    engine/Surface.h
+    engine/TerrainMesh.cpp
+    engine/TerrainMesh.h
     engine/Vertex.cpp
     engine/Vertex.h
+    logic/Barrier.cpp
+    logic/Barrier.h
+    logic/Plant.cpp
+    logic/Plant.h
     main.cpp 
+    math/Noise.cpp
+    math/Noise.h
+    view/BarrierView.cpp
+    view/BarrierView.h
+    view/PlantView.cpp
+    view/PlantView.h
 		)
 
 target_link_libraries(colony glfw dl GL GLEW assimp)

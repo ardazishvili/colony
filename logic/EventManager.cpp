@@ -85,6 +85,11 @@ void EventManager::handleKeyPress(GLFWwindow* window,
         std::make_shared<Plant>(_shader, unProject(currentX, currentY));
       _game.addPlant(plant);
     }
+    if (key == GLFW_KEY_B) {
+      auto barrier =
+        std::make_shared<Barrier>(_shader, unProject(currentX, currentY));
+      _game.addBarrier(barrier);
+    }
     if (key == GLFW_KEY_ESCAPE) {
       glfwSetWindowShouldClose(_window, true);
     }
