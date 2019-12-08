@@ -7,8 +7,8 @@
 
 float TankView::TANK_GUN_ANGLE_INCREMENT = 1.5;
 float TankView::TANK_GUN_ANGLE_TOLERANCE = 1.5;
-float TankView::TANK_HEALTH_BAR_WIDTH = 0.8;
-float TankView::TANK_HEALTH_BAR_HEIGHT = 0.08;
+float TankView::TANK_HEALTH_BAR_WIDTH = 0.5;
+float TankView::TANK_HEALTH_BAR_HEIGHT = 0.04;
 std::map<Status, unsigned int> tankTexturesMap;
 
 TankView::TankView(Shader& shader, glm::vec3 position, float tankTypeScaling) :
@@ -24,7 +24,7 @@ TankView::TankView(Shader& shader, glm::vec3 position, float tankTypeScaling) :
   _model = modelLoader->models()[Models::Tank];
   _texturesType = TexturePackType::Initial;
   _hasAnimation = true;
-  _healthBar.setOffsetZ(position.z + 0.8);
+  _healthBar.setOffsetZ(position.z + 0.3);
   _healthBar.setTexture("/home/roman/repos/colony/assets/red.png");
 }
 
