@@ -7,10 +7,7 @@ class PhongShader : public Shader
 {
 public:
   PhongShader(const GLchar* vertexPath, const GLchar* fragmentPath);
-
   void configure() override;
-
-private:
 };
 
 #endif

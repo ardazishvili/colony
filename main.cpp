@@ -13,6 +13,8 @@
 
 #include "engine/Light.h"
 #include "engine/PhongShader.h"
+#include "engine/Skybox.h"
+#include "engine/SkyboxShader.h"
 #include "engine/Terrain.h"
 
 #include "logic/EventManager.h"
@@ -116,6 +118,9 @@ int main(int argc, char** argv)
     "/home/roman/repos/colony/shaders/fragment_objects.fs");
   PhongShader lampShader("/home/roman/repos/colony/shaders/vertex_light.vs",
                          "/home/roman/repos/colony/shaders/fragment_light.fs");
+  SkyboxShader skyboxShader(
+    "/home/roman/repos/colony/shaders/vertex_skybox.vs",
+    "/home/roman/repos/colony/shaders/fragment_skybox.fs");
   modelLoader = std::make_unique<ModelLoader>(textureShader);
   modelLoader->load();
 
@@ -143,6 +148,17 @@ int main(int argc, char** argv)
 
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+  auto skybox = Skybox();
+  vector<std::string> faces{
+    "/home/roman/repos/colony/assets/skybox/right.png",
+    "/home/roman/repos/colony/assets/skybox/left.png",
+    "/home/roman/repos/colony/assets/skybox/top.png",
+    "/home/roman/repos/colony/assets/skybox/bottom.png",
+    "/home/roman/repos/colony/assets/skybox/front.png",
+    "/home/roman/repos/colony/assets/skybox/back.png"
+  };
+  skybox.loadCubemap(faces);
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
     processInput(window);
@@ -190,11 +206,19 @@ int main(int argc, char** argv)
     gView = view;
     gProjection = projection;
 
+    colorShader.use();
     colorShader.configure();
-    textureShader.configure();
-
     terrain.render();
+
+    textureShader.use();
+    textureShader.configure();
     eventManager->tick();
+
+    glDepthFunc(GL_LEQUAL);
+    skyboxShader.use();
+    skyboxShader.configure();
+    skybox.render();
+    glDepthFunc(GL_LESS);
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

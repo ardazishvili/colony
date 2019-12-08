@@ -18,6 +18,8 @@ add_executable(colony
 		engine/ModelMesh.h
 		engine/PhongShader.cpp
 		engine/PhongShader.h
+    engine/SkyboxShader.h
+    engine/SkyboxShader.cpp
 		engine/Shader.cpp
 		engine/Shader.h
 		engine/Terrain.cpp
@@ -92,6 +94,8 @@ add_executable(colony
     view/BarrierView.h
     view/PlantView.cpp
     view/PlantView.h
+    engine/Skybox.h
+    engine/Skybox.cpp
 		)
 
 target_link_libraries(colony glfw dl GL GLEW assimp)
