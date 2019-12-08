@@ -68,10 +68,9 @@ glm::vec3 TankView::position()
   return glm::vec3(_position.x, _position.y, _position.z);
 }
 
-void TankView::move(glm::vec3 moveIncrement)
+void TankView::move(glm::vec3 newPosition)
 {
-  _position.x += moveIncrement.x;
-  _position.y += moveIncrement.y;
+  _position = newPosition;
 }
 
 void TankView::rotateBody(float degreeAngle)

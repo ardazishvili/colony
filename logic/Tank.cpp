@@ -45,7 +45,9 @@ void Tank::display()
 
 void Tank::move()
 {
-  _view.move(_moveIncrement);
+  auto prev = _view.position();
+  auto c = _terrain->getXYZ(glm::vec2(prev.x, prev.y) + _moveIncrement);
+  _view.move(c);
   bool destinationIsReached =
     ::sqrt(::pow(_view.position().x - _destination.x, 2) +
            ::pow(_view.position().y - _destination.y, 2)) < _speed;
@@ -242,6 +244,11 @@ StructureBuilders Tank::getStructureBuilders()
 {
   // TODO
   return StructureBuilders();
+}
+
+void Tank::setTerrain(Terrain* terrain)
+{
+  _terrain = terrain;
 }
 
 std::shared_ptr<Tank> createTank(Game& game,

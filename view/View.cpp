@@ -4,4 +4,4 @@
 
 #include "View.h"
 
-float View::VIEW_SCALE = 0.25f;
+float View::VIEW_SCALE = 0.5f;

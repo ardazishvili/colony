@@ -35,6 +35,7 @@ void Game::tick()
 
 void Game::addTank(std::shared_ptr<Tank> tank)
 {
+  tank->setTerrain(_terrain);
   _tanks.push_back(tank);
 }
 
@@ -178,7 +179,6 @@ void Game::showDebug()
   ss << "x:" << std::setw(5) << std::setprecision(2) << pos.x
      << "; y:" << std::setw(5) << std::setprecision(2) << pos.y
      << "; z: " << pos.z;
-  /* ss << "; terrain z = " << _terrain->getXYZ(glm::vec2(pos.x, pos.y)).z; */
   ImGui::Text(ss.str().c_str());
   ImGui::End();
 }

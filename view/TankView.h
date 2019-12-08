@@ -15,7 +15,7 @@ public:
   void draw();
   bool contain(glm::vec3 point) const;
   glm::vec3 position();
-  void move(glm::vec3 moveIncrement);
+  void move(glm::vec3 newPosition);
   void rotateBody(float degreeAngle);
   void rotateGun(float degreeAngle);
   void setTexture(Status status);

@@ -6,6 +6,7 @@
 #include <list>
 
 #include "../Timer.h"
+#include "../engine/Terrain.h"
 #include "../view/TankView.h"
 #include "BuildableUnit.h"
 
@@ -58,6 +59,7 @@ public:
 
   void updateShells();
   glm::vec3 position() override;
+  void setTerrain(Terrain* terrain);
 
 private:
   float getTargetAngle();
@@ -68,7 +70,7 @@ private:
   void updateHealthBar() override;
 
   float _speed;
-  glm::vec3 _moveIncrement{ 0, 0, 0 };
+  glm::vec2 _moveIncrement{ 0, 0 };
   Type _type;
   Shell::Size _shellSize;
   Shells _shells;
@@ -76,6 +78,7 @@ private:
   glm::vec3 _destination;
   Timer _clock;
   std::chrono::milliseconds _shellLoadTime{ 200 };
+  Terrain* _terrain;
 
   // TODO
   Shader& _shader;
