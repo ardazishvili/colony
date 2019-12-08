@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 
+#include "../engine/Terrain.h"
 #include "Control.h"
 #include "Plant.h"
 #include "VehicleGroup.h"
@@ -23,6 +24,7 @@ public:
   void addTank(std::shared_ptr<Tank> tank);
   void addStructure(std::shared_ptr<BuildableStructure> buildable);
   void addPlant(std::shared_ptr<Plant> plant);
+  void addTerrain(Terrain* terrain);
   void setControl(std::unique_ptr<Control> control);
 
   Tank* getTank(const glm::vec3& mousePoint, bool select = false);
@@ -45,6 +47,7 @@ private:
   std::unique_ptr<Control> _control;
   Tank* _selectedTank = nullptr;
   Buildable* _selectedStructure = nullptr;
+  Terrain* _terrain;
 };
 
 #endif

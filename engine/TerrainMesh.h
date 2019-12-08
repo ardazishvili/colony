@@ -22,10 +22,15 @@ public:
                    float topRightY,
                    int divisions);
   void deinit();
+  float getZ(float x, float y) const;
 
 private:
   std::vector<VertexColor> _v;
   std::vector<unsigned int> _indices;
+  unsigned int _width;
+  unsigned int _height;
+  float _xStep;
+  float _yStep;
   GLuint _vao;
   GLuint _vertexVbo;
   GLuint _indicesEbo;

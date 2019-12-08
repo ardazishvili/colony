@@ -127,17 +127,26 @@ int main(int argc, char** argv)
   ImGui_ImplGlfw_NewFrame();
   ImGui::NewFrame();
 
-  createTank(game, textureShader, glm::vec3(-0.2f, -3.6f, 1.0f));
-  /* createTank(game, textureShader, glm::vec3(-2.5f, -2.5f, 1.0f)); */
+  auto terrain = Terrain(colorShader, -10.0f, -10.0f, 10.0f, 10.0f, 256);
+  game.addTerrain(&terrain);
+  eventManager =
+    std::make_unique<EventManager>(window, game, camera, textureShader);
+  /* auto x = 2; */
+  /* auto y = -2; */
+  auto x = 2;
+  auto y = -2;
+  auto z = terrain.getXYZ(glm::vec2(x, y)).z;
+  std::cout << "terrain.getXYZ(glm::vec2(x, y))= " << z << std::endl;
+
+  createTank(game, textureShader, terrain.getXYZ(glm::vec2(0.0, 0.0f)));
+  createTank(game, textureShader, terrain.getXYZ(glm::vec2(1.0, -1.0f)));
+  createTank(game, textureShader, terrain.getXYZ(glm::vec2(2.0, -2.0f)));
   /* createTank(game, phongShader, glm::vec2(-5.0f, -5.0f)); */
   /* auto tankFactory = */
   /*   std::make_shared<TankFactory>(textureShader, glm::vec2(2.0f, 2.0f)); */
   /* game.addStructure(tankFactory); */
   /* tankFactory->commit(); */
 
-  eventManager =
-    std::make_unique<EventManager>(window, game, camera, textureShader);
-  auto terrain = Terrain(colorShader, -10.0f, -10.0f, 10.0f, 10.0f, 256);
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
   while (!glfwWindowShouldClose(window)) {

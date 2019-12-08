@@ -14,6 +14,7 @@ public:
           float topRightY,
           int divisions);
   void render();
+  glm::vec3 getXYZ(glm::vec2 xy) const;
 
 private:
   Shader& _shader;

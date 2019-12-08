@@ -24,3 +24,8 @@ void Terrain::render()
   _shader.setBool("animated", false);
   _mesh.render();
 }
+
+glm::vec3 Terrain::getXYZ(glm::vec2 xy) const
+{
+  return glm::vec3(xy.x, xy.y, _mesh.getZ(xy.x - _offset.x, xy.y - _offset.y));
+}

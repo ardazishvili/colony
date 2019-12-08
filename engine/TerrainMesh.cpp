@@ -66,8 +66,8 @@ void TerrainMesh::initTerrain(float bottomLeftX,
                               int divisions)
 {
   _v.reserve((divisions + 1) * 2 * divisions);
-  float xStep = (topRightX - bottomLeftX) / divisions;
-  float yStep = (topRightY - bottomLeftY) / divisions;
+  _xStep = (topRightX - bottomLeftX) / divisions;
+  _yStep = (topRightY - bottomLeftY) / divisions;
 
   ImGui::Begin("surface_mountain");
   static float frequency = 0.3;
@@ -100,8 +100,8 @@ void TerrainMesh::initTerrain(float bottomLeftX,
   for (int i = 0; i < width; ++i) {
     for (int j = 0; j < width; ++j) {
       auto dummy = glm::vec2();
-      x = bottomLeftX + static_cast<float>(i) * xStep;
-      y = bottomLeftY + static_cast<float>(j) * yStep;
+      x = bottomLeftX + static_cast<float>(i) * _xStep;
+      y = bottomLeftY + static_cast<float>(j) * _yStep;
       auto nv_plain = noise.fractal(glm::vec2(x, y),
                                     dummy,
                                     frequency_plain,
@@ -114,8 +114,8 @@ void TerrainMesh::initTerrain(float bottomLeftX,
   for (int i = 0; i < width; ++i) {
     for (int j = 0; j < width; ++j) {
       VertexColor vertex;
-      vertex.p.x = bottomLeftX + static_cast<float>(i) * xStep;
-      vertex.p.y = bottomLeftY + static_cast<float>(j) * yStep;
+      vertex.p.x = bottomLeftX + static_cast<float>(i) * _xStep;
+      vertex.p.y = bottomLeftY + static_cast<float>(j) * _yStep;
       glm::vec2 derivs;
       auto nv = noise.fractal(glm::vec2(vertex.p.x, vertex.p.y),
                               derivs,
@@ -135,6 +135,8 @@ void TerrainMesh::initTerrain(float bottomLeftX,
     }
   }
   auto augmentedWidth = divisions + 1 + (divisions + 1 - 2);
+  _width = augmentedWidth;
+  _height = width;
   for (int i = 0; i < width - 1; ++i) {
     for (int j = 0; j < augmentedWidth; ++j) {
       glm::vec3 p0(0);
@@ -237,3 +239,17 @@ void TerrainMesh::initTerrain(float bottomLeftX,
   glBindVertexArray(0);
 }
 
+float TerrainMesh::getZ(float x, float y) const
+{
+  /* std::cout << "x= " << x << std::endl; */
+  /* std::cout << "y= " << y << std::endl; */
+  /* std::cout << "_xStep= " << _xStep << std::endl; */
+  /* std::cout << "_yStep= " << _yStep << std::endl; */
+  auto i = ::floor(x / _xStep);
+  auto j = ::floor(y / _yStep);
+  /* std::cout << "i= " << i << std::endl; */
+  /* std::cout << "j= " << j << std::endl; */
+  auto mappedJ = (j == 0) ? 0 : 2 * j - 1;
+  /* std::cout << "mappedJ= " << mappedJ << std::endl; */
+  return _v.at(i * _width + mappedJ).p.z;
+}

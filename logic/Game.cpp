@@ -47,6 +47,11 @@ void Game::addPlant(std::shared_ptr<Plant> plant)
   _plants.push_back(plant);
 }
 
+void Game::addTerrain(Terrain* terrain)
+{
+  _terrain = terrain;
+}
+
 void Game::setControl(std::unique_ptr<Control> control)
 {
   _control = std::move(control);
@@ -154,12 +159,13 @@ void Game::showDebug()
                ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs;
   ImGui::Begin("3dCoordinates", NULL, flags);
   ImGui::SetWindowPos(ImVec2(0, screenHeight - 22));
-  ImGui::SetWindowSize(ImVec2(250, 22));
+  ImGui::SetWindowSize(ImVec2(500, 22));
   auto pos = EventManager::unProject(currentX, currentY);
   std::stringstream ss;
   ss << "x:" << std::setw(5) << std::setprecision(2) << pos.x
      << "; y:" << std::setw(5) << std::setprecision(2) << pos.y
      << "; z: " << pos.z;
+  /* ss << "; terrain z = " << _terrain->getXYZ(glm::vec2(pos.x, pos.y)).z; */
   ImGui::Text(ss.str().c_str());
   ImGui::End();
 }
