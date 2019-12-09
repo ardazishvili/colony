@@ -16,11 +16,15 @@ struct RgbColor
 };
 
 using HeightPart = float;
-std::map<HeightPart, RgbColor> colorMapping = { { 0.0f, { 113, 128, 143 } },
-                                                { 0.5f, { 237, 227, 143 } },
-                                                { 1.0f, { 242, 127, 115 } } };
+std::map<HeightPart, RgbColor> colorMapping = {
+  { 0.0f, { 113.0f / 255, 128.0f / 255, 143.0f / 255 } },
+  { 0.5f, { 237.0f / 255, 227.0f / 255, 143.0f / 255 } },
+  { 1.0f, { 242.0f / 255, 127.0f / 255, 115.0f / 255 } }
+};
 /* float TerrainMesh::plantsColor[3] = { 0, 255, 0 }; */
-float TerrainMesh::plantsColor[3] = { 0 / 255, 255 / 255, 0 / 255 };
+float TerrainMesh::plantsColor[3] = { 101.0f / 255,
+                                      174.0f / 255,
+                                      101.0f / 255 };
 /* float TerrainMesh::plantsColor[3] = { 64, 140, 64 }; */
 float TerrainMesh::UPDATE_COLOR_SPEED = 0.99;
 
@@ -198,9 +202,9 @@ void TerrainMesh::initTerrain(float bottomLeftX,
         b = colorMapping[1.0f];
         h = (h - 0.5) * 2;
       }
-      _v[augmentedWidth * i + j].color.x = glm::lerp(a.r, b.r, h) / 255.0;
-      _v[augmentedWidth * i + j].color.y = glm::lerp(a.g, b.g, h) / 255.0;
-      _v[augmentedWidth * i + j].color.z = glm::lerp(a.b, b.b, h) / 255.0;
+      _v[augmentedWidth * i + j].color.x = glm::lerp(a.r, b.r, h);
+      _v[augmentedWidth * i + j].color.y = glm::lerp(a.g, b.g, h);
+      _v[augmentedWidth * i + j].color.z = glm::lerp(a.b, b.b, h);
     }
   }
   _indices.reserve(::pow(divisions, 2) * 2 * 3);
@@ -263,52 +267,28 @@ float TerrainMesh::getZ(float x, float y) const
 {
   x += _width / 2;
   y += _height / 2;
-  /* std::cout << "x= " << x << std::endl; */
-  /* std::cout << "y= " << y << std::endl; */
-  /* std::cout << "_xStep= " << _xStep << std::endl; */
-  /* std::cout << "_yStep= " << _yStep << std::endl; */
   auto i = ::floor(x / _xStep / _xyScale);
   auto j = ::floor(y / _yStep / _xyScale);
-  /* std::cout << "i= " << i << std::endl; */
-  /* std::cout << "j= " << j << std::endl; */
   auto mappedJ = (j == 0) ? 0 : 2 * j - 1;
-  /* std::cout << "mappedJ= " << mappedJ << std::endl; */
   return _v.at(i * _latticeWidth + mappedJ).p.z;
 }
 
 void TerrainMesh::updateColor(float x, float y)
 {
-  std::cout << "plantsColor[0]= " << plantsColor[0] << std::endl;
-  std::cout << "plantsColor[1]= " << plantsColor[1] << std::endl;
-  std::cout << "plantsColor[2]= " << plantsColor[2] << std::endl;
-  x += _width / 1;
-  y += _height / 1;
-  /* std::cout << "x= " << x << std::endl; */
-  /* std::cout << "y= " << y << std::endl; */
+  x += _width;
+  y += _height;
   auto i = ::floor(x / _xStep / _xyScale);
   auto j = ::floor(y / _yStep);
-  /* std::cout << "i= " << i << std::endl; */
-  /* std::cout << "j= " << j << std::endl; */
-  /* std::cout << "_latticeWidth= " << _latticeWidth << std::endl; */
   auto index = _latticeWidth * i + j;
   auto r = _v[index].color.x;
   auto g = _v[index].color.y;
   auto b = _v[index].color.z;
-  /* std::cout << "r= " << r << std::endl; */
-  /* std::cout << "g= " << g << std::endl; */
-  /* std::cout << "b= " << b << std::endl; */
   _v[index].color.x = glm::lerp(r, plantsColor[0], UPDATE_COLOR_SPEED);
   _v[index].color.y = glm::lerp(g, plantsColor[1], UPDATE_COLOR_SPEED);
   _v[index].color.z = glm::lerp(b, plantsColor[2], UPDATE_COLOR_SPEED);
-  /* glBufferData( */
-  /*   GL_ARRAY_BUFFER, sizeof(VertexColor) * _v.size(), &_v[0],
-   * GL_DYNAMIC_DRAW); */
   glBindBuffer(GL_ARRAY_BUFFER, _vertexVbo);
   glBufferSubData(GL_ARRAY_BUFFER,
                   sizeof(VertexColor) * (index),
                   sizeof(VertexColor),
                   &_v[index]);
-  /* glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(VertexColor) * _v.size(),
-   * &_v[0]); */
-  glBindVertexArray(_vao);
 }
