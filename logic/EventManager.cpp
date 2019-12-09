@@ -97,6 +97,18 @@ void EventManager::handleKeyPress(GLFWwindow* window,
       glfwSetWindowShouldClose(_window, true);
     }
   } else if (action == GLFW_REPEAT) {
+    if (key == GLFW_KEY_UP) {
+      _camera.zoomIn();
+    }
+    if (key == GLFW_KEY_DOWN) {
+      _camera.zoomOut();
+    }
+    if (key == GLFW_KEY_LEFT) {
+      _camera.rotateLeft();
+    }
+    if (key == GLFW_KEY_RIGHT) {
+      _camera.rotateRight();
+    }
     if (key == GLFW_KEY_W) {
       _camera.moveForward();
     }

@@ -10,6 +10,7 @@ class PlantView
 public:
   PlantView(Shader& shader, glm::vec3 position);
   void draw();
+  glm::vec2 position();
 
 private:
   std::shared_ptr<Model> _model;

@@ -19,26 +19,55 @@ void Camera::updateSpeed()
   _speed = 10.5f * _deltaTime; // adjust accordingly
 }
 
-void Camera::moveForward()
+void Camera::zoomIn()
 {
   _position += _speed * _front;
 }
 
-void Camera::moveBackward()
+void Camera::zoomOut()
 {
   _position -= _speed * _front;
 }
 
-void Camera::moveLeft()
+void Camera::rotateLeft()
 {
   _yaw -= 1.0f * _rotationSpeed;
   updatePosition();
 }
 
-void Camera::moveRight()
+void Camera::rotateRight()
 {
   _yaw += 1.0f * _rotationSpeed;
   updatePosition();
+}
+
+void Camera::moveForward()
+{
+  _position.y += _moveSpeed;
+  updateAngles();
+  updateFront();
+}
+
+void Camera::moveBackward()
+{
+  _position.y -= _moveSpeed;
+  updateAngles();
+  updateFront();
+}
+
+void Camera::moveLeft()
+{
+
+  _position.x -= _moveSpeed;
+  updateAngles();
+  updateFront();
+}
+
+void Camera::moveRight()
+{
+  _position.x += _moveSpeed;
+  updateAngles();
+  updateFront();
 }
 
 void Camera::tilt(double x, double y)
@@ -123,9 +152,9 @@ void Camera::updatePosition()
   updateFront();
 }
 
-void Camera::setEyeZ(float z)
+void Camera::setEye(glm::vec3 p)
 {
-  _position.z = z;
+  _position = p;
   updateAngles();
   updateFront();
 }

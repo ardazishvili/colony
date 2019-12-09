@@ -17,6 +17,7 @@ public:
           float zScale);
   void render();
   glm::vec3 getXYZ(glm::vec2 xy) const;
+  void updateColor(glm::vec2 xy);
 
 private:
   Shader& _shader;

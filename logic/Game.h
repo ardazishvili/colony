@@ -38,6 +38,7 @@ public:
   bool panelIsEmpty(Panel::Type type);
 
 private:
+  void updateTerrain();
   void displayTanks();
   void displayShells();
   void displayStructures();

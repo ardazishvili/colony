@@ -10,9 +10,11 @@ class Plant
 public:
   Plant(Shader& shader, glm::vec3 position);
   void render();
+  glm::vec2 position();
 
 private:
   PlantView _view;
+  float _strenght{ 0.0f }; // percent
 };
 
 #endif

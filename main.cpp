@@ -176,7 +176,9 @@ int main(int argc, char** argv)
     ImGui::SetWindowSize(ImVec2(500, 100));
     ImGui::SliderFloat("camera z", &camera_z, 0.0f, 20.0f);
     ImGui::End();
-    camera.setEyeZ(camera_z);
+    auto eye = camera.eye();
+    eye.z = camera_z;
+    camera.setEye(eye);
 
     ImGui::Begin("models scale");
     ImGui::SetWindowPos(ImVec2(0, 600));
@@ -204,9 +206,6 @@ int main(int argc, char** argv)
 
     /* linesShader.configureRender(); */
 
-    /* auto terrain2 = Terrain( */
-    /*   colorShader, -10.0f, -10.0f, 10.0f, 10.0f, 256 * 1, xyScale, zScale);
-     */
     terrain.render();
 
     eventManager->tick();

@@ -6,3 +6,8 @@ void Plant::render()
 {
   _view.draw();
 }
+
+glm::vec2 Plant::position()
+{
+  return _view.position();
+}

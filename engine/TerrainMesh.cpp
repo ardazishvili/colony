@@ -19,6 +19,10 @@ using HeightPart = float;
 std::map<HeightPart, RgbColor> colorMapping = { { 0.0f, { 113, 128, 143 } },
                                                 { 0.5f, { 237, 227, 143 } },
                                                 { 1.0f, { 242, 127, 115 } } };
+/* float TerrainMesh::plantsColor[3] = { 0, 255, 0 }; */
+float TerrainMesh::plantsColor[3] = { 0 / 255, 255 / 255, 0 / 255 };
+/* float TerrainMesh::plantsColor[3] = { 64, 140, 64 }; */
+float TerrainMesh::UPDATE_COLOR_SPEED = 0.99;
 
 TerrainMesh::TerrainMesh()
 {
@@ -54,6 +58,11 @@ void TerrainMesh::deinit()
 
 void TerrainMesh::render()
 {
+  ImGui::Begin("color");
+  ImGui::SetWindowPos(ImVec2(0, 500));
+  ImGui::SetWindowSize(ImVec2(200, 50));
+  ImGui::ColorEdit3("color 1", plantsColor);
+  ImGui::End();
   glBindVertexArray(_vao);
   glDrawElements(GL_TRIANGLES, _v.size() * 3, GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);
@@ -220,7 +229,7 @@ void TerrainMesh::initTerrain(float bottomLeftX,
 
   glBindBuffer(GL_ARRAY_BUFFER, _vertexVbo);
   glBufferData(
-    GL_ARRAY_BUFFER, sizeof(VertexColor) * _v.size(), &_v[0], GL_STATIC_DRAW);
+    GL_ARRAY_BUFFER, sizeof(VertexColor) * _v.size(), &_v[0], GL_DYNAMIC_DRAW);
   glEnableVertexAttribArray(0);
   glVertexAttribPointer(
     0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexColor), (void*)0);
@@ -265,4 +274,41 @@ float TerrainMesh::getZ(float x, float y) const
   auto mappedJ = (j == 0) ? 0 : 2 * j - 1;
   /* std::cout << "mappedJ= " << mappedJ << std::endl; */
   return _v.at(i * _latticeWidth + mappedJ).p.z;
+}
+
+void TerrainMesh::updateColor(float x, float y)
+{
+  std::cout << "plantsColor[0]= " << plantsColor[0] << std::endl;
+  std::cout << "plantsColor[1]= " << plantsColor[1] << std::endl;
+  std::cout << "plantsColor[2]= " << plantsColor[2] << std::endl;
+  x += _width / 1;
+  y += _height / 1;
+  /* std::cout << "x= " << x << std::endl; */
+  /* std::cout << "y= " << y << std::endl; */
+  auto i = ::floor(x / _xStep / _xyScale);
+  auto j = ::floor(y / _yStep);
+  /* std::cout << "i= " << i << std::endl; */
+  /* std::cout << "j= " << j << std::endl; */
+  /* std::cout << "_latticeWidth= " << _latticeWidth << std::endl; */
+  auto index = _latticeWidth * i + j;
+  auto r = _v[index].color.x;
+  auto g = _v[index].color.y;
+  auto b = _v[index].color.z;
+  /* std::cout << "r= " << r << std::endl; */
+  /* std::cout << "g= " << g << std::endl; */
+  /* std::cout << "b= " << b << std::endl; */
+  _v[index].color.x = glm::lerp(r, plantsColor[0], UPDATE_COLOR_SPEED);
+  _v[index].color.y = glm::lerp(g, plantsColor[1], UPDATE_COLOR_SPEED);
+  _v[index].color.z = glm::lerp(b, plantsColor[2], UPDATE_COLOR_SPEED);
+  /* glBufferData( */
+  /*   GL_ARRAY_BUFFER, sizeof(VertexColor) * _v.size(), &_v[0],
+   * GL_DYNAMIC_DRAW); */
+  glBindBuffer(GL_ARRAY_BUFFER, _vertexVbo);
+  glBufferSubData(GL_ARRAY_BUFFER,
+                  sizeof(VertexColor) * (index),
+                  sizeof(VertexColor),
+                  &_v[index]);
+  /* glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(VertexColor) * _v.size(),
+   * &_v[0]); */
+  glBindVertexArray(_vao);
 }

@@ -25,6 +25,9 @@ public:
                    float zScale);
   void deinit();
   float getZ(float x, float y) const;
+  void updateColor(float x, float y);
+  static float UPDATE_COLOR_SPEED;
+  static float plantsColor[3];
 
 private:
   std::vector<VertexColor> _v;

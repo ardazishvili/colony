@@ -9,6 +9,10 @@ public:
   Camera() = delete;
   Camera(glm::vec3 positionVector, glm::vec3 lookAtVector, glm::vec3 upVector);
   void updateSpeed();
+  void zoomIn();
+  void zoomOut();
+  void rotateLeft();
+  void rotateRight();
   void moveForward();
   void moveBackward();
   void moveLeft();
@@ -20,7 +24,7 @@ public:
   glm::vec3 reference() const;
   glm::vec3 up() const;
   float getPitch() const;
-  void setEyeZ(float z);
+  void setEye(glm::vec3 p);
 
 private:
   void updatePosition();
@@ -42,6 +46,7 @@ private:
   bool _firstMouse{ true };
   float _camRadius;
   float _rotationSpeed{ 2.0f };
+  float _moveSpeed{ 0.5f };
 };
 
 #endif

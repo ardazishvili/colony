@@ -9,6 +9,7 @@
 
 void Game::tick()
 {
+  updateTerrain();
   for (auto& tank : _tanks) {
     if (tank->isDestroyed()) {
       tank->stopShooting();
@@ -31,6 +32,13 @@ void Game::tick()
   displayControl();
 
   showDebug();
+}
+
+void Game::updateTerrain()
+{
+  for (auto& plant : _plants) {
+    _terrain->updateColor(plant->position());
+  }
 }
 
 void Game::addTank(std::shared_ptr<Tank> tank)
