@@ -63,11 +63,17 @@ void TerrainMesh::initTerrain(float bottomLeftX,
                               float bottomLeftY,
                               float topRightX,
                               float topRightY,
-                              int divisions)
+                              int divisions,
+                              float xyScale,
+                              float zScale)
 {
   _v.reserve((divisions + 1) * 2 * divisions);
+  _width = topRightX - bottomLeftX;
+  _height = topRightY - bottomLeftY;
   _xStep = (topRightX - bottomLeftX) / divisions;
   _yStep = (topRightY - bottomLeftY) / divisions;
+  _xyScale = xyScale;
+  _zScale = zScale;
 
   ImGui::Begin("surface_mountain");
   static float frequency = 0.3;
@@ -123,7 +129,9 @@ void TerrainMesh::initTerrain(float bottomLeftX,
                               frequencyFactor,
                               amplitudeFactor,
                               5);
-      vertex.p.z = ::max(nv, plainZ.at(i * width + j));
+      vertex.p.x *= _xyScale;
+      vertex.p.y *= _xyScale;
+      vertex.p.z = ::max(nv * _zScale, plainZ.at(i * width + j));
       min = std::min(min, vertex.p.z);
       max = std::max(max, vertex.p.z);
       vertex.normal = glm::vec3(0.0f);
@@ -135,8 +143,8 @@ void TerrainMesh::initTerrain(float bottomLeftX,
     }
   }
   auto augmentedWidth = divisions + 1 + (divisions + 1 - 2);
-  _width = augmentedWidth;
-  _height = width;
+  _latticeWidth = augmentedWidth;
+  _latticeHeight = width;
   for (int i = 0; i < width - 1; ++i) {
     for (int j = 0; j < augmentedWidth; ++j) {
       glm::vec3 p0(0);
@@ -165,11 +173,14 @@ void TerrainMesh::initTerrain(float bottomLeftX,
     }
   }
   auto amplitude = max - min;
+  std::cout << "max= " << max << std::endl;
+  std::cout << "min= " << min << std::endl;
+  std::cout << "amplitude= " << amplitude << std::endl;
   for (int i = 0; i < width; ++i) {
     for (int j = 0; j < augmentedWidth; ++j) {
       RgbColor a, b;
       auto h = (_v[augmentedWidth * i + j].p.z - min) / amplitude;
-      if (h <= amplitude * 0.4) {
+      if (h <= amplitude * 0.2) {
         a = colorMapping[0.0f];
         b = colorMapping[0.5f];
         h *= 2;
@@ -241,15 +252,17 @@ void TerrainMesh::initTerrain(float bottomLeftX,
 
 float TerrainMesh::getZ(float x, float y) const
 {
+  x += _width / 2;
+  y += _height / 2;
   /* std::cout << "x= " << x << std::endl; */
   /* std::cout << "y= " << y << std::endl; */
   /* std::cout << "_xStep= " << _xStep << std::endl; */
   /* std::cout << "_yStep= " << _yStep << std::endl; */
-  auto i = ::floor(x / _xStep);
-  auto j = ::floor(y / _yStep);
+  auto i = ::floor(x / _xStep / _xyScale);
+  auto j = ::floor(y / _yStep / _xyScale);
   /* std::cout << "i= " << i << std::endl; */
   /* std::cout << "j= " << j << std::endl; */
   auto mappedJ = (j == 0) ? 0 : 2 * j - 1;
   /* std::cout << "mappedJ= " << mappedJ << std::endl; */
-  return _v.at(i * _width + mappedJ).p.z;
+  return _v.at(i * _latticeWidth + mappedJ).p.z;
 }

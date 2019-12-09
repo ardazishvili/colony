@@ -15,7 +15,7 @@ private:
   std::shared_ptr<Model> _model;
   Shader& _shader;
   glm::vec3 _position;
-  float _scaleFactor{ 0.03 };
+  float _scaleFactor{ 1.0f };
 };
 
 #endif

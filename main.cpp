@@ -135,15 +135,17 @@ int main(int argc, char** argv)
   ImGui_ImplGlfw_NewFrame();
   ImGui::NewFrame();
 
-  auto terrain = Terrain(colorShader, -10.0f, -10.0f, 10.0f, 10.0f, 256);
+  auto xyScale = 2.0f;
+  auto zScale = 3.0f;
+  auto terrain = Terrain(
+    colorShader, -10.0f, -10.0f, 10.0f, 10.0f, 256 * 1, xyScale, zScale);
   game.addTerrain(&terrain);
   eventManager = std::make_unique<EventManager>(
     window, game, camera, textureShader, &terrain);
 
   createTank(game, textureShader, terrain.getXYZ(glm::vec2(0.0, 0.0f)));
-  createTank(game, textureShader, terrain.getXYZ(glm::vec2(1.0, -1.0f)));
-  createTank(game, textureShader, terrain.getXYZ(glm::vec2(2.0, -2.0f)));
-  /* createTank(game, phongShader, glm::vec2(-5.0f, -5.0f)); */
+  /* createTank(game, textureShader, terrain.getXYZ(glm::vec2(1.0, -1.0f))); */
+  /* createTank(game, textureShader, terrain.getXYZ(glm::vec2(2.0, -2.0f))); */
   /* auto tankFactory = */
   /*   std::make_shared<TankFactory>(textureShader, glm::vec2(2.0f, 2.0f)); */
   /* game.addStructure(tankFactory); */
@@ -169,10 +171,10 @@ int main(int argc, char** argv)
     glProvokingVertex(GL_FIRST_VERTEX_CONVENTION);
 
     ImGui::Begin("camera");
-    static float camera_z = 15.0;
+    static float camera_z = 20.0f;
     ImGui::SetWindowPos(ImVec2(0, 210));
     ImGui::SetWindowSize(ImVec2(500, 100));
-    ImGui::SliderFloat("camera z", &camera_z, -20.0f, 20.0f);
+    ImGui::SliderFloat("camera z", &camera_z, 0.0f, 20.0f);
     ImGui::End();
     camera.setEyeZ(camera_z);
 
@@ -200,13 +202,16 @@ int main(int argc, char** argv)
     gView = view;
     gProjection = projection;
 
-    linesShader.configureRender();
+    /* linesShader.configureRender(); */
 
+    /* auto terrain2 = Terrain( */
+    /*   colorShader, -10.0f, -10.0f, 10.0f, 10.0f, 256 * 1, xyScale, zScale);
+     */
     terrain.render();
 
     eventManager->tick();
 
-    skybox.render();
+    /* skybox.render(); */
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

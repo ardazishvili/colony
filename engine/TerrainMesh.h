@@ -20,17 +20,23 @@ public:
                    float bottomLeftY,
                    float topRightX,
                    float topRightY,
-                   int divisions);
+                   int divisions,
+                   float xyScale,
+                   float zScale);
   void deinit();
   float getZ(float x, float y) const;
 
 private:
   std::vector<VertexColor> _v;
   std::vector<unsigned int> _indices;
-  unsigned int _width;
-  unsigned int _height;
+  float _width;
+  float _height;
+  unsigned int _latticeWidth;
+  unsigned int _latticeHeight;
   float _xStep;
   float _yStep;
+  float _xyScale;
+  float _zScale;
   GLuint _vao;
   GLuint _vertexVbo;
   GLuint _indicesEbo;

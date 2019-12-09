@@ -16,7 +16,7 @@ void Camera::updateSpeed()
   float currentFrame = glfwGetTime();
   _deltaTime = currentFrame - _lastFrame;
   _lastFrame = currentFrame;
-  _speed = 5.5f * _deltaTime; // adjust accordingly
+  _speed = 10.5f * _deltaTime; // adjust accordingly
 }
 
 void Camera::moveForward()

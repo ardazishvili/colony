@@ -9,6 +9,7 @@ PlantView::PlantView(Shader& shader, glm::vec3 position) :
 
 void PlantView::draw()
 {
+  _scaleFactor = 0.01;
   _shader.setBool("animated", false);
   auto model = glm::mat4(1.0f);
   model = glm::translate(model, _position);
