@@ -292,3 +292,38 @@ void TerrainMesh::updateColor(float x, float y)
                   sizeof(VertexColor),
                   &_v[index]);
 }
+
+void TerrainMesh::updateColor(unsigned int index)
+{
+  auto r = _v[index].color.x;
+  auto g = _v[index].color.y;
+  auto b = _v[index].color.z;
+  _v[index].color.x = glm::lerp(r, plantsColor[0], UPDATE_COLOR_SPEED);
+  _v[index].color.y = glm::lerp(g, plantsColor[1], UPDATE_COLOR_SPEED);
+  _v[index].color.z = glm::lerp(b, plantsColor[2], UPDATE_COLOR_SPEED);
+  glBindBuffer(GL_ARRAY_BUFFER, _vertexVbo);
+  glBufferSubData(GL_ARRAY_BUFFER,
+                  sizeof(VertexColor) * (index),
+                  sizeof(VertexColor),
+                  &_v[index]);
+}
+
+std::vector<unsigned int> TerrainMesh::getVertices(glm::vec2 center,
+                                                   float radius)
+{
+  center.x += _width;
+  center.y += _height;
+  std::cout << "center.x= " << center.x << std::endl;
+  std::cout << "center.y= " << center.y << std::endl;
+  auto res = std::vector<unsigned int>();
+  for (unsigned long i = 0; i < _v.size(); ++i) {
+    if (::sqrt(::pow(center.x - _v[i].p.x, 2) +
+               ::pow(center.y - _v[i].p.y, 2)) < radius - 2 * _xStep) {
+      /* std::cout << "_v[i].p.x= " << _v[i].p.x << std::endl; */
+      /* std::cout << "_v[i].p.y= " << _v[i].p.y << std::endl; */
+      res.push_back(i);
+    }
+  }
+
+  return res;
+}

@@ -1,5 +1,6 @@
 #include "../imgui/imgui.h"
 
+#include "../engine/Circle.h"
 #include "../globals.h"
 #include "EventManager.h"
 #include "Game.h"
@@ -59,6 +60,7 @@ void Game::addPlant(std::shared_ptr<Plant> plant)
 
 void Game::addBarrier(std::shared_ptr<Barrier> barrier)
 {
+  barrier->assignVertices(_terrain);
   _barriers.push_back(barrier);
 }
 

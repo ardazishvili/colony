@@ -8,12 +8,14 @@
 class BarrierView
 {
 public:
-  BarrierView(Shader& shader, glm::vec3 position);
+  BarrierView(Shader& textureShader, Shader& _colorShader, glm::vec3 position);
   void draw();
+  glm::vec2 position() const;
 
 private:
   std::shared_ptr<Model> _model;
-  Shader& _shader;
+  Shader& _textureShader;
+  Shader& _colorShader;
   glm::vec3 _position;
   float _scaleFactor{ 1 };
 };

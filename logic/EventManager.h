@@ -13,7 +13,8 @@ public:
   EventManager(GLFWwindow* window,
                Game& game,
                Camera& camera,
-               Shader& shader,
+               Shader& textureShader,
+               Shader& colorShader,
                Terrain* terrain);
   void tick();
   void handleKeyPress(GLFWwindow* window,
@@ -35,7 +36,8 @@ private:
   GLFWwindow* _window;
   Camera& _camera;
   Game& _game;
-  Shader& _shader;
+  Shader& _textureShader;
+  Shader& _colorShader;
   /* Surface _selectionSurface; */
   glm::vec2 _selectionSurfaceBottonLeft;
   bool _selectionActive{ false };

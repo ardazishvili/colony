@@ -11,6 +11,7 @@
 #include <GL/glew.h> // Initialize with glewInit()
 #include <GLFW/glfw3.h>
 
+#include "engine/Circle.h"
 #include "engine/Light.h"
 #include "engine/LinesShader.h"
 #include "engine/PhongShader.h"
@@ -141,7 +142,7 @@ int main(int argc, char** argv)
     colorShader, -10.0f, -10.0f, 10.0f, 10.0f, 256 * 1, xyScale, zScale);
   game.addTerrain(&terrain);
   eventManager = std::make_unique<EventManager>(
-    window, game, camera, textureShader, &terrain);
+    window, game, camera, textureShader, colorShader, &terrain);
 
   createTank(game, textureShader, terrain.getXYZ(glm::vec2(0.0, 0.0f)));
   /* createTank(game, textureShader, terrain.getXYZ(glm::vec2(1.0, -1.0f))); */

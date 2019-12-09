@@ -43,3 +43,13 @@ void Terrain::updateColor(glm::vec2 xy)
 {
   _mesh.updateColor(xy.x, xy.y);
 }
+
+void Terrain::updateColor(unsigned int index)
+{
+  _mesh.updateColor(index);
+}
+
+std::vector<unsigned int> Terrain::getVertices(glm::vec2 center, float radius)
+{
+  return _mesh.getVertices(center, radius);
+}

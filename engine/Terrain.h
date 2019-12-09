@@ -18,6 +18,8 @@ public:
   void render();
   glm::vec3 getXYZ(glm::vec2 xy) const;
   void updateColor(glm::vec2 xy);
+  void updateColor(unsigned int index);
+  std::vector<unsigned int> getVertices(glm::vec2 center, float radius);
 
 private:
   Shader& _shader;

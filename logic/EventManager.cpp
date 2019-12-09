@@ -22,20 +22,22 @@ glm::vec3 EventManager::unProject(int xpos, int ypos)
 EventManager::EventManager(GLFWwindow* window,
                            Game& game,
                            Camera& camera,
-                           Shader& shader,
+                           Shader& textureShader,
+                           Shader& colorShader,
                            Terrain* terrain) :
   _window(window),
-  _camera(camera), _game(game), _shader(shader), _terrain(terrain)
+  _camera(camera), _game(game), _textureShader(textureShader),
+  _colorShader(colorShader), _terrain(terrain)
 /* _selectionSurface(shader, 0.0f, 0.0f, 1.0f, 1.0f, 1) */
 {
-  _game.setControl(std::make_unique<Control>(shader));
+  _game.setControl(std::make_unique<Control>(textureShader));
   /* _selectionSurface.setOffsetZ(0.04f); */
 }
 
 void EventManager::tick()
 {
-  _shader.use();
-  _shader.configure();
+  _textureShader.use();
+  _textureShader.configure();
   /* if (_selectionActive) { */
   /* _selectionSurface.render(); */
   /* } */
@@ -60,8 +62,8 @@ void EventManager::handleKeyPress(GLFWwindow* window,
       std::cout << "X pressed" << std::endl;
       if (_structureToBuild == nullptr) {
         _structureToBuildStage = BuildStage::SetAngle;
-        auto tankFactory =
-          std::make_shared<TankFactory>(_shader, unProject(currentX, currentY));
+        auto tankFactory = std::make_shared<TankFactory>(
+          _textureShader, unProject(currentX, currentY));
         _game.addStructure(tankFactory);
         _structureToBuild = tankFactory;
       } else {
@@ -74,7 +76,8 @@ void EventManager::handleKeyPress(GLFWwindow* window,
       std::cout << "C pressed" << std::endl;
       if (_structureToBuild == nullptr) {
         _structureToBuildStage = BuildStage::SetAngle;
-        auto hq = std::make_shared<Hq>(_shader, unProject(currentX, currentY));
+        auto hq =
+          std::make_shared<Hq>(_textureShader, unProject(currentX, currentY));
         _game.addStructure(hq);
         _structureToBuild = hq;
       } else {
@@ -85,12 +88,12 @@ void EventManager::handleKeyPress(GLFWwindow* window,
     }
     if (key == GLFW_KEY_P) {
       auto plant =
-        std::make_shared<Plant>(_shader, unProject(currentX, currentY));
+        std::make_shared<Plant>(_textureShader, unProject(currentX, currentY));
       _game.addPlant(plant);
     }
     if (key == GLFW_KEY_B) {
-      auto barrier =
-        std::make_shared<Barrier>(_shader, unProject(currentX, currentY));
+      auto barrier = std::make_shared<Barrier>(
+        _textureShader, _colorShader, unProject(currentX, currentY));
       _game.addBarrier(barrier);
     }
     if (key == GLFW_KEY_ESCAPE) {
