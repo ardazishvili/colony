@@ -12,6 +12,7 @@
 #include <GLFW/glfw3.h>
 
 #include "engine/Light.h"
+#include "engine/LinesShader.h"
 #include "engine/PhongShader.h"
 #include "engine/Skybox.h"
 #include "engine/SkyboxShader.h"
@@ -121,6 +122,8 @@ int main(int argc, char** argv)
   SkyboxShader skyboxShader(
     "/home/roman/repos/colony/shaders/vertex_skybox.vs",
     "/home/roman/repos/colony/shaders/fragment_skybox.fs");
+  LinesShader linesShader("/home/roman/repos/colony/shaders/vertex_lines.vs",
+                          "/home/roman/repos/colony/shaders/fragment_lines.fs");
   modelLoader = std::make_unique<ModelLoader>(textureShader);
   modelLoader->load();
 
@@ -197,12 +200,10 @@ int main(int argc, char** argv)
     gView = view;
     gProjection = projection;
 
-    colorShader.use();
-    colorShader.configure();
+    linesShader.configureRender();
+
     terrain.render();
 
-    textureShader.use();
-    textureShader.configure();
     eventManager->tick();
 
     skybox.render();

@@ -20,6 +20,8 @@ add_executable(colony
 		engine/PhongShader.h
     engine/SkyboxShader.h
     engine/SkyboxShader.cpp
+    engine/LinesShader.h
+    engine/LinesShader.cpp
 		engine/Shader.cpp
 		engine/Shader.h
 		engine/Terrain.cpp

@@ -29,8 +29,10 @@ public:
   void setBoneTransform(unsigned int index, const glm::mat4& matrix);
   virtual void configure() = 0;
 
-private:
+protected:
   unsigned int _id;
+
+private:
   GLuint m_boneLocation[MAX_BONES];
 };
 

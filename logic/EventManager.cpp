@@ -34,6 +34,8 @@ EventManager::EventManager(GLFWwindow* window,
 
 void EventManager::tick()
 {
+  _shader.use();
+  _shader.configure();
   /* if (_selectionActive) { */
   /* _selectionSurface.render(); */
   /* } */
