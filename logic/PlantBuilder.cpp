@@ -13,7 +13,7 @@ PlantBuilder::PlantBuilder(Shader& shader, Game& game, Barrier& barrier) :
 
 void PlantBuilder::create()
 {
-  std::mt19937 generator(glfwGetTime());
+  std::mt19937 generator(glfwGetTime() * 1000);
   std::uniform_real_distribution<float> dReal(0, 2 * M_PI);
   auto getRandomAngle = std::bind(dReal, generator);
   auto randomAngle = getRandomAngle();
