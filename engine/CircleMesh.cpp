@@ -47,7 +47,7 @@ void CircleMesh::init(float radius, unsigned int divisions)
   vertex.p.y = 0.0f;
   vertex.p.z = 0.0f;
   vertex.normal = glm::vec3(0.0f, 0.0f, 1.0f);
-  vertex.color = glm::vec3(0.0f, 1.0f, 0.0f);
+  vertex.color = glm::vec3(1.0f, 1.0f, 1.0f);
   _v.push_back(vertex);
   for (unsigned int i = 0; i < divisions; ++i) {
     auto vertex = VertexColor();
@@ -59,7 +59,7 @@ void CircleMesh::init(float radius, unsigned int divisions)
     _v.push_back(vertex);
   }
 
-  _indices.reserve(divisions);
+  _indices.reserve(divisions * 3 + 3);
   for (unsigned int i = 0; i < divisions - 1; ++i) {
     _indices.push_back(0);
     _indices.push_back(i + 1);

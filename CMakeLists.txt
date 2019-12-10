@@ -79,6 +79,10 @@ add_executable(colony
     engine/Circle.h
     engine/CircleMesh.cpp
     engine/CircleMesh.h
+    engine/Sphere.h
+    engine/Sphere.cpp
+    engine/SphereMesh.h
+    engine/SphereMesh.cpp
     engine/LinesShader.cpp
     engine/LinesShader.h
     engine/PlainMesh.cpp

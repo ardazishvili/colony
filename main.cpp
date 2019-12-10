@@ -11,12 +11,12 @@
 #include <GL/glew.h> // Initialize with glewInit()
 #include <GLFW/glfw3.h>
 
-#include "engine/Circle.h"
 #include "engine/Light.h"
 #include "engine/LinesShader.h"
 #include "engine/PhongShader.h"
 #include "engine/Skybox.h"
 #include "engine/SkyboxShader.h"
+#include "engine/Sphere.h"
 #include "engine/Terrain.h"
 
 #include "logic/EventManager.h"
@@ -182,7 +182,7 @@ int main(int argc, char** argv)
     camera.setEye(eye);
 
     ImGui::Begin("models scale");
-    ImGui::SetWindowPos(ImVec2(0, 600));
+    ImGui::SetWindowPos(ImVec2(0, 620));
     ImGui::SetWindowSize(ImVec2(200, 50));
     ImGui::SliderFloat("scale", &View::VIEW_SCALE, 0.0f, 1.0f);
     ImGui::End();
@@ -190,7 +190,7 @@ int main(int argc, char** argv)
     ImGui::Begin("light");
     static float x = 1.2;
     static float y = 0.0;
-    static float z = 5.0;
+    static float z = 10.0;
     ImGui::SetWindowPos(ImVec2(0, 110));
     ImGui::SetWindowSize(ImVec2(500, 100));
     ImGui::SliderFloat("light x", &x, -10.0f, 10.0f);
@@ -212,6 +212,9 @@ int main(int argc, char** argv)
     eventManager->tick();
 
     /* skybox.render(); */
+
+    auto s = Sphere(colorShader, glm::vec3(0.0f, 0.0f, 5.0f), 1.0f, 30);
+    s.render();
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
