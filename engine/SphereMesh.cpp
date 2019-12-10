@@ -2,6 +2,7 @@
 
 #include "../math/Noise.h"
 #include "SphereMesh.h"
+float color[3] = { 255.0f / 255, 143.0f / 255, 54.0f / 255 };
 
 SphereMesh::SphereMesh()
 {
@@ -45,17 +46,24 @@ void SphereMesh::render()
 void SphereMesh::init(float r, unsigned int divisions)
 {
   ImGui::Begin("sphere noise");
-  static float frequency_plain = 0.077;
+  static float frequency_plain = 1.5;
   static float frequencyFactor_plain = 3.0;
-  static float amplitudeFactor_plain = 0.366;
+  static float amplitudeFactor_plain = 0.325;
   ImGui::SetWindowPos(ImVec2(0, 340));
   ImGui::SetWindowSize(ImVec2(500, 110));
-  ImGui::SliderFloat("frequency slider", &frequency_plain, 0.0f, 1.5f);
+  ImGui::SliderFloat("frequency slider", &frequency_plain, 1.0f, 2.5f);
   ImGui::SliderFloat(
     "frequencyFactor slider", &frequencyFactor_plain, 0.0f, 3.0f);
   ImGui::SliderFloat(
     "amplitudeFactor slider", &amplitudeFactor_plain, 0.1f, 1.5f);
   ImGui::End();
+
+  ImGui::Begin("sphere color");
+  ImGui::SetWindowPos(ImVec2(0, 560));
+  ImGui::SetWindowSize(ImVec2(200, 50));
+  ImGui::ColorEdit3("color", color);
+  ImGui::End();
+
   auto noise = Noise(777);
   unsigned int stacksNum = divisions;
   unsigned int sectorNum = divisions;
@@ -84,7 +92,7 @@ void SphereMesh::init(float r, unsigned int divisions)
       v.normal.y = v.p.y / r;
       v.normal.z = v.p.z / r;
 
-      v.color = glm::vec3(0.0f, 1.0f, 0.0f);
+      v.color = glm::vec3(color[0], color[1], color[2]);
 
       _v.push_back(v);
     }
