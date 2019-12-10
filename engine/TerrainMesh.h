@@ -16,6 +16,7 @@ public:
   TerrainMesh();
   ~TerrainMesh();
   void render();
+  void renderSub();
   void initTerrain(float bottomLeftX,
                    float bottomLeftY,
                    float topRightX,
@@ -32,6 +33,12 @@ public:
   static float plantsColor[3];
 
 private:
+  void initSubTerrain(float bottomLeftX,
+                      float bottomLeftY,
+                      float topRightX,
+                      float topRightY,
+                      int divisions);
+
   std::vector<VertexColor> _v;
   std::vector<unsigned int> _indices;
   float _width;
@@ -45,6 +52,16 @@ private:
   GLuint _vao;
   GLuint _vertexVbo;
   GLuint _indicesEbo;
+
+  std::vector<VertexColor> _vSub;
+  std::vector<unsigned int> _indicesSub;
+  unsigned int _latticeWidthSub;
+  unsigned int _latticeHeightSub;
+  float _xStepSub;
+  float _yStepSub;
+  GLuint _vaoSub;
+  GLuint _vertexVboSub;
+  GLuint _indicesEboSub;
 };
 
 #endif

@@ -16,6 +16,7 @@ public:
           float xyScale,
           float zScale);
   void render();
+  void renderSub();
   glm::vec3 getXYZ(glm::vec2 xy) const;
   /* void updateColor(glm::vec2 xy); */
   void updateColor(unsigned int index);

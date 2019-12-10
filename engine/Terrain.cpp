@@ -28,10 +28,25 @@ void Terrain::render()
   _shader.configure();
   auto model = glm::mat4(1.0f);
   model = glm::translate(model, _offset * _xyScale);
-  /* model = glm::scale(model, glm::vec3(1.0f) * _scale); */
   _shader.setTransformation("model", glm::value_ptr(model));
   _shader.setBool("animated", false);
   _mesh.render();
+}
+
+void Terrain::renderSub()
+{
+  _shader.use();
+  _shader.configure();
+  glEnable(GL_BLEND);
+  glDepthMask(GL_FALSE);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  auto model = glm::mat4(1.0f);
+  model = glm::translate(model, _offset * _xyScale);
+  _shader.setTransformation("model", glm::value_ptr(model));
+  _shader.setBool("animated", false);
+  _mesh.renderSub();
+  glDisable(GL_BLEND);
+  glDepthMask(GL_TRUE);
 }
 
 glm::vec3 Terrain::getXYZ(glm::vec2 xy) const
