@@ -10,7 +10,7 @@ TankFactory::TankFactory(Shader& shader, glm::vec3 position) :
   _maxHealth = _health;
 }
 
-void TankFactory::display()
+void TankFactory::render()
 {
   _view.draw();
 }

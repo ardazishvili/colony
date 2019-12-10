@@ -2,13 +2,24 @@
 #include "../engine/Circle.h"
 #include "../globals.h"
 
+float BarrierView::BARRIER_HEALTH_BAR_WIDTH = 1.2f;
+float BarrierView::BARRIER_HEALTH_BAR_HEIGHT = 0.15f;
+
 BarrierView::BarrierView(Shader& textureShader,
                          Shader& colorShader,
                          glm::vec3 position) :
   _textureShader(textureShader),
-  _colorShader(colorShader), _position(position)
+  _colorShader(colorShader), _position(position),
+  _healthBar(textureShader,
+             position.x - 0.3,
+             position.y,
+             _position.x + BARRIER_HEALTH_BAR_WIDTH,
+             _position.y + BARRIER_HEALTH_BAR_HEIGHT,
+             1)
 {
   _model = modelLoader->models()[Models::Barrier];
+  _healthBar.setOffsetZ(1.3f);
+  _healthBar.setTexture("/home/roman/repos/colony/assets/red.png");
 }
 
 void BarrierView::draw()
@@ -33,8 +44,32 @@ void BarrierView::draw()
   _model->render();
   glDisable(GL_BLEND);
   glDepthMask(GL_TRUE);
+  showHealthBar();
 }
-glm::vec2 BarrierView::position() const
+glm::vec3 BarrierView::position() const
 {
-  return glm::vec2(_position.x, _position.y);
+  return _position;
+  /* return glm::vec2(_position.x, _position.y); */
+}
+
+void BarrierView::setTexture(Status status) {}
+
+bool BarrierView::contain(glm::vec3 point) const
+{
+  const auto radius = 1.41f / 2;
+  const auto distance =
+    ::sqrt(::pow(_position.x - point.x, 2) + ::pow(_position.y - point.y, 2));
+
+  return distance < radius;
+}
+
+void BarrierView::setHealthBarScaleFactor(float factor)
+{
+  _healthBarScaleFactor = factor;
+}
+
+void BarrierView::showHealthBar()
+{
+  _healthBar.setScaleX(_healthBarScaleFactor);
+  _healthBar.render();
 }

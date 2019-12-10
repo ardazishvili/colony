@@ -57,6 +57,8 @@ add_executable(colony
 		logic/Tank.h
 		logic/TankBuilder.cpp
 		logic/TankBuilder.h
+    logic/PlantBuilder.h
+    logic/PlantBuilder.cpp
 		logic/TankFactory.cpp
 		logic/TankFactory.h
 		logic/TankFactoryBuilder.cpp

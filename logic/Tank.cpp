@@ -38,7 +38,7 @@ Tank::Tank(Shader& shader,
   reload();
 }
 
-void Tank::display()
+void Tank::render()
 {
   _view.draw();
 }

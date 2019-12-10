@@ -28,7 +28,7 @@ class Buildable
 {
 public:
   virtual bool isUnderCursor(const glm::vec3& mousePoint) = 0;
-  virtual void display() = 0;
+  virtual void render() = 0;
   virtual void select() = 0;
   virtual void deselect() = 0;
   virtual void takeDamage(Shell::Size shellSize) = 0;

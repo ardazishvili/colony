@@ -34,8 +34,6 @@ void CircleMesh::deinit()
 
 void CircleMesh::render()
 {
-  std::cout << "_v.size()= " << _v.size() << std::endl;
-  std::cout << "_indices.size()= " << _indices.size() << std::endl;
   glBindVertexArray(_vao);
   glDrawElements(GL_TRIANGLES, _v.size() * 3, GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);
@@ -51,7 +49,6 @@ void CircleMesh::init(float radius, unsigned int divisions)
   vertex.normal = glm::vec3(0.0f, 0.0f, 1.0f);
   vertex.color = glm::vec3(0.0f, 1.0f, 0.0f);
   _v.push_back(vertex);
-  std::cout << "divisions= " << divisions << std::endl;
   for (unsigned int i = 0; i < divisions; ++i) {
     auto vertex = VertexColor();
     vertex.p.x = radius * ::cos(i * M_PI * 2 / divisions);

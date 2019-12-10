@@ -10,7 +10,7 @@ Hq::Hq(Shader& shader, glm::vec3 position) :
   _maxHealth = _health;
 }
 
-void Hq::display()
+void Hq::render()
 {
   _view.draw();
 }

@@ -19,7 +19,7 @@ public:
                   Tank::Type tankType,
                   HealthLevel healthLevel,
                   Shell::Size shellSize);
-  void display() override;
+  void render() override;
   bool isUnderCursor(const glm::vec3& mousePoint) override;
   void select() override;
   void deselect() override;

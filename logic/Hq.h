@@ -11,7 +11,7 @@ public:
   Hq(Shader& shader, glm::vec3 position);
 
   bool isUnderCursor(const glm::vec3& mousePoint) override;
-  void display() override;
+  void render() override;
   void select() override;
   void deselect() override;
   void takeDamage(Shell::Size shellSize) override;

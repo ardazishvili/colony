@@ -71,6 +71,11 @@ void ModelLoader::load()
     GL_TEXTURE_2D, "/home/roman/repos/colony/assets/heavyTank.png");
   heavyTankTexture->load();
   _menuTextures.emplace(MenuTextures::TankHeavy, std::move(heavyTankTexture));
+
+  auto plantTexture = std::make_shared<Texture>(
+    GL_TEXTURE_2D, "/home/roman/repos/colony/assets/Plant.png");
+  plantTexture->load();
+  _menuTextures.emplace(MenuTextures::Plant, std::move(plantTexture));
 }
 
 ModelsMapping ModelLoader::models()

@@ -45,6 +45,7 @@ private:
   VehicleGroup _tanksSelected;
   Tank* _tankUnderAttack{ nullptr };
   Buildable* _structureSelected{ nullptr };
+  Buildable* _barrierSelected{ nullptr };
   std::shared_ptr<BuildableStructure> _structureToBuild{ nullptr };
   BuildStage _structureToBuildStage;
   Buildable* _structureUnderAttack{ nullptr };

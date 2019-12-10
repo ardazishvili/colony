@@ -25,7 +25,7 @@ public:
                    float zScale);
   void deinit();
   float getZ(float x, float y) const;
-  void updateColor(float x, float y);
+  /* void updateColor(float x, float y); */
   void updateColor(unsigned int index);
   std::vector<unsigned int> getVertices(glm::vec2 center, float radius);
   static float UPDATE_COLOR_SPEED;

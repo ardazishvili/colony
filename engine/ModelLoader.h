@@ -22,7 +22,8 @@ enum class MenuTextures
   TankFactory,
   TankLight,
   TankMedium,
-  TankHeavy
+  TankHeavy,
+  Plant
 };
 
 using ModelsMapping = std::map<Models, std::shared_ptr<Model>>;

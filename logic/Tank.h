@@ -38,7 +38,7 @@ public:
        HealthLevel healthLevel = HealthLevel::High,
        Shell::Size shellSize = Shell::Size::Small);
 
-  void display() override;
+  void render() override;
   bool isUnderCursor(const glm::vec3& point) override;
   bool isInsideArea(glm::vec4 area);
   void select() override;

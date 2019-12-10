@@ -33,6 +33,7 @@ public:
   Tank* getTank(const glm::vec3& mousePoint, bool select = false);
   VehicleGroup getTanks(glm::vec4 area);
   Buildable* getStructure(const glm::vec3& mousePoint);
+  Buildable* getBarrier(const glm::vec3& mousePoint);
   void showDebug();
   void clearPanel(Panel::Type type);
   bool panelIsEmpty(Panel::Type type);
@@ -53,6 +54,7 @@ private:
   std::unique_ptr<Control> _control;
   Tank* _selectedTank = nullptr;
   Buildable* _selectedStructure = nullptr;
+  Buildable* _selectedBarrier = nullptr;
   Terrain* _terrain;
 };
 

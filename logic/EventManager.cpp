@@ -189,9 +189,16 @@ void EventManager::handleMousePressedLeft()
 
   _tankSelected = _game.getTank(c, true);
   _structureSelected = _game.getStructure(c);
+  _barrierSelected = _game.getBarrier(c);
   if (!_structureSelected) {
     _structureSelected = _game.getStructure(c);
     if (!_structureSelected && _game.panelIsEmpty(Panel::Type::Units)) {
+      _game.clearPanel(Panel::Type::Units);
+    }
+  }
+  if (!_barrierSelected) {
+    _barrierSelected = _game.getBarrier(c);
+    if (!_barrierSelected && _game.panelIsEmpty(Panel::Type::Units)) {
       _game.clearPanel(Panel::Type::Units);
     }
   }

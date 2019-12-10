@@ -37,9 +37,9 @@ void Game::tick()
 
 void Game::updateTerrain()
 {
-  for (auto& plant : _plants) {
-    _terrain->updateColor(plant->position());
-  }
+  /* for (auto& plant : _plants) { */
+  /*   _terrain->updateColor(plant->position()); */
+  /* } */
 }
 
 void Game::addTank(std::shared_ptr<Tank> tank)
@@ -60,7 +60,6 @@ void Game::addPlant(std::shared_ptr<Plant> plant)
 
 void Game::addBarrier(std::shared_ptr<Barrier> barrier)
 {
-  barrier->assignVertices(_terrain);
   _barriers.push_back(barrier);
 }
 
@@ -77,7 +76,7 @@ void Game::setControl(std::unique_ptr<Control> control)
 void Game::displayTanks()
 {
   for (auto& tank : _tanks) {
-    tank->display();
+    tank->render();
   }
 }
 
@@ -91,7 +90,7 @@ void Game::displayShells()
 void Game::displayStructures()
 {
   for (auto& structure : _structures) {
-    structure->display();
+    structure->render();
   }
 }
 
@@ -174,6 +173,28 @@ Buildable* Game::getStructure(const glm::vec3& mousePoint)
 
   _selectedStructure = nullptr;
   return _selectedStructure;
+}
+
+Buildable* Game::getBarrier(const glm::vec3& mousePoint)
+{
+  for (auto& barrier : _barriers) {
+    if (!barrier->isUnderFire()) {
+      barrier->deselect();
+    }
+  }
+
+  for (auto& barrier : _barriers) {
+    if (barrier->isUnderCursor(mousePoint) && !barrier->isDestroyed()) {
+      _selectedBarrier = barrier.get();
+      barrier->select();
+      _control->populateUnitPanel(*this, _selectedBarrier);
+      _control->populateStructurePanel(_selectedBarrier);
+      return _selectedBarrier;
+    }
+  }
+
+  _selectedBarrier = nullptr;
+  return _selectedBarrier;
 }
 
 void Game::showDebug()
