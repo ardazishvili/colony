@@ -21,11 +21,7 @@ public:
   /* void updateColor(glm::vec2 xy); */
   void updateColor(unsigned int index);
   std::vector<unsigned int> getVertices(glm::vec2 center, float radius);
-  void selectSubTerrainRegion(float x,
-                              float y,
-                              float width,
-                              float height,
-                              float alfa);
+  void selectSubTerrainRegion(Region region, float alfa);
   void deselect();
 
 private:

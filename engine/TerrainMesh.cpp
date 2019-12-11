@@ -315,35 +315,22 @@ float TerrainMesh::getZ(float x, float y) const
 /*                   &_v[index]); */
 /* } */
 
-void TerrainMesh::selectSubTerrainRegion(float x,
-                                         float y,
-                                         float width,
-                                         float height,
-                                         float alfa)
+void TerrainMesh::selectSubTerrainRegion(Region region, float alfa)
 {
-  _lastSelected = { x, y, width, height };
+  _lastSelected = region;
 
-  x += _width;
-  y += _height;
+  region.x += _width;
+  region.y += _height;
 
-  auto i = ::floor(x / _xStepSub / _xyScale);
-  auto j = ::floor(y / _yStepSub);
-  signed int xWidth = width / _xStepSub / _xyScale;
-  signed int yWidth = height / _yStepSub;
+  auto i = ::floor(region.x / _xStepSub / _xyScale);
+  auto j = ::floor(region.y / _yStepSub);
+  signed int xWidth = region.width / _xStepSub / _xyScale;
+  signed int yWidth = region.height / _yStepSub;
   glBindBuffer(GL_ARRAY_BUFFER, _vertexVboSub);
-  std::cout << "i= " << i << std::endl;
-  std::cout << "j= " << j << std::endl;
-  std::cout << "xWidth= " << xWidth << std::endl;
-  std::cout << "yWidth= " << yWidth << std::endl;
   unsigned int leftXBound = std::min(i, i + xWidth);
   unsigned int rightXBound = std::max(i, i + xWidth);
   unsigned int leftYBound = std::min(j, j + yWidth);
   unsigned int rightYBound = std::max(j, j + yWidth);
-  std::cout << "leftXBound= " << leftXBound << std::endl;
-  std::cout << "leftYBound= " << leftYBound << std::endl;
-  std::cout << "rightXBound= " << rightXBound << std::endl;
-  std::cout << "rightYBound= " << rightYBound << std::endl;
-  std::cout << "::abs(yWidth)= " << ::abs(yWidth) << std::endl;
   for (unsigned int k = leftXBound; k < rightXBound; ++k) {
     auto index = _latticeWidthSub * k + leftYBound;
     for (unsigned int n = leftYBound; n < rightYBound; ++n) {
@@ -358,11 +345,7 @@ void TerrainMesh::selectSubTerrainRegion(float x,
 
 void TerrainMesh::deselect()
 {
-  selectSubTerrainRegion(_lastSelected.x,
-                         _lastSelected.y,
-                         _lastSelected.width,
-                         _lastSelected.height,
-                         0.0f);
+  selectSubTerrainRegion(_lastSelected, 0.0f);
 }
 
 void TerrainMesh::updateColor(unsigned int index)

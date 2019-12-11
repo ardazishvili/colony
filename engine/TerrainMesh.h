@@ -35,11 +35,7 @@ public:
   void deinit();
   float getZ(float x, float y) const;
   /* void updateColor(float x, float y); */
-  void selectSubTerrainRegion(float x,
-                              float y,
-                              float width,
-                              float height,
-                              float alfa);
+  void selectSubTerrainRegion(Region region, float alfa);
   void deselect();
   void updateColor(unsigned int index);
   std::vector<unsigned int> getVertices(glm::vec2 center, float radius);
@@ -76,7 +72,7 @@ private:
   GLuint _vaoSub;
   GLuint _vertexVboSub;
   GLuint _indicesEboSub;
-  Region _lastSelected;
+  Region _lastSelected{ 0.0f, 0.0f, 0.0f, 0.0f };
 };
 
 template<typename T>

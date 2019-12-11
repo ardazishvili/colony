@@ -40,7 +40,7 @@ public:
 
   void render() override;
   bool isUnderCursor(const glm::vec3& point) override;
-  bool isInsideArea(glm::vec4 area);
+  bool isInsideArea(Region area);
   void select() override;
   void deselect() override;
   void takeDamage(Shell::Size shellSize) override;

@@ -48,8 +48,7 @@ private:
   Buildable* _structureUnderAttack{ nullptr };
 
   Terrain* _terrain;
-  glm::vec2 _selectionXy;
-  glm::vec2 _selectionSize;
+  Region _selection;
   bool _selectionActive{ false };
 };
 

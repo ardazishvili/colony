@@ -149,10 +149,17 @@ bool Tank::isUnderCursor(const glm::vec3& point)
   return _view.contain(point);
 }
 
-bool Tank::isInsideArea(glm::vec4 area)
+bool Tank::isInsideArea(Region area)
 {
   auto c = _view.position();
-  return (area.x <= c.x && c.x <= area.z) && (area.y <= c.y && c.y <= area.w);
+  auto lowerX = std::min(area.x, area.x + area.width);
+  auto upperX = std::max(area.x, area.x + area.width);
+  auto lowerY = std::min(area.y, area.y + area.height);
+  auto upperY = std::max(area.y, area.y + area.height);
+  std::cout << "c.x= " << c.x << std::endl;
+  std::cout << "area.x= " << area.x << std::endl;
+  std::cout << "area.x + area.width= " << area.x + area.width << std::endl;
+  return (lowerX <= c.x && c.x <= upperX) && (lowerY <= c.y && c.y <= upperY);
 }
 
 bool Tank::isShooting()
