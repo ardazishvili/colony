@@ -38,7 +38,7 @@ void EventManager::tick()
   _textureShader.configure();
   if (_selectionActive) {
     _terrain->selectSubTerrainRegion(
-      _selectionXy.x, _selectionXy.y, _selectionSize.x, _selectionSize.y);
+      _selectionXy.x, _selectionXy.y, _selectionSize.x, _selectionSize.y, 0.9f);
   }
   _game.tick();
 }
@@ -176,6 +176,7 @@ void EventManager::handleMouseReleased()
   /* } */
 
   _selectionActive = false;
+  _terrain->deselect();
 }
 
 void EventManager::handleMousePressedLeft()

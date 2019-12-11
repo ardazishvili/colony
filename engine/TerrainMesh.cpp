@@ -318,8 +318,11 @@ float TerrainMesh::getZ(float x, float y) const
 void TerrainMesh::selectSubTerrainRegion(float x,
                                          float y,
                                          float width,
-                                         float height)
+                                         float height,
+                                         float alfa)
 {
+  _lastSelected = { x, y, width, height };
+
   x += _width;
   y += _height;
 
@@ -332,10 +335,10 @@ void TerrainMesh::selectSubTerrainRegion(float x,
   std::cout << "j= " << j << std::endl;
   std::cout << "xWidth= " << xWidth << std::endl;
   std::cout << "yWidth= " << yWidth << std::endl;
-  auto leftXBound = std::min(i, i + xWidth);
-  auto rightXBound = std::max(i, i + xWidth);
-  auto leftYBound = std::min(j, j + yWidth);
-  auto rightYBound = std::max(j, j + yWidth);
+  unsigned int leftXBound = std::min(i, i + xWidth);
+  unsigned int rightXBound = std::max(i, i + xWidth);
+  unsigned int leftYBound = std::min(j, j + yWidth);
+  unsigned int rightYBound = std::max(j, j + yWidth);
   std::cout << "leftXBound= " << leftXBound << std::endl;
   std::cout << "leftYBound= " << leftYBound << std::endl;
   std::cout << "rightXBound= " << rightXBound << std::endl;
@@ -344,13 +347,22 @@ void TerrainMesh::selectSubTerrainRegion(float x,
   for (unsigned int k = leftXBound; k < rightXBound; ++k) {
     auto index = _latticeWidthSub * k + leftYBound;
     for (unsigned int n = leftYBound; n < rightYBound; ++n) {
-      _vSub.at(_latticeWidthSub * k + n).color.w = 0.4f;
+      _vSub.at(_latticeWidthSub * k + n).color.w = alfa;
     }
     glBufferSubData(GL_ARRAY_BUFFER,
                     sizeof(VertexColor) * (index),
                     sizeof(VertexColor) * ::abs(yWidth),
                     &_vSub[index]);
   }
+}
+
+void TerrainMesh::deselect()
+{
+  selectSubTerrainRegion(_lastSelected.x,
+                         _lastSelected.y,
+                         _lastSelected.width,
+                         _lastSelected.height,
+                         0.0f);
 }
 
 void TerrainMesh::updateColor(unsigned int index)
