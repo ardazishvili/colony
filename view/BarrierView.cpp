@@ -28,16 +28,9 @@ BarrierView::BarrierView(Shader& textureShader,
 
 void BarrierView::draw()
 {
-  /* _colorShader.use(); */
-  /* _colorShader.configure(); */
-  /* auto pos = _position; */
-  /* pos.z += 0.05; */
-  /* auto c = Circle(_colorShader, pos, _scaleFactor, 20); */
-  /* c.render(); */
-  CircularRegion r = { _position.x, _position.y, _scaleFactor };
-  _terrain->selectSubTerrainRegion(r, TerrainMesh::DEFAULT_BARRIER_COLOR);
+  /* _terrain->updateLivingArea(_livingArea); */
 
-  static bool bd = true;
+  static bool bd = false;
   ImGui::Begin("Barriers display");
   ImGui::SetWindowPos(ImVec2(0, 680));
   ImGui::SetWindowSize(ImVec2(200, 40));
@@ -86,4 +79,9 @@ void BarrierView::showHealthBar()
 {
   _healthBar.setScaleX(_healthBarScaleFactor);
   _healthBar.render();
+}
+
+float BarrierView::radius() const
+{
+  return _scaleFactor;
 }

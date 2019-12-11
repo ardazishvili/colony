@@ -24,8 +24,14 @@ struct CircularRegion
   float y;
   float r;
 };
-using LivingArea = std::vector<std::map<unsigned int, unsigned int>>;
-using LivingAreas = std::vector<LivingArea>;
+
+struct LivingArea
+{
+  std::vector<std::pair<unsigned int, unsigned int>> cells;
+  std::vector<glm::vec2> plants;
+};
+
+using LivingAreas = std::vector<std::shared_ptr<LivingArea>>;
 class TerrainMesh
 {
 public:
@@ -42,8 +48,12 @@ public:
                    float zScale);
   void deinit();
   float getZ(float x, float y) const;
+  glm::vec3 getRgbColor(float x, float y) const;
   /* void updateColor(float x, float y); */
   void selectSubTerrainRegion(RectangleRegion region, glm::vec4 rgba);
+  std::shared_ptr<LivingArea> addLivingArea(CircularRegion region,
+                                            glm::vec4 rgba);
+  void updateLivingArea(std::shared_ptr<LivingArea> area);
   void selectSubTerrainRegion(CircularRegion region, glm::vec4 rgba);
   void deselect();
   void updateColor(unsigned int index);
@@ -61,6 +71,7 @@ private:
                       float topRightX,
                       float topRightY,
                       int divisions);
+  void reloadLivingArea(std::shared_ptr<LivingArea> area);
 
   std::vector<VertexColor> _v;
   std::vector<unsigned int> _indices;

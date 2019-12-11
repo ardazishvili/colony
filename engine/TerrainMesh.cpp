@@ -10,7 +10,12 @@
 
 const glm::vec4 TerrainMesh::SELECTION_COLOR{ 0.0f, 0.0f, 1.0f, 0.3f };
 const glm::vec4 TerrainMesh::DESELECTION_COLOR{ 0.0f, 0.0f, 1.0f, 0.0f };
-const glm::vec4 TerrainMesh::DEFAULT_BARRIER_COLOR{ 1.0f, 1.0f, 1.0f, 0.5f };
+/* const glm::vec4 TerrainMesh::DEFAULT_BARRIER_COLOR{ 0.0f, 0.0f, 0.0f, 0.5f };
+ */
+const glm::vec4 TerrainMesh::DEFAULT_BARRIER_COLOR{ 113.0f / 255,
+                                                    128.0f / 255,
+                                                    143.0f / 255,
+                                                    0.5f };
 
 struct RgbColor
 {
@@ -299,6 +304,17 @@ float TerrainMesh::getZ(float x, float y) const
   return _v.at(i * _latticeWidth + mappedJ).p.z;
 }
 
+glm::vec3 TerrainMesh::getRgbColor(float x, float y) const
+{
+  x += _width / 2;
+  y += _height / 2;
+  auto i = ::floor(x / _xStep / _xyScale);
+  auto j = ::floor(y / _yStep / _xyScale);
+  auto mappedJ = (j == 0) ? 0 : 2 * j - 1;
+  auto c = _v.at(i * _latticeWidth + mappedJ).color;
+  return glm::vec3(c.x, c.y, c.z);
+}
+
 /* void TerrainMesh::updateColor(float x, float y) */
 /* { */
 /*   x += _width; */
@@ -319,10 +335,9 @@ float TerrainMesh::getZ(float x, float y) const
 /*                   &_v[index]); */
 /* } */
 
-void TerrainMesh::selectSubTerrainRegion(CircularRegion region, glm::vec4 rgba)
+std::shared_ptr<LivingArea> TerrainMesh::addLivingArea(CircularRegion region,
+                                                       glm::vec4 rgba)
 {
-  std::cout << "region.x= " << region.x << std::endl;
-  std::cout << "region.y= " << region.y << std::endl;
   RectangleRegion rect = {
     region.x - region.r, region.y - region.r, 2 * region.r, 2 * region.r
   };
@@ -331,16 +346,13 @@ void TerrainMesh::selectSubTerrainRegion(CircularRegion region, glm::vec4 rgba)
   auto x = region.x + _width;
   auto y = region.y + _height;
   auto r = region.r;
-  std::cout << "x= " << x << std::endl;
-  std::cout << "y= " << y << std::endl;
-  std::cout << "r= " << r << std::endl;
 
   auto i = ::floor(rect.x / _xStepSub / _xyScale);
   auto j = ::floor(rect.y / _yStepSub);
   signed int xWidth = rect.width / _xStepSub / _xyScale;
   signed int yWidth = rect.height / _yStepSub;
-  glBindBuffer(GL_ARRAY_BUFFER, _vertexVboSub);
-  auto livingArea = LivingArea();
+  /* glBindBuffer(GL_ARRAY_BUFFER, _vertexVboSub); */
+  auto livingArea = std::make_shared<LivingArea>();
   for (unsigned int k = i; k <= i + xWidth; ++k) {
     unsigned int index = 0;
     unsigned int stride = 0;
@@ -358,12 +370,53 @@ void TerrainMesh::selectSubTerrainRegion(CircularRegion region, glm::vec4 rgba)
         ++stride;
       }
     }
-    glBufferSubData(GL_ARRAY_BUFFER,
-                    sizeof(VertexColor) * (index),
-                    sizeof(VertexColor) * stride,
-                    &_vSub[index]);
+    livingArea->cells.push_back(std::make_pair(index, stride));
+    /* glBufferSubData(GL_ARRAY_BUFFER, */
+    /*                 sizeof(VertexColor) * (index), */
+    /*                 sizeof(VertexColor) * stride, */
+    /*                 &_vSub[index]); */
   }
+  reloadLivingArea(livingArea);
   _livingAreas.push_back(livingArea);
+  return livingArea;
+}
+void TerrainMesh::reloadLivingArea(std::shared_ptr<LivingArea> area)
+{
+  glBindBuffer(GL_ARRAY_BUFFER, _vertexVboSub);
+  for (auto& cell : area->cells) {
+    glBufferSubData(GL_ARRAY_BUFFER,
+                    sizeof(VertexColor) * (cell.first),
+                    sizeof(VertexColor) * cell.second,
+                    &_vSub[cell.first]);
+  }
+}
+
+void TerrainMesh::updateLivingArea(std::shared_ptr<LivingArea> area)
+{
+  /* static float newColor = 0.0; */
+  /* newColor += 0.1; */
+  for (auto plant : area->plants) {
+    plant.x += _width;
+    plant.y += _height;
+    /* auto min = 0.0f; */
+    /* auto max = 0.0f; */
+    for (auto& cell : area->cells) {
+      for (unsigned int i = cell.first; i < cell.first + cell.second; ++i) {
+        auto cellX = _vSub.at(i).p.x;
+        auto cellY = _vSub.at(i).p.y;
+        float d = ::sqrt(::pow(cellX - plant.x, 2) + ::pow(cellY - plant.y, 2));
+        d /= 2.0;
+        /* min = std::min(min, d); */
+        /* max = std::max(max, d); */
+        double g = _vSub.at(i).color.y;
+        auto newColor = glm::lerp(g, 1.0, ::pow(1.0f - d / 3, 10) / 30);
+        _vSub.at(i).color.y = newColor;
+      }
+    }
+    /* std::cout << "min= " << min << std::endl; */
+    /* std::cout << "max= " << max << std::endl; */
+  }
+  reloadLivingArea(area);
 }
 
 void TerrainMesh::selectSubTerrainRegion(RectangleRegion region, glm::vec4 rgba)

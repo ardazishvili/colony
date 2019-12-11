@@ -17,4 +17,6 @@ private:
   float _strenght{ 0.0f }; // percent
 };
 
+using Plants = std::vector<std::shared_ptr<Plant>>;
+
 #endif

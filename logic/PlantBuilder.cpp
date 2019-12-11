@@ -7,8 +7,12 @@
 #include "Game.h"
 #include "PlantBuilder.h"
 
-PlantBuilder::PlantBuilder(Shader& shader, Game& game, Barrier& barrier) :
-  _shader(shader), _game(game), _barrier(barrier)
+PlantBuilder::PlantBuilder(Shader& shader,
+                           Game& game,
+                           Barrier& barrier,
+                           Terrain* terrain) :
+  _shader(shader),
+  _game(game), _barrier(barrier), _terrain(terrain)
 {}
 
 void PlantBuilder::create()
@@ -25,9 +29,11 @@ void PlantBuilder::create()
   auto pos = _barrier.position();
   pos.x += x;
   pos.y += y;
-  pos.z += 0.5;
+  // TODO subterrain offset
+  pos.z = _terrain->getXYZ(glm::vec2(pos.x, pos.y)).z + 0.03;
   auto plant = std::make_shared<Plant>(_shader, pos);
 
+  _barrier.addPlant(plant);
   _game.addPlant(plant);
 }
 

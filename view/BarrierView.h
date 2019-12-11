@@ -20,6 +20,7 @@ public:
   bool contain(glm::vec3 point) const;
   void setTexture(Status status);
   void setHealthBarScaleFactor(float factor);
+  float radius() const;
 
 private:
   void showHealthBar();

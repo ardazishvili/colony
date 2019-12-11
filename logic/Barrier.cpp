@@ -6,11 +6,20 @@ Barrier::Barrier(Shader& textureShader,
                  glm::vec3 position,
                  Terrain* terrain) :
   _textureShader(textureShader),
-  _view(textureShader, colorShader, position, terrain)
-{}
+  _view(textureShader, colorShader, position, terrain), _terrain(terrain)
+{
+  CircularRegion r = { position.x, position.y, _view.radius() };
+  auto c = terrain->getRgbColor(position.x, position.y);
+  _livingArea = terrain->addLivingArea(r, glm::vec4(c.x, c.y, c.z, 0.5));
+}
 
 void Barrier::render()
 {
+  if (_clock.elapsed() >= _bioUpdateTime) {
+    std::cout << "_plants.size()= " << _plants.size() << std::endl;
+    _terrain->updateLivingArea(_livingArea);
+    _clock.reload();
+  }
   _view.draw();
 }
 
@@ -56,7 +65,7 @@ UnitBuilders Barrier::getUnitBuilders(Game& game)
 {
   auto builders = UnitBuilders();
   std::unique_ptr<AbstractUnitBuilder> builder =
-    std::make_unique<PlantBuilder>(_textureShader, game, *this);
+    std::make_unique<PlantBuilder>(_textureShader, game, *this, _terrain);
   builders.push_back(std::move(builder));
 
   return builders;
@@ -71,4 +80,10 @@ void Barrier::updateHealthBar()
 {
   auto factor = _health / _maxHealth;
   _view.setHealthBarScaleFactor(factor);
+}
+
+void Barrier::addPlant(std::shared_ptr<Plant> p)
+{
+  _livingArea->plants.push_back(p->position());
+  _plants.push_back(p);
 }

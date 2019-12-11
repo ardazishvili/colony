@@ -54,6 +54,11 @@ glm::vec3 Terrain::getXYZ(glm::vec2 xy) const
   return glm::vec3(xy.x, xy.y, _mesh.getZ(xy.x - _offset.x, xy.y - _offset.y));
 }
 
+glm::vec3 Terrain::getRgbColor(float x, float y) const
+{
+  return _mesh.getRgbColor(x, y);
+}
+
 /* void Terrain::updateColor(glm::vec2 xy) */
 /* { */
 /*   _mesh.updateColor(xy.x, xy.y); */
@@ -74,9 +79,15 @@ void Terrain::selectSubTerrainRegion(RectangleRegion region, glm::vec4 rgba)
   _mesh.selectSubTerrainRegion(region, rgba);
 }
 
-void Terrain::selectSubTerrainRegion(CircularRegion region, glm::vec4 rgba)
+std::shared_ptr<LivingArea> Terrain::addLivingArea(CircularRegion region,
+                                                   glm::vec4 rgba)
 {
-  _mesh.selectSubTerrainRegion(region, rgba);
+  return _mesh.addLivingArea(region, rgba);
+}
+
+void Terrain::updateLivingArea(std::shared_ptr<LivingArea> area)
+{
+  _mesh.updateLivingArea(area);
 }
 
 void Terrain::deselect()
