@@ -7,7 +7,7 @@ struct VertexColor
 {
   glm::vec3 p;
   glm::vec3 normal;
-  glm::vec3 color;
+  glm::vec4 color;
 };
 
 class TerrainMesh
@@ -27,6 +27,7 @@ public:
   void deinit();
   float getZ(float x, float y) const;
   /* void updateColor(float x, float y); */
+  void selectSubTerrainRegion(float x, float y, float width, float height);
   void updateColor(unsigned int index);
   std::vector<unsigned int> getVertices(glm::vec2 center, float radius);
   static float UPDATE_COLOR_SPEED;
@@ -63,5 +64,11 @@ private:
   GLuint _vertexVboSub;
   GLuint _indicesEboSub;
 };
+
+template<typename T>
+int sgn(T val)
+{
+  return (T(0) < val) - (val < T(0));
+}
 
 #endif

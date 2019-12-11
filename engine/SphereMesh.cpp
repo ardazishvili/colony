@@ -92,7 +92,7 @@ void SphereMesh::init(float r, unsigned int divisions)
       v.normal.y = v.p.y / r;
       v.normal.z = v.p.z / r;
 
-      v.color = glm::vec3(color[0], color[1], color[2]);
+      v.color = glm::vec4(color[0], color[1], color[2], 0.4f);
 
       _v.push_back(v);
     }
@@ -126,7 +126,7 @@ void SphereMesh::init(float r, unsigned int divisions)
 
   glEnableVertexAttribArray(1);
   glVertexAttribPointer(1,
-                        3,
+                        4,
                         GL_FLOAT,
                         GL_FALSE,
                         sizeof(VertexColor),

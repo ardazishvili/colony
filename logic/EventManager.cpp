@@ -28,19 +28,18 @@ EventManager::EventManager(GLFWwindow* window,
   _window(window),
   _camera(camera), _game(game), _textureShader(textureShader),
   _colorShader(colorShader), _terrain(terrain)
-/* _selectionSurface(shader, 0.0f, 0.0f, 1.0f, 1.0f, 1) */
 {
   _game.setControl(std::make_unique<Control>(textureShader));
-  /* _selectionSurface.setOffsetZ(0.04f); */
 }
 
 void EventManager::tick()
 {
   _textureShader.use();
   _textureShader.configure();
-  /* if (_selectionActive) { */
-  /* _selectionSurface.render(); */
-  /* } */
+  if (_selectionActive) {
+    _terrain->selectSubTerrainRegion(
+      _selectionXy.x, _selectionXy.y, _selectionSize.x, _selectionSize.y);
+  }
   _game.tick();
 }
 
@@ -151,8 +150,8 @@ void EventManager::handleMouseMove(GLFWwindow* window, double xpos, double ypos)
       _terrain->getXYZ(glm::vec2(position.x, position.y)));
   }
   if (_selectionActive) {
-    /* _selectionSurface.setScaleXY(c.x - _selectionSurfaceBottonLeft.x, */
-    /*                              c.y - _selectionSurfaceBottonLeft.y); */
+    _selectionSize.x = c.x - _selectionXy.x;
+    _selectionSize.y = c.y - _selectionXy.y;
   }
 }
 
@@ -170,6 +169,7 @@ void EventManager::handleMousePressed(int button, int action)
 void EventManager::handleMouseReleased()
 {
   std::cout << "mouse released" << std::endl;
+  _selectionSize = glm::vec2(0.0f);
   /* auto area = _selectionSurface.getArea(); */
   /* if (area.x != area.z || area.y != area.w) { */
   /*   _tanksSelected = _game.getTanks(area); */
@@ -184,7 +184,8 @@ void EventManager::handleMousePressedLeft()
   _selectionActive = true;
   /* _selectionSurface.setScaleXY(0, 0); */
   /* _selectionSurface.setOffsetXY(c.x, c.y); */
-  _selectionSurfaceBottonLeft = glm::vec2(c.x, c.y);
+  /* _selectionSurfaceBottonLeft = glm::vec2(c.x, c.y); */
+  _selectionXy = glm::vec2(c.x, c.y);
   _tanksSelected.clear();
 
   _tankSelected = _game.getTank(c, true);

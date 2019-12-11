@@ -1,6 +1,6 @@
 #version 330 core
 layout (location = 0) in vec3 position;
-layout (location = 1) in vec3 color;
+layout (location = 1) in vec4 color;
 layout (location = 2) in vec3 normals;
 
 struct Material {
@@ -25,12 +25,13 @@ uniform Light light;
 uniform Material material;
 uniform vec3 viewPos;
 
-flat out vec3 normals_colour;
+uniform float alfa;
+flat out vec4 normals_colour;
 
 vec3 calculateLighting() {
   vec3 fragPos = vec3(model * vec4(position, 1.0));
   vec3 normal = mat3(transpose(inverse(model))) * normals;
-  vec3 c = color;
+  vec3 c = color.xyz;
 
   vec3 ambient = light.ambient * c;
 
@@ -52,5 +53,5 @@ vec3 calculateLighting() {
 void main()
 {
   gl_Position = projection * view * model * vec4(position, 1.0);
-  normals_colour = calculateLighting();
+  normals_colour = vec4(calculateLighting(), color.w);
 }

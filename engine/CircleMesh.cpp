@@ -47,7 +47,7 @@ void CircleMesh::init(float radius, unsigned int divisions)
   vertex.p.y = 0.0f;
   vertex.p.z = 0.0f;
   vertex.normal = glm::vec3(0.0f, 0.0f, 1.0f);
-  vertex.color = glm::vec3(1.0f, 1.0f, 1.0f);
+  vertex.color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
   _v.push_back(vertex);
   for (unsigned int i = 0; i < divisions; ++i) {
     auto vertex = VertexColor();
@@ -55,7 +55,7 @@ void CircleMesh::init(float radius, unsigned int divisions)
     vertex.p.y = radius * ::sin(i * M_PI * 2 / divisions);
     vertex.p.z = 0.0f;
     vertex.normal = glm::vec3(0.0f, 0.0f, 1.0f);
-    vertex.color = glm::vec3(0.0f, 1.0f, 0.0f);
+    vertex.color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
     _v.push_back(vertex);
   }
 
@@ -78,7 +78,7 @@ void CircleMesh::init(float radius, unsigned int divisions)
 
   glEnableVertexAttribArray(1);
   glVertexAttribPointer(1,
-                        3,
+                        4,
                         GL_FLOAT,
                         GL_FALSE,
                         sizeof(VertexColor),

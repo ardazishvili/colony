@@ -68,3 +68,11 @@ std::vector<unsigned int> Terrain::getVertices(glm::vec2 center, float radius)
 {
   return _mesh.getVertices(center, radius);
 }
+
+void Terrain::selectSubTerrainRegion(float x,
+                                     float y,
+                                     float width,
+                                     float height)
+{
+  _mesh.selectSubTerrainRegion(x, y, width, height);
+}

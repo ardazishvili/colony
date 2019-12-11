@@ -38,9 +38,6 @@ private:
   Game& _game;
   Shader& _textureShader;
   Shader& _colorShader;
-  /* Surface _selectionSurface; */
-  glm::vec2 _selectionSurfaceBottonLeft;
-  bool _selectionActive{ false };
   Tank* _tankSelected{ nullptr };
   VehicleGroup _tanksSelected;
   Tank* _tankUnderAttack{ nullptr };
@@ -49,7 +46,11 @@ private:
   std::shared_ptr<BuildableStructure> _structureToBuild{ nullptr };
   BuildStage _structureToBuildStage;
   Buildable* _structureUnderAttack{ nullptr };
+
   Terrain* _terrain;
+  glm::vec2 _selectionXy;
+  glm::vec2 _selectionSize;
+  bool _selectionActive{ false };
 };
 
 #endif

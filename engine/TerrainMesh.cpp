@@ -223,6 +223,7 @@ void TerrainMesh::initTerrain(float bottomLeftX,
       _v[augmentedWidth * i + j].color.x = glm::lerp(a.r, b.r, h);
       _v[augmentedWidth * i + j].color.y = glm::lerp(a.g, b.g, h);
       _v[augmentedWidth * i + j].color.z = glm::lerp(a.b, b.b, h);
+      _v[augmentedWidth * i + j].color.w = 1.0;
     }
   }
   _indices.reserve(::pow(divisions, 2) * 2 * 3);
@@ -259,7 +260,7 @@ void TerrainMesh::initTerrain(float bottomLeftX,
 
   glEnableVertexAttribArray(1);
   glVertexAttribPointer(1,
-                        3,
+                        4,
                         GL_FLOAT,
                         GL_FALSE,
                         sizeof(VertexColor),
@@ -313,6 +314,44 @@ float TerrainMesh::getZ(float x, float y) const
 /*                   sizeof(VertexColor), */
 /*                   &_v[index]); */
 /* } */
+
+void TerrainMesh::selectSubTerrainRegion(float x,
+                                         float y,
+                                         float width,
+                                         float height)
+{
+  x += _width;
+  y += _height;
+
+  auto i = ::floor(x / _xStepSub / _xyScale);
+  auto j = ::floor(y / _yStepSub);
+  signed int xWidth = width / _xStepSub / _xyScale;
+  signed int yWidth = height / _yStepSub;
+  glBindBuffer(GL_ARRAY_BUFFER, _vertexVboSub);
+  std::cout << "i= " << i << std::endl;
+  std::cout << "j= " << j << std::endl;
+  std::cout << "xWidth= " << xWidth << std::endl;
+  std::cout << "yWidth= " << yWidth << std::endl;
+  auto leftXBound = std::min(i, i + xWidth);
+  auto rightXBound = std::max(i, i + xWidth);
+  auto leftYBound = std::min(j, j + yWidth);
+  auto rightYBound = std::max(j, j + yWidth);
+  std::cout << "leftXBound= " << leftXBound << std::endl;
+  std::cout << "leftYBound= " << leftYBound << std::endl;
+  std::cout << "rightXBound= " << rightXBound << std::endl;
+  std::cout << "rightYBound= " << rightYBound << std::endl;
+  std::cout << "::abs(yWidth)= " << ::abs(yWidth) << std::endl;
+  for (unsigned int k = leftXBound; k < rightXBound; ++k) {
+    auto index = _latticeWidthSub * k + leftYBound;
+    for (unsigned int n = leftYBound; n < rightYBound; ++n) {
+      _vSub.at(_latticeWidthSub * k + n).color.w = 0.4f;
+    }
+    glBufferSubData(GL_ARRAY_BUFFER,
+                    sizeof(VertexColor) * (index),
+                    sizeof(VertexColor) * ::abs(yWidth),
+                    &_vSub[index]);
+  }
+}
 
 void TerrainMesh::updateColor(unsigned int index)
 {
@@ -382,7 +421,7 @@ void TerrainMesh::initSubTerrain(float bottomLeftX,
       vertex.p.y *= _xyScale;
       vertex.p.z = nv + 0.03f;
       vertex.normal = glm::vec3(0.0f);
-      vertex.color = glm::vec3(0.0f, 0.0f, 1.0f);
+      vertex.color = glm::vec4(0.0f, 0.0f, 1.0f, 0.0);
 
       _vSub.push_back(vertex);
       if (j != 0 && j != (width - 1)) {
@@ -457,7 +496,7 @@ void TerrainMesh::initSubTerrain(float bottomLeftX,
 
   glEnableVertexAttribArray(1);
   glVertexAttribPointer(1,
-                        3,
+                        4,
                         GL_FLOAT,
                         GL_FALSE,
                         sizeof(VertexColor),
