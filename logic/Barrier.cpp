@@ -3,9 +3,10 @@
 
 Barrier::Barrier(Shader& textureShader,
                  Shader& colorShader,
-                 glm::vec3 position) :
+                 glm::vec3 position,
+                 Terrain* terrain) :
   _textureShader(textureShader),
-  _view(textureShader, colorShader, position)
+  _view(textureShader, colorShader, position, terrain)
 {}
 
 void Barrier::render()

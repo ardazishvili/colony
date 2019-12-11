@@ -1,13 +1,16 @@
-#include "BarrierView.h"
+#include "../imgui/imgui.h"
+
 #include "../engine/Circle.h"
 #include "../globals.h"
+#include "BarrierView.h"
 
 float BarrierView::BARRIER_HEALTH_BAR_WIDTH = 1.2f;
 float BarrierView::BARRIER_HEALTH_BAR_HEIGHT = 0.15f;
 
 BarrierView::BarrierView(Shader& textureShader,
                          Shader& colorShader,
-                         glm::vec3 position) :
+                         glm::vec3 position,
+                         Terrain* terrain) :
   _textureShader(textureShader),
   _colorShader(colorShader), _position(position),
   _healthBar(textureShader,
@@ -15,7 +18,8 @@ BarrierView::BarrierView(Shader& textureShader,
              position.y,
              _position.x + BARRIER_HEALTH_BAR_WIDTH,
              _position.y + BARRIER_HEALTH_BAR_HEIGHT,
-             1)
+             1),
+  _terrain(terrain)
 {
   _model = modelLoader->models()[Models::Barrier];
   _healthBar.setOffsetZ(1.3f);
@@ -24,27 +28,37 @@ BarrierView::BarrierView(Shader& textureShader,
 
 void BarrierView::draw()
 {
-  _colorShader.use();
-  _colorShader.configure();
-  auto pos = _position;
-  pos.z += 0.05;
-  auto c = Circle(_colorShader, pos, _scaleFactor, 20);
-  c.render();
+  /* _colorShader.use(); */
+  /* _colorShader.configure(); */
+  /* auto pos = _position; */
+  /* pos.z += 0.05; */
+  /* auto c = Circle(_colorShader, pos, _scaleFactor, 20); */
+  /* c.render(); */
+  CircularRegion r = { _position.x, _position.y, _scaleFactor };
+  _terrain->selectSubTerrainRegion(r, TerrainMesh::DEFAULT_BARRIER_COLOR);
 
-  _textureShader.use();
-  _textureShader.configure();
-  glEnable(GL_BLEND);
-  glDepthMask(GL_FALSE);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  _textureShader.setBool("animated", false);
-  auto model = glm::mat4(1.0f);
-  model = glm::translate(model, _position);
-  model = glm::scale(model, glm::vec3(_scaleFactor));
-  _textureShader.setTransformation("model", glm::value_ptr(model));
-  _model->render();
-  glDisable(GL_BLEND);
-  glDepthMask(GL_TRUE);
-  showHealthBar();
+  static bool bd = true;
+  ImGui::Begin("Barriers display");
+  ImGui::SetWindowPos(ImVec2(0, 680));
+  ImGui::SetWindowSize(ImVec2(200, 40));
+  ImGui::Checkbox("state", &bd);
+  ImGui::End();
+  if (bd) {
+    _textureShader.use();
+    _textureShader.configure();
+    glEnable(GL_BLEND);
+    glDepthMask(GL_FALSE);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    _textureShader.setBool("animated", false);
+    auto model = glm::mat4(1.0f);
+    model = glm::translate(model, _position);
+    model = glm::scale(model, glm::vec3(_scaleFactor));
+    _textureShader.setTransformation("model", glm::value_ptr(model));
+    _model->render();
+    glDisable(GL_BLEND);
+    glDepthMask(GL_TRUE);
+    showHealthBar();
+  }
 }
 glm::vec3 BarrierView::position() const
 {

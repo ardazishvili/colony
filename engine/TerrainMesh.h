@@ -10,7 +10,7 @@ struct VertexColor
   glm::vec4 color;
 };
 
-struct Region
+struct RectangleRegion
 {
   float x;
   float y;
@@ -18,6 +18,14 @@ struct Region
   float height;
 };
 
+struct CircularRegion
+{
+  float x;
+  float y;
+  float r;
+};
+using LivingArea = std::vector<std::map<unsigned int, unsigned int>>;
+using LivingAreas = std::vector<LivingArea>;
 class TerrainMesh
 {
 public:
@@ -35,12 +43,17 @@ public:
   void deinit();
   float getZ(float x, float y) const;
   /* void updateColor(float x, float y); */
-  void selectSubTerrainRegion(Region region, float alfa);
+  void selectSubTerrainRegion(RectangleRegion region, glm::vec4 rgba);
+  void selectSubTerrainRegion(CircularRegion region, glm::vec4 rgba);
   void deselect();
   void updateColor(unsigned int index);
   std::vector<unsigned int> getVertices(glm::vec2 center, float radius);
   static float UPDATE_COLOR_SPEED;
   static float plantsColor[3];
+
+  const static glm::vec4 SELECTION_COLOR;
+  const static glm::vec4 DESELECTION_COLOR;
+  const static glm::vec4 DEFAULT_BARRIER_COLOR;
 
 private:
   void initSubTerrain(float bottomLeftX,
@@ -72,13 +85,8 @@ private:
   GLuint _vaoSub;
   GLuint _vertexVboSub;
   GLuint _indicesEboSub;
-  Region _lastSelected{ 0.0f, 0.0f, 0.0f, 0.0f };
+  RectangleRegion _lastSelected{ 0.0f, 0.0f, 0.0f, 0.0f };
+  LivingAreas _livingAreas;
 };
-
-template<typename T>
-int sgn(T val)
-{
-  return (T(0) < val) - (val < T(0));
-}
 
 #endif

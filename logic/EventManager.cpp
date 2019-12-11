@@ -38,7 +38,7 @@ void EventManager::tick()
   _textureShader.configure();
   if (_selectionActive) {
     _terrain->deselect();
-    _terrain->selectSubTerrainRegion(_selection, 0.3f);
+    _terrain->selectSubTerrainRegion(_selection, TerrainMesh::SELECTION_COLOR);
   }
   _game.tick();
 }
@@ -92,7 +92,7 @@ void EventManager::handleKeyPress(GLFWwindow* window,
     }
     if (key == GLFW_KEY_B) {
       auto barrier = std::make_shared<Barrier>(
-        _textureShader, _colorShader, unProject(currentX, currentY));
+        _textureShader, _colorShader, unProject(currentX, currentY), _terrain);
       _game.addBarrier(barrier);
     }
     if (key == GLFW_KEY_ESCAPE) {

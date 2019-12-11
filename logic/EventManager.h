@@ -48,7 +48,7 @@ private:
   Buildable* _structureUnderAttack{ nullptr };
 
   Terrain* _terrain;
-  Region _selection;
+  RectangleRegion _selection;
   bool _selectionActive{ false };
 };
 

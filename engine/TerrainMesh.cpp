@@ -8,6 +8,10 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/compatibility.hpp>
 
+const glm::vec4 TerrainMesh::SELECTION_COLOR{ 0.0f, 0.0f, 1.0f, 0.3f };
+const glm::vec4 TerrainMesh::DESELECTION_COLOR{ 0.0f, 0.0f, 1.0f, 0.0f };
+const glm::vec4 TerrainMesh::DEFAULT_BARRIER_COLOR{ 1.0f, 1.0f, 1.0f, 0.5f };
+
 struct RgbColor
 {
   float r;
@@ -315,7 +319,54 @@ float TerrainMesh::getZ(float x, float y) const
 /*                   &_v[index]); */
 /* } */
 
-void TerrainMesh::selectSubTerrainRegion(Region region, float alfa)
+void TerrainMesh::selectSubTerrainRegion(CircularRegion region, glm::vec4 rgba)
+{
+  std::cout << "region.x= " << region.x << std::endl;
+  std::cout << "region.y= " << region.y << std::endl;
+  RectangleRegion rect = {
+    region.x - region.r, region.y - region.r, 2 * region.r, 2 * region.r
+  };
+  rect.x += _width;
+  rect.y += _height;
+  auto x = region.x + _width;
+  auto y = region.y + _height;
+  auto r = region.r;
+  std::cout << "x= " << x << std::endl;
+  std::cout << "y= " << y << std::endl;
+  std::cout << "r= " << r << std::endl;
+
+  auto i = ::floor(rect.x / _xStepSub / _xyScale);
+  auto j = ::floor(rect.y / _yStepSub);
+  signed int xWidth = rect.width / _xStepSub / _xyScale;
+  signed int yWidth = rect.height / _yStepSub;
+  glBindBuffer(GL_ARRAY_BUFFER, _vertexVboSub);
+  auto livingArea = LivingArea();
+  for (unsigned int k = i; k <= i + xWidth; ++k) {
+    unsigned int index = 0;
+    unsigned int stride = 0;
+    auto indexIsSet = false;
+    for (unsigned int n = j; n < j + yWidth; ++n) {
+      auto c = _vSub.at(_latticeWidthSub * k + n);
+
+      if (::sqrt(::pow(x - c.p.x, 2) + ::pow(y - c.p.y, 2)) < r) {
+        if (!indexIsSet) {
+          index = _latticeWidthSub * k + n;
+          indexIsSet = true;
+        }
+        _vSub.at(_latticeWidthSub * k + n).color = rgba;
+
+        ++stride;
+      }
+    }
+    glBufferSubData(GL_ARRAY_BUFFER,
+                    sizeof(VertexColor) * (index),
+                    sizeof(VertexColor) * stride,
+                    &_vSub[index]);
+  }
+  _livingAreas.push_back(livingArea);
+}
+
+void TerrainMesh::selectSubTerrainRegion(RectangleRegion region, glm::vec4 rgba)
 {
   _lastSelected = region;
 
@@ -334,7 +385,7 @@ void TerrainMesh::selectSubTerrainRegion(Region region, float alfa)
   for (unsigned int k = leftXBound; k < rightXBound; ++k) {
     auto index = _latticeWidthSub * k + leftYBound;
     for (unsigned int n = leftYBound; n < rightYBound; ++n) {
-      _vSub.at(_latticeWidthSub * k + n).color.w = alfa;
+      _vSub.at(_latticeWidthSub * k + n).color = rgba;
     }
     glBufferSubData(GL_ARRAY_BUFFER,
                     sizeof(VertexColor) * (index),
@@ -345,7 +396,7 @@ void TerrainMesh::selectSubTerrainRegion(Region region, float alfa)
 
 void TerrainMesh::deselect()
 {
-  selectSubTerrainRegion(_lastSelected, 0.0f);
+  selectSubTerrainRegion(_lastSelected, DESELECTION_COLOR);
 }
 
 void TerrainMesh::updateColor(unsigned int index)

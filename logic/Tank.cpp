@@ -149,7 +149,7 @@ bool Tank::isUnderCursor(const glm::vec3& point)
   return _view.contain(point);
 }
 
-bool Tank::isInsideArea(Region area)
+bool Tank::isInsideArea(RectangleRegion area)
 {
   auto c = _view.position();
   auto lowerX = std::min(area.x, area.x + area.width);
