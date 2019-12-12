@@ -11,9 +11,9 @@ class BuildableStructure : public Buildable
 public:
   BuildableStructure(Shader& shader, std::unique_ptr<StructureView> view);
   bool isUnderCursor(const glm::vec3& mousePoint);
-  virtual void setPosition(glm::vec3 position) = 0;
-  virtual void setAngle(float angle) = 0;
-  virtual void commit() = 0;
+  virtual void commit();
+  void setAngle(float angle);
+  void setPosition(glm::vec3 position);
 
 protected:
   BuildStage _stage{ BuildStage::SetPosition };

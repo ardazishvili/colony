@@ -28,11 +28,7 @@ public:
        HealthLevel healthLevel = HealthLevel::High,
        Shell::Size shellSize = Shell::Size::Small);
 
-  void render() override;
   bool isInsideArea(RectangleRegion area);
-  /* void select() override; */
-  /* void deselect() override; */
-  void takeDamage(Shell::Size shellSize) override;
   UnitBuilders getUnitBuilders(Game& game) override;
   StructureBuilders getStructureBuilders() override;
 
@@ -47,7 +43,6 @@ public:
   bool isShooting();
 
   void updateShells();
-  glm::vec3 position() override;
   void setTerrain(Terrain* terrain);
 
 private:
@@ -56,7 +51,6 @@ private:
   float getMouseAngle(int mouseX, int mouseY);
   void reload();
   bool isShellLoaded();
-  void updateHealthBar() override;
 
   float _speed;
   glm::vec2 _moveIncrement{ 0, 0 };

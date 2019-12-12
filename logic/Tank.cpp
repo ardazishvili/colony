@@ -42,11 +42,6 @@ Tank::Tank(Shader& shader,
   reload();
 }
 
-void Tank::render()
-{
-  _view->draw();
-}
-
 void Tank::move()
 {
   auto prev = _view->position();
@@ -108,27 +103,6 @@ void Tank::shootTarget()
   reload();
 }
 
-void Tank::takeDamage(Shell::Size shellSize)
-{
-  if (_status != Status::Destroyed) {
-    _status = Status::UnderFire;
-    _view->setTexture(Status::UnderFire);
-    _health =
-      std::max(0.0f, _health - Shell::SHELL_DAMAGE_MAP.find(shellSize)->second);
-    if (_health == 0) {
-      _status = Status::Destroyed;
-      _view->setTexture(Status::Destroyed);
-    }
-    updateHealthBar();
-  }
-}
-
-void Tank::updateHealthBar()
-{
-  auto factor = _health / _maxHealth;
-  _view->setHealthBarScaleFactor(factor);
-}
-
 void Tank::updateShells()
 {
   bool pop = false;
@@ -141,11 +115,6 @@ void Tank::updateShells()
   if (pop) {
     _shells.pop_front();
   }
-}
-
-glm::vec3 Tank::position()
-{
-  return _view->position();
 }
 
 bool Tank::isInsideArea(RectangleRegion area)
@@ -165,20 +134,6 @@ bool Tank::isShooting()
 {
   return _target != nullptr;
 }
-
-/* void Tank::select() */
-/* { */
-/*   _status = Status::Selected; */
-/*   _view->setTexture(Status::Selected); */
-/* } */
-
-/* void Tank::deselect() */
-/* { */
-/*   if (_status != Status::Destroyed) { */
-/*     _status = Status::None; */
-/*     _view->setTexture(Status::None); */
-/*   } */
-/* } */
 
 void Tank::startShooting(Buildable* other)
 {

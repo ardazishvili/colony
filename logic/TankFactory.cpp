@@ -13,65 +13,20 @@ TankFactory::TankFactory(Shader& shader, glm::vec3 position) :
   _maxHealth = _health;
 }
 
-void TankFactory::render()
-{
-  _view->draw();
-}
-
 void TankFactory::createTank(Game& game,
                              Tank::Type tankType,
                              HealthLevel healthLevel,
                              Shell::Size shellSize)
 {
-  auto x = position().x + 0.0f;
-  auto y = position().y + 0.0f;
-  auto z = position().z + 0.0f;
-  auto tank = ::createTank(
-    game, _shader, glm::vec3(x, y, z), tankType, healthLevel, shellSize);
+  auto p = position();
+  auto tank =
+    ::createTank(game, _shader, position(), tankType, healthLevel, shellSize);
   auto d = 3.0f;
-  auto tankDestination = glm::vec3(x - d * ::cos(glm::radians(_view->angle())),
-                                   y - d * ::sin(glm::radians(_view->angle())),
-                                   z);
+  auto tankDestination =
+    glm::vec3(p.x - d * ::cos(glm::radians(_view->angle())),
+              p.y - d * ::sin(glm::radians(_view->angle())),
+              p.z);
   tank->startMoving(tankDestination);
-}
-
-/* void TankFactory::select() */
-/* { */
-/*   _view->setTexture(Status::Selected); */
-/* } */
-
-/* void TankFactory::deselect() */
-/* { */
-/*   if (_status != Status::Destroyed) { */
-/*     _status = Status::None; */
-/*     _view->setTexture(Status::None); */
-/*   } */
-/* } */
-
-void TankFactory::updateHealthBar()
-{
-  auto factor = _health / _maxHealth;
-  _view->setHealthBarScaleFactor(factor);
-}
-
-void TankFactory::takeDamage(Shell::Size shellSize)
-{
-  if (_status != Status::Destroyed) {
-    _status = Status::UnderFire;
-    _view->setTexture(Status::UnderFire);
-    _health =
-      std::max(0.0f, _health - Shell::SHELL_DAMAGE_MAP.find(shellSize)->second);
-    if (_health == 0) {
-      _status = Status::Destroyed;
-      _view->setTexture(Status::Destroyed);
-    }
-    updateHealthBar();
-  }
-}
-
-glm::vec3 TankFactory::position()
-{
-  return _view->position();
 }
 
 UnitBuilders TankFactory::getUnitBuilders(Game& game)
@@ -100,21 +55,5 @@ void TankFactory::addUnitBuilder(Game& game,
 StructureBuilders TankFactory::getStructureBuilders()
 {
   return StructureBuilders();
-}
-
-void TankFactory::setAngle(float angle)
-{
-  _view->rotate(angle);
-}
-
-void TankFactory::setPosition(glm::vec3 position)
-{
-  std::cout << "moving tf" << std::endl;
-  _view->move(position);
-}
-
-void TankFactory::commit()
-{
-  deselect();
 }
 
