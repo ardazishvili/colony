@@ -7,13 +7,10 @@ float HqView::HQ_HEALTH_BAR_WIDTH = 1.2f;
 float HqView::HQ_HEALTH_BAR_HEIGHT = 0.15f;
 
 HqView::HqView(Shader& shader, glm::vec3 position) :
-  SelectableView(shader, position, 0.75),
-  _healthBar(_shader,
-             position.x - 0.3,
-             position.y,
-             _position.x + HQ_HEALTH_BAR_WIDTH,
-             _position.y + HQ_HEALTH_BAR_HEIGHT,
-             1)
+  SelectableView(shader,
+                 position,
+                 0.75,
+                 { -0.3, 0, HQ_HEALTH_BAR_WIDTH, HQ_HEALTH_BAR_HEIGHT })
 {
   _texturesType = TexturePackType::PreBuild;
   _model = modelLoader->models()[Models::Hq];
@@ -35,16 +32,6 @@ void HqView::draw()
   _model->render();
   showHealthBar();
 }
-
-/* bool HqView::contain(glm::vec3 point) const */
-/* { */
-/*   const auto radius = 1.5f / 2; // TODO adjust */
-/*   const auto distance = */
-/*     ::sqrt(::pow(_position.x - point.x, 2) + ::pow(_position.y - point.y,
- * 2)); */
-
-/*   return distance < radius; */
-/* } */
 
 void HqView::setTexture(Status status)
 {
@@ -78,11 +65,6 @@ void HqView::showHealthBar()
 {
   _healthBar.setScaleX(_healthBarScaleFactor);
   _healthBar.render();
-}
-
-void HqView::setHealthBarScaleFactor(float factor)
-{
-  _healthBarScaleFactor = factor;
 }
 
 float HqView::angle() const

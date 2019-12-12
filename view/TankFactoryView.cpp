@@ -5,13 +5,11 @@ float TankFactoryView::TANK_FACTORY_HEALTH_BAR_WIDTH = 1.2f;
 float TankFactoryView::TANK_FACTORY_HEALTH_BAR_HEIGHT = 0.15f;
 
 TankFactoryView::TankFactoryView(Shader& shader, glm::vec3 position) :
-  SelectableView(shader, position, 1.41 / 2),
-  _healthBar(_shader,
-             position.x - 0.3,
-             position.y,
-             _position.x + TANK_FACTORY_HEALTH_BAR_WIDTH,
-             _position.y + TANK_FACTORY_HEALTH_BAR_HEIGHT,
-             1)
+  SelectableView(
+    shader,
+    position,
+    1.41 / 2,
+    { -0.3, 0, TANK_FACTORY_HEALTH_BAR_WIDTH, TANK_FACTORY_HEALTH_BAR_HEIGHT })
 {
   _texturesType = TexturePackType::PreBuild;
   _model = modelLoader->models()[Models::TankFactory];
@@ -32,16 +30,6 @@ void TankFactoryView::draw()
   _model->render();
   showHealthBar();
 }
-
-/* bool TankFactoryView::contain(glm::vec3 point) const */
-/* { */
-/*   const auto radius = 1.41f / 2; */
-/*   const auto distance = */
-/*     ::sqrt(::pow(_position.x - point.x, 2) + ::pow(_position.y - point.y,
- * 2)); */
-
-/*   return distance < radius; */
-/* } */
 
 void TankFactoryView::setTexture(Status status)
 {
@@ -74,11 +62,6 @@ void TankFactoryView::showHealthBar()
 {
   _healthBar.setScaleX(_healthBarScaleFactor);
   _healthBar.render();
-}
-
-void TankFactoryView::setHealthBarScaleFactor(float factor)
-{
-  _healthBarScaleFactor = factor;
 }
 
 float TankFactoryView::angle() const
