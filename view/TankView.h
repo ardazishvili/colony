@@ -19,7 +19,7 @@ private:
   float _bodyAngle{ 0.0f };
   float _targetGunAngle{ 0.001f };  // TODO animation issue
   float _currentGunAngle{ 0.001f }; // TODO animation issue
-  float _tankSizeScaleFactor;
+  float _tankTypeScaleFactor;
   static float TANK_GUN_ANGLE_INCREMENT;
   static float TANK_GUN_ANGLE_TOLERANCE;
   static float TANK_HEALTH_BAR_WIDTH;

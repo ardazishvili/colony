@@ -31,17 +31,3 @@ void TankFactoryView::draw()
   showHealthBar();
 }
 
-void TankFactoryView::rotate(float degreeAngle)
-{
-  _angle = degreeAngle + 180;
-}
-void TankFactoryView::move(glm::vec3 position)
-{
-  _position = glm::vec3(position);
-  _healthBar.setOffsetXY(position.x, position.y);
-}
-
-float TankFactoryView::angle() const
-{
-  return _angle - 180;
-}

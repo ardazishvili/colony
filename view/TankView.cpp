@@ -17,7 +17,7 @@ TankView::TankView(Shader& shader, glm::vec3 position, float tankTypeScaling) :
            0.38,
            { 0, 0, TANK_HEALTH_BAR_WIDTH, TANK_HEALTH_BAR_HEIGHT },
            TexturePackType::Initial),
-  _tankSizeScaleFactor(tankTypeScaling)
+  _tankTypeScaleFactor(tankTypeScaling)
 {
   _model = modelLoader->models()[Models::Tank];
   _hasAnimation = true;
@@ -42,7 +42,7 @@ void TankView::draw()
   model = glm::translate(model, _position);
   model =
     glm::rotate(model, glm::radians(_bodyAngle), glm::vec3(0.0f, 0.0f, 1.0f));
-  model = glm::scale(model, glm::vec3(_tankSizeScaleFactor));
+  model = glm::scale(model, glm::vec3(_tankTypeScaleFactor));
   model = glm::scale(model, glm::vec3(VIEW_SCALE));
   _shader.setTransformation("model", glm::value_ptr(model));
   _model->setActiveTexturesPack(_texturesType);
