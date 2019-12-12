@@ -17,8 +17,3 @@ void PlantView::draw()
   _shader.setTransformation("model", glm::value_ptr(model));
   _model->render();
 }
-
-glm::vec3 PlantView::position() const
-{
-  return _position;
-}

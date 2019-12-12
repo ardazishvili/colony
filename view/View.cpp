@@ -10,3 +10,8 @@ View::View(Shader& shader, glm::vec3 position) :
   _shader(shader), _position(position)
 {
 }
+
+glm::vec3 View::position() const
+{
+  return _position;
+}

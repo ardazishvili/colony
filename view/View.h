@@ -16,7 +16,7 @@ public:
   static float VIEW_SCALE;
   View(Shader& shader, glm::vec3 position);
   virtual void draw() = 0;
-  virtual glm::vec3 position() const = 0;
+  virtual glm::vec3 position() const;
 
 protected:
   bool _hasAnimation{ false };

@@ -19,11 +19,6 @@ void ShellView::draw()
   _model->render();
 }
 
-glm::vec3 ShellView::position() const
-{
-  return _position;
-}
-
 void ShellView::move(glm::vec2 moveIncrement)
 {
   _position.x += moveIncrement.x;

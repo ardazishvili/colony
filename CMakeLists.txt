@@ -73,6 +73,8 @@ add_executable(colony
 		view/TankFactoryView.h
 		view/TankView.cpp
 		view/TankView.h
+    view/SelectableView.h
+    view/SelectableView.cpp
 		view/View.cpp
 		view/View.h
     engine/Circle.cpp
