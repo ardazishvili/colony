@@ -2,7 +2,7 @@
 #include "../globals.h"
 
 ShellView::ShellView(Shader& shader, glm::vec3 position) :
-  _shader(shader), _position(position)
+  View(shader, position)
 {
   _model = modelLoader->models()[Models::Shell];
 }
@@ -19,9 +19,9 @@ void ShellView::draw()
   _model->render();
 }
 
-glm::vec3 ShellView::position()
+glm::vec3 ShellView::position() const
 {
-  return glm::vec3(_position.x, _position.y, _position.z);
+  return _position;
 }
 
 void ShellView::move(glm::vec2 moveIncrement)

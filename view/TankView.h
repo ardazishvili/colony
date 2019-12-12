@@ -1,8 +1,8 @@
 #ifndef TANK_VIEW_H
 #define TANK_VIEW_H
 
-#include "../engine/Model.h"
-#include "../engine/Shader.h"
+/* #include "../engine/Model.h" */
+/* #include "../engine/Shader.h" */
 #include "../engine/Surface.h"
 #include "../logic/Buildable.h"
 #include "View.h"
@@ -12,9 +12,9 @@ class TankView : public View
 {
 public:
   TankView(Shader& shader, glm::vec3 position, float tankTypeScaling);
-  void draw();
+  void draw() override;
   bool contain(glm::vec3 point) const;
-  glm::vec3 position();
+  glm::vec3 position() const override;
   void move(glm::vec3 newPosition);
   void rotateBody(float degreeAngle);
   void rotateGun(float degreeAngle);
@@ -25,10 +25,10 @@ private:
   void updateGun();
   void showHealthBar();
 
-  std::shared_ptr<Model> _model;
+  /* std::shared_ptr<Model> _model; */
   TexturePackType _texturesType;
-  Shader& _shader;
-  glm::vec3 _position;
+  /* Shader& _shader; */
+  /* glm::vec3 _position; */
   float _bodyAngle{ 0.0f };
   float _targetGunAngle{ 0.001f };  // TODO animation issue
   float _currentGunAngle{ 0.001f }; // TODO animation issue

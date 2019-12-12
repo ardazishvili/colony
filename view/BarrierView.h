@@ -8,15 +8,12 @@
 #include "../logic/Buildable.h"
 #include "View.h"
 
-class BarrierView
+class BarrierView : public View
 {
 public:
-  BarrierView(Shader& textureShader,
-              Shader& _colorShader,
-              glm::vec3 position,
-              Terrain* terrain);
-  void draw();
-  glm::vec3 position() const;
+  BarrierView(Shader& shader, glm::vec3 position, Terrain* terrain);
+  void draw() override;
+  glm::vec3 position() const override;
   bool contain(glm::vec3 point) const;
   void setTexture(Status status);
   void setHealthBarScaleFactor(float factor);
@@ -25,10 +22,10 @@ public:
 private:
   void showHealthBar();
 
-  std::shared_ptr<Model> _model;
-  Shader& _textureShader;
-  Shader& _colorShader;
-  glm::vec3 _position;
+  /* std::shared_ptr<Model> _model; */
+  /* Shader& _textureShader; */
+  /* Shader& _colorShader; */
+  /* glm::vec3 _position; */
   float _scaleFactor{ 1 };
   Surface _healthBar;
   float _healthBarScaleFactor{ 1.0 };

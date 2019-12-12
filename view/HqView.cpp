@@ -7,13 +7,12 @@ float HqView::HQ_HEALTH_BAR_WIDTH = 1.2f;
 float HqView::HQ_HEALTH_BAR_HEIGHT = 0.15f;
 
 HqView::HqView(Shader& shader, glm::vec3 position) :
-  _shader(shader), _position(position),
-  _healthBar(_shader,
-             position.x - 0.3,
-             position.y,
-             _position.x + HQ_HEALTH_BAR_WIDTH,
-             _position.y + HQ_HEALTH_BAR_HEIGHT,
-             1)
+  View(shader, position), _healthBar(_shader,
+                                     position.x - 0.3,
+                                     position.y,
+                                     _position.x + HQ_HEALTH_BAR_WIDTH,
+                                     _position.y + HQ_HEALTH_BAR_HEIGHT,
+                                     1)
 {
   _texturesType = TexturePackType::PreBuild;
   _model = modelLoader->models()[Models::Hq];
@@ -45,9 +44,9 @@ bool HqView::contain(glm::vec3 point) const
   return distance < radius;
 }
 
-glm::vec3 HqView::position()
+glm::vec3 HqView::position() const
 {
-  return glm::vec3(_position.x, _position.y, _position.z);
+  return _position;
 }
 
 void HqView::setTexture(Status status)

@@ -1,12 +1,9 @@
 #include "Barrier.h"
 #include "PlantBuilder.h"
 
-Barrier::Barrier(Shader& textureShader,
-                 Shader& colorShader,
-                 glm::vec3 position,
-                 Terrain* terrain) :
-  _textureShader(textureShader),
-  _view(textureShader, colorShader, position, terrain), _terrain(terrain)
+Barrier::Barrier(Shader& textureShader, glm::vec3 position, Terrain* terrain) :
+  _textureShader(textureShader), _view(textureShader, position, terrain),
+  _terrain(terrain)
 {
   CircularRegion r = { position.x, position.y, _view.radius() };
   auto c = terrain->getRgbColor(position.x, position.y);

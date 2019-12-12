@@ -11,10 +11,7 @@
 class Barrier : public Buildable
 {
 public:
-  Barrier(Shader& textureShader,
-          Shader& colorShader,
-          glm::vec3 position,
-          Terrain* terrain);
+  Barrier(Shader& textureShader, glm::vec3 position, Terrain* terrain);
   bool isUnderCursor(const glm::vec3& mousePoint) override;
   void render() override;
   void select() override;

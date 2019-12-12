@@ -2,7 +2,7 @@
 #include "../globals.h"
 
 PlantView::PlantView(Shader& shader, glm::vec3 position) :
-  _shader(shader), _position(position)
+  View(shader, position)
 {
   _model = modelLoader->models()[Models::Plant];
 }
@@ -18,7 +18,7 @@ void PlantView::draw()
   _model->render();
 }
 
-glm::vec2 PlantView::position()
+glm::vec3 PlantView::position() const
 {
-  return glm::vec2(_position.x, _position.y);
+  return _position;
 }
