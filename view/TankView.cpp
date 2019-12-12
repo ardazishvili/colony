@@ -12,14 +12,14 @@ float TankView::TANK_HEALTH_BAR_HEIGHT = 0.04;
 std::map<Status, unsigned int> tankTexturesMap;
 
 TankView::TankView(Shader& shader, glm::vec3 position, float tankTypeScaling) :
-  SelectableView(shader,
-                 position,
-                 0.38,
-                 { 0, 0, TANK_HEALTH_BAR_WIDTH, TANK_HEALTH_BAR_HEIGHT }),
+  UnitView(shader,
+           position,
+           0.38,
+           { 0, 0, TANK_HEALTH_BAR_WIDTH, TANK_HEALTH_BAR_HEIGHT },
+           TexturePackType::Initial),
   _tankSizeScaleFactor(tankTypeScaling)
 {
   _model = modelLoader->models()[Models::Tank];
-  _texturesType = TexturePackType::Initial;
   _hasAnimation = true;
   _healthBar.setOffsetZ(position.z + 0.3);
   _healthBar.setTexture("/home/roman/repos/colony/assets/red.png");
@@ -72,23 +72,6 @@ void TankView::rotateGun(float degreeAngle)
   }
 }
 
-void TankView::setTexture(Status status)
-{
-  if (status == Status::Selected) {
-    _texturesType = TexturePackType::OnSelection;
-    _model->setActiveTexturesPack(_texturesType);
-  } else if (status == Status::None) {
-    _texturesType = TexturePackType::Initial;
-    _model->setActiveTexturesPack(_texturesType);
-  } else if (status == Status::UnderFire) {
-    _texturesType = TexturePackType::UnderFire;
-    _model->setActiveTexturesPack(_texturesType);
-  } else if (status == Status::Destroyed) {
-    _texturesType = TexturePackType::Destroyed;
-    _model->setActiveTexturesPack(_texturesType);
-  }
-}
-
 void TankView::updateGun()
 {
   auto delta = _targetGunAngle - _currentGunAngle;
@@ -114,11 +97,11 @@ void TankView::updateGun()
   }
 }
 
-void TankView::showHealthBar()
-{
-  _healthBar.setOffsetXY(_position.x - 0.25, _position.y);
-  _healthBar.setScaleX(_healthBarScaleFactor);
-  _healthBar.setPitchAngle(-camera.getPitch());
-  _healthBar.render();
-}
+/* void TankView::showHealthBar() */
+/* { */
+/*   _healthBar.setOffsetXY(_position.x - 0.25, _position.y); */
+/*   _healthBar.setScaleX(_healthBarScaleFactor); */
+/*   _healthBar.setPitchAngle(-camera.getPitch()); */
+/*   _healthBar.render(); */
+/* } */
 

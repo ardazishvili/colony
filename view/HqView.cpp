@@ -7,12 +7,12 @@ float HqView::HQ_HEALTH_BAR_WIDTH = 1.2f;
 float HqView::HQ_HEALTH_BAR_HEIGHT = 0.15f;
 
 HqView::HqView(Shader& shader, glm::vec3 position) :
-  SelectableView(shader,
-                 position,
-                 0.75,
-                 { -0.3, 0, HQ_HEALTH_BAR_WIDTH, HQ_HEALTH_BAR_HEIGHT })
+  StructureView(shader,
+                position,
+                0.75,
+                { -0.3, 0, HQ_HEALTH_BAR_WIDTH, HQ_HEALTH_BAR_HEIGHT },
+                TexturePackType::PreBuild)
 {
-  _texturesType = TexturePackType::PreBuild;
   _model = modelLoader->models()[Models::Hq];
   _model->setActiveTexturesPack(TexturePackType::PreBuild);
   _healthBar.setOffsetZ(1.3f);
@@ -33,23 +33,6 @@ void HqView::draw()
   showHealthBar();
 }
 
-void HqView::setTexture(Status status)
-{
-  if (status == Status::Selected) {
-    _texturesType = TexturePackType::OnSelection;
-    _model->setActiveTexturesPack(_texturesType);
-  } else if (status == Status::None) {
-    _texturesType = TexturePackType::Initial;
-    _model->setActiveTexturesPack(_texturesType);
-  } else if (status == Status::UnderFire) {
-    _texturesType = TexturePackType::UnderFire;
-    _model->setActiveTexturesPack(_texturesType);
-  } else if (status == Status::Destroyed) {
-    _texturesType = TexturePackType::Destroyed;
-    _model->setActiveTexturesPack(_texturesType);
-  }
-}
-
 void HqView::rotate(float degreeAngle)
 {
   _angle = degreeAngle + 180;
@@ -59,12 +42,6 @@ void HqView::move(glm::vec3 position)
 {
   _position = glm::vec3(position);
   _healthBar.setOffsetXY(position.x, position.y);
-}
-
-void HqView::showHealthBar()
-{
-  _healthBar.setScaleX(_healthBarScaleFactor);
-  _healthBar.render();
 }
 
 float HqView::angle() const

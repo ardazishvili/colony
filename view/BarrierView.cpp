@@ -8,11 +8,12 @@ float BarrierView::BARRIER_HEALTH_BAR_WIDTH = 1.2f;
 float BarrierView::BARRIER_HEALTH_BAR_HEIGHT = 0.15f;
 
 BarrierView::BarrierView(Shader& shader, glm::vec3 position, Terrain* terrain) :
-  SelectableView(
+  StructureView(
     shader,
     position,
     1.41 / 2,
-    { -0.3, 0, BARRIER_HEALTH_BAR_WIDTH, BARRIER_HEALTH_BAR_HEIGHT }),
+    { -0.3, 0, BARRIER_HEALTH_BAR_WIDTH, BARRIER_HEALTH_BAR_HEIGHT },
+    TexturePackType::Initial),
   _terrain(terrain)
 {
   _model = modelLoader->models()[Models::Barrier];
@@ -46,16 +47,6 @@ void BarrierView::draw()
     glDepthMask(GL_TRUE);
     showHealthBar();
   }
-}
-
-void BarrierView::setTexture(Status status)
-{
-}
-
-void BarrierView::showHealthBar()
-{
-  _healthBar.setScaleX(_healthBarScaleFactor);
-  _healthBar.render();
 }
 
 float BarrierView::radius() const

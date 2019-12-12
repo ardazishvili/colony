@@ -4,6 +4,10 @@ project(Colony)
 add_executable(colony
 		Timer.cpp
 		Timer.h
+    view/UnitView.h
+    view/UnitView.cpp
+    view/StructureView.h
+    view/StructureView.cpp
 		engine/Animation.cpp
 		engine/Animation.h
 		engine/Camera.cpp
