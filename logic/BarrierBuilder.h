@@ -1,15 +1,13 @@
-#ifndef HQ_BUILDER_H
-#define HQ_BUILDER_H
+#ifndef BARRIER_BUILDER_H
+#define BARRIER_BUILDER_H
 
-#include "../engine/Shader.h"
 #include "../engine/Terrain.h"
 #include "AbstractStructureBuilder.h"
 
-class HqBuilder : public AbstractStructureBuilder
+class BarrierBuilder : public AbstractStructureBuilder
 {
 public:
-  HqBuilder(Shader& shader, Terrain* terrain);
-  ~HqBuilder();
+  BarrierBuilder(Shader& shader, Terrain* terrain);
 
   void create() override;
   MenuTextures getPreviewType() override;

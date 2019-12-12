@@ -4,12 +4,12 @@
 #include "HqBuilder.h"
 #include "TankFactoryBuilder.h"
 
-Control::Control(Shader& shader) :
-	_structurePanel(Panel::Type::Structures, shader),
-	_unitPanel(Panel::Type::Units, shader),
-	_shader(shader)
+Control::Control(Shader& shader, Terrain* terrain) :
+  _structurePanel(Panel::Type::Structures, shader),
+  _unitPanel(Panel::Type::Units, shader), _shader(shader)
 {
-  std::unique_ptr<AbstractBuilder> hqBuilder = std::make_unique<HqBuilder>(shader);
+  std::unique_ptr<AbstractBuilder> hqBuilder =
+    std::make_unique<HqBuilder>(shader, terrain);
   auto hqPanelItem = std::make_unique<PanelItem>(std::move(hqBuilder));
   _structurePanel.addItem(std::move(hqPanelItem));
 }
@@ -24,7 +24,7 @@ void Control::populateStructurePanel(Buildable* buildable)
 {
   clearStructurePanel();
   StructureBuilders builders = buildable->getStructureBuilders();
-  for(auto& builder : builders) {
+  for (auto& builder : builders) {
     addToStructurePanel(std::move(builder));
   }
 }
@@ -54,7 +54,8 @@ void Control::addToUnitPanel(std::unique_ptr<AbstractUnitBuilder> builder)
   _unitPanel.addItem(std::move(panelItem));
 }
 
-void Control::addToStructurePanel(std::unique_ptr<AbstractStructureBuilder> builder)
+void Control::addToStructurePanel(
+  std::unique_ptr<AbstractStructureBuilder> builder)
 {
   auto panelItem = std::make_unique<PanelItem>(std::move(builder));
   _structurePanel.addItem(std::move(panelItem));

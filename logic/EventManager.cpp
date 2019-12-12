@@ -29,7 +29,7 @@ EventManager::EventManager(GLFWwindow* window,
   _camera(camera), _game(game), _textureShader(textureShader),
   _colorShader(colorShader), _terrain(terrain)
 {
-  _game.setControl(std::make_unique<Control>(textureShader));
+  _game.setControl(std::make_unique<Control>(textureShader, _terrain));
 }
 
 void EventManager::tick()
@@ -75,8 +75,8 @@ void EventManager::handleKeyPress(GLFWwindow* window,
       std::cout << "C pressed" << std::endl;
       if (_structureToBuild == nullptr) {
         _structureToBuildStage = BuildStage::SetAngle;
-        auto hq =
-          std::make_shared<Hq>(_textureShader, unProject(currentX, currentY));
+        auto hq = std::make_shared<Hq>(
+          _textureShader, unProject(currentX, currentY), _terrain);
         _game.addStructure(hq);
         _structureToBuild = hq;
       } else {
@@ -91,9 +91,21 @@ void EventManager::handleKeyPress(GLFWwindow* window,
       _game.addPlant(plant);
     }
     if (key == GLFW_KEY_B) {
-      auto barrier = std::make_shared<Barrier>(
-        _textureShader, unProject(currentX, currentY), _terrain);
-      _game.addBarrier(barrier);
+      std::cout << "B pressed" << std::endl;
+      if (_structureToBuild == nullptr) {
+        _structureToBuildStage = BuildStage::SetAngle;
+        auto b = std::make_shared<Barrier>(
+          _textureShader, unProject(currentX, currentY), _terrain);
+        _game.addStructure(b);
+        _structureToBuild = b;
+      } else {
+        _structureToBuildStage = BuildStage::Done;
+        _structureToBuild->commit();
+        _structureToBuild = nullptr;
+      }
+      /* auto barrier = std::make_shared<Barrier>( */
+      /*   _textureShader, unProject(currentX, currentY), _terrain); */
+      /* _game.addStructure(barrier); */
     }
     if (key == GLFW_KEY_ESCAPE) {
       glfwSetWindowShouldClose(_window, true);
@@ -189,19 +201,19 @@ void EventManager::handleMousePressedLeft()
 
   _tankSelected = _game.getTank(c, true);
   _structureSelected = _game.getStructure(c);
-  _barrierSelected = _game.getBarrier(c);
+  /* _barrierSelected = _game.getBarrier(c); */
   if (!_structureSelected) {
     _structureSelected = _game.getStructure(c);
     if (!_structureSelected && _game.panelIsEmpty(Panel::Type::Units)) {
       _game.clearPanel(Panel::Type::Units);
     }
   }
-  if (!_barrierSelected) {
-    _barrierSelected = _game.getBarrier(c);
-    if (!_barrierSelected && _game.panelIsEmpty(Panel::Type::Units)) {
-      _game.clearPanel(Panel::Type::Units);
-    }
-  }
+  /* if (!_barrierSelected) { */
+  /*   _barrierSelected = _game.getBarrier(c); */
+  /*   if (!_barrierSelected && _game.panelIsEmpty(Panel::Type::Units)) { */
+  /*     _game.clearPanel(Panel::Type::Units); */
+  /*   } */
+  /* } */
 }
 
 void EventManager::handleMousePressedRight()
@@ -221,9 +233,11 @@ void EventManager::handleMousePressedRight()
   }
   if (_structureToBuild &&
       (_structureToBuildStage == BuildStage::SetPosition)) {
+    std::cout << "setting position" << std::endl;
     _structureToBuildStage = BuildStage::SetAngle;
   } else if (_structureToBuild &&
              (_structureToBuildStage == BuildStage::SetAngle)) {
+    std::cout << "setting angle" << std::endl;
     _structureToBuildStage = BuildStage::Done;
     _structureToBuild->commit();
     _structureToBuild = nullptr;

@@ -10,7 +10,7 @@
 class Control
 {
 public:
-  Control(Shader& shader);
+  Control(Shader& shader, Terrain* terrain);
   void display();
   void populateUnitPanel(Game& game, Buildable* buildable);
   void populateStructurePanel(Buildable* buildable);

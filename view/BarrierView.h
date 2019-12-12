@@ -1,5 +1,5 @@
-#ifndef BARRER_VIEW_H
-#define BARRER_VIEW_H
+#ifndef BARRIER_VIEW_H
+#define BARRIER_VIEW_H
 
 #include "../engine/Terrain.h"
 #include "StructureView.h"

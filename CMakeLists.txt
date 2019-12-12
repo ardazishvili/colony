@@ -4,6 +4,8 @@ project(Colony)
 add_executable(colony
 		Timer.cpp
 		Timer.h
+    logic/BarrierBuilder.h
+    logic/BarrierBuilder.cpp
     view/UnitView.h
     view/UnitView.cpp
     view/StructureView.h

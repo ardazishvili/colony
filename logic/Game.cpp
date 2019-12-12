@@ -29,7 +29,7 @@ void Game::tick()
   displayShells();
   displayStructures();
   displayPlants();
-  displayBarriers();
+  /* displayBarriers(); */
   displayControl();
 
   showDebug();
@@ -58,10 +58,10 @@ void Game::addPlant(std::shared_ptr<Plant> plant)
   _plants.push_back(plant);
 }
 
-void Game::addBarrier(std::shared_ptr<Barrier> barrier)
-{
-  _barriers.push_back(barrier);
-}
+/* void Game::addBarrier(std::shared_ptr<Barrier> barrier) */
+/* { */
+/*   _barriers.push_back(barrier); */
+/* } */
 
 void Game::addTerrain(Terrain* terrain)
 {
@@ -101,12 +101,12 @@ void Game::displayPlants()
   }
 }
 
-void Game::displayBarriers()
-{
-  for (auto& barrier : _barriers) {
-    barrier->render();
-  }
-}
+/* void Game::displayBarriers() */
+/* { */
+/*   for (auto& barrier : _barriers) { */
+/*     barrier->render(); */
+/*   } */
+/* } */
 
 void Game::displayControl()
 {
@@ -175,27 +175,27 @@ Buildable* Game::getStructure(const glm::vec3& mousePoint)
   return _selectedStructure;
 }
 
-Buildable* Game::getBarrier(const glm::vec3& mousePoint)
-{
-  for (auto& barrier : _barriers) {
-    if (!barrier->isUnderFire()) {
-      barrier->deselect();
-    }
-  }
+/* Buildable* Game::getBarrier(const glm::vec3& mousePoint) */
+/* { */
+/*   for (auto& barrier : _barriers) { */
+/*     if (!barrier->isUnderFire()) { */
+/*       barrier->deselect(); */
+/*     } */
+/*   } */
 
-  for (auto& barrier : _barriers) {
-    if (barrier->isUnderCursor(mousePoint) && !barrier->isDestroyed()) {
-      _selectedBarrier = barrier.get();
-      barrier->select();
-      _control->populateUnitPanel(*this, _selectedBarrier);
-      _control->populateStructurePanel(_selectedBarrier);
-      return _selectedBarrier;
-    }
-  }
+/*   for (auto& barrier : _barriers) { */
+/*     if (barrier->isUnderCursor(mousePoint) && !barrier->isDestroyed()) { */
+/*       _selectedBarrier = barrier.get(); */
+/*       barrier->select(); */
+/*       _control->populateUnitPanel(*this, _selectedBarrier); */
+/*       _control->populateStructurePanel(_selectedBarrier); */
+/*       return _selectedBarrier; */
+/*     } */
+/*   } */
 
-  _selectedBarrier = nullptr;
-  return _selectedBarrier;
-}
+/*   _selectedBarrier = nullptr; */
+/*   return _selectedBarrier; */
+/* } */
 
 void Game::showDebug()
 {

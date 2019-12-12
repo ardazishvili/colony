@@ -1,21 +1,26 @@
 #include "Barrier.h"
 #include "PlantBuilder.h"
+const int Barrier::BARRIER_HP = 200;
 
 Barrier::Barrier(Shader& textureShader, glm::vec3 position, Terrain* terrain) :
   _textureShader(textureShader), _view(textureShader, position, terrain),
   _terrain(terrain)
 {
-  CircularRegion r = { position.x, position.y, _view.radius() };
-  auto c = terrain->getRgbColor(position.x, position.y);
-  _livingArea = terrain->addLivingArea(r, glm::vec4(c.x, c.y, c.z, 0.5));
+  std::cout << "position.x= " << position.x << std::endl;
+  std::cout << "position.y= " << position.y << std::endl;
+
+  _health = BARRIER_HP;
+  _maxHealth = _health;
 }
 
 void Barrier::render()
 {
-  if (_clock.elapsed() >= _bioUpdateTime) {
-    std::cout << "_plants.size()= " << _plants.size() << std::endl;
-    _terrain->updateLivingArea(_livingArea);
-    _clock.reload();
+  if (_livingArea != nullptr) {
+    if (_clock.elapsed() >= _bioUpdateTime) {
+      std::cout << "_plants.size()= " << _plants.size() << std::endl;
+      _terrain->updateLivingArea(_livingArea);
+      _clock.reload();
+    }
   }
   _view.draw();
 }
@@ -83,4 +88,25 @@ void Barrier::addPlant(std::shared_ptr<Plant> p)
 {
   _livingArea->plants.push_back(p->position());
   _plants.push_back(p);
+}
+
+void Barrier::setAngle(float angle)
+{
+  std::cout << "barrier rotate" << std::endl;
+  _view.rotate(angle);
+}
+
+void Barrier::setPosition(glm::vec3 position)
+{
+  std::cout << "moving barrier" << std::endl;
+  _view.move(position);
+}
+
+void Barrier::commit()
+{
+  auto p = _view.position();
+  CircularRegion r = { p.x, p.y, _view.radius() };
+  auto c = _terrain->getRgbColor(p.x, p.y);
+  _livingArea = _terrain->addLivingArea(r, glm::vec4(c.x, c.y, c.z, 0.5));
+  deselect();
 }

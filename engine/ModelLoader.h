@@ -6,24 +6,16 @@
 
 #include "Model.h"
 
-enum class Models
-{
-  Shell,
-  Tank,
-  TankFactory,
-  Hq,
-  Plant,
-  Barrier
-};
+enum class Models { Shell, Tank, TankFactory, Hq, Plant, Barrier };
 
-enum class MenuTextures
-{
+enum class MenuTextures {
   Hq,
   TankFactory,
   TankLight,
   TankMedium,
   TankHeavy,
-  Plant
+  Plant,
+  Barrier
 };
 
 using ModelsMapping = std::map<Models, std::shared_ptr<Model>>;

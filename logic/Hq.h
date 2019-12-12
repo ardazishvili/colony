@@ -1,6 +1,7 @@
 #ifndef HQ_H
 #define HQ_H
 
+#include "../engine/Terrain.h"
 #include "../view/HqView.h"
 #include "BuildableStructure.h"
 
@@ -8,7 +9,7 @@ class Hq : public BuildableStructure
 {
 public:
   Hq() = delete;
-  Hq(Shader& shader, glm::vec3 position);
+  Hq(Shader& shader, glm::vec3 position, Terrain* terrain);
 
   bool isUnderCursor(const glm::vec3& mousePoint) override;
   void render() override;
@@ -24,6 +25,7 @@ public:
 
 private:
   Shader& _shader;
+  Terrain* _terrain;
   void updateHealthBar() override;
   HqView _view;
   static const int HQ_HP;

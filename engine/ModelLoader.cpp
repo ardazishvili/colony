@@ -1,6 +1,8 @@
 #include "ModelLoader.h"
 
-ModelLoader::ModelLoader(Shader& shader) : _shader(shader) {}
+ModelLoader::ModelLoader(Shader& shader) : _shader(shader)
+{
+}
 
 void ModelLoader::load()
 {
@@ -48,6 +50,14 @@ void ModelLoader::load()
 
   auto barrierModel = std::make_unique<Model>(_shader);
   barrierModel->load("/home/roman/repos/colony/assets/barrier.dae");
+  barrierModel->loadTexture("/home/roman/repos/colony/assets/grey.png",
+                            TexturePackType::PreBuild);
+  barrierModel->loadTexture("/home/roman/repos/colony/assets/blue.png",
+                            TexturePackType::OnSelection);
+  barrierModel->loadTexture("/home/roman/repos/colony/assets/red.png",
+                            TexturePackType::UnderFire);
+  barrierModel->loadTexture("/home/roman/repos/colony/assets/black.png",
+                            TexturePackType::Destroyed);
   _models.emplace(Models::Barrier, std::move(barrierModel));
 
   auto tfTexture = std::make_shared<Texture>(
@@ -76,6 +86,11 @@ void ModelLoader::load()
     GL_TEXTURE_2D, "/home/roman/repos/colony/assets/Plant.png");
   plantTexture->load();
   _menuTextures.emplace(MenuTextures::Plant, std::move(plantTexture));
+
+  auto barrierTexture = std::make_shared<Texture>(
+    GL_TEXTURE_2D, "/home/roman/repos/colony/assets/Barrier.png");
+  barrierTexture->load();
+  _menuTextures.emplace(MenuTextures::Barrier, std::move(barrierTexture));
 }
 
 ModelsMapping ModelLoader::models()

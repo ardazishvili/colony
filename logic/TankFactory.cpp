@@ -6,6 +6,8 @@ const int TankFactory::TANK_FACTORY_HP = 200;
 TankFactory::TankFactory(Shader& shader, glm::vec3 position) :
   _view(shader, position), _shader(shader)
 {
+  std::cout << "position.x= " << position.x << std::endl;
+  std::cout << "position.y= " << position.y << std::endl;
   _health = TANK_FACTORY_HP;
   _maxHealth = _health;
 }
@@ -111,6 +113,7 @@ void TankFactory::setAngle(float angle)
 
 void TankFactory::setPosition(glm::vec3 position)
 {
+  std::cout << "moving tf" << std::endl;
   _view.move(position);
 }
 
