@@ -409,7 +409,7 @@ void TerrainMesh::updateLivingArea(std::shared_ptr<LivingArea> area)
         /* min = std::min(min, d); */
         /* max = std::max(max, d); */
         double g = _vSub.at(i).color.y;
-        auto newColor = glm::lerp(g, 1.0, ::pow(1.0f - d / 3, 10) / 30);
+        auto newColor = glm::lerp(g, 1.0, ::pow(1.0f - d / 3, 20) / 30);
         _vSub.at(i).color.y = newColor;
       }
     }

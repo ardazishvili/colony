@@ -26,7 +26,7 @@ public:
   void addPlant(std::shared_ptr<Plant> p);
 
 private:
-  void updateHealthBar();
+  void updateHealthBar() override;
 
   Shader& _textureShader;
   BarrierView _view;
