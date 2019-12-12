@@ -43,6 +43,10 @@ add_executable(colony
 		imgui/imstb_truetype.h
 		logic/Buildable.cpp
 		logic/Buildable.h
+    logic/BuildableUnit.h
+    logic/BuildableUnit.cpp
+    logic/BuildableStructure.h
+    logic/BuildableStructure.cpp
 		logic/Control.cpp
 		logic/Control.h
 		logic/EventManager.cpp

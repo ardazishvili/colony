@@ -8,7 +8,7 @@ class TankView : public UnitView
 public:
   TankView(Shader& shader, glm::vec3 position, float tankTypeScaling);
   void draw() override;
-  void move(glm::vec3 newPosition);
+  void move(glm::vec3 newPosition) override;
   void rotateBody(float degreeAngle);
   void rotateGun(float degreeAngle);
 

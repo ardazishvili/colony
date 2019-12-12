@@ -14,22 +14,12 @@ class Game;
 
 using Shells = std::list<Shell>;
 
-enum class HealthLevel
-{
-  Low,
-  Medium,
-  High
-};
+enum class HealthLevel { Low, Medium, High };
 
 class Tank : public BuildableUnit
 {
 public:
-  enum class Type
-  {
-    Light,
-    Medium,
-    Heavy
-  };
+  enum class Type { Light, Medium, Heavy };
 
   Tank() = delete;
   Tank(Shader& shader,
@@ -39,7 +29,7 @@ public:
        Shell::Size shellSize = Shell::Size::Small);
 
   void render() override;
-  bool isUnderCursor(const glm::vec3& point) override;
+  /* bool isUnderCursor(const glm::vec3& point) override; */
   bool isInsideArea(RectangleRegion area);
   void select() override;
   void deselect() override;
@@ -81,8 +71,8 @@ private:
   Terrain* _terrain;
 
   // TODO
-  Shader& _shader;
-  TankView _view;
+  /* Shader& _shader; */
+  /* TankView _view; */
 };
 
 std::shared_ptr<Tank> createTank(Game& game,

@@ -6,6 +6,7 @@
 
 #include <glm/glm.hpp>
 
+#include "../view/SelectableView.h"
 #include "AbstractStructureBuilder.h"
 #include "AbstractUnitBuilder.h"
 #include "Shell.h"
@@ -16,17 +17,10 @@ using UnitBuilders = std::vector<std::unique_ptr<AbstractUnitBuilder>>;
 using StructureBuilders =
   std::vector<std::unique_ptr<AbstractStructureBuilder>>;
 
-enum class Status
-{
-  None,
-  Selected,
-  UnderFire,
-  Destroyed
-};
-
 class Buildable
 {
 public:
+  Buildable(Shader& shader);
   virtual bool isUnderCursor(const glm::vec3& mousePoint) = 0;
   virtual void render() = 0;
   virtual void select() = 0;
@@ -44,6 +38,7 @@ protected:
   float _health;
   float _maxHealth;
   Status _status;
+  Shader& _shader;
 
 private:
   virtual void updateHealthBar() = 0;

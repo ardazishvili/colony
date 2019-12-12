@@ -28,8 +28,12 @@ Tank::Tank(Shader& shader,
            Type type,
            HealthLevel healthLevel,
            Shell::Size sh) :
+  BuildableUnit(
+    shader,
+    std::make_unique<TankView>(shader, position, tankSizeMap[type])),
   _speed(speedMap[type]),
-  _view(shader, position, tankSizeMap[type]), _shader(shader), _type(type),
+  /* _view->shader, position, tankSizeMap[type]), _shader(shader), _type(type),
+   */
   _shellSize(sh), _destination(-1, -1, -1)
 {
   _health = healthLevelMap[healthLevel] * tankHitPointsMap[type];
@@ -40,17 +44,17 @@ Tank::Tank(Shader& shader,
 
 void Tank::render()
 {
-  _view.draw();
+  _view->draw();
 }
 
 void Tank::move()
 {
-  auto prev = _view.position();
+  auto prev = _view->position();
   auto c = _terrain->getXYZ(glm::vec2(prev.x, prev.y) + _moveIncrement);
-  _view.move(c);
+  _view->move(c);
   bool destinationIsReached =
-    ::sqrt(::pow(_view.position().x - _destination.x, 2) +
-           ::pow(_view.position().y - _destination.y, 2)) < _speed;
+    ::sqrt(::pow(_view->position().x - _destination.x, 2) +
+           ::pow(_view->position().y - _destination.y, 2)) < _speed;
   if (destinationIsReached || isDestroyed()) {
     stopMoving();
   }
@@ -59,14 +63,14 @@ void Tank::move()
 void Tank::startMoving(glm::vec3 endPoint)
 {
   _destination = endPoint;
-  float dy = _destination.y - _view.position().y;
-  float dx = _destination.x - _view.position().x;
+  float dy = _destination.y - _view->position().y;
+  float dx = _destination.x - _view->position().x;
   float radianAngle = ::atan(dx / dy);
   if (dy < 0) {
     radianAngle += M_PI;
   }
   float degreeAngle = radianAngle * 180.0f / M_PI - 90;
-  _view.rotateBody(degreeAngle);
+  _view->rotateBody(degreeAngle);
   _moveIncrement.x = _speed * ::sin(radianAngle);
   _moveIncrement.y = _speed * ::cos(radianAngle);
 }
@@ -92,10 +96,10 @@ void Tank::shootTarget()
   }
 
   float angle = getTargetAngle() + 90.0f;
-  _view.rotateGun(getTargetAngle());
+  _view->rotateGun(getTargetAngle());
   // TODO magic number = tank length
   Shell shell(_shader,
-              glm::vec3(_view.position().x, _view.position().y, 0.5f),
+              glm::vec3(_view->position().x, _view->position().y, 0.5f),
               glm::radians(angle),
               getTargetDistance(),
               _shellSize);
@@ -108,12 +112,12 @@ void Tank::takeDamage(Shell::Size shellSize)
 {
   if (_status != Status::Destroyed) {
     _status = Status::UnderFire;
-    _view.setTexture(Status::UnderFire);
+    _view->setTexture(Status::UnderFire);
     _health =
       std::max(0.0f, _health - Shell::SHELL_DAMAGE_MAP.find(shellSize)->second);
     if (_health == 0) {
       _status = Status::Destroyed;
-      _view.setTexture(Status::Destroyed);
+      _view->setTexture(Status::Destroyed);
     }
     updateHealthBar();
   }
@@ -122,7 +126,7 @@ void Tank::takeDamage(Shell::Size shellSize)
 void Tank::updateHealthBar()
 {
   auto factor = _health / _maxHealth;
-  _view.setHealthBarScaleFactor(factor);
+  _view->setHealthBarScaleFactor(factor);
 }
 
 void Tank::updateShells()
@@ -141,17 +145,17 @@ void Tank::updateShells()
 
 glm::vec3 Tank::position()
 {
-  return _view.position();
+  return _view->position();
 }
 
-bool Tank::isUnderCursor(const glm::vec3& point)
-{
-  return _view.contain(point);
-}
+/* bool Tank::isUnderCursor(const glm::vec3& point) */
+/* { */
+/*   return _view->contain(point); */
+/* } */
 
 bool Tank::isInsideArea(RectangleRegion area)
 {
-  auto c = _view.position();
+  auto c = _view->position();
   auto lowerX = std::min(area.x, area.x + area.width);
   auto upperX = std::max(area.x, area.x + area.width);
   auto lowerY = std::min(area.y, area.y + area.height);
@@ -170,14 +174,14 @@ bool Tank::isShooting()
 void Tank::select()
 {
   _status = Status::Selected;
-  _view.setTexture(Status::Selected);
+  _view->setTexture(Status::Selected);
 }
 
 void Tank::deselect()
 {
   if (_status != Status::Destroyed) {
     _status = Status::None;
-    _view.setTexture(Status::None);
+    _view->setTexture(Status::None);
   }
 }
 

@@ -5,7 +5,9 @@
 const int Hq::HQ_HP = 500;
 
 Hq::Hq(Shader& shader, glm::vec3 position, Terrain* terrain) :
-  _shader(shader), _view(shader, position), _terrain(terrain)
+  /* _shader(shader), _view(shader, position), _terrain(terrain) */
+  BuildableStructure(shader, std::make_unique<HqView>(shader, position)),
+  _terrain(terrain)
 {
   _health = HQ_HP;
   _maxHealth = _health;
@@ -13,43 +15,43 @@ Hq::Hq(Shader& shader, glm::vec3 position, Terrain* terrain) :
 
 void Hq::render()
 {
-  _view.draw();
+  _view->draw();
 }
 
-bool Hq::isUnderCursor(const glm::vec3& mousePoint)
-{
-  return _view.contain(mousePoint);
-}
+/* bool Hq::isUnderCursor(const glm::vec3& mousePoint) */
+/* { */
+/*   return _view.contain(mousePoint); */
+/* } */
 
 void Hq::select()
 {
-  _view.setTexture(Status::Selected);
+  _view->setTexture(Status::Selected);
 }
 
 void Hq::deselect()
 {
   if (_status != Status::Destroyed) {
     _status = Status::None;
-    _view.setTexture(Status::None);
+    _view->setTexture(Status::None);
   }
 }
 
 void Hq::updateHealthBar()
 {
   auto factor = _health / _maxHealth;
-  _view.setHealthBarScaleFactor(factor);
+  _view->setHealthBarScaleFactor(factor);
 }
 
 void Hq::takeDamage(Shell::Size shellSize)
 {
   if (_status != Status::Destroyed) {
     _status = Status::UnderFire;
-    _view.setTexture(Status::UnderFire);
+    _view->setTexture(Status::UnderFire);
     _health =
       std::max(0.0f, _health - Shell::SHELL_DAMAGE_MAP.find(shellSize)->second);
     if (_health == 0) {
       _status = Status::Destroyed;
-      _view.setTexture(Status::Destroyed);
+      _view->setTexture(Status::Destroyed);
     }
     updateHealthBar();
   }
@@ -57,7 +59,7 @@ void Hq::takeDamage(Shell::Size shellSize)
 
 glm::vec3 Hq::position()
 {
-  return _view.position();
+  return _view->position();
 }
 
 UnitBuilders Hq::getUnitBuilders(Game& game)
@@ -81,12 +83,12 @@ StructureBuilders Hq::getStructureBuilders()
 
 void Hq::setAngle(float angle)
 {
-  _view.rotate(angle);
+  _view->rotate(angle);
 }
 
 void Hq::setPosition(glm::vec3 position)
 {
-  _view.move(position);
+  _view->move(position);
 }
 
 void Hq::commit()

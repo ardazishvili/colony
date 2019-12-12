@@ -11,8 +11,8 @@
 class Barrier : public BuildableStructure
 {
 public:
-  Barrier(Shader& textureShader, glm::vec3 position, Terrain* terrain);
-  bool isUnderCursor(const glm::vec3& mousePoint) override;
+  Barrier(Shader& shader, glm::vec3 position, Terrain* terrain);
+  /* bool isUnderCursor(const glm::vec3& mousePoint) override; */
   void render() override;
   void select() override;
   void deselect() override;
@@ -28,8 +28,8 @@ public:
 private:
   void updateHealthBar() override;
 
-  Shader& _textureShader;
-  BarrierView _view;
+  /* Shader& _textureShader; */
+  /* BarrierView _view; */
   std::vector<unsigned int> _vertices;
   float _radius{ 1.0f };
   Terrain* _terrain;

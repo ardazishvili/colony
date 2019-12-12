@@ -2,8 +2,10 @@
 #define SELECTABLE_VIEW_H
 
 #include "../engine/Surface.h"
-#include "../logic/Buildable.h"
+/* #include "../logic/Buildable.h" */
 #include "View.h"
+
+enum class Status { None, Selected, UnderFire, Destroyed };
 
 struct HealthBarParams
 {

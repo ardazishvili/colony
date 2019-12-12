@@ -4,7 +4,9 @@
 const int TankFactory::TANK_FACTORY_HP = 200;
 
 TankFactory::TankFactory(Shader& shader, glm::vec3 position) :
-  _view(shader, position), _shader(shader)
+  /* _view(shader, position), _shader(shader) */
+  BuildableStructure(shader,
+                     std::make_unique<TankFactoryView>(shader, position))
 {
   std::cout << "position.x= " << position.x << std::endl;
   std::cout << "position.y= " << position.y << std::endl;
@@ -14,7 +16,7 @@ TankFactory::TankFactory(Shader& shader, glm::vec3 position) :
 
 void TankFactory::render()
 {
-  _view.draw();
+  _view->draw();
 }
 
 void TankFactory::createTank(Game& game,
@@ -28,46 +30,46 @@ void TankFactory::createTank(Game& game,
   auto tank = ::createTank(
     game, _shader, glm::vec3(x, y, z), tankType, healthLevel, shellSize);
   auto d = 3.0f;
-  auto tankDestination = glm::vec3(x - d * ::cos(glm::radians(_view.angle())),
-                                   y - d * ::sin(glm::radians(_view.angle())),
+  auto tankDestination = glm::vec3(x - d * ::cos(glm::radians(_view->angle())),
+                                   y - d * ::sin(glm::radians(_view->angle())),
                                    z);
   tank->startMoving(tankDestination);
 }
 
-bool TankFactory::isUnderCursor(const glm::vec3& mousePoint)
-{
-  return _view.contain(mousePoint);
-}
+/* bool TankFactory::isUnderCursor(const glm::vec3& mousePoint) */
+/* { */
+/*   return _view->contain(mousePoint); */
+/* } */
 
 void TankFactory::select()
 {
-  _view.setTexture(Status::Selected);
+  _view->setTexture(Status::Selected);
 }
 
 void TankFactory::deselect()
 {
   if (_status != Status::Destroyed) {
     _status = Status::None;
-    _view.setTexture(Status::None);
+    _view->setTexture(Status::None);
   }
 }
 
 void TankFactory::updateHealthBar()
 {
   auto factor = _health / _maxHealth;
-  _view.setHealthBarScaleFactor(factor);
+  _view->setHealthBarScaleFactor(factor);
 }
 
 void TankFactory::takeDamage(Shell::Size shellSize)
 {
   if (_status != Status::Destroyed) {
     _status = Status::UnderFire;
-    _view.setTexture(Status::UnderFire);
+    _view->setTexture(Status::UnderFire);
     _health =
       std::max(0.0f, _health - Shell::SHELL_DAMAGE_MAP.find(shellSize)->second);
     if (_health == 0) {
       _status = Status::Destroyed;
-      _view.setTexture(Status::Destroyed);
+      _view->setTexture(Status::Destroyed);
     }
     updateHealthBar();
   }
@@ -75,7 +77,7 @@ void TankFactory::takeDamage(Shell::Size shellSize)
 
 glm::vec3 TankFactory::position()
 {
-  return _view.position();
+  return _view->position();
 }
 
 UnitBuilders TankFactory::getUnitBuilders(Game& game)
@@ -108,13 +110,13 @@ StructureBuilders TankFactory::getStructureBuilders()
 
 void TankFactory::setAngle(float angle)
 {
-  _view.rotate(angle);
+  _view->rotate(angle);
 }
 
 void TankFactory::setPosition(glm::vec3 position)
 {
   std::cout << "moving tf" << std::endl;
-  _view.move(position);
+  _view->move(position);
 }
 
 void TankFactory::commit()
