@@ -4,7 +4,6 @@
 const int TankFactory::TANK_FACTORY_HP = 200;
 
 TankFactory::TankFactory(Shader& shader, glm::vec3 position) :
-  /* _view(shader, position), _shader(shader) */
   BuildableStructure(shader,
                      std::make_unique<TankFactoryView>(shader, position))
 {
@@ -36,23 +35,18 @@ void TankFactory::createTank(Game& game,
   tank->startMoving(tankDestination);
 }
 
-/* bool TankFactory::isUnderCursor(const glm::vec3& mousePoint) */
+/* void TankFactory::select() */
 /* { */
-/*   return _view->contain(mousePoint); */
+/*   _view->setTexture(Status::Selected); */
 /* } */
 
-void TankFactory::select()
-{
-  _view->setTexture(Status::Selected);
-}
-
-void TankFactory::deselect()
-{
-  if (_status != Status::Destroyed) {
-    _status = Status::None;
-    _view->setTexture(Status::None);
-  }
-}
+/* void TankFactory::deselect() */
+/* { */
+/*   if (_status != Status::Destroyed) { */
+/*     _status = Status::None; */
+/*     _view->setTexture(Status::None); */
+/*   } */
+/* } */
 
 void TankFactory::updateHealthBar()
 {

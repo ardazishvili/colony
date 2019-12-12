@@ -20,9 +20,8 @@ public:
                   HealthLevel healthLevel,
                   Shell::Size shellSize);
   void render() override;
-  /* bool isUnderCursor(const glm::vec3& mousePoint) override; */
-  void select() override;
-  void deselect() override;
+  /* void select() override; */
+  /* void deselect() override; */
   void takeDamage(Shell::Size shellSize) override;
   glm::vec3 position() override;
   UnitBuilders getUnitBuilders(Game& game) override;
@@ -39,8 +38,6 @@ private:
                       HealthLevel healthLevel,
                       Shell::Size shellSize);
 
-  /* TankFactoryView _view; */
-  /* Shader& _shader; */
   static const int TANK_FACTORY_HP;
 };
 

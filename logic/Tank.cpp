@@ -148,11 +148,6 @@ glm::vec3 Tank::position()
   return _view->position();
 }
 
-/* bool Tank::isUnderCursor(const glm::vec3& point) */
-/* { */
-/*   return _view->contain(point); */
-/* } */
-
 bool Tank::isInsideArea(RectangleRegion area)
 {
   auto c = _view->position();
@@ -171,19 +166,19 @@ bool Tank::isShooting()
   return _target != nullptr;
 }
 
-void Tank::select()
-{
-  _status = Status::Selected;
-  _view->setTexture(Status::Selected);
-}
+/* void Tank::select() */
+/* { */
+/*   _status = Status::Selected; */
+/*   _view->setTexture(Status::Selected); */
+/* } */
 
-void Tank::deselect()
-{
-  if (_status != Status::Destroyed) {
-    _status = Status::None;
-    _view->setTexture(Status::None);
-  }
-}
+/* void Tank::deselect() */
+/* { */
+/*   if (_status != Status::Destroyed) { */
+/*     _status = Status::None; */
+/*     _view->setTexture(Status::None); */
+/*   } */
+/* } */
 
 void Tank::startShooting(Buildable* other)
 {

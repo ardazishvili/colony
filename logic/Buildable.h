@@ -23,14 +23,16 @@ public:
   Buildable(Shader& shader);
   virtual bool isUnderCursor(const glm::vec3& mousePoint) = 0;
   virtual void render() = 0;
-  virtual void select() = 0;
-  virtual void deselect() = 0;
+  /* virtual void select() = 0; */
+  /* virtual void deselect() = 0; */
   virtual void takeDamage(Shell::Size shellSize) = 0;
   virtual glm::vec3 position() = 0;
   virtual UnitBuilders getUnitBuilders(Game& game) = 0;
   virtual StructureBuilders getStructureBuilders() = 0;
   bool isDestroyed() const;
   bool isUnderFire() const;
+  void select();
+  void deselect();
 
   virtual ~Buildable() = default;
 
@@ -39,6 +41,7 @@ protected:
   float _maxHealth;
   Status _status;
   Shader& _shader;
+  SelectableView* _viewPtr;
 
 private:
   virtual void updateHealthBar() = 0;

@@ -23,18 +23,18 @@ void Hq::render()
 /*   return _view.contain(mousePoint); */
 /* } */
 
-void Hq::select()
-{
-  _view->setTexture(Status::Selected);
-}
+/* void Hq::select() */
+/* { */
+/*   _view->setTexture(Status::Selected); */
+/* } */
 
-void Hq::deselect()
-{
-  if (_status != Status::Destroyed) {
-    _status = Status::None;
-    _view->setTexture(Status::None);
-  }
-}
+/* void Hq::deselect() */
+/* { */
+/*   if (_status != Status::Destroyed) { */
+/*     _status = Status::None; */
+/*     _view->setTexture(Status::None); */
+/*   } */
+/* } */
 
 void Hq::updateHealthBar()
 {

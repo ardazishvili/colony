@@ -5,6 +5,7 @@ BuildableStructure::BuildableStructure(Shader& shader,
   Buildable(shader),
   _view(std::move(view))
 {
+  _viewPtr = _view.get();
 }
 
 bool BuildableStructure::isUnderCursor(const glm::vec3& mousePoint)

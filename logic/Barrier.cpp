@@ -32,18 +32,18 @@ void Barrier::render()
 /*   return _view->contain(mousePoint); */
 /* } */
 
-void Barrier::select()
-{
-  _view->setTexture(Status::Selected);
-}
+/* void Barrier::select() */
+/* { */
+/*   _view->setTexture(Status::Selected); */
+/* } */
 
-void Barrier::deselect()
-{
-  if (_status != Status::Destroyed) {
-    _status = Status::None;
-    _view->setTexture(Status::None);
-  }
-}
+/* void Barrier::deselect() */
+/* { */
+/*   if (_status != Status::Destroyed) { */
+/*     _status = Status::None; */
+/*     _view->setTexture(Status::None); */
+/*   } */
+/* } */
 
 void Barrier::takeDamage(Shell::Size shellSize)
 {

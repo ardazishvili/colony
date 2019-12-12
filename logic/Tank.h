@@ -29,10 +29,9 @@ public:
        Shell::Size shellSize = Shell::Size::Small);
 
   void render() override;
-  /* bool isUnderCursor(const glm::vec3& point) override; */
   bool isInsideArea(RectangleRegion area);
-  void select() override;
-  void deselect() override;
+  /* void select() override; */
+  /* void deselect() override; */
   void takeDamage(Shell::Size shellSize) override;
   UnitBuilders getUnitBuilders(Game& game) override;
   StructureBuilders getStructureBuilders() override;
@@ -69,10 +68,6 @@ private:
   Timer _clock;
   std::chrono::milliseconds _shellLoadTime{ 200 };
   Terrain* _terrain;
-
-  // TODO
-  /* Shader& _shader; */
-  /* TankView _view; */
 };
 
 std::shared_ptr<Tank> createTank(Game& game,

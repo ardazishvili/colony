@@ -11,10 +11,9 @@ public:
   Hq() = delete;
   Hq(Shader& shader, glm::vec3 position, Terrain* terrain);
 
-  /* bool isUnderCursor(const glm::vec3& mousePoint) override; */
   void render() override;
-  void select() override;
-  void deselect() override;
+  /* void select() override; */
+  /* void deselect() override; */
   void takeDamage(Shell::Size shellSize) override;
   glm::vec3 position() override;
   UnitBuilders getUnitBuilders(Game& game) override;
@@ -24,10 +23,8 @@ public:
   void commit() override;
 
 private:
-  /* Shader& _shader; */
   Terrain* _terrain;
   void updateHealthBar() override;
-  /* HqView _view; */
   static const int HQ_HP;
 };
 
