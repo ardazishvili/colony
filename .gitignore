@@ -1,2 +1,4 @@
 cbuild/**
 .directory
+*.swp
+*.blend1
