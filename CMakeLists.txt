@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 project(Colony)
 
 add_executable(colony
+  engine/Mesh.h
+  engine/Mesh.cpp
 		Timer.cpp
 		Timer.h
     logic/BarrierBuilder.h

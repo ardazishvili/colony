@@ -1,16 +1,16 @@
 #ifndef TERRAIN_MESH_H
 #define TERRAIN_MESH_H
 
-#include "ModelMesh.h"
+#include "Mesh.h"
+/* #include "ModelMesh.h" */
 #include "SubTerrainMesh.h"
 
-class TerrainMesh
+class TerrainMesh : public Mesh
 {
 public:
-  TerrainMesh();
-  ~TerrainMesh();
+  /* TerrainMesh(); */
+  /* ~TerrainMesh(); */
   void render();
-  /* void renderSub(); */
   void initTerrain(float bottomLeftX,
                    float bottomLeftY,
                    float topRightX,
@@ -18,11 +18,9 @@ public:
                    int divisions,
                    float xyScale,
                    float zScale);
-  void deinit();
   float getZ(float x, float y) const;
   glm::vec3 getRgbColor(float x, float y) const;
   void deselect();
-  void updateColor(unsigned int index);
   static float UPDATE_COLOR_SPEED;
   static float plantsColor[3];
   SubTerrainMesh _subTerrainMesh;
@@ -32,6 +30,7 @@ public:
   const static glm::vec4 DEFAULT_BARRIER_COLOR;
 
 private:
+  /* void deinit(); */
   std::vector<VertexColor> _v;
   std::vector<unsigned int> _indices;
   float _width;
@@ -42,9 +41,9 @@ private:
   float _yStep;
   float _xyScale;
   float _zScale;
-  GLuint _vao;
-  GLuint _vertexVbo;
-  GLuint _indicesEbo;
+  /* GLuint _vao; */
+  /* GLuint _vertexVbo; */
+  /* GLuint _indicesEbo; */
 };
 
 #endif

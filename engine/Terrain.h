@@ -19,7 +19,6 @@ public:
   void renderSub();
   glm::vec3 getXYZ(glm::vec2 xy) const;
   glm::vec3 getRgbColor(float x, float y) const;
-  void updateColor(unsigned int index);
   void selectSubTerrainRegion(RectangleRegion region, glm::vec4 rgba);
   std::shared_ptr<LivingArea> addLivingArea(CircularRegion region,
                                             glm::vec4 rgba);

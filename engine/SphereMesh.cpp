@@ -4,37 +4,37 @@
 #include "SphereMesh.h"
 float color[3] = { 255.0f / 255, 143.0f / 255, 54.0f / 255 };
 
-SphereMesh::SphereMesh()
-{
-  _vao = 0;
-  _vertexVbo = 0;
-  _indicesEbo = 0;
-  deinit();
+/* SphereMesh::SphereMesh() */
+/* { */
+/*   _vao = 0; */
+/*   _vbo = 0; */
+/*   _ebo = 0; */
+/*   deinit(); */
 
-  glGenVertexArrays(1, &_vao);
-  glBindVertexArray(_vao);
+/*   glGenVertexArrays(1, &_vao); */
+/*   glBindVertexArray(_vao); */
 
-  glGenBuffers(1, &_vertexVbo);
-  glGenBuffers(1, &_indicesEbo);
-}
+/*   glGenBuffers(1, &_vbo); */
+/*   glGenBuffers(1, &_ebo); */
+/* } */
 
-SphereMesh::~SphereMesh()
-{
-  deinit();
-}
+/* SphereMesh::~SphereMesh() */
+/* { */
+/*   deinit(); */
+/* } */
 
-void SphereMesh::deinit()
-{
-  if (_vertexVbo != 0) {
-    glDeleteBuffers(1, &_vertexVbo);
-    glDeleteBuffers(1, &_indicesEbo);
-  }
+/* void SphereMesh::deinit() */
+/* { */
+/*   if (_vbo != 0) { */
+/*     glDeleteBuffers(1, &_vbo); */
+/*     glDeleteBuffers(1, &_ebo); */
+/*   } */
 
-  if (_vao != 0) {
-    glDeleteVertexArrays(1, &_vao);
-    _vao = 0;
-  }
-}
+/*   if (_vao != 0) { */
+/*     glDeleteVertexArrays(1, &_vao); */
+/*     _vao = 0; */
+/*   } */
+/* } */
 
 void SphereMesh::render()
 {
@@ -117,7 +117,7 @@ void SphereMesh::init(float r, unsigned int divisions)
     }
   }
 
-  glBindBuffer(GL_ARRAY_BUFFER, _vertexVbo);
+  glBindBuffer(GL_ARRAY_BUFFER, _vbo);
   glBufferData(
     GL_ARRAY_BUFFER, sizeof(VertexColor) * _v.size(), &_v[0], GL_STATIC_DRAW);
   glEnableVertexAttribArray(0);
@@ -140,7 +140,7 @@ void SphereMesh::init(float r, unsigned int divisions)
                         sizeof(VertexColor),
                         (void*)offsetof(VertexColor, normal));
 
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indicesEbo);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                sizeof(_indices[0]) * _indices.size(),
                &_indices[0],

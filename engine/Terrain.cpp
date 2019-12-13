@@ -1,3 +1,5 @@
+#include <glm/gtc/type_ptr.hpp>
+
 #include "Terrain.h"
 
 Terrain::Terrain(Shader& shader,
@@ -57,11 +59,6 @@ glm::vec3 Terrain::getXYZ(glm::vec2 xy) const
 glm::vec3 Terrain::getRgbColor(float x, float y) const
 {
   return _mesh.getRgbColor(x, y);
-}
-
-void Terrain::updateColor(unsigned int index)
-{
-  _mesh.updateColor(index);
 }
 
 void Terrain::selectSubTerrainRegion(RectangleRegion region, glm::vec4 rgba)

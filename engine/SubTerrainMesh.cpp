@@ -10,40 +10,40 @@
 const glm::vec4 SubTerrainMesh::SELECTION_COLOR{ 0.0f, 0.0f, 1.0f, 0.3f };
 const glm::vec4 SubTerrainMesh::DESELECTION_COLOR{ 0.0f, 0.0f, 1.0f, 0.0f };
 
-SubTerrainMesh::SubTerrainMesh()
-{
-  _vaoSub = 0;
-  _vertexVboSub = 0;
-  _indicesEboSub = 0;
+/* SubTerrainMesh::SubTerrainMesh() */
+/* { */
+/*   _vaoSub = 0; */
+/*   _vertexVboSub = 0; */
+/*   _indicesEboSub = 0; */
 
-  deinit();
+/*   deinit(); */
 
-  glGenVertexArrays(1, &_vaoSub);
-  glGenBuffers(1, &_vertexVboSub);
-  glGenBuffers(1, &_indicesEboSub);
-}
+/*   glGenVertexArrays(1, &_vaoSub); */
+/*   glGenBuffers(1, &_vertexVboSub); */
+/*   glGenBuffers(1, &_indicesEboSub); */
+/* } */
 
-SubTerrainMesh::~SubTerrainMesh()
-{
-  deinit();
-}
+/* SubTerrainMesh::~SubTerrainMesh() */
+/* { */
+/*   deinit(); */
+/* } */
 
-void SubTerrainMesh::deinit()
-{
-  if (_vertexVboSub != 0) {
-    glDeleteBuffers(1, &_vertexVboSub);
-    glDeleteBuffers(1, &_indicesEboSub);
-  }
+/* void SubTerrainMesh::deinit() */
+/* { */
+/*   if (_vertexVboSub != 0) { */
+/*     glDeleteBuffers(1, &_vertexVboSub); */
+/*     glDeleteBuffers(1, &_indicesEboSub); */
+/*   } */
 
-  if (_vaoSub != 0) {
-    glDeleteVertexArrays(1, &_vaoSub);
-    _vaoSub = 0;
-  }
-}
+/*   if (_vaoSub != 0) { */
+/*     glDeleteVertexArrays(1, &_vaoSub); */
+/*     _vaoSub = 0; */
+/*   } */
+/* } */
 
 void SubTerrainMesh::render()
 {
-  glBindVertexArray(_vaoSub);
+  glBindVertexArray(_vao);
   glDrawElements(GL_TRIANGLES, _vSub.size() * 3, GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);
 }
@@ -90,7 +90,7 @@ std::shared_ptr<LivingArea> SubTerrainMesh::addLivingArea(CircularRegion region,
 }
 void SubTerrainMesh::reloadLivingArea(std::shared_ptr<LivingArea> area)
 {
-  glBindBuffer(GL_ARRAY_BUFFER, _vertexVboSub);
+  glBindBuffer(GL_ARRAY_BUFFER, _vbo);
   for (auto& cell : area->cells) {
     glBufferSubData(GL_ARRAY_BUFFER,
                     sizeof(VertexColor) * (cell.first),
@@ -131,7 +131,7 @@ void SubTerrainMesh::selectSubTerrainRegion(RectangleRegion region,
   auto j = ::floor(region.y / _yStepSub);
   signed int xWidth = region.width / _xStepSub / _xyScale;
   signed int yWidth = region.height / _yStepSub;
-  glBindBuffer(GL_ARRAY_BUFFER, _vertexVboSub);
+  glBindBuffer(GL_ARRAY_BUFFER, _vbo);
   unsigned int leftXBound = std::min(i, i + xWidth);
   unsigned int rightXBound = std::max(i, i + xWidth);
   unsigned int leftYBound = std::min(j, j + yWidth);
@@ -254,8 +254,8 @@ void SubTerrainMesh::init(float bottomLeftX,
     }
   }
 
-  glBindVertexArray(_vaoSub);
-  glBindBuffer(GL_ARRAY_BUFFER, _vertexVboSub);
+  glBindVertexArray(_vao);
+  glBindBuffer(GL_ARRAY_BUFFER, _vbo);
   glBufferData(GL_ARRAY_BUFFER,
                sizeof(VertexColor) * _vSub.size(),
                &_vSub[0],
@@ -280,7 +280,7 @@ void SubTerrainMesh::init(float bottomLeftX,
                         sizeof(VertexColor),
                         (void*)offsetof(VertexColor, normal));
 
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indicesEboSub);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                sizeof(_indicesSub[0]) * _indicesSub.size(),
                &_indicesSub[0],

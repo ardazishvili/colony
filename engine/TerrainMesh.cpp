@@ -1,3 +1,5 @@
+#include <algorithm>
+#include <map>
 #include <string>
 
 #include "../imgui/imgui.h"
@@ -26,36 +28,36 @@ float TerrainMesh::plantsColor[3] = { 101.0f / 255,
                                       101.0f / 255 };
 float TerrainMesh::UPDATE_COLOR_SPEED = 0.99;
 
-TerrainMesh::TerrainMesh()
-{
-  _vao = 0;
-  _vertexVbo = 0;
-  _indicesEbo = 0;
+/* TerrainMesh::TerrainMesh() : Mesh() */
+/* { */
+/*   _vao = 0; */
+/*   _vertexVbo = 0; */
+/*   _indicesEbo = 0; */
 
-  deinit();
+/*   deinit(); */
 
-  glGenVertexArrays(1, &_vao);
-  glGenBuffers(1, &_vertexVbo);
-  glGenBuffers(1, &_indicesEbo);
-}
+/*   glGenVertexArrays(1, &_vao); */
+/*   glGenBuffers(1, &_vertexVbo); */
+/*   glGenBuffers(1, &_indicesEbo); */
+/* } */
 
-TerrainMesh::~TerrainMesh()
-{
-  deinit();
-}
+/* TerrainMesh::~TerrainMesh() */
+/* { */
+/*   deinit(); */
+/* } */
 
-void TerrainMesh::deinit()
-{
-  if (_vertexVbo != 0) {
-    glDeleteBuffers(1, &_vertexVbo);
-    glDeleteBuffers(1, &_indicesEbo);
-  }
+/* void TerrainMesh::deinit() */
+/* { */
+/*   if (_vertexVbo != 0) { */
+/*     glDeleteBuffers(1, &_vertexVbo); */
+/*     glDeleteBuffers(1, &_indicesEbo); */
+/*   } */
 
-  if (_vao != 0) {
-    glDeleteVertexArrays(1, &_vao);
-    _vao = 0;
-  }
-}
+/*   if (_vao != 0) { */
+/*     glDeleteVertexArrays(1, &_vao); */
+/*     _vao = 0; */
+/*   } */
+/* } */
 
 void TerrainMesh::render()
 {
@@ -141,7 +143,7 @@ void TerrainMesh::initTerrain(float bottomLeftX,
                               5);
       vertex.p.x *= _xyScale;
       vertex.p.y *= _xyScale;
-      vertex.p.z = ::max(nv * _zScale, plainZ.at(i * width + j));
+      vertex.p.z = std::max(nv * _zScale, plainZ.at(i * width + j));
       min = std::min(min, vertex.p.z);
       max = std::max(max, vertex.p.z);
       vertex.normal = glm::vec3(0.0f);
@@ -227,7 +229,7 @@ void TerrainMesh::initTerrain(float bottomLeftX,
   }
 
   glBindVertexArray(_vao);
-  glBindBuffer(GL_ARRAY_BUFFER, _vertexVbo);
+  glBindBuffer(GL_ARRAY_BUFFER, _vbo);
   glBufferData(
     GL_ARRAY_BUFFER, sizeof(VertexColor) * _v.size(), &_v[0], GL_DYNAMIC_DRAW);
   glEnableVertexAttribArray(0);
@@ -250,7 +252,7 @@ void TerrainMesh::initTerrain(float bottomLeftX,
                         sizeof(VertexColor),
                         (void*)offsetof(VertexColor, normal));
 
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indicesEbo);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                sizeof(_indices[0]) * _indices.size(),
                &_indices[0],
@@ -286,20 +288,5 @@ glm::vec3 TerrainMesh::getRgbColor(float x, float y) const
   auto mappedJ = (j == 0) ? 0 : 2 * j - 1;
   auto c = _v.at(i * _latticeWidth + mappedJ).color;
   return glm::vec3(c.x, c.y, c.z);
-}
-
-void TerrainMesh::updateColor(unsigned int index)
-{
-  auto r = _v[index].color.x;
-  auto g = _v[index].color.y;
-  auto b = _v[index].color.z;
-  _v[index].color.x = glm::lerp(r, plantsColor[0], UPDATE_COLOR_SPEED);
-  _v[index].color.y = glm::lerp(g, plantsColor[1], UPDATE_COLOR_SPEED);
-  _v[index].color.z = glm::lerp(b, plantsColor[2], UPDATE_COLOR_SPEED);
-  glBindBuffer(GL_ARRAY_BUFFER, _vertexVbo);
-  glBufferSubData(GL_ARRAY_BUFFER,
-                  sizeof(VertexColor) * (index),
-                  sizeof(VertexColor),
-                  &_v[index]);
 }
 
