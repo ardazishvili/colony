@@ -24,19 +24,6 @@ std::map<HeightPart, RgbColor> colorMapping = {
   { 0.5f, { 237.0f / 255, 227.0f / 255, 143.0f / 255 } },
   { 1.0f, { 242.0f / 255, 127.0f / 255, 115.0f / 255 } }
 };
-float MainTerrainMesh::plantsColor[3] = { 101.0f / 255,
-                                          174.0f / 255,
-                                          101.0f / 255 };
-
-void MainTerrainMesh::render()
-{
-  ImGui::Begin("color");
-  ImGui::SetWindowPos(ImVec2(0, 500));
-  ImGui::SetWindowSize(ImVec2(200, 50));
-  ImGui::ColorEdit3("color 1", plantsColor);
-  ImGui::End();
-  TerrainMesh::render();
-}
 
 void MainTerrainMesh::calculateHeights(unsigned int width,
                                        float bottomLeftX,

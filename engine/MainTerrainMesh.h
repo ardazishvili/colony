@@ -7,7 +7,6 @@
 class MainTerrainMesh : public TerrainMesh
 {
 public:
-  void render() override;
   void calculateHeights(unsigned int width,
                         float bottomLeftX,
                         float bottomLeftY,
@@ -19,7 +18,6 @@ public:
                        unsigned int augmentedWidth) override;
   float getZ(float x, float y) const;
   glm::vec3 getRgbColor(float x, float y) const;
-  static float plantsColor[3];
 };
 
 #endif
