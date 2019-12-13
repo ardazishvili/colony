@@ -10,7 +10,9 @@
 class EventManager
 {
 public:
-  EventManager(GLFWwindow* window,
+  EventManager(glm::mat4& view,
+               glm::mat4& projection,
+               GLFWwindow* window,
                Game& game,
                Camera& camera,
                Shader& textureShader,
@@ -25,7 +27,9 @@ public:
   void handleMouseMove(GLFWwindow* window, double xpos, double ypos);
   void handleMousePressed(int button, int action);
   void handleMouseReleased();
-  static glm::vec3 unProject(int xpos, int ypos);
+  static glm::vec3 unProject(GLFWwindow* window,
+                             glm::mat4& view,
+                             glm::mat4& proj);
   void setStructureToBuild(std::shared_ptr<BuildableStructure> structure);
   void setStructureToBuildStage(BuildStage stage);
 
@@ -33,6 +37,8 @@ private:
   void handleMousePressedLeft();
   void handleMousePressedRight();
 
+  glm::mat4& _view;
+  glm::mat4& _projection;
   GLFWwindow* _window;
   Camera& _camera;
   Game& _game;

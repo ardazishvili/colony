@@ -5,9 +5,13 @@
 #include "../globals.h"
 #include "PhongShader.h"
 
-PhongShader::PhongShader(const GLchar* vertexPath, const GLchar* fragmentPath) :
-  Shader(vertexPath, fragmentPath)
-{}
+PhongShader::PhongShader(glm::mat4& view,
+                         glm::mat4& projection,
+                         const GLchar* vertexPath,
+                         const GLchar* fragmentPath) :
+  Shader(view, projection, vertexPath, fragmentPath)
+{
+}
 
 void PhongShader::configure()
 {
@@ -25,6 +29,6 @@ void PhongShader::configure()
   setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
   setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
-  setTransformation("view", glm::value_ptr(gView));
-  setTransformation("projection", glm::value_ptr(gProjection));
+  setTransformation("view", glm::value_ptr(_view));
+  setTransformation("projection", glm::value_ptr(_projection));
 }

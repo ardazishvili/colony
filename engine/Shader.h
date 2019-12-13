@@ -12,7 +12,10 @@ class Shader
 {
 public:
   static const unsigned int MAX_BONES = 100;
-  Shader(const GLchar* vertexPath, const GLchar* fragmentPath);
+  Shader(glm::mat4& view,
+         glm::mat4& projection,
+         const GLchar* vertexPath,
+         const GLchar* fragmentPath);
 
   void init();
   void use();
@@ -31,6 +34,8 @@ public:
 
 protected:
   unsigned int _id;
+  glm::mat4& _view;
+  glm::mat4& _projection;
 
 private:
   GLuint m_boneLocation[MAX_BONES];

@@ -4,15 +4,18 @@
 #include "../globals.h"
 #include "SkyboxShader.h"
 
-SkyboxShader::SkyboxShader(const GLchar* vertexPath,
+SkyboxShader::SkyboxShader(glm::mat4& view,
+                           glm::mat4& projection,
+                           const GLchar* vertexPath,
                            const GLchar* fragmentPath) :
-  Shader(vertexPath, fragmentPath)
-{}
+  Shader(view, projection, vertexPath, fragmentPath)
+{
+}
 
 void SkyboxShader::configure()
 {
-  auto view = glm::mat4(glm::mat3(gView));
-  setTransformation("view", glm::value_ptr(view));
-  setTransformation("projection", glm::value_ptr(gProjection));
+  auto v = glm::mat4(glm::mat3(_view));
+  setTransformation("view", glm::value_ptr(v));
+  setTransformation("projection", glm::value_ptr(_projection));
   setInt("skybox", 0);
 }

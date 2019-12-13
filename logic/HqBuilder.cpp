@@ -13,7 +13,7 @@ void HqBuilder::create()
 {
   std::cout << "hq builder create" << std::endl;
   auto structure = std::make_shared<Hq>(_shader, glm::vec3(), _terrain);
-  game.addStructure(structure);
+  game->addStructure(structure);
   eventManager->setStructureToBuild(structure);
   eventManager->setStructureToBuildStage(BuildStage::SetPosition);
 }

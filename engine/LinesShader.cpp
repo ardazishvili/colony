@@ -1,15 +1,15 @@
 #include "LinesShader.h"
 
-LinesShader::LinesShader(const GLchar* vertexPath, const GLchar* fragmentPath) :
-  Shader(vertexPath, fragmentPath)
-{}
+LinesShader::LinesShader(glm::mat4& view,
+                         glm::mat4& projection,
+                         const GLchar* vertexPath,
+                         const GLchar* fragmentPath) :
+  Shader(view, projection, vertexPath, fragmentPath)
+{
+}
 
 void LinesShader::configureRender()
 {
-  /* float verts[] = { 1, 1, 1, 0, 0, 0 }; */
-  /* float verts[] = { -0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f
-   * }; */
-  /* float verts[] = { -0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f }; */
   float verts[] = { -0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f,
                     -0.5f, 0.5f,  0.0f, 0.5f, 0.5f,  0.0f };
   glGenVertexArrays(1, &_vao);

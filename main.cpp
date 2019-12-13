@@ -41,8 +41,8 @@ void processInput(GLFWwindow* window)
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-  currentX = xpos;
-  currentY = ypos;
+  /* currentX = xpos; */
+  /* currentY = ypos; */
   eventManager->handleMouseMove(window, xpos, ypos);
   /* camera.tilt(xpos, ypos); */
 }
@@ -113,17 +113,29 @@ int main(int argc, char** argv)
   glfwSetMouseButtonCallback(window, mouse_button_callback);
   glfwSetKeyCallback(window, keyboard_callback);
 
-  PhongShader colorShader("/home/roman/repos/colony/shaders/vertex_color.vs",
+  glm::mat4 view;
+  glm::mat4 projection;
+  PhongShader colorShader(view,
+                          projection,
+                          "/home/roman/repos/colony/shaders/vertex_color.vs",
                           "/home/roman/repos/colony/shaders/fragment_color.fs");
   PhongShader textureShader(
+    view,
+    projection,
     "/home/roman/repos/colony/shaders/vertex_objects.vs",
     "/home/roman/repos/colony/shaders/fragment_objects.fs");
-  PhongShader lampShader("/home/roman/repos/colony/shaders/vertex_light.vs",
+  PhongShader lampShader(view,
+                         projection,
+                         "/home/roman/repos/colony/shaders/vertex_light.vs",
                          "/home/roman/repos/colony/shaders/fragment_light.fs");
   SkyboxShader skyboxShader(
+    view,
+    projection,
     "/home/roman/repos/colony/shaders/vertex_skybox.vs",
     "/home/roman/repos/colony/shaders/fragment_skybox.fs");
-  LinesShader linesShader("/home/roman/repos/colony/shaders/vertex_lines.vs",
+  LinesShader linesShader(view,
+                          projection,
+                          "/home/roman/repos/colony/shaders/vertex_lines.vs",
                           "/home/roman/repos/colony/shaders/fragment_lines.fs");
   modelLoader = std::make_unique<ModelLoader>(textureShader);
   modelLoader->load();
@@ -140,11 +152,18 @@ int main(int argc, char** argv)
   auto zScale = 3.0f;
   auto terrain = Terrain(
     colorShader, -10.0f, -10.0f, 10.0f, 10.0f, 256 * 1, xyScale, zScale);
-  game.addTerrain(&terrain);
-  eventManager = std::make_unique<EventManager>(
-    window, game, camera, textureShader, colorShader, &terrain);
+  game = std::make_unique<Game>(window, view, projection);
+  game->addTerrain(&terrain);
+  eventManager = std::make_unique<EventManager>(view,
+                                                projection,
+                                                window,
+                                                *game,
+                                                camera,
+                                                textureShader,
+                                                colorShader,
+                                                &terrain);
 
-  createTank(game, textureShader, terrain.getXYZ(glm::vec2(0.0, 0.0f)));
+  createTank(*game, textureShader, terrain.getXYZ(glm::vec2(0.0, 0.0f)));
   /* createTank(game, textureShader, terrain.getXYZ(glm::vec2(1.0, -1.0f))); */
   /* createTank(game, textureShader, terrain.getXYZ(glm::vec2(2.0, -2.0f))); */
   /* auto tankFactory = */
@@ -199,11 +218,9 @@ int main(int argc, char** argv)
     ImGui::End();
     light->setPosition(glm::vec3(x, y, z));
 
-    glm::mat4 view = glm::lookAt(camera.eye(), camera.reference(), camera.up());
-    glm::mat4 projection = glm::perspective(
+    view = glm::lookAt(camera.eye(), camera.reference(), camera.up());
+    projection = glm::perspective(
       glm::radians(camera.fov()), screenWidth / screenHeight, 0.01f, 1000.0f);
-    gView = view;
-    gProjection = projection;
 
     /* linesShader.configureRender(); */
 

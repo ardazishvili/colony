@@ -6,7 +6,12 @@
 
 #define ARRAY_SIZE_IN_ELEMENTS(a) (sizeof(a) / sizeof(a[0]))
 
-Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
+Shader::Shader(glm::mat4& view,
+               glm::mat4& projection,
+               const GLchar* vertexPath,
+               const GLchar* fragmentPath) :
+  _view(view),
+  _projection(projection)
 {
   std::string vertexCode;
   std::string fragmentCode;

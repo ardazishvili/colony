@@ -91,10 +91,10 @@ add_executable(colony
     view/SelectableView.cpp
 		view/View.cpp
 		view/View.h
-    engine/Circle.cpp
-    engine/Circle.h
-    engine/CircleMesh.cpp
-    engine/CircleMesh.h
+    # engine/Circle.cpp
+    # engine/Circle.h
+    # engine/CircleMesh.cpp
+    # engine/CircleMesh.h
     engine/Sphere.h
     engine/Sphere.cpp
     engine/SphereMesh.h

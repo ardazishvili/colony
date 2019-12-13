@@ -4,6 +4,8 @@
 #include <memory>
 #include <vector>
 
+#include <GLFW/glfw3.h>
+
 #include "../engine/Terrain.h"
 #include "Barrier.h"
 #include "Control.h"
@@ -21,7 +23,7 @@ class AbstractStructureBuilder;
 class Game
 {
 public:
-  Game() = default;
+  Game(GLFWwindow* window, glm::mat4& view, glm::mat4& projection);
   void tick();
   void addTank(std::shared_ptr<Tank> tank);
   void addStructure(std::shared_ptr<BuildableStructure> buildable);
@@ -47,6 +49,9 @@ private:
   /* void displayBarriers(); */
   void displayControl();
 
+  GLFWwindow* _window;
+  glm::mat4& _view;
+  glm::mat4& _projection;
   Tanks _tanks;
   Structures _structures;
   Plants _plants;

@@ -10,7 +10,7 @@ BarrierBuilder::BarrierBuilder(Shader& shader, Terrain* terrain) :
 void BarrierBuilder::create()
 {
   auto structure = std::make_shared<Barrier>(_shader, glm::vec3(), _terrain);
-  game.addStructure(structure);
+  game->addStructure(structure);
   eventManager->setStructureToBuild(structure);
   eventManager->setStructureToBuildStage(BuildStage::SetPosition);
 }

@@ -7,9 +7,12 @@ class LinesShader : public Shader
 {
 
 public:
-  LinesShader(const GLchar* vertexPath, const GLchar* fragmentPath);
+  LinesShader(glm::mat4& view,
+              glm::mat4& projection,
+              const GLchar* vertexPath,
+              const GLchar* fragmentPath);
   void configureRender();
-  void configure(){};
+  void configure() override{};
 
 private:
   unsigned int _vao;

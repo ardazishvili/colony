@@ -8,6 +8,11 @@
 #include <iomanip>
 #include <iostream>
 
+Game::Game(GLFWwindow* window, glm::mat4& view, glm::mat4& projection) :
+  _window(window), _view(view), _projection(projection)
+{
+}
+
 void Game::tick()
 {
   updateTerrain();
@@ -205,7 +210,7 @@ void Game::showDebug()
   ImGui::Begin("3dCoordinates", NULL, flags);
   ImGui::SetWindowPos(ImVec2(0, screenHeight - 22));
   ImGui::SetWindowSize(ImVec2(500, 22));
-  auto pos = EventManager::unProject(currentX, currentY);
+  auto pos = EventManager::unProject(_window, _view, _projection);
   std::stringstream ss;
   ss << "x:" << std::setw(5) << std::setprecision(2) << pos.x
      << "; y:" << std::setw(5) << std::setprecision(2) << pos.y
