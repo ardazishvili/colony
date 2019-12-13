@@ -1,143 +1,101 @@
+#include <algorithm>
 #include <iostream>
+#include <map>
 #include <string>
 
+#include "../imgui/imgui.h"
+
 #include "../math/Noise.h"
-#include "SubTerrainMesh.h"
+#include "MainTerrainMesh.h"
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/compatibility.hpp>
 
-const glm::vec4 SubTerrainMesh::SELECTION_COLOR{ 0.0f, 0.0f, 1.0f, 0.3f };
-const glm::vec4 SubTerrainMesh::DESELECTION_COLOR{ 0.0f, 0.0f, 1.0f, 0.0f };
-
-std::shared_ptr<LivingArea> SubTerrainMesh::addLivingArea(CircularRegion region,
-                                                          glm::vec4 rgba)
+struct RgbColor
 {
-  RectangleRegion rect = {
-    region.x - region.r, region.y - region.r, 2 * region.r, 2 * region.r
-  };
-  rect.x += _width;
-  rect.y += _height;
-  auto x = region.x + _width;
-  auto y = region.y + _height;
-  auto r = region.r;
+  float r;
+  float g;
+  float b;
+};
 
-  auto i = ::floor(rect.x / _xStep / _xyScale);
-  auto j = ::floor(rect.y / _yStep);
-  signed int xWidth = rect.width / _xStep / _xyScale;
-  signed int yWidth = rect.height / _yStep;
-  auto livingArea = std::make_shared<LivingArea>();
-  for (unsigned int k = i; k <= i + xWidth; ++k) {
-    unsigned int index = 0;
-    unsigned int stride = 0;
-    auto indexIsSet = false;
-    for (unsigned int n = j; n < j + yWidth; ++n) {
-      auto c = _v.at(_latticeWidth * k + n);
+using HeightPart = float;
+std::map<HeightPart, RgbColor> colorMapping = {
+  { 0.0f, { 113.0f / 255, 128.0f / 255, 143.0f / 255 } },
+  { 0.5f, { 237.0f / 255, 227.0f / 255, 143.0f / 255 } },
+  { 1.0f, { 242.0f / 255, 127.0f / 255, 115.0f / 255 } }
+};
+float MainTerrainMesh::plantsColor[3] = { 101.0f / 255,
+                                          174.0f / 255,
+                                          101.0f / 255 };
 
-      if (::sqrt(::pow(x - c.p.x, 2) + ::pow(y - c.p.y, 2)) < r) {
-        if (!indexIsSet) {
-          index = _latticeWidth * k + n;
-          indexIsSet = true;
-        }
-        _v.at(_latticeWidth * k + n).color = rgba;
-
-        ++stride;
-      }
-    }
-    livingArea->cells.push_back(std::make_pair(index, stride));
-  }
-  reloadLivingArea(livingArea);
-  _livingAreas.push_back(livingArea);
-  return livingArea;
-}
-void SubTerrainMesh::reloadLivingArea(std::shared_ptr<LivingArea> area)
+void MainTerrainMesh::render()
 {
-  glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-  for (auto& cell : area->cells) {
-    glBufferSubData(GL_ARRAY_BUFFER,
-                    sizeof(VertexColor) * (cell.first),
-                    sizeof(VertexColor) * cell.second,
-                    &_v[cell.first]);
-  }
+  ImGui::Begin("color");
+  ImGui::SetWindowPos(ImVec2(0, 500));
+  ImGui::SetWindowSize(ImVec2(200, 50));
+  ImGui::ColorEdit3("color 1", plantsColor);
+  ImGui::End();
+  TerrainMesh::render();
 }
 
-void SubTerrainMesh::updateLivingArea(std::shared_ptr<LivingArea> area)
+void MainTerrainMesh::init(float bottomLeftX,
+                           float bottomLeftY,
+                           float topRightX,
+                           float topRightY,
+                           int divisions,
+                           float xyScale,
+                           float zScale)
 {
-  for (auto plant : area->plants) {
-    plant.x += _width;
-    plant.y += _height;
-    for (auto& cell : area->cells) {
-      for (unsigned int i = cell.first; i < cell.first + cell.second; ++i) {
-        auto cellX = _v.at(i).p.x;
-        auto cellY = _v.at(i).p.y;
-        float d = ::sqrt(::pow(cellX - plant.x, 2) + ::pow(cellY - plant.y, 2));
-        d /= 2.0;
-        double g = _v.at(i).color.y;
-        auto newColor = glm::lerp(g, 1.0, ::pow(1.0f - d / 3, 20) / 30);
-        _v.at(i).color.y = newColor;
-      }
-    }
-  }
-  reloadLivingArea(area);
-}
-
-void SubTerrainMesh::selectSubTerrainRegion(RectangleRegion region,
-                                            glm::vec4 rgba)
-{
-  _lastSelected = region;
-
-  region.x += _width;
-  region.y += _height;
-
-  auto i = ::floor(region.x / _xStep / _xyScale);
-  auto j = ::floor(region.y / _yStep);
-  signed int xWidth = region.width / _xStep / _xyScale;
-  signed int yWidth = region.height / _yStep;
-  glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-  unsigned int leftXBound = std::min(i, i + xWidth);
-  unsigned int rightXBound = std::max(i, i + xWidth);
-  unsigned int leftYBound = std::min(j, j + yWidth);
-  unsigned int rightYBound = std::max(j, j + yWidth);
-  for (unsigned int k = leftXBound; k < rightXBound; ++k) {
-    auto index = _latticeWidth * k + leftYBound;
-    for (unsigned int n = leftYBound; n < rightYBound; ++n) {
-      _v.at(_latticeWidth * k + n).color = rgba;
-    }
-    glBufferSubData(GL_ARRAY_BUFFER,
-                    sizeof(VertexColor) * (index),
-                    sizeof(VertexColor) * ::abs(yWidth),
-                    &_v[index]);
-  }
-}
-
-void SubTerrainMesh::deselect()
-{
-  selectSubTerrainRegion(_lastSelected, DESELECTION_COLOR);
-}
-
-void SubTerrainMesh::init(float bottomLeftX,
-                          float bottomLeftY,
-                          float topRightX,
-                          float topRightY,
-                          int divisions,
-                          float xyScale,
-                          float zScale)
-{
-
+  _v.reserve((divisions + 1) * 2 * divisions);
   _width = topRightX - bottomLeftX;
   _height = topRightY - bottomLeftY;
-  _xyScale = xyScale;
-  _zScale = zScale;
-  _v.reserve((divisions + 1) * 2 * divisions);
   _xStep = (topRightX - bottomLeftX) / divisions;
   _yStep = (topRightY - bottomLeftY) / divisions;
+  _xyScale = xyScale;
+  _zScale = zScale;
 
-  static float frequency = 0.077;
-  static float frequencyFactor = 3.0;
-  static float amplitudeFactor = 0.366;
+  ImGui::Begin("surface_mountain");
+  static float frequency = 0.3;
+  static float frequencyFactor = 2.0;
+  static float amplitudeFactor = 0.6;
+  ImGui::SetWindowPos(ImVec2(0, 0));
+  ImGui::SetWindowSize(ImVec2(500, 110));
+  ImGui::SliderFloat("frequency slider", &frequency, 0.0f, 1.5f);
+  ImGui::SliderFloat("frequencyFactor slider", &frequencyFactor, 0.0f, 3.0f);
+  ImGui::SliderFloat("amplitudeFactor slider", &amplitudeFactor, 0.1f, 1.5f);
+  ImGui::End();
+  ImGui::Begin("surface_plain");
+  static float frequency_plain = 0.077;
+  static float frequencyFactor_plain = 3.0;
+  static float amplitudeFactor_plain = 0.366;
+  ImGui::SetWindowPos(ImVec2(0, 340));
+  ImGui::SetWindowSize(ImVec2(500, 110));
+  ImGui::SliderFloat("frequency slider", &frequency_plain, 0.0f, 1.5f);
+  ImGui::SliderFloat(
+    "frequencyFactor slider", &frequencyFactor_plain, 0.0f, 3.0f);
+  ImGui::SliderFloat(
+    "amplitudeFactor slider", &amplitudeFactor_plain, 0.1f, 1.5f);
+  ImGui::End();
   auto noise = Noise(777);
+  auto max = 0.0f;
+  auto min = 0.0f;
   int width = divisions + 1;
   std::vector<float> plainZ;
+  float x, y;
+  for (int i = 0; i < width; ++i) {
+    for (int j = 0; j < width; ++j) {
+      auto dummy = glm::vec2();
+      x = bottomLeftX + static_cast<float>(i) * _xStep;
+      y = bottomLeftY + static_cast<float>(j) * _yStep;
+      auto nv_plain = noise.fractal(glm::vec2(x, y),
+                                    dummy,
+                                    frequency_plain,
+                                    frequencyFactor_plain,
+                                    amplitudeFactor_plain,
+                                    5);
+      plainZ.push_back(nv_plain);
+    }
+  }
   for (int i = 0; i < width; ++i) {
     for (int j = 0; j < width; ++j) {
       VertexColor vertex;
@@ -152,9 +110,10 @@ void SubTerrainMesh::init(float bottomLeftX,
                               5);
       vertex.p.x *= _xyScale;
       vertex.p.y *= _xyScale;
-      vertex.p.z = nv + 0.03f;
+      vertex.p.z = std::max(nv * _zScale, plainZ.at(i * width + j));
+      min = std::min(min, vertex.p.z);
+      max = std::max(max, vertex.p.z);
       vertex.normal = glm::vec3(0.0f);
-      vertex.color = glm::vec4(0.0f, 0.0f, 1.0f, 0.0);
 
       _v.push_back(vertex);
       if (j != 0 && j != (width - 1)) {
@@ -164,6 +123,7 @@ void SubTerrainMesh::init(float bottomLeftX,
   }
   auto augmentedWidth = divisions + 1 + (divisions + 1 - 2);
   _latticeWidth = augmentedWidth;
+  _latticeHeight = width;
   for (int i = 0; i < width - 1; ++i) {
     for (int j = 0; j < augmentedWidth; ++j) {
       glm::vec3 p0(0);
@@ -191,6 +151,26 @@ void SubTerrainMesh::init(float bottomLeftX,
       _v[augmentedWidth * i + j].normal = glm::cross(p1 - p0, p2 - p0);
     }
   }
+  auto amplitude = max - min;
+  for (int i = 0; i < width; ++i) {
+    for (int j = 0; j < augmentedWidth; ++j) {
+      RgbColor a, b;
+      auto h = (_v[augmentedWidth * i + j].p.z - min) / amplitude;
+      if (h <= amplitude * 0.2) {
+        a = colorMapping[0.0f];
+        b = colorMapping[0.5f];
+        h *= 2;
+      } else {
+        a = colorMapping[0.5f];
+        b = colorMapping[1.0f];
+        h = (h - 0.5) * 2;
+      }
+      _v[augmentedWidth * i + j].color.x = glm::lerp(a.r, b.r, h);
+      _v[augmentedWidth * i + j].color.y = glm::lerp(a.g, b.g, h);
+      _v[augmentedWidth * i + j].color.z = glm::lerp(a.b, b.b, h);
+      _v[augmentedWidth * i + j].color.w = 1.0;
+    }
+  }
   _indices.reserve(::pow(divisions, 2) * 2 * 3);
   for (int i = 0; i < divisions; ++i) {
     for (int j = 0; j < divisions; ++j) {
@@ -203,7 +183,6 @@ void SubTerrainMesh::init(float bottomLeftX,
         _indices.push_back(i * augmentedWidth + j2 + 1);
         _indices.push_back(i * augmentedWidth + j2);
         _indices.push_back(i * augmentedWidth + j2 + augmentedWidth + 1);
-
       } else {
         _indices.push_back(i * augmentedWidth + j2);
         _indices.push_back(i * augmentedWidth + j2 + augmentedWidth);
@@ -248,3 +227,25 @@ void SubTerrainMesh::init(float bottomLeftX,
 
   glBindVertexArray(0);
 }
+
+float MainTerrainMesh::getZ(float x, float y) const
+{
+  x += _width / 2;
+  y += _height / 2;
+  auto i = ::floor(x / _xStep / _xyScale);
+  auto j = ::floor(y / _yStep / _xyScale);
+  auto mappedJ = (j == 0) ? 0 : 2 * j - 1;
+  return _v.at(i * _latticeWidth + mappedJ).p.z;
+}
+
+glm::vec3 MainTerrainMesh::getRgbColor(float x, float y) const
+{
+  x += _width / 2;
+  y += _height / 2;
+  auto i = ::floor(x / _xStep / _xyScale);
+  auto j = ::floor(y / _yStep / _xyScale);
+  auto mappedJ = (j == 0) ? 0 : 2 * j - 1;
+  auto c = _v.at(i * _latticeWidth + mappedJ).color;
+  return glm::vec3(c.x, c.y, c.z);
+}
+

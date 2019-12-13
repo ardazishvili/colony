@@ -4,15 +4,8 @@
 #include <memory>
 #include <vector>
 
-#include "Mesh.h"
+#include "TerrainMesh.h"
 #include <glm/glm.hpp>
-
-struct VertexColor
-{
-  glm::vec3 p;
-  glm::vec3 normal;
-  glm::vec4 color;
-};
 
 struct RectangleRegion
 {
@@ -36,17 +29,16 @@ struct LivingArea
 };
 
 using LivingAreas = std::vector<std::shared_ptr<LivingArea>>;
-class SubTerrainMesh : public Mesh
+class SubTerrainMesh : public TerrainMesh
 {
 public:
-  void render();
   void init(float bottomLeftX,
             float bottomLeftY,
             float topRightX,
             float topRightY,
             int divisions,
             float xyScale,
-            float zScale);
+            float zScale) override;
   void selectSubTerrainRegion(RectangleRegion region, glm::vec4 rgba);
   std::shared_ptr<LivingArea> addLivingArea(CircularRegion region,
                                             glm::vec4 rgba);
@@ -60,16 +52,6 @@ private:
   void reloadLivingArea(std::shared_ptr<LivingArea> area);
   void selectSubTerrainRegion(CircularRegion region, glm::vec4 rgba);
 
-  float _xyScale;
-  float _zScale;
-  float _width;
-  float _height;
-  std::vector<VertexColor> _vSub;
-  std::vector<unsigned int> _indicesSub;
-  unsigned int _latticeWidthSub;
-  unsigned int _latticeHeightSub;
-  float _xStepSub;
-  float _yStepSub;
   RectangleRegion _lastSelected{ 0.0f, 0.0f, 0.0f, 0.0f };
   LivingAreas _livingAreas;
 };

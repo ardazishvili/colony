@@ -4,6 +4,8 @@ project(Colony)
 add_executable(colony
   engine/Mesh.h
   engine/Mesh.cpp
+  engine/MainTerrainMesh.h
+  engine/MainTerrainMesh.cpp
 		Timer.cpp
 		Timer.h
     logic/BarrierBuilder.h

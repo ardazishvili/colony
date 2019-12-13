@@ -20,8 +20,6 @@ public:
   void loadTexture(const std::string& filename, TexturePackType type);
 
 private:
-  void deinit();
-
   std::vector<ModelMesh::MeshMetadata> _meshesData;
   Textures _initialTextures;
   std::vector<Vertex> _vertices;

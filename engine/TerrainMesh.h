@@ -1,32 +1,32 @@
 #ifndef TERRAIN_MESH_H
 #define TERRAIN_MESH_H
 
+#include <vector>
+
+#include <glm/glm.hpp>
+
 #include "Mesh.h"
-#include "SubTerrainMesh.h"
+
+struct VertexColor
+{
+  glm::vec3 p;
+  glm::vec3 normal;
+  glm::vec4 color;
+};
 
 class TerrainMesh : public Mesh
 {
 public:
-  void render();
-  void initTerrain(float bottomLeftX,
-                   float bottomLeftY,
-                   float topRightX,
-                   float topRightY,
-                   int divisions,
-                   float xyScale,
-                   float zScale);
-  float getZ(float x, float y) const;
-  glm::vec3 getRgbColor(float x, float y) const;
-  void deselect();
-  static float UPDATE_COLOR_SPEED;
-  static float plantsColor[3];
-  SubTerrainMesh _subTerrainMesh;
+  virtual void render();
+  virtual void init(float bottomLeftX,
+                    float bottomLeftY,
+                    float topRightX,
+                    float topRightY,
+                    int divisions,
+                    float xyScale,
+                    float zScale) = 0;
 
-  const static glm::vec4 SELECTION_COLOR;
-  const static glm::vec4 DESELECTION_COLOR;
-  const static glm::vec4 DEFAULT_BARRIER_COLOR;
-
-private:
+protected:
   std::vector<VertexColor> _v;
   std::vector<unsigned int> _indices;
   float _width;

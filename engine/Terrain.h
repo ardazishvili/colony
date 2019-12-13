@@ -1,8 +1,8 @@
 #ifndef TERRAIN_H
 #define TERRAIN_H
 
+#include "MainTerrainMesh.h"
 #include "Shader.h"
-#include "TerrainMesh.h"
 
 class Terrain
 {
@@ -27,7 +27,8 @@ public:
 
 private:
   Shader& _shader;
-  TerrainMesh _mesh;
+  MainTerrainMesh _mainMesh;
+  SubTerrainMesh _subMesh;
   glm::vec3 _offset{ glm::vec3(0.0f) };
   float _xyScale;
   float _zScale;
