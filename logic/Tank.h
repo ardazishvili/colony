@@ -29,7 +29,7 @@ public:
        Shell::Size shellSize = Shell::Size::Small);
 
   bool isInsideArea(RectangleRegion area);
-  UnitBuilders getUnitBuilders(Game& game) override;
+  UnitBuilders getUnitBuilders(Game* game) override;
   StructureBuilders getStructureBuilders() override;
 
   void move();
@@ -64,7 +64,7 @@ private:
   Terrain* _terrain;
 };
 
-std::shared_ptr<Tank> createTank(Game& game,
+std::shared_ptr<Tank> createTank(Game* game,
                                  Shader& shader,
                                  glm::vec3 position,
                                  Tank::Type type = Tank::Type::Light,

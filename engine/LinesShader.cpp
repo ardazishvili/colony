@@ -1,10 +1,12 @@
 #include "LinesShader.h"
 
-LinesShader::LinesShader(glm::mat4& view,
+LinesShader::LinesShader(Light* light,
+                         Camera& camera,
+                         glm::mat4& view,
                          glm::mat4& projection,
                          const GLchar* vertexPath,
                          const GLchar* fragmentPath) :
-  Shader(view, projection, vertexPath, fragmentPath)
+  Shader(light, camera, view, projection, vertexPath, fragmentPath)
 {
 }
 

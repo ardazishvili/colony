@@ -1,14 +1,16 @@
 #include "Surface.h"
 
-Surface::Surface(Shader& shader,
+Surface::Surface(Camera& camera,
+                 Shader& shader,
                  float bottomLeftX,
                  float bottomLeftY,
                  float topRightX,
                  float topRightY,
                  int divisions,
                  std::string texturePath) :
-  _shader(shader),
-  _bottomLeft(bottomLeftX, bottomLeftY), _topRight(topRightX, topRightY)
+  _camera(camera),
+  _shader(shader), _bottomLeft(bottomLeftX, bottomLeftY),
+  _topRight(topRightX, topRightY)
 {
   _mesh.initSurface(0,
                     0,
@@ -45,9 +47,9 @@ void Surface::setTexture(const std::string& filename)
   _mesh.loadTexture(filename, TexturePackType::Initial);
 }
 
-void Surface::setPitchAngle(float angle)
+void Surface::setPitchAngle()
 {
-  _pitchAngle = angle;
+  _pitchAngle = -_camera.getPitch();
 }
 
 void Surface::setYawAngle(float angle)

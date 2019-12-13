@@ -6,6 +6,9 @@
 class AbstractUnitBuilder : public AbstractBuilder
 {
 public:
+  AbstractUnitBuilder(Game* game) : AbstractBuilder(game)
+  {
+  }
   virtual void create() = 0;
 
   virtual ~AbstractUnitBuilder() = default;

@@ -26,7 +26,7 @@ void Barrier::render()
   Buildable::render();
 }
 
-UnitBuilders Barrier::getUnitBuilders(Game& game)
+UnitBuilders Barrier::getUnitBuilders(Game* game)
 {
   auto builders = UnitBuilders();
   std::unique_ptr<AbstractUnitBuilder> builder =

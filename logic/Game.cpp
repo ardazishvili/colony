@@ -170,7 +170,7 @@ Buildable* Game::getStructure(const glm::vec3& mousePoint)
     if (structure->isUnderCursor(mousePoint) && !structure->isDestroyed()) {
       _selectedStructure = structure.get();
       structure->select();
-      _control->populateUnitPanel(*this, _selectedStructure);
+      _control->populateUnitPanel(this, _selectedStructure);
       _control->populateStructurePanel(_selectedStructure);
       return _selectedStructure;
     }
@@ -208,6 +208,8 @@ void Game::showDebug()
                ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar |
                ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs;
   ImGui::Begin("3dCoordinates", NULL, flags);
+  int screenWidth, screenHeight;
+  glfwGetWindowSize(_window, &screenWidth, &screenHeight);
   ImGui::SetWindowPos(ImVec2(0, screenHeight - 22));
   ImGui::SetWindowSize(ImVec2(500, 22));
   auto pos = EventManager::unProject(_window, _view, _projection);

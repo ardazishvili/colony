@@ -4,11 +4,13 @@
 #include "../globals.h"
 #include "SkyboxShader.h"
 
-SkyboxShader::SkyboxShader(glm::mat4& view,
+SkyboxShader::SkyboxShader(Light* light,
+                           Camera& camera,
+                           glm::mat4& view,
                            glm::mat4& projection,
                            const GLchar* vertexPath,
                            const GLchar* fragmentPath) :
-  Shader(view, projection, vertexPath, fragmentPath)
+  Shader(light, camera, view, projection, vertexPath, fragmentPath)
 {
 }
 

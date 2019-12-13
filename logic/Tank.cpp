@@ -195,7 +195,7 @@ float Tank::getMouseAngle(int mouseX, int mouseY)
   return degreeAngle;
 }
 
-UnitBuilders Tank::getUnitBuilders(Game& game)
+UnitBuilders Tank::getUnitBuilders(Game* game)
 {
   // TODO
   return UnitBuilders();
@@ -212,7 +212,7 @@ void Tank::setTerrain(Terrain* terrain)
   _terrain = terrain;
 }
 
-std::shared_ptr<Tank> createTank(Game& game,
+std::shared_ptr<Tank> createTank(Game* game,
                                  Shader& shader,
                                  glm::vec3 position,
                                  Tank::Type type,
@@ -221,6 +221,6 @@ std::shared_ptr<Tank> createTank(Game& game,
 {
   auto newTank =
     std::make_shared<Tank>(shader, position, type, health, shellSize);
-  game.addTank(newTank);
+  game->addTank(newTank);
   return newTank;
 }

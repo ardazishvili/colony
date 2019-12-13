@@ -3,8 +3,12 @@
 
 #include "AbstractBuilder.h"
 
-class AbstractStructureBuilder : public AbstractBuilder {
+class AbstractStructureBuilder : public AbstractBuilder
+{
 public:
+  AbstractStructureBuilder(Game* game) : AbstractBuilder(game)
+  {
+  }
   virtual ~AbstractStructureBuilder() = default;
 };
 

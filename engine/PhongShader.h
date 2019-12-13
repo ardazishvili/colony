@@ -8,7 +8,9 @@
 class PhongShader : public Shader
 {
 public:
-  PhongShader(glm::mat4& view,
+  PhongShader(Light* light,
+              Camera& camera,
+              glm::mat4& view,
               glm::mat4& projection,
               const GLchar* vertexPath,
               const GLchar* fragmentPath);

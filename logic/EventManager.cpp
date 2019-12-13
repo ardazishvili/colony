@@ -14,6 +14,8 @@ glm::vec3 EventManager::unProject(GLFWwindow* window,
 
   double xpos, ypos;
   glfwGetCursorPos(window, &xpos, &ypos);
+  int screenWidth, screenHeight;
+  glfwGetWindowSize(window, &screenWidth, &screenHeight);
   glReadPixels(
     xpos, screenHeight - ypos - 1, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
 
@@ -26,7 +28,7 @@ glm::vec3 EventManager::unProject(GLFWwindow* window,
 EventManager::EventManager(glm::mat4& view,
                            glm::mat4& projection,
                            GLFWwindow* window,
-                           Game& game,
+                           Game* game,
                            Camera& camera,
                            Shader& textureShader,
                            Shader& colorShader,
@@ -35,7 +37,8 @@ EventManager::EventManager(glm::mat4& view,
   _projection(projection), _window(window), _camera(camera), _game(game),
   _textureShader(textureShader), _colorShader(colorShader), _terrain(terrain)
 {
-  _game.setControl(std::make_unique<Control>(textureShader, _terrain));
+  _game->setControl(
+    std::make_unique<Control>(_game, _window, textureShader, _terrain));
 }
 
 void EventManager::tick()
@@ -47,7 +50,7 @@ void EventManager::tick()
     _terrain->selectSubTerrainRegion(_selection,
                                      SubTerrainMesh::SELECTION_COLOR);
   }
-  _game.tick();
+  _game->tick();
 }
 
 void EventManager::handleKeyPress(GLFWwindow* window,
@@ -70,7 +73,7 @@ void EventManager::handleKeyPress(GLFWwindow* window,
         _structureToBuildStage = BuildStage::SetAngle;
         auto tankFactory = std::make_shared<TankFactory>(
           _textureShader, unProject(_window, _view, _projection));
-        _game.addStructure(tankFactory);
+        _game->addStructure(tankFactory);
         _structureToBuild = tankFactory;
       } else {
         _structureToBuildStage = BuildStage::Done;
@@ -82,9 +85,11 @@ void EventManager::handleKeyPress(GLFWwindow* window,
       std::cout << "C pressed" << std::endl;
       if (_structureToBuild == nullptr) {
         _structureToBuildStage = BuildStage::SetAngle;
-        auto hq = std::make_shared<Hq>(
-          _textureShader, unProject(_window, _view, _projection), _terrain);
-        _game.addStructure(hq);
+        auto hq = std::make_shared<Hq>(_game,
+                                       _textureShader,
+                                       unProject(_window, _view, _projection),
+                                       _terrain);
+        _game->addStructure(hq);
         _structureToBuild = hq;
       } else {
         _structureToBuildStage = BuildStage::Done;
@@ -95,7 +100,7 @@ void EventManager::handleKeyPress(GLFWwindow* window,
     if (key == GLFW_KEY_P) {
       auto plant = std::make_shared<Plant>(
         _textureShader, unProject(_window, _view, _projection));
-      _game.addPlant(plant);
+      _game->addPlant(plant);
     }
     if (key == GLFW_KEY_B) {
       std::cout << "B pressed" << std::endl;
@@ -103,7 +108,7 @@ void EventManager::handleKeyPress(GLFWwindow* window,
         _structureToBuildStage = BuildStage::SetAngle;
         auto b = std::make_shared<Barrier>(
           _textureShader, unProject(_window, _view, _projection), _terrain);
-        _game.addStructure(b);
+        _game->addStructure(b);
         _structureToBuild = b;
       } else {
         _structureToBuildStage = BuildStage::Done;
@@ -186,7 +191,7 @@ void EventManager::handleMouseReleased()
 {
   std::cout << "mouse released" << std::endl;
   if (_selection.width != 0 || _selection.height != 0) {
-    _tanksSelected = _game.getTanks(_selection);
+    _tanksSelected = _game->getTanks(_selection);
   }
 
   _selectionActive = false;
@@ -203,19 +208,19 @@ void EventManager::handleMousePressedLeft()
   _selection.y = c.y;
   _tanksSelected.clear();
 
-  _tankSelected = _game.getTank(c, true);
-  _structureSelected = _game.getStructure(c);
-  /* _barrierSelected = _game.getBarrier(c); */
+  _tankSelected = _game->getTank(c, true);
+  _structureSelected = _game->getStructure(c);
+  /* _barrierSelected = _game->getBarrier(c); */
   if (!_structureSelected) {
-    _structureSelected = _game.getStructure(c);
-    if (!_structureSelected && _game.panelIsEmpty(Panel::Type::Units)) {
-      _game.clearPanel(Panel::Type::Units);
+    _structureSelected = _game->getStructure(c);
+    if (!_structureSelected && _game->panelIsEmpty(Panel::Type::Units)) {
+      _game->clearPanel(Panel::Type::Units);
     }
   }
   /* if (!_barrierSelected) { */
-  /*   _barrierSelected = _game.getBarrier(c); */
-  /*   if (!_barrierSelected && _game.panelIsEmpty(Panel::Type::Units)) { */
-  /*     _game.clearPanel(Panel::Type::Units); */
+  /*   _barrierSelected = _game->getBarrier(c); */
+  /*   if (!_barrierSelected && _game->panelIsEmpty(Panel::Type::Units)) { */
+  /*     _game->clearPanel(Panel::Type::Units); */
   /*   } */
   /* } */
 }
@@ -225,8 +230,8 @@ void EventManager::handleMousePressedRight()
   auto c = unProject(_window, _view, _projection);
   // TODO remove copypaste for one tank and group of tanks
   if (_tankSelected) {
-    _tankUnderAttack = _game.getTank(c);
-    _structureUnderAttack = _game.getStructure(c);
+    _tankUnderAttack = _game->getTank(c);
+    _structureUnderAttack = _game->getStructure(c);
     if (_tankUnderAttack) {
       _tankSelected->startShooting(_tankUnderAttack);
     } else if (_structureUnderAttack) {
@@ -246,8 +251,8 @@ void EventManager::handleMousePressedRight()
     _structureToBuild->commit();
     _structureToBuild = nullptr;
   } else if (!_tanksSelected.empty()) {
-    _tankUnderAttack = _game.getTank(c);
-    _structureUnderAttack = _game.getStructure(c);
+    _tankUnderAttack = _game->getTank(c);
+    _structureUnderAttack = _game->getStructure(c);
     if (_tankUnderAttack) {
       _tanksSelected.startShooting(_tankUnderAttack);
     } else if (_structureUnderAttack) {

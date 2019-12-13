@@ -9,17 +9,14 @@ std::map<Tank::Type, MenuTextures> tankTypeToPreviewMapping = {
 };
 
 TankBuilder::TankBuilder(Shader& shader,
-			 Game& game, 
-			 TankFactory& tankFactory,
-			 Tank::Type tankType,
-	      		 HealthLevel healthLevel,
-	      		 Shell::Size shellSize) :
-	_shader(shader),
-	_type(tankType),
-	_healthLevel(healthLevel),
-	_shellSize(shellSize),
-	_game(game),
-	_tankFactory(tankFactory)
+                         Game* game,
+                         TankFactory& tankFactory,
+                         Tank::Type tankType,
+                         HealthLevel healthLevel,
+                         Shell::Size shellSize) :
+  AbstractUnitBuilder(game),
+  _shader(shader), _type(tankType), _healthLevel(healthLevel),
+  _shellSize(shellSize), _game(game), _tankFactory(tankFactory)
 {
 }
 

@@ -10,7 +10,7 @@ class TankBuilder : public AbstractUnitBuilder
 {
 public:
   TankBuilder(Shader& shader,
-              Game& game,
+              Game* game,
               TankFactory& _tankFactory,
               Tank::Type tankType,
               HealthLevel healthLevel,
@@ -25,7 +25,7 @@ private:
   Tank::Type _type;
   HealthLevel _healthLevel;
   Shell::Size _shellSize;
-  Game& _game;
+  Game* _game;
   TankFactory& _tankFactory;
 };
 

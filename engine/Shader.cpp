@@ -6,12 +6,14 @@
 
 #define ARRAY_SIZE_IN_ELEMENTS(a) (sizeof(a) / sizeof(a[0]))
 
-Shader::Shader(glm::mat4& view,
+Shader::Shader(Light* light,
+               Camera& camera,
+               glm::mat4& view,
                glm::mat4& projection,
                const GLchar* vertexPath,
                const GLchar* fragmentPath) :
-  _view(view),
-  _projection(projection)
+  _light(light),
+  _camera(camera), _view(view), _projection(projection)
 {
   std::string vertexCode;
   std::string fragmentCode;
@@ -151,4 +153,9 @@ GLint Shader::getUniformLocation(const char* name)
   }
 
   return location;
+}
+
+Camera& Shader::camera()
+{
+  return _camera;
 }

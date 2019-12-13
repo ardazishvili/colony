@@ -8,12 +8,13 @@
 #include "PlantBuilder.h"
 
 PlantBuilder::PlantBuilder(Shader& shader,
-                           Game& game,
+                           Game* game,
                            Barrier& barrier,
                            Terrain* terrain) :
-  _shader(shader),
-  _game(game), _barrier(barrier), _terrain(terrain)
-{}
+  AbstractUnitBuilder(game),
+  _shader(shader), _game(game), _barrier(barrier), _terrain(terrain)
+{
+}
 
 void PlantBuilder::create()
 {
@@ -34,7 +35,7 @@ void PlantBuilder::create()
   auto plant = std::make_shared<Plant>(_shader, pos);
 
   _barrier.addPlant(plant);
-  _game.addPlant(plant);
+  _game->addPlant(plant);
 }
 
 MenuTextures PlantBuilder::getPreviewType()

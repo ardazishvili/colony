@@ -2,15 +2,15 @@
 #include "../globals.h"
 #include "Barrier.h"
 
-BarrierBuilder::BarrierBuilder(Shader& shader, Terrain* terrain) :
-  _shader(shader), _terrain(terrain)
+BarrierBuilder::BarrierBuilder(Game* game, Shader& shader, Terrain* terrain) :
+  AbstractStructureBuilder(game), _shader(shader), _terrain(terrain)
 {
 }
 
 void BarrierBuilder::create()
 {
   auto structure = std::make_shared<Barrier>(_shader, glm::vec3(), _terrain);
-  game->addStructure(structure);
+  _game->addStructure(structure);
   eventManager->setStructureToBuild(structure);
   eventManager->setStructureToBuildStage(BuildStage::SetPosition);
 }

@@ -12,12 +12,12 @@
 /* extern glm::mat4 gProjection; */
 /* extern int currentX; */
 /* extern int currentY; */
-extern float screenWidth;
-extern float screenHeight;
+/* extern float screenWidth; */
+/* extern float screenHeight; */
 extern std::unique_ptr<ModelLoader> modelLoader;
-extern Camera camera;
-extern std::unique_ptr<Game> game;
-extern std::unique_ptr<Light> light;
+/* extern Camera camera; */
+/* extern std::unique_ptr<Game> game; */
+/* extern std::unique_ptr<Light> light; */
 extern std::unique_ptr<EventManager> eventManager;
 
 #endif

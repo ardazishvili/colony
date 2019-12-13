@@ -7,7 +7,9 @@ class LinesShader : public Shader
 {
 
 public:
-  LinesShader(glm::mat4& view,
+  LinesShader(Light* light,
+              Camera& camera,
+              glm::mat4& view,
               glm::mat4& projection,
               const GLchar* vertexPath,
               const GLchar* fragmentPath);

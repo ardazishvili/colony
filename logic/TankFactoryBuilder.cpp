@@ -4,7 +4,8 @@
 #include "TankFactory.h"
 #include "TankFactoryBuilder.h"
 
-TankFactoryBuilder::TankFactoryBuilder(Shader& shader) : _shader(shader)
+TankFactoryBuilder::TankFactoryBuilder(Game* game, Shader& shader) :
+  AbstractStructureBuilder(game), _shader(shader)
 {
 }
 
@@ -12,7 +13,7 @@ void TankFactoryBuilder::create()
 {
   std::cout << "factory builder create" << std::endl;
   auto structure = std::make_shared<TankFactory>(_shader, glm::vec3());
-  game->addStructure(structure);
+  _game->addStructure(structure);
   eventManager->setStructureToBuild(structure);
   eventManager->setStructureToBuildStage(BuildStage::SetPosition);
 }

@@ -5,17 +5,19 @@
 #include "../globals.h"
 #include "PhongShader.h"
 
-PhongShader::PhongShader(glm::mat4& view,
+PhongShader::PhongShader(Light* light,
+                         Camera& camera,
+                         glm::mat4& view,
                          glm::mat4& projection,
                          const GLchar* vertexPath,
                          const GLchar* fragmentPath) :
-  Shader(view, projection, vertexPath, fragmentPath)
+  Shader(light, camera, view, projection, vertexPath, fragmentPath)
 {
 }
 
 void PhongShader::configure()
 {
-  auto cameraPosition = camera.reference();
+  auto cameraPosition = _camera.reference();
   setVec3("viewPos", cameraPosition);
   // material properties
   setInt("material.diffuse", 0);
@@ -23,7 +25,7 @@ void PhongShader::configure()
   setFloat("material.shininess", 64.0f);
 
   // light properties
-  auto lightPosition = light->position();
+  auto lightPosition = _light->position();
   setVec3("light.position", lightPosition);
   setVec3("light.ambient", 0.6f, 0.6f, 0.6f);
   setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);

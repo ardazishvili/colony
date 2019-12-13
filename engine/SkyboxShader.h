@@ -6,7 +6,9 @@
 class SkyboxShader : public Shader
 {
 public:
-  SkyboxShader(glm::mat4& view,
+  SkyboxShader(Light* light,
+               Camera& camera,
+               glm::mat4& view,
                glm::mat4& projection,
                const GLchar* vertexPath,
                const GLchar* fragmentPath);

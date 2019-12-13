@@ -8,11 +8,16 @@
 #include <sstream>
 #include <string>
 
+#include "Camera.h"
+
+class Light;
 class Shader
 {
 public:
   static const unsigned int MAX_BONES = 100;
-  Shader(glm::mat4& view,
+  Shader(Light* light,
+         Camera& camera,
+         glm::mat4& view,
          glm::mat4& projection,
          const GLchar* vertexPath,
          const GLchar* fragmentPath);
@@ -27,6 +32,7 @@ public:
   void setVec3(const std::string& name, glm::vec3& value) const;
   void setTransformation(const std::string& name, const GLfloat* matrix) const;
   void setMat4(const std::string& name, const glm::mat4& mat) const;
+  Camera& camera();
 
   GLint getUniformLocation(const char* name);
   void setBoneTransform(unsigned int index, const glm::mat4& matrix);
@@ -34,6 +40,8 @@ public:
 
 protected:
   unsigned int _id;
+  Light* _light;
+  Camera& _camera;
   glm::mat4& _view;
   glm::mat4& _projection;
 

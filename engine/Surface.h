@@ -1,13 +1,15 @@
 #ifndef SURFACE_H
 #define SURFACE_H
 
+#include "Camera.h"
 #include "PlainMesh.h"
 #include "Shader.h"
 
 class Surface
 {
 public:
-  Surface(Shader& shader,
+  Surface(Camera& camera,
+          Shader& shader,
           float bottomLeftX,
           float bottomLeftY,
           float topRightX,
@@ -17,7 +19,7 @@ public:
   void render();
   void setOffsetZ(float offset);
   void setOffsetXY(float x, float y);
-  void setPitchAngle(float angle);
+  void setPitchAngle();
   void setYawAngle(float angle);
   void setTexture(const std::string& filename);
   void setScaleX(float factor);
@@ -25,6 +27,7 @@ public:
   glm::vec4 getArea() const; // bottom left x, y; top right x, y
 
 private:
+  Camera& _camera;
   Shader& _shader;
   PlainMesh _mesh;
   glm::vec3 _offset{ glm::vec3(0.0f) };

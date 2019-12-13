@@ -7,7 +7,7 @@
 class TankFactoryBuilder : public AbstractStructureBuilder
 {
 public:
-  TankFactoryBuilder(Shader& shader);
+  TankFactoryBuilder(Game* game, Shader& shader);
   ~TankFactoryBuilder();
 
   void create() override;

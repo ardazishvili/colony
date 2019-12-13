@@ -13,7 +13,7 @@ class Barrier : public BuildableStructure
 public:
   Barrier(Shader& shader, glm::vec3 position, Terrain* terrain);
   void render() override;
-  UnitBuilders getUnitBuilders(Game& game) override;
+  UnitBuilders getUnitBuilders(Game* game) override;
   StructureBuilders getStructureBuilders() override;
   void addPlant(std::shared_ptr<Plant> p);
   void commit() override;

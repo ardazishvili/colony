@@ -42,12 +42,11 @@ float vertices[] = {
 };
 
 Light::Light(glm::vec3 position,
-             Shader& shader,
              Camera& camera,
              float screenWidth,
              float screenHeight) :
   _position(position),
-  _shader(shader), _camera(camera)
+  _camera(camera)
 {
   init();
   _view = glm::lookAt(camera.eye(), camera.reference(), camera.up());
@@ -78,11 +77,11 @@ void Light::init()
 
 void Light::render()
 {
-  _shader.use();
+  _shader->use();
   _model = glm::translate(_model, _position);
-  _shader.setTransformation("view", glm::value_ptr(_view));
-  _shader.setTransformation("projection", glm::value_ptr(_projection));
-  _shader.setTransformation("model", glm::value_ptr(_model));
+  _shader->setTransformation("view", glm::value_ptr(_view));
+  _shader->setTransformation("projection", glm::value_ptr(_projection));
+  _shader->setTransformation("model", glm::value_ptr(_model));
   glBindVertexArray(_vao);
   glDrawArrays(GL_TRIANGLES, 0, 36);
 }
@@ -95,4 +94,9 @@ glm::vec3 Light::position()
 void Light::setPosition(glm::vec3 position)
 {
   _position = position;
+}
+
+void Light::setShader(Shader* shader)
+{
+  _shader = shader;
 }

@@ -9,12 +9,13 @@ class Hq : public BuildableStructure
 {
 public:
   Hq() = delete;
-  Hq(Shader& shader, glm::vec3 position, Terrain* terrain);
+  Hq(Game* game, Shader& shader, glm::vec3 position, Terrain* terrain);
 
-  UnitBuilders getUnitBuilders(Game& game) override;
+  UnitBuilders getUnitBuilders(Game* game) override;
   StructureBuilders getStructureBuilders() override;
 
 private:
+  Game* _game;
   Terrain* _terrain;
   static const int HQ_HP;
 };

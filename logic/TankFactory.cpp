@@ -13,7 +13,7 @@ TankFactory::TankFactory(Shader& shader, glm::vec3 position) :
   _maxHealth = _health;
 }
 
-void TankFactory::createTank(Game& game,
+void TankFactory::createTank(Game* game,
                              Tank::Type tankType,
                              HealthLevel healthLevel,
                              Shell::Size shellSize)
@@ -29,7 +29,7 @@ void TankFactory::createTank(Game& game,
   tank->startMoving(tankDestination);
 }
 
-UnitBuilders TankFactory::getUnitBuilders(Game& game)
+UnitBuilders TankFactory::getUnitBuilders(Game* game)
 {
   auto builders = UnitBuilders();
   addUnitBuilder(
@@ -41,7 +41,7 @@ UnitBuilders TankFactory::getUnitBuilders(Game& game)
   return builders;
 }
 
-void TankFactory::addUnitBuilder(Game& game,
+void TankFactory::addUnitBuilder(Game* game,
                                  UnitBuilders& builders,
                                  Tank::Type type,
                                  HealthLevel healthLevel,

@@ -13,7 +13,7 @@ public:
   EventManager(glm::mat4& view,
                glm::mat4& projection,
                GLFWwindow* window,
-               Game& game,
+               Game* game,
                Camera& camera,
                Shader& textureShader,
                Shader& colorShader,
@@ -41,7 +41,7 @@ private:
   glm::mat4& _projection;
   GLFWwindow* _window;
   Camera& _camera;
-  Game& _game;
+  Game* _game;
   Shader& _textureShader;
   Shader& _colorShader;
   Tank* _tankSelected{ nullptr };

@@ -23,6 +23,9 @@
 #include "logic/Game.h"
 
 #include "globals.h"
+Camera camera(glm::vec3(0.0f, -15.0f, 15.0f),
+              glm::vec3(0.0f, 0.0f, 0.0f),
+              glm::vec3(0.0f, 0.0f, 1.0f));
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -77,8 +80,8 @@ int main(int argc, char** argv)
   int count;
   GLFWmonitor** monitors = glfwGetMonitors(&count);
   const GLFWvidmode* mode = glfwGetVideoMode(monitors[1]);
-  screenWidth = mode->width - 200;
-  screenHeight = mode->height - 200;
+  float screenWidth = mode->width - 200;
+  float screenHeight = mode->height - 200;
   GLFWwindow* window =
     glfwCreateWindow(screenWidth, screenHeight, "LearnOPenGl", NULL, NULL);
   if (window == NULL) {
@@ -115,25 +118,38 @@ int main(int argc, char** argv)
 
   glm::mat4 view;
   glm::mat4 projection;
-  PhongShader colorShader(view,
+  std::unique_ptr<Light> light = std::make_unique<Light>(
+    glm::vec3(1.2f, 0.0f, 5.0f), camera, screenWidth, screenHeight);
+  PhongShader colorShader(light.get(),
+                          camera,
+                          view,
                           projection,
                           "/home/roman/repos/colony/shaders/vertex_color.vs",
                           "/home/roman/repos/colony/shaders/fragment_color.fs");
   PhongShader textureShader(
+    light.get(),
+    camera,
     view,
     projection,
     "/home/roman/repos/colony/shaders/vertex_objects.vs",
     "/home/roman/repos/colony/shaders/fragment_objects.fs");
-  PhongShader lampShader(view,
+  PhongShader lampShader(light.get(),
+                         camera,
+                         view,
                          projection,
                          "/home/roman/repos/colony/shaders/vertex_light.vs",
                          "/home/roman/repos/colony/shaders/fragment_light.fs");
+  light->setShader(&lampShader);
   SkyboxShader skyboxShader(
+    light.get(),
+    camera,
     view,
     projection,
     "/home/roman/repos/colony/shaders/vertex_skybox.vs",
     "/home/roman/repos/colony/shaders/fragment_skybox.fs");
-  LinesShader linesShader(view,
+  LinesShader linesShader(light.get(),
+                          camera,
+                          view,
                           projection,
                           "/home/roman/repos/colony/shaders/vertex_lines.vs",
                           "/home/roman/repos/colony/shaders/fragment_lines.fs");
@@ -141,8 +157,6 @@ int main(int argc, char** argv)
   modelLoader->load();
 
   glEnable(GL_DEPTH_TEST);
-  light = std::make_unique<Light>(
-    glm::vec3(1.2f, 0.0f, 5.0f), lampShader, camera, screenWidth, screenHeight);
   /* glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); */
   ImGui_ImplOpenGL3_NewFrame();
   ImGui_ImplGlfw_NewFrame();
@@ -152,18 +166,18 @@ int main(int argc, char** argv)
   auto zScale = 3.0f;
   auto terrain = Terrain(
     colorShader, -10.0f, -10.0f, 10.0f, 10.0f, 256 * 1, xyScale, zScale);
-  game = std::make_unique<Game>(window, view, projection);
+  std::unique_ptr<Game> game = std::make_unique<Game>(window, view, projection);
   game->addTerrain(&terrain);
   eventManager = std::make_unique<EventManager>(view,
                                                 projection,
                                                 window,
-                                                *game,
+                                                game.get(),
                                                 camera,
                                                 textureShader,
                                                 colorShader,
                                                 &terrain);
 
-  createTank(*game, textureShader, terrain.getXYZ(glm::vec2(0.0, 0.0f)));
+  createTank(game.get(), textureShader, terrain.getXYZ(glm::vec2(0.0, 0.0f)));
   /* createTank(game, textureShader, terrain.getXYZ(glm::vec2(1.0, -1.0f))); */
   /* createTank(game, textureShader, terrain.getXYZ(glm::vec2(2.0, -2.0f))); */
   /* auto tankFactory = */

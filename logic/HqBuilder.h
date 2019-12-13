@@ -8,7 +8,7 @@
 class HqBuilder : public AbstractStructureBuilder
 {
 public:
-  HqBuilder(Shader& shader, Terrain* terrain);
+  HqBuilder(Game* game, Shader& shader, Terrain* terrain);
   ~HqBuilder();
 
   void create() override;

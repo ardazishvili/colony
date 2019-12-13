@@ -13,15 +13,15 @@ public:
   TankFactory() = delete;
   TankFactory(Shader& shader, glm::vec3 position);
 
-  void createTank(Game& game,
+  void createTank(Game* game,
                   Tank::Type tankType,
                   HealthLevel healthLevel,
                   Shell::Size shellSize);
-  UnitBuilders getUnitBuilders(Game& game) override;
+  UnitBuilders getUnitBuilders(Game* game) override;
   StructureBuilders getStructureBuilders() override;
 
 private:
-  void addUnitBuilder(Game& game,
+  void addUnitBuilder(Game* game,
                       UnitBuilders& builders,
                       Tank::Type type,
                       HealthLevel healthLevel,

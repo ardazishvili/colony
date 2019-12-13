@@ -4,12 +4,16 @@
 #include "HqBuilder.h"
 #include "TankFactoryBuilder.h"
 
-Control::Control(Shader& shader, Terrain* terrain) :
-  _structurePanel(Panel::Type::Structures, shader),
-  _unitPanel(Panel::Type::Units, shader), _shader(shader)
+Control::Control(Game* game,
+                 GLFWwindow* window,
+                 Shader& shader,
+                 Terrain* terrain) :
+  _game(game),
+  _structurePanel(window, Panel::Type::Structures, shader),
+  _unitPanel(window, Panel::Type::Units, shader), _shader(shader)
 {
   std::unique_ptr<AbstractBuilder> hqBuilder =
-    std::make_unique<HqBuilder>(shader, terrain);
+    std::make_unique<HqBuilder>(_game, shader, terrain);
   auto hqPanelItem = std::make_unique<PanelItem>(std::move(hqBuilder));
   _structurePanel.addItem(std::move(hqPanelItem));
 }
@@ -29,7 +33,7 @@ void Control::populateStructurePanel(Buildable* buildable)
   }
 }
 
-void Control::populateUnitPanel(Game& game, Buildable* buildable)
+void Control::populateUnitPanel(Game* game, Buildable* buildable)
 {
   clearUnitPanel();
   UnitBuilders builders = buildable->getUnitBuilders(game);
