@@ -2,7 +2,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "../globals.h"
+#include "Light.h"
 #include "PhongShader.h"
 
 PhongShader::PhongShader(Light* light,

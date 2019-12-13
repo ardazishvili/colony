@@ -1,7 +1,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "../globals.h"
 #include "SkyboxShader.h"
 
 SkyboxShader::SkyboxShader(Light* light,

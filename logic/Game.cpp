@@ -1,7 +1,6 @@
 #include "../imgui/imgui.h"
 
 #include "../engine/Circle.h"
-#include "../globals.h"
 #include "EventManager.h"
 #include "Game.h"
 

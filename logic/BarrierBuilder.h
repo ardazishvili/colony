@@ -7,7 +7,10 @@
 class BarrierBuilder : public AbstractStructureBuilder
 {
 public:
-  BarrierBuilder(Game* game, Shader& shader, Terrain* terrain);
+  BarrierBuilder(Game* game,
+                 EventManager* eventManager,
+                 Shader& shader,
+                 Terrain* terrain);
 
   void create() override;
   MenuTextures getPreviewType() override;

@@ -5,15 +5,17 @@
 #include "TankFactoryBuilder.h"
 
 Control::Control(Game* game,
+                 EventManager* eventManager,
                  GLFWwindow* window,
                  Shader& shader,
                  Terrain* terrain) :
   _game(game),
+  _eventManager(eventManager),
   _structurePanel(window, Panel::Type::Structures, shader),
   _unitPanel(window, Panel::Type::Units, shader), _shader(shader)
 {
   std::unique_ptr<AbstractBuilder> hqBuilder =
-    std::make_unique<HqBuilder>(_game, shader, terrain);
+    std::make_unique<HqBuilder>(_game, _eventManager, shader, terrain);
   auto hqPanelItem = std::make_unique<PanelItem>(std::move(hqBuilder));
   _structurePanel.addItem(std::move(hqPanelItem));
 }

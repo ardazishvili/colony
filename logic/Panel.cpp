@@ -3,7 +3,6 @@
 #include "../imgui/imgui.h"
 
 #include "../engine/ModelLoader.h"
-#include "../globals.h"
 #include "Panel.h"
 
 using namespace std::string_literals;

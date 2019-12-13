@@ -1,4 +1,5 @@
 #ifndef SHADER_H
+#define SHADER_H
 
 #include <GL/glew.h>
 #include <glm/gtc/matrix_transform.hpp>
@@ -49,5 +50,4 @@ private:
   GLuint m_boneLocation[MAX_BONES];
 };
 
-#define SHADER_H
 #endif

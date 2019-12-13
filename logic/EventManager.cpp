@@ -2,7 +2,6 @@
 
 #include <GL/glew.h>
 
-#include "../globals.h"
 #include "EventManager.h"
 #include "Hq.h"
 
@@ -38,7 +37,7 @@ EventManager::EventManager(glm::mat4& view,
   _textureShader(textureShader), _colorShader(colorShader), _terrain(terrain)
 {
   _game->setControl(
-    std::make_unique<Control>(_game, _window, textureShader, _terrain));
+    std::make_unique<Control>(_game, this, _window, textureShader, _terrain));
 }
 
 void EventManager::tick()
@@ -86,6 +85,7 @@ void EventManager::handleKeyPress(GLFWwindow* window,
       if (_structureToBuild == nullptr) {
         _structureToBuildStage = BuildStage::SetAngle;
         auto hq = std::make_shared<Hq>(_game,
+                                       this,
                                        _textureShader,
                                        unProject(_window, _view, _projection),
                                        _terrain);

@@ -1,9 +1,14 @@
 #include "BarrierBuilder.h"
-#include "../globals.h"
 #include "Barrier.h"
+#include "EventManager.h"
+#include "Game.h"
 
-BarrierBuilder::BarrierBuilder(Game* game, Shader& shader, Terrain* terrain) :
-  AbstractStructureBuilder(game), _shader(shader), _terrain(terrain)
+BarrierBuilder::BarrierBuilder(Game* game,
+                               EventManager* eventManager,
+                               Shader& shader,
+                               Terrain* terrain) :
+  AbstractStructureBuilder(game, eventManager),
+  _shader(shader), _terrain(terrain)
 {
 }
 
@@ -11,8 +16,8 @@ void BarrierBuilder::create()
 {
   auto structure = std::make_shared<Barrier>(_shader, glm::vec3(), _terrain);
   _game->addStructure(structure);
-  eventManager->setStructureToBuild(structure);
-  eventManager->setStructureToBuildStage(BuildStage::SetPosition);
+  _eventManager->setStructureToBuild(structure);
+  _eventManager->setStructureToBuildStage(BuildStage::SetPosition);
 }
 
 MenuTextures BarrierBuilder::getPreviewType()

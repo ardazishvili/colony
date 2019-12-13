@@ -10,7 +10,11 @@
 class Control
 {
 public:
-  Control(Game* game, GLFWwindow* window, Shader& shader, Terrain* terrain);
+  Control(Game* game,
+          EventManager* eventManager,
+          GLFWwindow* window,
+          Shader& shader,
+          Terrain* terrain);
   void display();
   void populateUnitPanel(Game* game, Buildable* buildable);
   void populateStructurePanel(Buildable* buildable);
@@ -23,6 +27,7 @@ private:
   void addToStructurePanel(std::unique_ptr<AbstractStructureBuilder> builder);
 
   Game* _game;
+  EventManager* _eventManager;
   Panel _structurePanel;
   Panel _unitPanel;
   Shader& _shader;
