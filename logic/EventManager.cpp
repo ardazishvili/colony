@@ -38,7 +38,8 @@ void EventManager::tick()
   _textureShader.configure();
   if (_selectionActive) {
     _terrain->deselect();
-    _terrain->selectSubTerrainRegion(_selection, TerrainMesh::SELECTION_COLOR);
+    _terrain->selectSubTerrainRegion(_selection,
+                                     SubTerrainMesh::SELECTION_COLOR);
   }
   _game.tick();
 }

@@ -107,6 +107,8 @@ add_executable(colony
     engine/Surface.h
     engine/TerrainMesh.cpp
     engine/TerrainMesh.h
+    engine/SubTerrainMesh.h
+    engine/SubTerrainMesh.cpp
     engine/Vertex.cpp
     engine/Vertex.h
     logic/Barrier.cpp

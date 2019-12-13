@@ -1,8 +1,6 @@
 #ifndef TANK_FACTORY_H
 #define TANK_FACTORY_H
 
-#include <GL/glew.h>
-
 #include "../view/TankFactoryView.h"
 #include "BuildableStructure.h"
 #include "Tank.h"

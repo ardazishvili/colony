@@ -44,7 +44,7 @@ void Terrain::renderSub()
   model = glm::translate(model, _offset * _xyScale);
   _shader.setTransformation("model", glm::value_ptr(model));
   _shader.setBool("animated", false);
-  _mesh.renderSub();
+  _mesh._subTerrainMesh.render();
   glDisable(GL_BLEND);
   glDepthMask(GL_TRUE);
 }
@@ -59,38 +59,28 @@ glm::vec3 Terrain::getRgbColor(float x, float y) const
   return _mesh.getRgbColor(x, y);
 }
 
-/* void Terrain::updateColor(glm::vec2 xy) */
-/* { */
-/*   _mesh.updateColor(xy.x, xy.y); */
-/* } */
-
 void Terrain::updateColor(unsigned int index)
 {
   _mesh.updateColor(index);
 }
 
-std::vector<unsigned int> Terrain::getVertices(glm::vec2 center, float radius)
-{
-  return _mesh.getVertices(center, radius);
-}
-
 void Terrain::selectSubTerrainRegion(RectangleRegion region, glm::vec4 rgba)
 {
-  _mesh.selectSubTerrainRegion(region, rgba);
+  _mesh._subTerrainMesh.selectSubTerrainRegion(region, rgba);
 }
 
 std::shared_ptr<LivingArea> Terrain::addLivingArea(CircularRegion region,
                                                    glm::vec4 rgba)
 {
-  return _mesh.addLivingArea(region, rgba);
+  return _mesh._subTerrainMesh.addLivingArea(region, rgba);
 }
 
 void Terrain::updateLivingArea(std::shared_ptr<LivingArea> area)
 {
-  _mesh.updateLivingArea(area);
+  _mesh._subTerrainMesh.updateLivingArea(area);
 }
 
 void Terrain::deselect()
 {
-  _mesh.deselect();
+  _mesh._subTerrainMesh.deselect();
 }
