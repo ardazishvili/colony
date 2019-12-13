@@ -13,14 +13,14 @@
 #include <assimp/scene.h>
 
 #include "Animation.h"
+#include "Mesh.h"
 #include "Texture.h"
 #include "Vertex.h"
 #define INVALID_MATERIAL 0xFFFFFFFF
 
 using namespace std;
 
-enum class TexturePackType
-{
+enum class TexturePackType {
   PreBuild,
   Initial,
   OnSelection,
@@ -29,11 +29,10 @@ enum class TexturePackType
 };
 
 using Textures = std::vector<std::shared_ptr<Texture>>;
-class ModelMesh
+class ModelMesh : public Mesh
 {
 public:
   ModelMesh();
-  ~ModelMesh();
 
   struct MeshMetadata
   {
@@ -62,11 +61,7 @@ private:
   void initMesh(unsigned int MeshIndex, const aiMesh* paiMesh);
   void loadBones(unsigned int MeshIndex, const aiMesh* pMesh);
   bool initMaterials(const aiScene* pScene, const string& Filename);
-  void deinit();
 
-  GLuint _vao;
-  GLuint _vertexVbo;
-  GLuint _indicesEbo;
   BoneMapping _boneMapping;
   std::vector<MeshMetadata> _meshesData;
   std::vector<Vertex> _vertices;

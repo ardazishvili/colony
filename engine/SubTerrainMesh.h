@@ -4,9 +4,7 @@
 #include <memory>
 #include <vector>
 
-/* #include "ModelMesh.h" */
 #include "Mesh.h"
-/* #include <GL/glew.h> */
 #include <glm/glm.hpp>
 
 struct VertexColor
@@ -41,8 +39,6 @@ using LivingAreas = std::vector<std::shared_ptr<LivingArea>>;
 class SubTerrainMesh : public Mesh
 {
 public:
-  /* SubTerrainMesh(); */
-  /* ~SubTerrainMesh(); */
   void render();
   void init(float bottomLeftX,
             float bottomLeftY,
@@ -61,7 +57,6 @@ public:
   const static glm::vec4 DESELECTION_COLOR;
 
 private:
-  /* void deinit(); */
   void reloadLivingArea(std::shared_ptr<LivingArea> area);
   void selectSubTerrainRegion(CircularRegion region, glm::vec4 rgba);
 
@@ -75,9 +70,6 @@ private:
   unsigned int _latticeHeightSub;
   float _xStepSub;
   float _yStepSub;
-  /* GLuint _vaoSub; */
-  /* GLuint _vertexVboSub; */
-  /* GLuint _indicesEboSub; */
   RectangleRegion _lastSelected{ 0.0f, 0.0f, 0.0f, 0.0f };
   LivingAreas _livingAreas;
 };

@@ -7,19 +7,12 @@
 class SphereMesh : public Mesh
 {
 public:
-  /* SphereMesh(); */
-  /* ~SphereMesh(); */
   void init(float r, unsigned int divisions);
   void render();
 
 private:
-  /* void deinit(); */
-
   std::vector<VertexColor> _v;
   std::vector<unsigned int> _indices;
-  /* GLuint _vao; */
-  /* GLuint _vertexVbo; */
-  /* GLuint _indicesEbo; */
 };
 
 #endif

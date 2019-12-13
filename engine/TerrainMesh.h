@@ -2,14 +2,11 @@
 #define TERRAIN_MESH_H
 
 #include "Mesh.h"
-/* #include "ModelMesh.h" */
 #include "SubTerrainMesh.h"
 
 class TerrainMesh : public Mesh
 {
 public:
-  /* TerrainMesh(); */
-  /* ~TerrainMesh(); */
   void render();
   void initTerrain(float bottomLeftX,
                    float bottomLeftY,
@@ -30,7 +27,6 @@ public:
   const static glm::vec4 DEFAULT_BARRIER_COLOR;
 
 private:
-  /* void deinit(); */
   std::vector<VertexColor> _v;
   std::vector<unsigned int> _indices;
   float _width;
@@ -41,9 +37,6 @@ private:
   float _yStep;
   float _xyScale;
   float _zScale;
-  /* GLuint _vao; */
-  /* GLuint _vertexVbo; */
-  /* GLuint _indicesEbo; */
 };
 
 #endif

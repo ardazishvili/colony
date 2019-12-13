@@ -1,24 +1,5 @@
 #include "PlainMesh.h"
 
-PlainMesh::PlainMesh()
-{
-  _vao = 0;
-  _vertexVbo = 0;
-  _indicesEbo = 0;
-  deinit();
-
-  glGenVertexArrays(1, &_vao);
-  glBindVertexArray(_vao);
-
-  glGenBuffers(1, &_vertexVbo);
-  glGenBuffers(1, &_indicesEbo);
-}
-
-PlainMesh::~PlainMesh()
-{
-  deinit();
-}
-
 void PlainMesh::initSurface(float bottomLeftX,
                             float bottomLeftY,
                             float topRightX,
@@ -78,7 +59,7 @@ void PlainMesh::initSurface(float bottomLeftX,
     printf("%d - loaded texture '%s'\n", 0, texturePath.c_str());
   }
 
-  glBindBuffer(GL_ARRAY_BUFFER, _vertexVbo);
+  glBindBuffer(GL_ARRAY_BUFFER, _vbo);
   glBufferData(GL_ARRAY_BUFFER,
                sizeof(Vertex) * _vertices.size(),
                &_vertices[0],
@@ -106,26 +87,13 @@ void PlainMesh::initSurface(float bottomLeftX,
   glVertexAttribPointer(
     4, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Weights));
 
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indicesEbo);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                sizeof(_indices[0]) * _indices.size(),
                &_indices[0],
                GL_STATIC_DRAW);
 
   glBindVertexArray(0);
-}
-
-void PlainMesh::deinit()
-{
-  if (_vertexVbo != 0) {
-    glDeleteBuffers(1, &_vertexVbo);
-    glDeleteBuffers(1, &_indicesEbo);
-  }
-
-  if (_vao != 0) {
-    glDeleteVertexArrays(1, &_vao);
-    _vao = 0;
-  }
 }
 
 void PlainMesh::render()

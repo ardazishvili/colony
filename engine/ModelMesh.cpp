@@ -34,7 +34,7 @@ bool ModelMesh::initModel(const aiScene* scene, const string& Filename)
   _animation.setScene(scene);
   _hasAnimation = scene->HasAnimations();
 
-  glBindBuffer(GL_ARRAY_BUFFER, _vertexVbo);
+  glBindBuffer(GL_ARRAY_BUFFER, _vbo);
   glBufferData(GL_ARRAY_BUFFER,
                sizeof(Vertex) * _vertices.size(),
                &_vertices[0],
@@ -62,7 +62,7 @@ bool ModelMesh::initModel(const aiScene* scene, const string& Filename)
   glVertexAttribPointer(
     4, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Weights));
 
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indicesEbo);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                sizeof(_indices[0]) * _indices.size(),
                &_indices[0],
@@ -173,19 +173,6 @@ bool ModelMesh::initMaterials(const aiScene* pScene, const string& Filename)
   return res;
 }
 
-void ModelMesh::deinit()
-{
-  if (_vertexVbo != 0) {
-    glDeleteBuffers(1, &_vertexVbo);
-    glDeleteBuffers(1, &_indicesEbo);
-  }
-
-  if (_vao != 0) {
-    glDeleteVertexArrays(1, &_vao);
-    _vao = 0;
-  }
-}
-
 void ModelMesh::render()
 {
   glBindVertexArray(_vao);
@@ -222,22 +209,7 @@ void ModelMesh::render()
 
 ModelMesh::ModelMesh() : _animation(_bonesData, _boneMapping, _numBones)
 {
-  _vao = 0;
-  _vertexVbo = 0;
-  _indicesEbo = 0;
   _numBones = 0;
-  deinit();
-
-  glGenVertexArrays(1, &_vao);
-  glBindVertexArray(_vao);
-
-  glGenBuffers(1, &_vertexVbo);
-  glGenBuffers(1, &_indicesEbo);
-}
-
-ModelMesh::~ModelMesh()
-{
-  deinit();
 }
 
 void ModelMesh::loadTexture(const std::string& filename, TexturePackType type)

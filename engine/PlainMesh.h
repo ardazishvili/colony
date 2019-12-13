@@ -1,13 +1,14 @@
 #ifndef PLAIN_MESH_H
 #define PLAIN_MESH_H
 
+#include <string>
+
+#include "Mesh.h"
 #include "ModelMesh.h"
 
-class PlainMesh
+class PlainMesh : public Mesh
 {
 public:
-  PlainMesh();
-  ~PlainMesh();
   void render();
   void initSurface(
     float bottomLeftX,
@@ -25,9 +26,6 @@ private:
   Textures _initialTextures;
   std::vector<Vertex> _vertices;
   std::vector<unsigned int> _indices;
-  GLuint _vao;
-  GLuint _vertexVbo;
-  GLuint _indicesEbo;
 };
 
 #endif
