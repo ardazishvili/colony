@@ -32,13 +32,15 @@ using LivingAreas = std::vector<std::shared_ptr<LivingArea>>;
 class SubTerrainMesh : public TerrainMesh
 {
 public:
-  void init(float bottomLeftX,
-            float bottomLeftY,
-            float topRightX,
-            float topRightY,
-            int divisions,
-            float xyScale,
-            float zScale) override;
+  void calculateHeights(unsigned int width,
+                        float bottomLeftX,
+                        float bottomLeftY,
+                        float& min,
+                        float& max) override;
+  void calculateColors(float min,
+                       float max,
+                       unsigned int width,
+                       unsigned int augmentedWidth) override;
   void selectSubTerrainRegion(RectangleRegion region, glm::vec4 rgba);
   std::shared_ptr<LivingArea> addLivingArea(CircularRegion region,
                                             glm::vec4 rgba);

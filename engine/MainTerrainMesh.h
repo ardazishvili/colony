@@ -8,13 +8,15 @@ class MainTerrainMesh : public TerrainMesh
 {
 public:
   void render() override;
-  void init(float bottomLeftX,
-            float bottomLeftY,
-            float topRightX,
-            float topRightY,
-            int divisions,
-            float xyScale,
-            float zScale) override;
+  void calculateHeights(unsigned int width,
+                        float bottomLeftX,
+                        float bottomLeftY,
+                        float& min,
+                        float& max) override;
+  void calculateColors(float min,
+                       float max,
+                       unsigned int width,
+                       unsigned int augmentedWidth) override;
   float getZ(float x, float y) const;
   glm::vec3 getRgbColor(float x, float y) const;
   static float plantsColor[3];

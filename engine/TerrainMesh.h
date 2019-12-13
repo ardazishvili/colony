@@ -18,13 +18,22 @@ class TerrainMesh : public Mesh
 {
 public:
   virtual void render();
-  virtual void init(float bottomLeftX,
-                    float bottomLeftY,
-                    float topRightX,
-                    float topRightY,
-                    int divisions,
-                    float xyScale,
-                    float zScale) = 0;
+  void init(float bottomLeftX,
+            float bottomLeftY,
+            float topRightX,
+            float topRightY,
+            int divisions,
+            float xyScale,
+            float zScale);
+  virtual void calculateHeights(unsigned int width,
+                                float bottomLeftX,
+                                float bottomLeftY,
+                                float& min,
+                                float& max) = 0;
+  virtual void calculateColors(float min,
+                               float max,
+                               unsigned int width,
+                               unsigned int augmentedWidth) = 0;
 
 protected:
   std::vector<VertexColor> _v;
