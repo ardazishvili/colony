@@ -11,8 +11,8 @@ using Points = std::vector<glm::vec3>;
 class Beam
 {
 public:
-  Beam(Shader& shader, unsigned int numPoints, float height);
-  void init(unsigned int numPoints, float height);
+  Beam(Shader& shader, glm::vec3 begin, glm::vec3 end);
+  void init(glm::vec3 begin, glm::vec3 end);
   void render();
 
 private:
@@ -20,9 +20,12 @@ private:
   unsigned int _vao;
   unsigned int _vbo;
   Points _v;
-  float _rotateSpeed{ 8.0f };
-  unsigned int _fragmentsNum{ 3 };
-  float _r{ 0.01 };
+  float _rotateSpeed{ 1.0f };
+  unsigned int _fragmentsNum{ 30 };
+  float _r{ 0.9 };
+  unsigned int _numLines{ 5 };
+  float _oxAngle;
+  float _oyAngle;
 };
 
 #endif

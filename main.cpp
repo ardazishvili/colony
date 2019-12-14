@@ -150,7 +150,8 @@ int main(int argc, char** argv)
     projection,
     "/home/roman/repos/colony/shaders/vertex_skybox.vs",
     "/home/roman/repos/colony/shaders/fragment_skybox.fs");
-  LinesShader linesShader(light.get(),
+  LinesShader linesShader(window,
+                          light.get(),
                           camera,
                           view,
                           projection,
@@ -239,19 +240,22 @@ int main(int argc, char** argv)
     projection = glm::perspective(
       glm::radians(camera.fov()), screenWidth / screenHeight, 0.01f, 1000.0f);
 
-    auto beam = Beam(linesShader, 5, 1.0f);
-    beam.render();
+    /* auto beam = Beam(linesShader, glm::vec3(0), glm::vec3(1.0f, 1.0f, 8.0f));
+     */
 
     terrain.render();
 
-    eventManager->tick();
+    /* eventManager->tick(); */
 
     /* skybox.render(); */
 
     /* auto s = Sphere(colorShader, glm::vec3(0.0f, 0.0f, 5.0f), 1.0f, 50); */
     /* s.render(); */
 
-    terrain.renderSub();
+    auto beam = Beam(linesShader, glm::vec3(0), glm::vec3(0.0f, 0.0f, 5.1f));
+    beam.render();
+
+    /* terrain.renderSub(); */
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
