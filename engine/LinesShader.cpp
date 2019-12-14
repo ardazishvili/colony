@@ -1,3 +1,7 @@
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #include "LinesShader.h"
 
 LinesShader::LinesShader(Light* light,
@@ -10,20 +14,8 @@ LinesShader::LinesShader(Light* light,
 {
 }
 
-void LinesShader::configureRender()
+void LinesShader::configure()
 {
-  float verts[] = { -0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f,
-                    -0.5f, 0.5f,  0.0f, 0.5f, 0.5f,  0.0f };
-  glGenVertexArrays(1, &_vao);
-  glBindVertexArray(_vao);
-  glGenBuffers(1, &_vbo);
-  glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-  glEnableVertexAttribArray(0);
-
-  glUseProgram(_id);
-
-  glBindVertexArray(_vao);
-  glDrawArrays(GL_LINES, 0, 4);
+  setTransformation("view", glm::value_ptr(_view));
+  setTransformation("projection", glm::value_ptr(_projection));
 }

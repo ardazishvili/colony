@@ -40,13 +40,6 @@ vec3 calculateLighting() {
   float diff = max(dot(norm, lightDirection), 0.0);
   vec3 diffuse = diff * light.diffuse * c;
 
-  // vec3 viewDirection = normalize(viewPos - fragPos);
-  // vec3 reflectDirection = reflect(-lightDirection, norm);
-  // float spec = pow(max(dot(viewDirection, reflectDirection), 0.0), 
-	// 	   material.shininess);
-  // vec3 specular = spec * light.specular * c;
-
-  // return ambient + diffuse + specular;
   return ambient + diffuse;
 }
 

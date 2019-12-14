@@ -13,12 +13,9 @@ public:
               glm::mat4& projection,
               const GLchar* vertexPath,
               const GLchar* fragmentPath);
-  void configureRender();
-  void configure() override{};
+  void configure() override;
 
 private:
-  unsigned int _vao;
-  unsigned int _vbo;
 };
 
 #endif

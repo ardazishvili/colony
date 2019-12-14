@@ -3,6 +3,8 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
 project(Colony)
 
 add_executable(colony
+  engine/Beam.h
+  engine/Beam.cpp
   engine/Mesh.h
   engine/Mesh.cpp
   engine/MainTerrainMesh.h

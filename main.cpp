@@ -11,6 +11,7 @@
 #include <GL/glew.h> // Initialize with glewInit()
 #include <GLFW/glfw3.h>
 
+#include "engine/Beam.h"
 #include "engine/Light.h"
 #include "engine/LinesShader.h"
 #include "engine/PhongShader.h"
@@ -238,7 +239,8 @@ int main(int argc, char** argv)
     projection = glm::perspective(
       glm::radians(camera.fov()), screenWidth / screenHeight, 0.01f, 1000.0f);
 
-    /* linesShader.configureRender(); */
+    auto beam = Beam(linesShader, 5, 1.0f);
+    beam.render();
 
     terrain.render();
 
@@ -246,8 +248,8 @@ int main(int argc, char** argv)
 
     /* skybox.render(); */
 
-    auto s = Sphere(colorShader, glm::vec3(0.0f, 0.0f, 5.0f), 1.0f, 50);
-    s.render();
+    /* auto s = Sphere(colorShader, glm::vec3(0.0f, 0.0f, 5.0f), 1.0f, 50); */
+    /* s.render(); */
 
     terrain.renderSub();
 
