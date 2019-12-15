@@ -10,8 +10,7 @@ class LinesShader : public Shader
 {
 
 public:
-  LinesShader(GLFWwindow* window,
-              Light* light,
+  LinesShader(Light* light,
               Camera& camera,
               glm::mat4& view,
               glm::mat4& projection,

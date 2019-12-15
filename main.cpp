@@ -150,8 +150,7 @@ int main(int argc, char** argv)
     projection,
     "/home/roman/repos/colony/shaders/vertex_skybox.vs",
     "/home/roman/repos/colony/shaders/fragment_skybox.fs");
-  LinesShader linesShader(window,
-                          light.get(),
+  LinesShader linesShader(light.get(),
                           camera,
                           view,
                           projection,
