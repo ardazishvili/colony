@@ -239,22 +239,27 @@ int main(int argc, char** argv)
     projection = glm::perspective(
       glm::radians(camera.fov()), screenWidth / screenHeight, 0.01f, 1000.0f);
 
-    /* auto beam = Beam(linesShader, glm::vec3(0), glm::vec3(1.0f, 1.0f, 8.0f));
-     */
-
     terrain.render();
 
-    /* eventManager->tick(); */
+    eventManager->tick();
 
-    /* skybox.render(); */
+    skybox.render();
 
-    /* auto s = Sphere(colorShader, glm::vec3(0.0f, 0.0f, 5.0f), 1.0f, 50); */
-    /* s.render(); */
+    auto s = Sphere(colorShader, glm::vec3(0.0f, 0.0f, 5.0f), 1.0f, 50);
+    s.render();
 
-    auto beam = Beam(linesShader, glm::vec3(0), glm::vec3(0.0f, 0.0f, 5.1f));
+    auto beam = Beam(linesShader, glm::vec3(0.0f, 0.0f, 8.0f), glm::vec3(0));
     beam.render();
 
-    /* terrain.renderSub(); */
+    auto beam2 =
+      Beam(linesShader, glm::vec3(1, 1, 0), glm::vec3(2.0f, 2.0f, 8.0f));
+    beam2.render();
+
+    auto beam3 =
+      Beam(linesShader, glm::vec3(5.0f, 5.0f, 8.0f), glm::vec3(4, 4, 0));
+    beam3.render();
+
+    terrain.renderSub();
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

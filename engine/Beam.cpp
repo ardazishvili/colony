@@ -16,6 +16,11 @@ Beam::Beam(Shader& shader, glm::vec3 begin, glm::vec3 end) : _shader(shader)
   glBindVertexArray(_vao);
   glGenBuffers(1, &_vbo);
 
+  _offset = begin;
+  _offset.z = 0;
+  if (begin.z > end.z) {
+    _reverse = true;
+  }
   init(begin, end);
 }
 
@@ -32,11 +37,10 @@ void Beam::render()
   _shader.use();
   _shader.configure();
   glEnable(GL_BLEND);
-  glLineWidth(3.0f);
   glDepthMask(GL_FALSE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   auto model = glm::mat4(1.0f);
-  /* model = glm::translate(model, _offset * _xyScale); */
+  model = glm::translate(model, _offset);
   float angle = fmod(glfwGetTime(), 2 * M_PI) * _rotateSpeed;
   model = glm::rotate(model, _oxAngle, glm::vec3(1.0f, 0.0f, 0.0f));
   model = glm::rotate(model, _oyAngle, glm::vec3(0.0f, 1.0f, 0.0f));
@@ -61,25 +65,27 @@ void Beam::init(glm::vec3 begin, glm::vec3 end)
 {
   auto deltaAngle = M_PI * 2 / _numLines;
   auto angleStep = M_PI * 2 / _fragmentsNum;
+  auto rStep = _r / _fragmentsNum;
   _oyAngle = M_PI / 2 - ::atan((end.z - begin.z) / (end.x - begin.x));
   _oxAngle = -(M_PI / 2 - ::atan((end.z - begin.z) / (end.y - begin.y)));
   auto height = ::sqrt(::pow(begin.x - end.x, 2) + ::pow(begin.y - end.y, 2) +
                        ::pow(begin.z - end.z, 2));
-  /* std::cout << " height= " << height << std::endl; */
   auto zStep = height / _fragmentsNum;
   for (unsigned int i = 0; i < _numLines; ++i) {
+    float r = !_reverse ? _r : 0;
     for (unsigned int j = 0; j < _fragmentsNum; ++j) {
       auto p1 = glm::vec3();
-      p1.x = _r * ::sin(angleStep * j + deltaAngle * i);
-      p1.y = _r * ::cos(angleStep * j + deltaAngle * i);
+      p1.x = r * ::sin(angleStep * j + deltaAngle * i);
+      p1.y = r * ::cos(angleStep * j + deltaAngle * i);
       p1.z = j * zStep;
       _v.push_back(p1);
 
+      r -= rStep;
+
       auto p2 = glm::vec3();
-      p2.x = _r * ::sin(angleStep * (j + 1) + deltaAngle * i);
-      p2.y = _r * ::cos(angleStep * (j + 1) + deltaAngle * i);
+      p2.x = r * ::sin(angleStep * (j + 1) + deltaAngle * i);
+      p2.y = r * ::cos(angleStep * (j + 1) + deltaAngle * i);
       p2.z = (j + 1) * zStep;
-      /* std::cout << "p2.z= " << p2.z << std::endl; */
       _v.push_back(p2);
     }
   }

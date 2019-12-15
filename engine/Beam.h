@@ -21,11 +21,13 @@ private:
   unsigned int _vbo;
   Points _v;
   float _rotateSpeed{ 1.0f };
-  unsigned int _fragmentsNum{ 30 };
+  unsigned int _fragmentsNum{ 10 };
   float _r{ 0.9 };
   unsigned int _numLines{ 5 };
   float _oxAngle;
   float _oyAngle;
+  glm::vec3 _offset;
+  bool _reverse{ false };
 };
 
 #endif
