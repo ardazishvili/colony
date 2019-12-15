@@ -6,6 +6,8 @@
 
 float BarrierView::BARRIER_HEALTH_BAR_WIDTH = 1.2f;
 float BarrierView::BARRIER_HEALTH_BAR_HEIGHT = 0.15f;
+const float BarrierView::SHROUD_UP_SPEED = 0.1;
+const float BarrierView::SHROUD_HEIGHT = 8.0;
 
 BarrierView::BarrierView(Shader& shader, glm::vec3 position, Terrain* terrain) :
   StructureView(
@@ -20,6 +22,9 @@ BarrierView::BarrierView(Shader& shader, glm::vec3 position, Terrain* terrain) :
   _model->setActiveTexturesPack(TexturePackType::PreBuild);
   _healthBar.setOffsetZ(1.3f);
   _healthBar.setTexture("/home/roman/repos/colony/assets/red.png");
+
+  _shroudModel = modelLoader->models()[Models::Shroud];
+  _shroudModel->setActiveTexturesPack(TexturePackType::Initial);
 }
 
 void BarrierView::draw()
@@ -47,11 +52,30 @@ void BarrierView::draw()
     _model->render();
     glDisable(GL_BLEND);
     glDepthMask(GL_TRUE);
+
     showHealthBar();
   }
+}
+
+void BarrierView::drawShroud()
+{
+  _shader.use();
+  _shader.configure();
+  auto model = glm::mat4(1.0f);
+  auto p = _position;
+  _shroudZ = ::min(8.0f, _shroudZ + SHROUD_UP_SPEED);
+  model = glm::translate(model, glm::vec3(p.x, p.y, _shroudZ));
+  _shader.setTransformation("model", glm::value_ptr(model));
+  _shroudModel->render();
 }
 
 float BarrierView::radius() const
 {
   return _scaleFactor;
 }
+
+bool BarrierView::shroudSetUp() const
+{
+  return (_shroudZ == SHROUD_HEIGHT);
+}
+

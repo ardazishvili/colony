@@ -60,6 +60,16 @@ void ModelLoader::load()
                             TexturePackType::Destroyed);
   _models.emplace(Models::Barrier, std::move(barrierModel));
 
+  auto shroudModel = std::make_unique<Model>(_shader);
+  shroudModel->load("/home/roman/repos/colony/assets/shroud.dae");
+  shroudModel->loadTexture("/home/roman/repos/colony/assets/blue.png",
+                           TexturePackType::OnSelection);
+  shroudModel->loadTexture("/home/roman/repos/colony/assets/red.png",
+                           TexturePackType::UnderFire);
+  shroudModel->loadTexture("/home/roman/repos/colony/assets/black.png",
+                           TexturePackType::Destroyed);
+  _models.emplace(Models::Shroud, std::move(shroudModel));
+
   auto tfTexture = std::make_shared<Texture>(
     GL_TEXTURE_2D, "/home/roman/repos/colony/assets/Garage.png");
   tfTexture->load();

@@ -15,6 +15,7 @@ bool BuildableStructure::isUnderCursor(const glm::vec3& mousePoint)
 
 void BuildableStructure::commit()
 {
+  _stage = BuildStage::Done;
   deselect();
 }
 

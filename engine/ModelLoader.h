@@ -6,7 +6,7 @@
 
 #include "Model.h"
 
-enum class Models { Shell, Tank, TankFactory, Hq, Plant, Barrier };
+enum class Models { Shell, Tank, TankFactory, Hq, Plant, Barrier, Shroud };
 
 enum class MenuTextures {
   Hq,

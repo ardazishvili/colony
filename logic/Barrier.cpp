@@ -23,7 +23,23 @@ void Barrier::render()
       _clock.reload();
     }
   }
-  Buildable::render();
+  if (_stage == BuildStage::Done) {
+    // TODO downcast!
+    BarrierView* v = dynamic_cast<BarrierView*>(_view.get());
+    v->drawShroud();
+    if (v->shroudSetUp()) {
+      Buildable::render();
+      if (_livingArea != nullptr) {
+        if (_clock.elapsed() >= _bioUpdateTime) {
+          std::cout << "_plants.size()= " << _plants.size() << std::endl;
+          _terrain->updateLivingArea(_livingArea);
+          _clock.reload();
+        }
+      }
+    }
+  } else {
+    Buildable::render();
+  }
 }
 
 UnitBuilders Barrier::getUnitBuilders(Game* game)

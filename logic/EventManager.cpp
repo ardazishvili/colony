@@ -75,7 +75,7 @@ void EventManager::handleKeyPress(GLFWwindow* window,
         _game->addStructure(tankFactory);
         _structureToBuild = tankFactory;
       } else {
-        _structureToBuildStage = BuildStage::Done;
+        /* _structureToBuildStage = BuildStage::Done; */
         _structureToBuild->commit();
         _structureToBuild = nullptr;
       }
@@ -92,7 +92,7 @@ void EventManager::handleKeyPress(GLFWwindow* window,
         _game->addStructure(hq);
         _structureToBuild = hq;
       } else {
-        _structureToBuildStage = BuildStage::Done;
+        /* _structureToBuildStage = BuildStage::Done; */
         _structureToBuild->commit();
         _structureToBuild = nullptr;
       }
@@ -111,7 +111,7 @@ void EventManager::handleKeyPress(GLFWwindow* window,
         _game->addStructure(b);
         _structureToBuild = b;
       } else {
-        _structureToBuildStage = BuildStage::Done;
+        /* _structureToBuildStage = BuildStage::Done; */
         _structureToBuild->commit();
         _structureToBuild = nullptr;
       }
@@ -247,7 +247,7 @@ void EventManager::handleMousePressedRight()
   } else if (_structureToBuild &&
              (_structureToBuildStage == BuildStage::SetAngle)) {
     std::cout << "setting angle" << std::endl;
-    _structureToBuildStage = BuildStage::Done;
+    /* _structureToBuildStage = BuildStage::Done; */
     _structureToBuild->commit();
     _structureToBuild = nullptr;
   } else if (!_tanksSelected.empty()) {
