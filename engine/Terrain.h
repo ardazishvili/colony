@@ -24,12 +24,14 @@ public:
                                             glm::vec4 rgba);
   void updateLivingArea(std::shared_ptr<LivingArea> area);
   void deselect();
+  float getMaxXy() const;
 
 private:
   Shader& _shader;
   MainTerrainMesh _mainMesh;
   SubTerrainMesh _subMesh;
   glm::vec3 _offset{ glm::vec3(0.0f) };
+  float _maxXy;
   float _xyScale;
   float _zScale;
 };

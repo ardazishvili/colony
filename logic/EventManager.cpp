@@ -184,8 +184,9 @@ void EventManager::handleMouseMove(GLFWwindow* window, double xpos, double ypos)
   } else if (_structureToBuild &&
              (_structureToBuildStage == BuildStage::SetPosition)) {
     auto position = unProject(_window, _view, _projection);
-    if (::abs(position.x) > 10.0f || ::abs(position.y) > 10.0f) {
-      position = glm::vec3(10.0f, 10.0f, 0.0f);
+    auto maxXy = _terrain->getMaxXy();
+    if (::abs(position.x) > maxXy || ::abs(position.y) > maxXy) {
+      position = glm::vec3(maxXy, maxXy, 0.0f);
     }
     _structureToBuild->setPosition(
       _terrain->getXYZ(glm::vec2(position.x, position.y)));

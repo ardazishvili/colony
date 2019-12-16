@@ -29,6 +29,7 @@ Terrain::Terrain(Shader& shader,
                 zScale);
   _offset.x = bottomLeftX;
   _offset.y = bottomLeftY;
+  _maxXy = std::max(topRightX, bottomLeftY) * xyScale;
 }
 
 void Terrain::render()
@@ -88,4 +89,9 @@ void Terrain::updateLivingArea(std::shared_ptr<LivingArea> area)
 void Terrain::deselect()
 {
   _subMesh.deselect();
+}
+
+float Terrain::getMaxXy() const
+{
+  return _maxXy;
 }
