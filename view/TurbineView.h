@@ -12,11 +12,13 @@ public:
               glm::vec3 position,
               glm::vec3 shroudPosition);
   void draw() override;
+  void initBeam();
 
 private:
   Shader& _linesShader;
   Timer _timer;
-  Beam _beam;
+  std::unique_ptr<Beam> _beam;
+  glm::vec3 _shroudPos;
   static std::chrono::milliseconds TURBINE_CYCLE;
   static float TURBINE_HEALTH_BAR_WIDTH;
   static float TURBINE_HEALTH_BAR_HEIGHT;

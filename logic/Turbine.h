@@ -15,6 +15,7 @@ public:
           glm::vec3 position);
   UnitBuilders getUnitBuilders(Game* game) override;
   StructureBuilders getStructureBuilders() override;
+  void commit() override;
 
 private:
   Game* _game;

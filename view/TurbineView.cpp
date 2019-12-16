@@ -22,25 +22,8 @@ TurbineView::TurbineView(Shader& textureShader,
     0.75,
     { -0.3, 0, TURBINE_HEALTH_BAR_WIDTH, TURBINE_HEALTH_BAR_HEIGHT },
     TexturePackType::PreBuild),
-  _linesShader(linesShader),
-  _beam(linesShader,
-        glm::vec3(
-          p.x,
-          p.y,
-          p.z + TURBINE_MODEL_HEIGHT * VIEW_SCALE * TURBINE_SCALE_FACTOR - 0.1),
-        glm::vec3(sp.x, sp.y, sp.z),
-        0.06f,
-        10)
+  _linesShader(linesShader), _shroudPos(sp)
 {
-  std::cout << "sp.x= " << sp.x << std::endl;
-  std::cout << "sp.y= " << sp.y << std::endl;
-  std::cout << "sp.z= " << sp.z << std::endl;
-  std::cout << "p.x= " << p.x << std::endl;
-  std::cout << "p.y= " << p.y << std::endl;
-  std::cout << "p.z= "
-            << p.z + TURBINE_MODEL_HEIGHT * VIEW_SCALE * TURBINE_SCALE_FACTOR -
-                 0.1
-            << std::endl;
   _model = modelLoader->models()[Models::Turbine];
   _model->setActiveTexturesPack(TexturePackType::PreBuild);
   _healthBar.setOffsetZ(1.3f);
@@ -72,5 +55,21 @@ void TurbineView::draw()
   _model->setActiveTexturesPack(_texturesType);
   _model->render();
   showHealthBar();
-  _beam.render();
+  if (_beam) {
+
+    _beam->render();
+  }
+}
+
+void TurbineView::initBeam()
+{
+  _beam = std::make_unique<Beam>(
+    _linesShader,
+    glm::vec3(_position.x,
+              _position.y,
+              _position.z +
+                TURBINE_MODEL_HEIGHT * VIEW_SCALE * TURBINE_SCALE_FACTOR - 0.1),
+    glm::vec3(_shroudPos.x, _shroudPos.y, _shroudPos.z),
+    0.06f,
+    10);
 }

@@ -241,11 +241,6 @@ int main(int argc, char** argv)
       glm::radians(camera.fov()), screenWidth / screenHeight, 0.01f, 1000.0f);
 
     terrain.render();
-    /* auto beam = Beam(linesShader, */
-    /*                  glm::vec3(10.2104, 8.57479, 8), */
-    /*                  glm::vec3(10.2104, 8.57479, 1.00884)); */
-
-    /* beam.render(); */
 
     eventManager->tick();
 

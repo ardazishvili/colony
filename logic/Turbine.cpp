@@ -30,3 +30,11 @@ StructureBuilders Turbine::getStructureBuilders()
 {
   return StructureBuilders();
 }
+
+void Turbine::commit()
+{
+  BuildableStructure::commit();
+  // TODO downcast!
+  TurbineView* v = dynamic_cast<TurbineView*>(_view.get());
+  v->initBeam();
+}
