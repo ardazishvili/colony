@@ -70,11 +70,22 @@ void ModelLoader::load()
                            TexturePackType::Destroyed);
   _models.emplace(Models::Shroud, std::move(shroudModel));
 
+  auto turbineModel = std::make_unique<Model>(_shader);
+  turbineModel->load("/home/roman/repos/colony/assets/turbine.dae");
+  turbineModel->loadTexture("/home/roman/repos/colony/assets/grey.png",
+                            TexturePackType::PreBuild);
+  turbineModel->loadTexture("/home/roman/repos/colony/assets/blue.png",
+                            TexturePackType::OnSelection);
+  turbineModel->loadTexture("/home/roman/repos/colony/assets/red.png",
+                            TexturePackType::UnderFire);
+  turbineModel->loadTexture("/home/roman/repos/colony/assets/black.png",
+                            TexturePackType::Destroyed);
+  _models.emplace(Models::Turbine, std::move(turbineModel));
+
   auto tfTexture = std::make_shared<Texture>(
     GL_TEXTURE_2D, "/home/roman/repos/colony/assets/Garage.png");
   tfTexture->load();
   _menuTextures.emplace(MenuTextures::TankFactory, std::move(tfTexture));
-
   auto hqTexture = std::make_shared<Texture>(
     GL_TEXTURE_2D, "/home/roman/repos/colony/assets/Hq.png");
   hqTexture->load();
@@ -101,6 +112,11 @@ void ModelLoader::load()
     GL_TEXTURE_2D, "/home/roman/repos/colony/assets/Barrier.png");
   barrierTexture->load();
   _menuTextures.emplace(MenuTextures::Barrier, std::move(barrierTexture));
+
+  auto turbineTexture = std::make_shared<Texture>(
+    GL_TEXTURE_2D, "/home/roman/repos/colony/assets/Turbine.png");
+  turbineTexture->load();
+  _menuTextures.emplace(MenuTextures::Turbine, std::move(turbineTexture));
 }
 
 ModelsMapping ModelLoader::models()

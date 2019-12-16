@@ -11,6 +11,12 @@ add_executable(colony
   engine/MainTerrainMesh.cpp
   logic/EnergyStructure.h
   logic/EnergyStructure.cpp
+  logic/Turbine.h
+  logic/Turbine.cpp
+  logic/TurbineBuilder.h
+  logic/TurbineBuilder.cpp
+  view/TurbineView.h
+  view/TurbineView.cpp
 		Timer.cpp
 		Timer.h
     logic/BarrierBuilder.h

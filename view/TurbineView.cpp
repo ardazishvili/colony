@@ -1,26 +1,31 @@
-#include "HqView.h"
+#include "TurbineView.h"
 #include "../globals.h"
 
-float HqView::HQ_HEALTH_BAR_WIDTH = 1.2f;
-float HqView::HQ_HEALTH_BAR_HEIGHT = 0.15f;
+float TurbineView::TURBINE_HEALTH_BAR_WIDTH = 1.2f;
+float TurbineView::TURBINE_HEALTH_BAR_HEIGHT = 0.15f;
 
-HqView::HqView(Shader& shader, glm::vec3 position) :
-  StructureView(shader,
-                position,
-                0.75,
-                { -0.3, 0, HQ_HEALTH_BAR_WIDTH, HQ_HEALTH_BAR_HEIGHT },
-                TexturePackType::PreBuild)
+TurbineView::TurbineView(Shader& textureShader,
+                         Shader& linesShader,
+                         glm::vec3 position) :
+  StructureView(
+    textureShader,
+    position,
+    0.75,
+    { -0.3, 0, TURBINE_HEALTH_BAR_WIDTH, TURBINE_HEALTH_BAR_HEIGHT },
+    TexturePackType::PreBuild),
+  _linesShader(linesShader)
 {
-  _model = modelLoader->models()[Models::Hq];
+  _model = modelLoader->models()[Models::Turbine];
   _model->setActiveTexturesPack(TexturePackType::PreBuild);
   _healthBar.setOffsetZ(1.3f);
   _healthBar.setTexture("/home/roman/repos/colony/assets/red.png");
 }
 
-void HqView::draw()
+void TurbineView::draw()
 {
   _shader.use();
   _shader.configure();
+  /* _shader.setBool("animated", true); */
   _shader.setBool("animated", false);
   auto model = glm::mat4(1.0f);
   model = glm::translate(model, _position);
@@ -28,7 +33,6 @@ void HqView::draw()
   model = glm::scale(model, glm::vec3(VIEW_SCALE));
   _shader.setTransformation("model", glm::value_ptr(model));
   _model->setActiveTexturesPack(_texturesType);
-  _shader.use();
   _model->render();
   showHealthBar();
 }
