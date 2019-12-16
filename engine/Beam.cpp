@@ -37,6 +37,10 @@ void Beam::render()
   auto model = glm::mat4(1.0f);
   model = glm::translate(model, _offset);
   float angle = fmod(glfwGetTime(), 2 * M_PI) * _rotateSpeed;
+  std::cout << " _oxAngle= " << glm::degrees(_oxAngle) << std::endl;
+  std::cout << " _oyAngle= " << glm::degrees(_oyAngle) << std::endl;
+  /* _oxAngle = glm::radians(45.0f); */
+  /* _oyAngle = glm::radians(-45.0f); */
   model = glm::rotate(model, _oxAngle, glm::vec3(1.0f, 0.0f, 0.0f));
   model = glm::rotate(model, _oyAngle, glm::vec3(0.0f, 1.0f, 0.0f));
   model = glm::rotate(model, angle, glm::vec3(0.0f, 0.0f, 1.0f));
@@ -52,8 +56,13 @@ void Beam::init(glm::vec3 begin, glm::vec3 end)
   auto deltaAngle = M_PI * 2 / _numLines;
   auto angleStep = M_PI * 2 / _fragmentsNum;
   auto rStep = _r / _fragmentsNum;
-  _oyAngle = M_PI / 2 - ::atan((end.z - begin.z) / (end.x - begin.x));
-  _oxAngle = -(M_PI / 2 - ::atan((end.z - begin.z) / (end.y - begin.y)));
+  auto oxDev = ::atan((end.z - begin.z) / (end.x - begin.x));
+  auto oyDev = ::atan((end.z - begin.z) / (end.y - begin.y));
+  std::cout << " oxDev= " << glm::degrees(oxDev) << std::endl;
+  std::cout << " oyDev= " << glm::degrees(oyDev) << std::endl;
+
+  _oyAngle = (M_PI / 2 - ::abs(oxDev)) * sgn(oxDev);
+  _oxAngle = -(M_PI / 2 - ::abs(oyDev)) * sgn(oyDev);
   auto height = ::sqrt(::pow(begin.x - end.x, 2) + ::pow(begin.y - end.y, 2) +
                        ::pow(begin.z - end.z, 2));
   auto zStep = height / _fragmentsNum;
