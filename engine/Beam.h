@@ -28,7 +28,7 @@ private:
   unsigned int _fragmentsNum{ 10 };
   float _r;
   unsigned int _numLines;
-  float _oxAngle;
+  float _ozAngle;
   float _oyAngle;
   glm::vec3 _offset;
   bool _reverse{ false };
