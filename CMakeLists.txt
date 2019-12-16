@@ -3,6 +3,10 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
 project(Colony)
 
 add_executable(colony
+  misc/Logger.h
+  misc/Logger.cpp
+  misc/Log.h
+  misc/Log.cpp
   engine/Beam.h
   engine/Beam.cpp
   engine/Mesh.h

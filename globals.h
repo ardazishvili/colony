@@ -2,7 +2,9 @@
 #define GLOBALS_H
 
 #include "engine/ModelLoader.h"
+#include "misc/Logger.h"
 
 extern std::unique_ptr<ModelLoader> modelLoader;
+extern Logger logger;
 
 #endif

@@ -1,6 +1,8 @@
 #include "../imgui/imgui.h"
 
 #include "../engine/Circle.h"
+#include "../globals.h"
+#include "../misc/Logger.h"
 #include "EventManager.h"
 #include "Game.h"
 
@@ -36,6 +38,7 @@ void Game::tick()
   displayControl();
 
   showDebug();
+  logger.log();
 }
 
 void Game::updateTerrain()

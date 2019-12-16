@@ -83,8 +83,8 @@ int main(int argc, char** argv)
   int count;
   GLFWmonitor** monitors = glfwGetMonitors(&count);
   const GLFWvidmode* mode = glfwGetVideoMode(monitors[1]);
-  float screenWidth = mode->width - 200;
-  float screenHeight = mode->height - 200;
+  float screenWidth = mode->width;
+  float screenHeight = mode->height;
   GLFWwindow* window =
     glfwCreateWindow(screenWidth, screenHeight, "LearnOPenGl", NULL, NULL);
   if (window == NULL) {
@@ -219,7 +219,7 @@ int main(int argc, char** argv)
     camera.setEye(eye);
 
     ImGui::Begin("models scale");
-    ImGui::SetWindowPos(ImVec2(0, 620));
+    ImGui::SetWindowPos(ImVec2(0, 450));
     ImGui::SetWindowSize(ImVec2(200, 50));
     ImGui::SliderFloat("scale", &View::VIEW_SCALE, 0.0f, 1.0f);
     ImGui::End();
