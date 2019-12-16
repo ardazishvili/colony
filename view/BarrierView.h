@@ -17,6 +17,7 @@ public:
   void drawBeam();
   bool shroudSetUp() const;
   float radius() const;
+  glm::vec3 shroudPosition() const;
 
 private:
   float _scaleFactor{ 1 };

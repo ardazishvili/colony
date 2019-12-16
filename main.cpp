@@ -254,11 +254,6 @@ int main(int argc, char** argv)
     auto s = Sphere(colorShader, glm::vec3(0.0f, 0.0f, 5.0f), 1.0f, 50);
     s.render();
 
-    /* auto beam = Beam(linesShader, glm::vec3(0.0f, 0.0f, 8.0f),
-     * glm::vec3(0));
-     */
-    /* beam.render(); */
-
     terrain.renderSub();
 
     ImGui::Render();

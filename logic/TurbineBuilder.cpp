@@ -15,7 +15,7 @@ TurbineBuilder::TurbineBuilder(Game* game,
 void TurbineBuilder::create()
 {
   auto structure =
-    std::make_shared<Turbine>(_textureShader, _linesShader, glm::vec3());
+    std::make_shared<Turbine>(_textureShader, _linesShader, _game, glm::vec3());
   _game->addStructure(structure);
   _eventManager->setStructureToBuild(structure);
   _eventManager->setStructureToBuildStage(BuildStage::SetPosition);

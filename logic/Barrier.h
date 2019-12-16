@@ -20,6 +20,7 @@ public:
   StructureBuilders getStructureBuilders() override;
   void addPlant(std::shared_ptr<Plant> p);
   void commit() override;
+  glm::vec3 shroudPosition() const;
 
 private:
   float _radius{ 1.0f };

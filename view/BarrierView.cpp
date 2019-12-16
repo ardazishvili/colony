@@ -71,7 +71,7 @@ void BarrierView::drawShroud()
   _shader.configure();
   auto model = glm::mat4(1.0f);
   auto p = _position;
-  _shroudZ = ::min(8.0f, _shroudZ + SHROUD_UP_SPEED);
+  _shroudZ = ::min(SHROUD_HEIGHT, _shroudZ + SHROUD_UP_SPEED);
   model = glm::translate(model, glm::vec3(p.x, p.y, _shroudZ));
   _shader.setTransformation("model", glm::value_ptr(model));
   _shroudModel->render();
@@ -79,16 +79,6 @@ void BarrierView::drawShroud()
 
 void BarrierView::drawBeam()
 {
-  /* auto beam = Beam(_linesShader, */
-  /*                  glm::vec3(10.2104, 8.57479, 8), */
-  /*                  glm::vec3(10.2104, 8.57479, 1.00884)); */
-  /* std::cout << "drawing beam" << std::endl; */
-  /* std::cout << "_linesShader= " << &_linesShader << std::endl; */
-  /* _linesShader.use(); */
-  /* _linesShader.configure(); */
-  /* auto model = glm::mat4(1.0f); */
-  /* model = glm::translate(model, _position); */
-  /* _linesShader.setTransformation("model", glm::value_ptr(model)); */
   _beam.render();
 }
 
@@ -102,3 +92,7 @@ bool BarrierView::shroudSetUp() const
   return (_shroudZ == SHROUD_HEIGHT);
 }
 
+glm::vec3 BarrierView::shroudPosition() const
+{
+  return glm::vec3(_position.x, _position.y, _position.z + SHROUD_HEIGHT);
+}

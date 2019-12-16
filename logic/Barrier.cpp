@@ -72,3 +72,11 @@ void Barrier::commit()
   _livingArea = _terrain->addLivingArea(r, glm::vec4(c.x, c.y, c.z, 0.5));
   BuildableStructure::commit();
 }
+
+glm::vec3 Barrier::shroudPosition() const
+{
+  // TODO downcast
+  BarrierView* v = dynamic_cast<BarrierView*>(_view.get());
+  std::cout << "v->shroudPosition().z= " << v->shroudPosition().z << std::endl;
+  return v->shroudPosition();
+}

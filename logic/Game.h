@@ -26,6 +26,7 @@ public:
   void tick();
   void addTank(std::shared_ptr<Tank> tank);
   void addStructure(std::shared_ptr<BuildableStructure> buildable);
+  void addBarrier(std::shared_ptr<Barrier> barrier);
   void addPlant(std::shared_ptr<Plant> plant);
   void addTerrain(Terrain* terrain);
   void setControl(std::unique_ptr<Control> control);
@@ -36,6 +37,7 @@ public:
   void showDebug();
   void clearPanel(Panel::Type type);
   bool panelIsEmpty(Panel::Type type);
+  glm::vec3 getNearestShroudPosition() const;
 
 private:
   void updateTerrain();
@@ -50,6 +52,7 @@ private:
   glm::mat4& _projection;
   Tanks _tanks;
   Structures _structures;
+  std::shared_ptr<Barrier> _barrier;
   Plants _plants;
   std::unique_ptr<Control> _control;
   Tank* _selectedTank = nullptr;

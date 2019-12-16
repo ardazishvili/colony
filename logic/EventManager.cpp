@@ -4,6 +4,7 @@
 
 #include "EventManager.h"
 #include "Hq.h"
+#include "Turbine.h"
 
 glm::vec3 EventManager::unProject(GLFWwindow* window,
                                   glm::mat4& view,
@@ -77,7 +78,6 @@ void EventManager::handleKeyPress(GLFWwindow* window,
         _game->addStructure(tankFactory);
         _structureToBuild = tankFactory;
       } else {
-        /* _structureToBuildStage = BuildStage::Done; */
         _structureToBuild->commit();
         _structureToBuild = nullptr;
       }
@@ -112,6 +112,23 @@ void EventManager::handleKeyPress(GLFWwindow* window,
                                     _linesShader,
                                     unProject(_window, _view, _projection),
                                     _terrain);
+        _game->addStructure(b);
+        _game->addBarrier(b);
+        _structureToBuild = b;
+      } else {
+        _structureToBuild->commit();
+        _structureToBuild = nullptr;
+      }
+    }
+    if (key == GLFW_KEY_T) {
+      std::cout << "T pressed" << std::endl;
+      if (_structureToBuild == nullptr) {
+        _structureToBuildStage = BuildStage::SetAngle;
+        auto b =
+          std::make_shared<Turbine>(_textureShader,
+                                    _linesShader,
+                                    _game,
+                                    unProject(_window, _view, _projection));
         _game->addStructure(b);
         _structureToBuild = b;
       } else {
