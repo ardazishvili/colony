@@ -9,14 +9,22 @@ float BarrierView::BARRIER_HEALTH_BAR_HEIGHT = 0.15f;
 const float BarrierView::SHROUD_UP_SPEED = 0.1;
 const float BarrierView::SHROUD_HEIGHT = 8.0;
 
-BarrierView::BarrierView(Shader& shader, glm::vec3 position, Terrain* terrain) :
+BarrierView::BarrierView(Shader& textureShader,
+                         Shader& linesShader,
+                         glm::vec3 p,
+                         Terrain* terrain) :
   StructureView(
-    shader,
-    position,
+    textureShader,
+    p,
     1.41 / 2,
     { -0.3, 0, BARRIER_HEALTH_BAR_WIDTH, BARRIER_HEALTH_BAR_HEIGHT },
     TexturePackType::Initial),
-  _terrain(terrain)
+  _terrain(terrain), _beam(linesShader,
+                           glm::vec3(p.x, p.y, SHROUD_HEIGHT),
+                           glm::vec3(p.x, p.y, p.z + _scaleFactor),
+                           0.4f,
+                           10),
+  _linesShader(linesShader)
 {
   _model = modelLoader->models()[Models::Barrier];
   _model->setActiveTexturesPack(TexturePackType::PreBuild);
@@ -67,6 +75,21 @@ void BarrierView::drawShroud()
   model = glm::translate(model, glm::vec3(p.x, p.y, _shroudZ));
   _shader.setTransformation("model", glm::value_ptr(model));
   _shroudModel->render();
+}
+
+void BarrierView::drawBeam()
+{
+  /* auto beam = Beam(_linesShader, */
+  /*                  glm::vec3(10.2104, 8.57479, 8), */
+  /*                  glm::vec3(10.2104, 8.57479, 1.00884)); */
+  /* std::cout << "drawing beam" << std::endl; */
+  /* std::cout << "_linesShader= " << &_linesShader << std::endl; */
+  /* _linesShader.use(); */
+  /* _linesShader.configure(); */
+  /* auto model = glm::mat4(1.0f); */
+  /* model = glm::translate(model, _position); */
+  /* _linesShader.setTransformation("model", glm::value_ptr(model)); */
+  _beam.render();
 }
 
 float BarrierView::radius() const

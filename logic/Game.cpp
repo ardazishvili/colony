@@ -33,7 +33,6 @@ void Game::tick()
   displayShells();
   displayStructures();
   displayPlants();
-  /* displayBarriers(); */
   displayControl();
 
   showDebug();

@@ -178,6 +178,7 @@ int main(int argc, char** argv)
                                                 camera,
                                                 textureShader,
                                                 colorShader,
+                                                linesShader,
                                                 &terrain);
 
   createTank(game.get(), textureShader, terrain.getXYZ(glm::vec2(0.0, 0.0f)));
@@ -240,6 +241,11 @@ int main(int argc, char** argv)
       glm::radians(camera.fov()), screenWidth / screenHeight, 0.01f, 1000.0f);
 
     terrain.render();
+    /* auto beam = Beam(linesShader, */
+    /*                  glm::vec3(10.2104, 8.57479, 8), */
+    /*                  glm::vec3(10.2104, 8.57479, 1.00884)); */
+
+    /* beam.render(); */
 
     eventManager->tick();
 
@@ -248,16 +254,10 @@ int main(int argc, char** argv)
     auto s = Sphere(colorShader, glm::vec3(0.0f, 0.0f, 5.0f), 1.0f, 50);
     s.render();
 
-    auto beam = Beam(linesShader, glm::vec3(0.0f, 0.0f, 8.0f), glm::vec3(0));
-    beam.render();
-
-    auto beam2 =
-      Beam(linesShader, glm::vec3(1, 1, 0), glm::vec3(2.0f, 2.0f, 8.0f));
-    beam2.render();
-
-    auto beam3 =
-      Beam(linesShader, glm::vec3(5.0f, 5.0f, 8.0f), glm::vec3(4, 4, 0));
-    beam3.render();
+    /* auto beam = Beam(linesShader, glm::vec3(0.0f, 0.0f, 8.0f),
+     * glm::vec3(0));
+     */
+    /* beam.render(); */
 
     terrain.renderSub();
 

@@ -5,13 +5,16 @@
 
 #include "../engine/Terrain.h"
 #include "../view/BarrierView.h"
-#include "BuildableStructure.h"
+#include "EnergyStructure.h"
 #include "Plant.h"
 
-class Barrier : public BuildableStructure
+class Barrier : public EnergyStructure
 {
 public:
-  Barrier(Shader& shader, glm::vec3 position, Terrain* terrain);
+  Barrier(Shader& textureShader,
+          Shader& linesShader,
+          glm::vec3 position,
+          Terrain* terrain);
   void render() override;
   UnitBuilders getUnitBuilders(Game* game) override;
   StructureBuilders getStructureBuilders() override;

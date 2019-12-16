@@ -2,13 +2,18 @@
 #include "PlantBuilder.h"
 const int Barrier::BARRIER_HP = 200;
 
-Barrier::Barrier(Shader& shader, glm::vec3 position, Terrain* terrain) :
-  BuildableStructure(shader,
-                     std::make_unique<BarrierView>(shader, position, terrain)),
+Barrier::Barrier(Shader& textureShader,
+                 Shader& linesShader,
+                 glm::vec3 position,
+                 Terrain* terrain) :
+  EnergyStructure(textureShader,
+                  linesShader,
+                  std::make_unique<BarrierView>(textureShader,
+                                                linesShader,
+                                                position,
+                                                terrain)),
   _terrain(terrain)
 {
-  std::cout << "position.x= " << position.x << std::endl;
-  std::cout << "position.y= " << position.y << std::endl;
 
   _health = BARRIER_HP;
   _maxHealth = _health;
@@ -16,22 +21,16 @@ Barrier::Barrier(Shader& shader, glm::vec3 position, Terrain* terrain) :
 
 void Barrier::render()
 {
-  if (_livingArea != nullptr) {
-    if (_clock.elapsed() >= _bioUpdateTime) {
-      std::cout << "_plants.size()= " << _plants.size() << std::endl;
-      _terrain->updateLivingArea(_livingArea);
-      _clock.reload();
-    }
-  }
+
   if (_stage == BuildStage::Done) {
     // TODO downcast!
     BarrierView* v = dynamic_cast<BarrierView*>(_view.get());
     v->drawShroud();
     if (v->shroudSetUp()) {
+      v->drawBeam();
       Buildable::render();
       if (_livingArea != nullptr) {
         if (_clock.elapsed() >= _bioUpdateTime) {
-          std::cout << "_plants.size()= " << _plants.size() << std::endl;
           _terrain->updateLivingArea(_livingArea);
           _clock.reload();
         }

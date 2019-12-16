@@ -9,6 +9,8 @@ add_executable(colony
   engine/Mesh.cpp
   engine/MainTerrainMesh.h
   engine/MainTerrainMesh.cpp
+  logic/EnergyStructure.h
+  logic/EnergyStructure.cpp
 		Timer.cpp
 		Timer.h
     logic/BarrierBuilder.h

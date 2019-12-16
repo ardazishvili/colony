@@ -5,16 +5,18 @@
 
 BarrierBuilder::BarrierBuilder(Game* game,
                                EventManager* eventManager,
-                               Shader& shader,
+                               Shader& textureShader,
+                               Shader& linesShader,
                                Terrain* terrain) :
   AbstractStructureBuilder(game, eventManager),
-  _shader(shader), _terrain(terrain)
+  _textureShader(textureShader), _linesShader(linesShader), _terrain(terrain)
 {
 }
 
 void BarrierBuilder::create()
 {
-  auto structure = std::make_shared<Barrier>(_shader, glm::vec3(), _terrain);
+  auto structure = std::make_shared<Barrier>(
+    _textureShader, _linesShader, glm::vec3(), _terrain);
   _game->addStructure(structure);
   _eventManager->setStructureToBuild(structure);
   _eventManager->setStructureToBuildStage(BuildStage::SetPosition);

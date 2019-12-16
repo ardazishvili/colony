@@ -1,5 +1,6 @@
 #include "Hq.h"
 #include "BarrierBuilder.h"
+#include "EventManager.h"
 #include "TankFactoryBuilder.h"
 
 const int Hq::HQ_HP = 500;
@@ -29,7 +30,8 @@ StructureBuilders Hq::getStructureBuilders()
   builders.push_back(std::move(tfBuilder));
 
   std::unique_ptr<AbstractStructureBuilder> bBuilder =
-    std::make_unique<BarrierBuilder>(_game, _eventManager, _shader, _terrain);
+    std::make_unique<BarrierBuilder>(
+      _game, _eventManager, _shader, _eventManager->getLinesShader(), _terrain);
   builders.push_back(std::move(bBuilder));
 
   return builders;

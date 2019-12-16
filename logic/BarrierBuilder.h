@@ -9,14 +9,16 @@ class BarrierBuilder : public AbstractStructureBuilder
 public:
   BarrierBuilder(Game* game,
                  EventManager* eventManager,
-                 Shader& shader,
+                 Shader& textureShader,
+                 Shader& linesShader,
                  Terrain* terrain);
 
   void create() override;
   MenuTextures getPreviewType() override;
 
 private:
-  Shader& _shader;
+  Shader& _textureShader;
+  Shader& _linesShader;
   Terrain* _terrain;
 };
 

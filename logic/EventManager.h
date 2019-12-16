@@ -17,6 +17,7 @@ public:
                Camera& camera,
                Shader& textureShader,
                Shader& colorShader,
+               Shader& linesShader,
                Terrain* terrain);
   void tick();
   void handleKeyPress(GLFWwindow* window,
@@ -32,6 +33,8 @@ public:
                              glm::mat4& proj);
   void setStructureToBuild(std::shared_ptr<BuildableStructure> structure);
   void setStructureToBuildStage(BuildStage stage);
+  // TODO not a contract of EventManager! REFACTOR!
+  Shader& getLinesShader();
 
 private:
   void handleMousePressedLeft();
@@ -44,6 +47,7 @@ private:
   Game* _game;
   Shader& _textureShader;
   Shader& _colorShader;
+  Shader& _linesShader;
   Tank* _tankSelected{ nullptr };
   VehicleGroup _tanksSelected;
   Tank* _tankUnderAttack{ nullptr };

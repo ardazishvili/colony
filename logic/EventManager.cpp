@@ -31,10 +31,12 @@ EventManager::EventManager(glm::mat4& view,
                            Camera& camera,
                            Shader& textureShader,
                            Shader& colorShader,
+                           Shader& linesShader,
                            Terrain* terrain) :
   _view(view),
   _projection(projection), _window(window), _camera(camera), _game(game),
-  _textureShader(textureShader), _colorShader(colorShader), _terrain(terrain)
+  _textureShader(textureShader), _colorShader(colorShader),
+  _linesShader(linesShader), _terrain(terrain)
 {
   _game->setControl(
     std::make_unique<Control>(_game, this, _window, textureShader, _terrain));
@@ -92,7 +94,6 @@ void EventManager::handleKeyPress(GLFWwindow* window,
         _game->addStructure(hq);
         _structureToBuild = hq;
       } else {
-        /* _structureToBuildStage = BuildStage::Done; */
         _structureToBuild->commit();
         _structureToBuild = nullptr;
       }
@@ -106,12 +107,14 @@ void EventManager::handleKeyPress(GLFWwindow* window,
       std::cout << "B pressed" << std::endl;
       if (_structureToBuild == nullptr) {
         _structureToBuildStage = BuildStage::SetAngle;
-        auto b = std::make_shared<Barrier>(
-          _textureShader, unProject(_window, _view, _projection), _terrain);
+        auto b =
+          std::make_shared<Barrier>(_textureShader,
+                                    _linesShader,
+                                    unProject(_window, _view, _projection),
+                                    _terrain);
         _game->addStructure(b);
         _structureToBuild = b;
       } else {
-        /* _structureToBuildStage = BuildStage::Done; */
         _structureToBuild->commit();
         _structureToBuild = nullptr;
       }
@@ -210,19 +213,12 @@ void EventManager::handleMousePressedLeft()
 
   _tankSelected = _game->getTank(c, true);
   _structureSelected = _game->getStructure(c);
-  /* _barrierSelected = _game->getBarrier(c); */
   if (!_structureSelected) {
     _structureSelected = _game->getStructure(c);
     if (!_structureSelected && _game->panelIsEmpty(Panel::Type::Units)) {
       _game->clearPanel(Panel::Type::Units);
     }
   }
-  /* if (!_barrierSelected) { */
-  /*   _barrierSelected = _game->getBarrier(c); */
-  /*   if (!_barrierSelected && _game->panelIsEmpty(Panel::Type::Units)) { */
-  /*     _game->clearPanel(Panel::Type::Units); */
-  /*   } */
-  /* } */
 }
 
 void EventManager::handleMousePressedRight()
@@ -272,4 +268,9 @@ void EventManager::setStructureToBuild(
 void EventManager::setStructureToBuildStage(BuildStage stage)
 {
   _structureToBuildStage = stage;
+}
+
+Shader& EventManager::getLinesShader()
+{
+  return _linesShader;
 }

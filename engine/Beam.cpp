@@ -10,35 +10,30 @@
 float verts[] = { -0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f,
                   -0.5f, 0.5f,  0.0f, 0.5f, 0.5f,  0.0f };
 
-Beam::Beam(Shader& shader, glm::vec3 begin, glm::vec3 end) : _shader(shader)
+Beam::Beam(Shader& shader,
+           glm::vec3 begin,
+           glm::vec3 end,
+           float r,
+           unsigned int numLines) :
+  _shader(shader),
+  _r(r), _numLines(numLines)
 {
   glGenVertexArrays(1, &_vao);
   glBindVertexArray(_vao);
   glGenBuffers(1, &_vbo);
 
   _offset = begin;
-  _offset.z = 0;
   if (begin.z > end.z) {
     _reverse = true;
   }
+  _offset.z = std::min(begin.z, end.z);
   init(begin, end);
 }
 
 void Beam::render()
 {
-  /* ImGui::Begin("beam angles"); */
-  /* static float x = 0.0; */
-  /* static float y = 0.0; */
-  /* ImGui::SetWindowPos(ImVec2(0, 810)); */
-  /* ImGui::SetWindowSize(ImVec2(500, 100)); */
-  /* ImGui::SliderFloat("OX angle", &x, -M_PI, M_PI); */
-  /* ImGui::SliderFloat("OY angle", &y, -M_PI, M_PI); */
-  /* ImGui::End(); */
   _shader.use();
   _shader.configure();
-  glEnable(GL_BLEND);
-  glDepthMask(GL_FALSE);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   auto model = glm::mat4(1.0f);
   model = glm::translate(model, _offset);
   float angle = fmod(glfwGetTime(), 2 * M_PI) * _rotateSpeed;
@@ -48,17 +43,8 @@ void Beam::render()
   _shader.setTransformation("model", glm::value_ptr(model));
   _shader.setBool("animated", false);
 
-  glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-  glBufferData(
-    GL_ARRAY_BUFFER, sizeof(glm::vec3) * _v.size(), &_v[0], GL_DYNAMIC_DRAW);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
-  glEnableVertexAttribArray(0);
-
   glBindVertexArray(_vao);
   glDrawArrays(GL_LINES, 0, _v.size());
-
-  glDisable(GL_BLEND);
-  glDepthMask(GL_TRUE);
 }
 
 void Beam::init(glm::vec3 begin, glm::vec3 end)
@@ -89,4 +75,10 @@ void Beam::init(glm::vec3 begin, glm::vec3 end)
       _v.push_back(p2);
     }
   }
+
+  glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+  glBufferData(
+    GL_ARRAY_BUFFER, sizeof(glm::vec3) * _v.size(), &_v[0], GL_DYNAMIC_DRAW);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+  glEnableVertexAttribArray(0);
 }

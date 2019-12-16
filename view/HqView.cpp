@@ -21,6 +21,8 @@ HqView::HqView(Shader& shader, glm::vec3 position) :
 
 void HqView::draw()
 {
+  _shader.use();
+  _shader.configure();
   _shader.setBool("animated", false);
   auto model = glm::mat4(1.0f);
   model = glm::translate(model, _position);
