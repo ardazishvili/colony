@@ -39,5 +39,4 @@ void main()
 
   float alfa = texture(material.diffuse, texCoords).w;
   FragColor = vec4(ambient + diffuse + specular, alfa);
-  /* FragColor = texture(material.diffuse, texCoords); */
 }
