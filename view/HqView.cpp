@@ -21,6 +21,9 @@ void HqView::draw()
 {
   _shader.use();
   _shader.configure();
+  glEnable(GL_BLEND);
+  /* glDepthMask(GL_FALSE); */
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   _shader.setBool("animated", false);
   auto model = glm::mat4(1.0f);
   model = glm::translate(model, _position);
@@ -30,5 +33,7 @@ void HqView::draw()
   _model->setActiveTexturesPack(_texturesType);
   _shader.use();
   _model->render();
+  glDisable(GL_BLEND);
+  /* glDepthMask(GL_TRUE); */
   showHealthBar();
 }

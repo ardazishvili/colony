@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.79.0</authoring_tool>
     </contributor>
-    <created>2019-12-17T04:26:40</created>
-    <modified>2019-12-17T04:26:40</modified>
+    <created>2019-12-17T19:25:47</created>
+    <modified>2019-12-17T19:25:47</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -102,24 +102,24 @@
     </light>
   </library_lights>
   <library_images>
-    <image id="hq_bottom_png" name="hq_bottom_png">
-      <init_from>hq_bottom.png</init_from>
+    <image id="Untitled" name="Untitled">
+      <init_from>Untitled.png</init_from>
     </image>
-    <image id="hq_top_png" name="hq_top_png">
-      <init_from>hq_top.png</init_from>
+    <image id="Untitled_001" name="Untitled_001">
+      <init_from>Untitled.001.png</init_from>
     </image>
   </library_images>
   <library_effects>
     <effect id="Material-effect">
       <profile_COMMON>
-        <newparam sid="hq_bottom_png-surface">
+        <newparam sid="Untitled-surface">
           <surface type="2D">
-            <init_from>hq_bottom_png</init_from>
+            <init_from>Untitled</init_from>
           </surface>
         </newparam>
-        <newparam sid="hq_bottom_png-sampler">
+        <newparam sid="Untitled-sampler">
           <sampler2D>
-            <source>hq_bottom_png-surface</source>
+            <source>Untitled-surface</source>
           </sampler2D>
         </newparam>
         <technique sid="common">
@@ -131,7 +131,7 @@
               <color sid="ambient">0 0 0 1</color>
             </ambient>
             <diffuse>
-              <texture texture="hq_bottom_png-sampler"/>
+              <texture texture="Untitled-sampler"/>
             </diffuse>
             <specular>
               <color sid="specular">0.5 0.5 0.5 1</color>
@@ -148,14 +148,14 @@
     </effect>
     <effect id="Material_002-effect">
       <profile_COMMON>
-        <newparam sid="hq_top_png-surface">
+        <newparam sid="Untitled_001-surface">
           <surface type="2D">
-            <init_from>hq_top_png</init_from>
+            <init_from>Untitled_001</init_from>
           </surface>
         </newparam>
-        <newparam sid="hq_top_png-sampler">
+        <newparam sid="Untitled_001-sampler">
           <sampler2D>
-            <source>hq_top_png-surface</source>
+            <source>Untitled_001-surface</source>
           </sampler2D>
         </newparam>
         <technique sid="common">
@@ -167,7 +167,7 @@
               <color sid="ambient">0 0 0 1</color>
             </ambient>
             <diffuse>
-              <texture texture="hq_top_png-sampler"/>
+              <texture texture="Untitled_001-sampler"/>
             </diffuse>
             <specular>
               <color sid="specular">0.5 0.5 0.5 1</color>
@@ -176,7 +176,7 @@
               <float sid="shininess">50</float>
             </shininess>
             <transparent opaque="A_ONE">
-              <color>1 1 1 0.2711864</color>
+              <texture texture="Untitled_001-sampler"/>
             </transparent>
             <index_of_refraction>
               <float sid="index_of_refraction">1</float>

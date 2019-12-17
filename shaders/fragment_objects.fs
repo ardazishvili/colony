@@ -37,5 +37,7 @@ void main()
 		   material.shininess);
   vec3 specular = spec * light.specular * vec3(texture(material.specular, texCoords));
 
-  FragColor = vec4(ambient + diffuse + specular, 0.5);
+  float alfa = texture(material.diffuse, texCoords).w;
+  FragColor = vec4(ambient + diffuse + specular, alfa);
+  /* FragColor = texture(material.diffuse, texCoords); */
 }
