@@ -23,10 +23,6 @@ Beam::Beam(Shader& shader,
   glGenBuffers(1, &_vbo);
 
   _offset = begin;
-  if (begin.z > end.z) {
-    _reverse = true;
-  }
-  _offset.z = std::min(begin.z, end.z);
   init(begin, end);
 }
 
@@ -64,6 +60,11 @@ void Beam::init(glm::vec3 begin, glm::vec3 end)
   if (end.y < begin.y) {
     _ozAngle += M_PI;
   }
+  if (end.z < begin.z) {
+    _oyAngle = -_oyAngle + M_PI;
+  }
+  std::cout << "_oyAngle= " << glm::degrees(_oyAngle) << std::endl;
+  std::cout << "_ozAngle= " << glm::degrees(_ozAngle) << std::endl;
   auto height = ::sqrt(::pow(begin.x - end.x, 2) + ::pow(begin.y - end.y, 2) +
                        ::pow(begin.z - end.z, 2));
   auto zStep = height / _fragmentsNum;

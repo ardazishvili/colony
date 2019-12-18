@@ -47,8 +47,6 @@ void processInput(GLFWwindow* window)
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-  /* currentX = xpos; */
-  /* currentY = ypos; */
   eventManager->handleMouseMove(window, xpos, ypos);
   /* camera.tilt(xpos, ypos); */
 }
@@ -182,12 +180,8 @@ int main(int argc, char** argv)
                                                 &terrain);
 
   createTank(game.get(), textureShader, terrain.getXYZ(glm::vec2(0.0, 0.0f)));
-  /* createTank(game, textureShader, terrain.getXYZ(glm::vec2(1.0, -1.0f))); */
-  /* createTank(game, textureShader, terrain.getXYZ(glm::vec2(2.0, -2.0f))); */
-  /* auto tankFactory = */
-  /*   std::make_shared<TankFactory>(textureShader, glm::vec2(2.0f, 2.0f)); */
-  /* game.addStructure(tankFactory); */
-  /* tankFactory->commit(); */
+  createTank(game.get(), textureShader, terrain.getXYZ(glm::vec2(5.0, 5.0f)));
+  createTank(game.get(), textureShader, terrain.getXYZ(glm::vec2(-5.0, -5.0f)));
 
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -241,6 +235,61 @@ int main(int argc, char** argv)
       glm::radians(camera.fov()), screenWidth / screenHeight, 0.01f, 1000.0f);
 
     terrain.render();
+    auto beam0 =
+      Beam(linesShader, glm::vec3(0, 0, 10), glm::vec3(0, 0, 5), 0.1f, 10);
+    beam0.render();
+    auto beam1 =
+      Beam(linesShader, glm::vec3(5, 5, 10), glm::vec3(0, 0, 5), 0.1f, 10);
+    beam1.render();
+    auto beam2 =
+      Beam(linesShader, glm::vec3(-5, -5, 10), glm::vec3(0, 0, 5), 0.1f, 10);
+    beam2.render();
+    auto beam3 =
+      Beam(linesShader, glm::vec3(5, -5, 10), glm::vec3(0, 0, 5), 0.1f, 10);
+    beam3.render();
+    auto beam4 =
+      Beam(linesShader, glm::vec3(-5, 5, 10), glm::vec3(0, 0, 5), 0.1f, 10);
+    beam4.render();
+    auto beam5 =
+      Beam(linesShader, glm::vec3(0, 5, 10), glm::vec3(0, 0, 5), 0.1f, 10);
+    beam5.render();
+    auto beam6 =
+      Beam(linesShader, glm::vec3(0, -5, 10), glm::vec3(0, 0, 5), 0.1f, 10);
+    beam6.render();
+    auto beam7 =
+      Beam(linesShader, glm::vec3(5, 0, 10), glm::vec3(0, 0, 5), 0.1f, 10);
+    beam7.render();
+    auto beam8 =
+      Beam(linesShader, glm::vec3(-5, 0, 10), glm::vec3(0, 0, 5), 0.1f, 10);
+    beam8.render();
+
+    auto beam10 =
+      Beam(linesShader, glm::vec3(0, 0, 0), glm::vec3(0, 0, 5), 0.1f, 10);
+    beam10.render();
+    auto beam11 =
+      Beam(linesShader, glm::vec3(5, 5, 0), glm::vec3(0, 0, 5), 0.1f, 10);
+    beam11.render();
+    auto beam12 =
+      Beam(linesShader, glm::vec3(-5, -5, 0), glm::vec3(0, 0, 5), 0.1f, 10);
+    beam12.render();
+    auto beam13 =
+      Beam(linesShader, glm::vec3(5, -5, 0), glm::vec3(0, 0, 5), 0.1f, 10);
+    beam13.render();
+    auto beam14 =
+      Beam(linesShader, glm::vec3(-5, 5, 0), glm::vec3(0, 0, 5), 0.1f, 10);
+    beam14.render();
+    auto beam15 =
+      Beam(linesShader, glm::vec3(0, 5, 0), glm::vec3(0, 0, 5), 0.1f, 10);
+    beam15.render();
+    auto beam16 =
+      Beam(linesShader, glm::vec3(0, -5, 0), glm::vec3(0, 0, 5), 0.1f, 10);
+    beam16.render();
+    auto beam17 =
+      Beam(linesShader, glm::vec3(5, 0, 0), glm::vec3(0, 0, 5), 0.1f, 10);
+    beam17.render();
+    auto beam18 =
+      Beam(linesShader, glm::vec3(-5, 0, 0), glm::vec3(0, 0, 5), 0.1f, 10);
+    beam18.render();
 
     eventManager->tick();
 
