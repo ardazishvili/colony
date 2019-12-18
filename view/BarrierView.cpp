@@ -6,8 +6,10 @@
 
 float BarrierView::BARRIER_HEALTH_BAR_WIDTH = 1.2f;
 float BarrierView::BARRIER_HEALTH_BAR_HEIGHT = 0.15f;
-const float BarrierView::SHROUD_UP_SPEED = 0.1;
-const float BarrierView::SHROUD_HEIGHT = 8.0;
+const float BarrierView::SHROUD_UP_SPEED = 0.03;
+const glm::vec3 BarrierView::SHROUD_OFFSET = glm::vec3(-6.0, 6.0, 6.0);
+const std::chrono::milliseconds BarrierView::SHROUD_CYCLE =
+  std::chrono::milliseconds(3000);
 
 BarrierView::BarrierView(Shader& textureShader,
                          Shader& linesShader,
@@ -20,11 +22,11 @@ BarrierView::BarrierView(Shader& textureShader,
     { -0.3, 0, BARRIER_HEALTH_BAR_WIDTH, BARRIER_HEALTH_BAR_HEIGHT },
     TexturePackType::Initial),
   _terrain(terrain), _beam(linesShader,
-                           glm::vec3(p.x, p.y, SHROUD_HEIGHT),
+                           p + SHROUD_OFFSET,
                            glm::vec3(p.x, p.y, p.z + _scaleFactor),
-                           0.4f,
-                           10),
-  _linesShader(linesShader)
+                           0.05f,
+                           5),
+  _shroudPos(p), _linesShader(linesShader)
 {
   _model = modelLoader->models()[Models::Barrier];
   _model->setActiveTexturesPack(TexturePackType::PreBuild);
@@ -67,14 +69,47 @@ void BarrierView::draw()
 
 void BarrierView::drawShroud()
 {
+  float p;
+  if (_animate) {
+    if (_timer.elapsed() >= SHROUD_CYCLE) {
+      // TODO animation bug
+      p = 0.999;
+      _setUp = true;
+    } else {
+      p = static_cast<float>(_timer.elapsed().count()) / SHROUD_CYCLE.count();
+    }
+  } else {
+    p = 0.001;
+    _timer.reload();
+  }
+
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   _shader.use();
+  _shroudModel->animate(_shader, Animation::Type::OneShot, p);
   _shader.configure();
+  _shader.setBool("animated", true);
   auto model = glm::mat4(1.0f);
-  auto p = _position;
-  _shroudZ = ::min(SHROUD_HEIGHT, _shroudZ + SHROUD_UP_SPEED);
-  model = glm::translate(model, glm::vec3(p.x, p.y, _shroudZ));
+  _shroudPos.z =
+    ::min(_position.z + SHROUD_OFFSET.z, _shroudPos.z + SHROUD_UP_SPEED);
+  auto xFactor = ::abs(SHROUD_OFFSET.z / SHROUD_OFFSET.x);
+  auto yFactor = ::abs(SHROUD_OFFSET.z / SHROUD_OFFSET.y);
+  _shroudPos.x = ::max(_position.x + SHROUD_OFFSET.x,
+                       _shroudPos.x - SHROUD_UP_SPEED / xFactor);
+  _shroudPos.y = ::min(_position.y + SHROUD_OFFSET.y,
+                       _shroudPos.y + SHROUD_UP_SPEED / yFactor);
+  glm::vec3 co = _shroudPos - _position;
+  float oyAngle =
+    -M_PI / 2 + ::abs(::atan(co.z / ::sqrt(::pow(co.x, 2) + ::pow(co.y, 2))));
+  float ozAngle = M_PI / 2 - ::atan(co.z / co.y);
+
+  model = glm::translate(model, _shroudPos);
+  model = glm::rotate(model, -ozAngle, glm::vec3(0.0f, 0.0f, 1.0f));
+  model = glm::rotate(model, oyAngle, glm::vec3(0.0f, 1.0f, 0.0f));
   _shader.setTransformation("model", glm::value_ptr(model));
+
   _shroudModel->render();
+  glDisable(GL_BLEND);
 }
 
 void BarrierView::drawBeam()
@@ -89,10 +124,20 @@ float BarrierView::radius() const
 
 bool BarrierView::shroudSetUp() const
 {
-  return (_shroudZ == SHROUD_HEIGHT);
+  return _setUp;
+}
+
+bool BarrierView::onOrbit() const
+{
+  return (_shroudPos.z == _position.z + SHROUD_OFFSET.z);
 }
 
 glm::vec3 BarrierView::shroudPosition() const
 {
-  return glm::vec3(_position.x, _position.y, _position.z + SHROUD_HEIGHT);
+  return _shroudPos;
+}
+
+void BarrierView::startAnimation()
+{
+  _animate = true;
 }

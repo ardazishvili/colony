@@ -238,7 +238,7 @@ int main(int argc, char** argv)
 
     eventManager->tick();
 
-    /* skybox.render(); */
+    skybox.render();
 
     auto s = Sphere(colorShader, glm::vec3(0.0f, 0.0f, 5.0f), 1.0f, 50);
     s.render();

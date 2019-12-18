@@ -26,6 +26,9 @@ void Barrier::render()
     // TODO downcast!
     BarrierView* v = dynamic_cast<BarrierView*>(_view.get());
     v->drawShroud();
+    if (v->onOrbit()) {
+      v->startAnimation();
+    }
     if (v->shroudSetUp()) {
       v->drawBeam();
       Buildable::render();
