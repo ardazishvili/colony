@@ -177,14 +177,14 @@ void EventManager::handleMouseMove(GLFWwindow* window, double xpos, double ypos)
     auto deltaY = ypos - _middleLastPressed.y;
 
     if (deltaY < 0) {
-      _camera.moveForward();
-    } else if (deltaY > 0) {
       _camera.moveBackward();
+    } else if (deltaY > 0) {
+      _camera.moveForward();
     }
     if (deltaX > 0) {
-      _camera.moveRight();
-    } else if (deltaX < 0) {
       _camera.moveLeft();
+    } else if (deltaX < 0) {
+      _camera.moveRight();
     }
     _middleLastPressed = glm::vec2(xpos, ypos);
   }
