@@ -13,6 +13,8 @@ public:
   void zoomOut();
   void rotateLeft();
   void rotateRight();
+  void rotateUp();
+  void rotateDown();
   void moveForward();
   void moveBackward();
   void moveLeft();
@@ -25,6 +27,7 @@ public:
   glm::vec3 up() const;
   float getPitch() const;
   void setEye(glm::vec3 p);
+  void setLookAt(glm::vec3 p);
 
 private:
   void updatePosition();
@@ -45,8 +48,8 @@ private:
   float _lastY{ 300 };
   bool _firstMouse{ true };
   float _camRadius;
-  float _rotationSpeed{ 2.0f };
-  float _moveSpeed{ 0.5f };
+  float _rotationSpeed{ 0.5 };
+  float _moveSpeed{ 0.2f };
 };
 
 #endif

@@ -39,6 +39,8 @@ public:
 private:
   void handleMousePressedLeft();
   void handleMousePressedRight();
+  void handleMousePressedMiddle();
+  void handleMouseReleasedMiddle();
 
   glm::mat4& _view;
   glm::mat4& _projection;
@@ -60,6 +62,10 @@ private:
   Terrain* _terrain;
   RectangleRegion _selection;
   bool _selectionActive{ false };
+
+  bool _middleButtonPressed{ false };
+  glm::vec2 _middleLastPressed{ 0.0f, 0.0f };
+  bool _shiftPressed{ false };
 };
 
 #endif

@@ -61,7 +61,15 @@ void EventManager::handleKeyPress(GLFWwindow* window,
                                   int action,
                                   int mods)
 {
+  if (action == GLFW_PRESS) {
+    if (key == GLFW_KEY_LEFT_SHIFT) {
+      _shiftPressed = true;
+    }
+  }
   if (action == GLFW_RELEASE) {
+    if (key == GLFW_KEY_LEFT_SHIFT) {
+      _shiftPressed = false;
+    }
     if (key == GLFW_KEY_Z) {
       if (_structureSelected) {
         auto factory = dynamic_cast<TankFactory*>(_structureSelected);
@@ -140,12 +148,6 @@ void EventManager::handleKeyPress(GLFWwindow* window,
       glfwSetWindowShouldClose(_window, true);
     }
   } else if (action == GLFW_REPEAT) {
-    if (key == GLFW_KEY_UP) {
-      _camera.zoomIn();
-    }
-    if (key == GLFW_KEY_DOWN) {
-      _camera.zoomOut();
-    }
     if (key == GLFW_KEY_LEFT) {
       _camera.rotateLeft();
     }
@@ -170,6 +172,22 @@ void EventManager::handleKeyPress(GLFWwindow* window,
 
 void EventManager::handleMouseMove(GLFWwindow* window, double xpos, double ypos)
 {
+  if (_shiftPressed && _middleButtonPressed) {
+    auto deltaX = xpos - _middleLastPressed.x;
+    auto deltaY = ypos - _middleLastPressed.y;
+
+    if (deltaY < 0) {
+      _camera.moveForward();
+    } else if (deltaY > 0) {
+      _camera.moveBackward();
+    }
+    if (deltaX > 0) {
+      _camera.moveRight();
+    } else if (deltaX < 0) {
+      _camera.moveLeft();
+    }
+    _middleLastPressed = glm::vec2(xpos, ypos);
+  }
   auto c = unProject(_window, _view, _projection);
   if (_structureToBuild && (_structureToBuildStage == BuildStage::SetAngle)) {
     float structureX = _structureToBuild->position().x;
@@ -195,10 +213,33 @@ void EventManager::handleMouseMove(GLFWwindow* window, double xpos, double ypos)
     _selection.width = c.x - _selection.x;
     _selection.height = c.y - _selection.y;
   }
+
+  if (_middleButtonPressed) {
+    auto deltaX = xpos - _middleLastPressed.x;
+    auto deltaY = ypos - _middleLastPressed.y;
+
+    if (deltaY < 0) {
+      _camera.rotateUp();
+    } else if (deltaY > 0) {
+      _camera.rotateDown();
+    }
+    if (deltaX > 0) {
+      _camera.rotateLeft();
+    } else if (deltaX < 0) {
+      _camera.rotateRight();
+    }
+    _middleLastPressed = glm::vec2(xpos, ypos);
+  }
 }
 
 void EventManager::handleMousePressed(int button, int action)
 {
+  if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_PRESS) {
+    handleMousePressedMiddle();
+  }
+  if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_RELEASE) {
+    handleMouseReleasedMiddle();
+  }
   if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
     handleMousePressedLeft();
   } else if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
@@ -206,6 +247,20 @@ void EventManager::handleMousePressed(int button, int action)
   } else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE) {
     handleMouseReleased();
   }
+}
+
+void EventManager::handleMousePressedMiddle()
+{
+  _camera.setLookAt(unProject(_window, _view, _projection));
+  _middleButtonPressed = true;
+  double xpos, ypos;
+  glfwGetCursorPos(_window, &xpos, &ypos);
+  _middleLastPressed = glm::vec2(xpos, ypos);
+}
+
+void EventManager::handleMouseReleasedMiddle()
+{
+  _middleButtonPressed = false;
 }
 
 void EventManager::handleMouseReleased()

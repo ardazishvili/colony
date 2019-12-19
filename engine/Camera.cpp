@@ -31,43 +31,54 @@ void Camera::zoomOut()
 
 void Camera::rotateLeft()
 {
-  _yaw -= 1.0f * _rotationSpeed;
+  _yaw -= _rotationSpeed;
   updatePosition();
 }
 
 void Camera::rotateRight()
 {
-  _yaw += 1.0f * _rotationSpeed;
+  _yaw += _rotationSpeed;
+  updatePosition();
+}
+
+void Camera::rotateUp()
+{
+  _pitch += _rotationSpeed;
+  updatePosition();
+}
+
+void Camera::rotateDown()
+{
+  _pitch -= _rotationSpeed;
   updatePosition();
 }
 
 void Camera::moveForward()
 {
-  _position.y += _moveSpeed;
-  updateAngles();
-  updateFront();
+  _position += _front * _moveSpeed;
+  /* updateAngles(); */
+  /* updateFront(); */
 }
 
 void Camera::moveBackward()
 {
-  _position.y -= _moveSpeed;
-  updateAngles();
-  updateFront();
+  _position -= _front * _moveSpeed;
+  /* updateAngles(); */
+  /* updateFront(); */
 }
 
 void Camera::moveLeft()
 {
-
-  _position.x -= _moveSpeed;
-  updateAngles();
-  updateFront();
+  _position -= glm::normalize(glm::cross(_up, -_front)) * _moveSpeed;
+  /* updateAngles(); */
+  /* updateFront(); */
 }
 
 void Camera::moveRight()
 {
-  _position.x += _moveSpeed;
-  updateAngles();
-  updateFront();
+  _position += glm::normalize(glm::cross(_up, -_front)) * _moveSpeed;
+  /* updateAngles(); */
+  /* updateFront(); */
 }
 
 void Camera::tilt(double x, double y)
@@ -155,8 +166,8 @@ void Camera::updatePosition()
 void Camera::setEye(glm::vec3 p)
 {
   _position = p;
-  updateAngles();
-  updateFront();
+  /* updateAngles(); */
+  /* updateFront(); */
 }
 
 void Camera::updateAngles()
@@ -168,4 +179,9 @@ void Camera::updateAngles()
 
   _pitch = -glm::degrees(::atan(a / b));
   _camRadius = b;
+}
+
+void Camera::setLookAt(glm::vec3 p)
+{
+  _lookAt = p;
 }
