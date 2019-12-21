@@ -106,11 +106,6 @@ void EventManager::handleKeyPress(GLFWwindow* window,
         _structureToBuild = nullptr;
       }
     }
-    if (key == GLFW_KEY_P) {
-      auto plant = std::make_shared<Plant>(
-        _textureShader, unProject(_window, _view, _projection));
-      _game->addPlant(plant);
-    }
     if (key == GLFW_KEY_B) {
       std::cout << "B pressed" << std::endl;
       if (_structureToBuild == nullptr) {

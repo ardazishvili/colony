@@ -5,19 +5,19 @@
 #include <GLFW/glfw3.h>
 
 #include "Game.h"
-#include "Plant.h"
-#include "PlantBuilder.h"
+#include "Tree.h"
+#include "TreeBuilder.h"
 
-PlantBuilder::PlantBuilder(Shader& shader,
-                           Game* game,
-                           Barrier& barrier,
-                           Terrain* terrain) :
+TreeBuilder::TreeBuilder(Shader& shader,
+                         Game* game,
+                         Barrier& barrier,
+                         Terrain* terrain) :
   AbstractUnitBuilder(game),
   _shader(shader), _game(game), _barrier(barrier), _terrain(terrain)
 {
 }
 
-void PlantBuilder::create()
+void TreeBuilder::create()
 {
   std::mt19937 generator(glfwGetTime() * 1000);
   std::uniform_real_distribution<float> dReal(0, 2 * M_PI);
@@ -31,14 +31,14 @@ void PlantBuilder::create()
   pos.x += x;
   pos.y += y;
   // TODO subterrain offset
-  pos.z = _terrain->getXYZ(glm::vec2(pos.x, pos.y)).z + 0.03;
-  auto plant = std::make_shared<Plant>(_shader, pos);
+  pos.z = _terrain->getXYZ(glm::vec2(pos.x, pos.y)).z + 0.3;
+  auto tree = std::make_shared<Tree>(_shader, pos);
 
-  _barrier.addPlant(plant);
-  _game->addPlant(plant);
+  _barrier.addPlant(tree);
+  _game->addPlant(tree);
 }
 
-MenuTextures PlantBuilder::getPreviewType()
+MenuTextures TreeBuilder::getPreviewType()
 {
-  return MenuTextures::Plant;
+  return MenuTextures::Tree;
 }

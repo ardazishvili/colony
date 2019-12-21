@@ -48,6 +48,10 @@ void ModelLoader::load()
   plantModel->load("/home/roman/repos/colony/assets/plant.dae");
   _models.emplace(Models::Plant, std::move(plantModel));
 
+  auto treeModel = std::make_unique<Model>(_shader);
+  treeModel->load("/home/roman/repos/colony/assets/tree.dae");
+  _models.emplace(Models::Tree, std::move(treeModel));
+
   auto barrierModel = std::make_unique<Model>(_shader);
   barrierModel->load("/home/roman/repos/colony/assets/barrier.dae");
   barrierModel->loadTexture("/home/roman/repos/colony/assets/grey.png",
@@ -107,6 +111,10 @@ void ModelLoader::load()
     GL_TEXTURE_2D, "/home/roman/repos/colony/assets/Plant.png");
   plantTexture->load();
   _menuTextures.emplace(MenuTextures::Plant, std::move(plantTexture));
+  auto treeTexture = std::make_shared<Texture>(
+    GL_TEXTURE_2D, "/home/roman/repos/colony/assets/Tree.png");
+  treeTexture->load();
+  _menuTextures.emplace(MenuTextures::Tree, std::move(treeTexture));
 
   auto barrierTexture = std::make_shared<Texture>(
     GL_TEXTURE_2D, "/home/roman/repos/colony/assets/Barrier.png");

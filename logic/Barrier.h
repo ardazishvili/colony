@@ -5,8 +5,8 @@
 
 #include "../engine/Terrain.h"
 #include "../view/BarrierView.h"
+#include "AbstractPlant.h"
 #include "EnergyStructure.h"
-#include "Plant.h"
 
 class Barrier : public EnergyStructure
 {
@@ -18,7 +18,7 @@ public:
   void render() override;
   UnitBuilders getUnitBuilders(Game* game) override;
   StructureBuilders getStructureBuilders() override;
-  void addPlant(std::shared_ptr<Plant> p);
+  void addPlant(std::shared_ptr<AbstractPlant> p);
   void commit() override;
   glm::vec3 shroudPosition() const;
 

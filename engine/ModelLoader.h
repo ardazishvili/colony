@@ -12,6 +12,7 @@ enum class Models {
   TankFactory,
   Hq,
   Plant,
+  Tree,
   Barrier,
   Shroud,
   Turbine
@@ -24,6 +25,7 @@ enum class MenuTextures {
   TankMedium,
   TankHeavy,
   Plant,
+  Tree,
   Barrier,
   Turbine
 };

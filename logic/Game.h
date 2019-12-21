@@ -7,14 +7,13 @@
 #include <GLFW/glfw3.h>
 
 #include "../engine/Terrain.h"
+#include "AbstractPlant.h"
 #include "Barrier.h"
 #include "Control.h"
-#include "Plant.h"
 #include "VehicleGroup.h"
 
 using Tanks = std::vector<std::shared_ptr<Tank>>;
 using Structures = std::vector<std::shared_ptr<BuildableStructure>>;
-using Plants = std::vector<std::shared_ptr<Plant>>;
 
 class Tank;
 class AbstractStructureBuilder;
@@ -27,7 +26,7 @@ public:
   void addTank(std::shared_ptr<Tank> tank);
   void addStructure(std::shared_ptr<BuildableStructure> buildable);
   void addBarrier(std::shared_ptr<Barrier> barrier);
-  void addPlant(std::shared_ptr<Plant> plant);
+  void addPlant(std::shared_ptr<AbstractPlant> plant);
   void addTerrain(Terrain* terrain);
   void setControl(std::unique_ptr<Control> control);
 

@@ -1,13 +1,6 @@
 #include "Plant.h"
 
-Plant::Plant(Shader& shader, glm::vec3 position) : _view(shader, position) {}
-
-void Plant::render()
+Plant::Plant(Shader& shader, glm::vec3 position) :
+  AbstractPlant(std::make_unique<PlantView>(shader, position))
 {
-  _view.draw();
-}
-
-glm::vec2 Plant::position()
-{
-  return _view.position();
 }

@@ -1,5 +1,7 @@
 #include "Barrier.h"
 #include "PlantBuilder.h"
+#include "TreeBuilder.h"
+
 const int Barrier::BARRIER_HP = 200;
 
 Barrier::Barrier(Shader& textureShader,
@@ -47,9 +49,13 @@ void Barrier::render()
 UnitBuilders Barrier::getUnitBuilders(Game* game)
 {
   auto builders = UnitBuilders();
-  std::unique_ptr<AbstractUnitBuilder> builder =
+  std::unique_ptr<AbstractUnitBuilder> pb =
     std::make_unique<PlantBuilder>(_shader, game, *this, _terrain);
-  builders.push_back(std::move(builder));
+  builders.push_back(std::move(pb));
+
+  std::unique_ptr<AbstractUnitBuilder> tb =
+    std::make_unique<TreeBuilder>(_shader, game, *this, _terrain);
+  builders.push_back(std::move(tb));
 
   return builders;
 }
@@ -59,7 +65,7 @@ StructureBuilders Barrier::getStructureBuilders()
   return StructureBuilders();
 }
 
-void Barrier::addPlant(std::shared_ptr<Plant> p)
+void Barrier::addPlant(std::shared_ptr<AbstractPlant> p)
 {
   _livingArea->plants.push_back(p->position());
   _plants.push_back(p);

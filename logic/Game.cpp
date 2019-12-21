@@ -59,7 +59,7 @@ void Game::addStructure(std::shared_ptr<BuildableStructure> buildable)
   _structures.push_back(buildable);
 }
 
-void Game::addPlant(std::shared_ptr<Plant> plant)
+void Game::addPlant(std::shared_ptr<AbstractPlant> plant)
 {
   _plants.push_back(plant);
 }

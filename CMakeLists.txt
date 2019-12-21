@@ -3,32 +3,8 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
 project(Colony)
 
 add_executable(colony
-  misc/Logger.h
-  misc/Logger.cpp
-  misc/Log.h
-  misc/Log.cpp
-  engine/Beam.h
-  engine/Beam.cpp
-  engine/Mesh.h
-  engine/Mesh.cpp
-  engine/MainTerrainMesh.h
-  engine/MainTerrainMesh.cpp
-  logic/EnergyStructure.h
-  logic/EnergyStructure.cpp
-  logic/Turbine.h
-  logic/Turbine.cpp
-  logic/TurbineBuilder.h
-  logic/TurbineBuilder.cpp
-  view/TurbineView.h
-  view/TurbineView.cpp
 		Timer.cpp
 		Timer.h
-    logic/BarrierBuilder.h
-    logic/BarrierBuilder.cpp
-    view/UnitView.h
-    view/UnitView.cpp
-    view/StructureView.h
-    view/StructureView.cpp
 		engine/Animation.cpp
 		engine/Animation.h
 		engine/Camera.cpp
@@ -62,10 +38,6 @@ add_executable(colony
 		imgui/imstb_truetype.h
 		logic/Buildable.cpp
 		logic/Buildable.h
-    logic/BuildableUnit.h
-    logic/BuildableUnit.cpp
-    logic/BuildableStructure.h
-    logic/BuildableStructure.cpp
 		logic/Control.cpp
 		logic/Control.h
 		logic/EventManager.cpp
@@ -86,8 +58,6 @@ add_executable(colony
 		logic/Tank.h
 		logic/TankBuilder.cpp
 		logic/TankBuilder.h
-    logic/PlantBuilder.h
-    logic/PlantBuilder.cpp
 		logic/TankFactory.cpp
 		logic/TankFactory.h
 		logic/TankFactoryBuilder.cpp
@@ -102,45 +72,85 @@ add_executable(colony
 		view/TankFactoryView.h
 		view/TankView.cpp
 		view/TankView.h
-    view/SelectableView.h
-    view/SelectableView.cpp
 		view/View.cpp
 		view/View.h
     # engine/Circle.cpp
     # engine/Circle.h
     # engine/CircleMesh.cpp
     # engine/CircleMesh.h
-    engine/Sphere.h
-    engine/Sphere.cpp
-    engine/SphereMesh.h
-    engine/SphereMesh.cpp
+    engine/Beam.cpp
+    engine/Beam.h
     engine/LinesShader.cpp
     engine/LinesShader.h
+    engine/MainTerrainMesh.cpp
+    engine/MainTerrainMesh.h
+    engine/Mesh.cpp
+    engine/Mesh.h
     engine/PlainMesh.cpp
     engine/PlainMesh.h
     engine/Skybox.cpp
     engine/Skybox.h
     engine/SkyboxShader.cpp
     engine/SkyboxShader.h
+    engine/Sphere.cpp
+    engine/Sphere.h
+    engine/SphereMesh.cpp
+    engine/SphereMesh.h
+    engine/SubTerrainMesh.cpp
+    engine/SubTerrainMesh.h
     engine/Surface.cpp
     engine/Surface.h
     engine/TerrainMesh.cpp
     engine/TerrainMesh.h
-    engine/SubTerrainMesh.h
-    engine/SubTerrainMesh.cpp
     engine/Vertex.cpp
     engine/Vertex.h
+    logic/AbstractPlant.cpp
+    logic/AbstractPlant.h
     logic/Barrier.cpp
     logic/Barrier.h
+    logic/BarrierBuilder.cpp
+    logic/BarrierBuilder.h
+    logic/BuildableStructure.cpp
+    logic/BuildableStructure.h
+    logic/BuildableUnit.cpp
+    logic/BuildableUnit.h
+    logic/EnergyStructure.cpp
+    logic/EnergyStructure.h
     logic/Plant.cpp
     logic/Plant.h
+    logic/PlantBuilder.cpp
+    logic/PlantBuilder.h
+    logic/Tree.cpp
+    logic/Tree.h
+    logic/TreeBuilder.cpp
+    logic/TreeBuilder.h
+    logic/Turbine.cpp
+    logic/Turbine.h
+    logic/TurbineBuilder.cpp
+    logic/TurbineBuilder.h
     main.cpp 
     math/Noise.cpp
     math/Noise.h
+    misc/Log.cpp
+    misc/Log.h
+    misc/Logger.cpp
+    misc/Logger.h
+    view/AbstractPlantView.cpp
+    view/AbstractPlantView.h
     view/BarrierView.cpp
     view/BarrierView.h
     view/PlantView.cpp
     view/PlantView.h
+    view/SelectableView.cpp
+    view/SelectableView.h
+    view/StructureView.cpp
+    view/StructureView.h
+    view/TreeView.cpp
+    view/TreeView.h
+    view/TurbineView.cpp
+    view/TurbineView.h
+    view/UnitView.cpp
+    view/UnitView.h
 		)
 
 target_link_libraries(colony glfw dl GL GLEW assimp)
