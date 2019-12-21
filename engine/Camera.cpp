@@ -1,5 +1,7 @@
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "../globals.h"
 #include "Camera.h"
 
 #include <iostream>
@@ -56,6 +58,8 @@ void Camera::rotateDown()
 void Camera::moveForward()
 {
   _position += _front * _moveSpeed;
+  _lookAt += _front * _moveSpeed;
+  logger._log.AddLog("%f, %f, %f \n", _lookAt.x, _lookAt.y, _lookAt.z);
   /* updateAngles(); */
   /* updateFront(); */
 }
@@ -63,6 +67,8 @@ void Camera::moveForward()
 void Camera::moveBackward()
 {
   _position -= _front * _moveSpeed;
+  _lookAt -= _front * _moveSpeed;
+  logger._log.AddLog("%f, %f, %f \n", _lookAt.x, _lookAt.y, _lookAt.z);
   /* updateAngles(); */
   /* updateFront(); */
 }
@@ -70,6 +76,8 @@ void Camera::moveBackward()
 void Camera::moveLeft()
 {
   _position -= glm::normalize(glm::cross(_up, -_front)) * _moveSpeed;
+  _lookAt -= glm::normalize(glm::cross(_up, -_front)) * _moveSpeed;
+  logger._log.AddLog("%f, %f, %f \n", _lookAt.x, _lookAt.y, _lookAt.z);
   /* updateAngles(); */
   /* updateFront(); */
 }
@@ -77,39 +85,10 @@ void Camera::moveLeft()
 void Camera::moveRight()
 {
   _position += glm::normalize(glm::cross(_up, -_front)) * _moveSpeed;
+  _lookAt += glm::normalize(glm::cross(_up, -_front)) * _moveSpeed;
+  logger._log.AddLog("%f, %f, %f \n", _lookAt.x, _lookAt.y, _lookAt.z);
   /* updateAngles(); */
   /* updateFront(); */
-}
-
-void Camera::tilt(double x, double y)
-{
-  if (_firstMouse) {
-    _lastX = x;
-    _lastY = y;
-    _firstMouse = false;
-  }
-  float xOffset = x - _lastX;
-  float yOffset = _lastY - y;
-  _lastX = x;
-  _lastY = y;
-
-  float sensitivity = 0.05f;
-  xOffset *= sensitivity;
-  yOffset *= sensitivity;
-
-  _yaw -= xOffset;
-  _pitch += yOffset;
-
-  if (_pitch > 89.0f) {
-    _pitch = 89.0f;
-  }
-  if (_pitch < -89.0f) {
-    _pitch = -89.0f;
-  }
-
-  updateFront();
-  std::cout << "_pitch= " << _pitch << std::endl;
-  std::cout << "_yaw= " << _yaw << std::endl;
 }
 
 void Camera::zoom(double factor)
@@ -156,10 +135,15 @@ float Camera::getPitch() const
   return _pitch;
 }
 
+float Camera::getYaw() const
+{
+  return _yaw;
+}
+
 void Camera::updatePosition()
 {
-  _position.x = -::sin(glm::radians(_yaw + 90)) * _camRadius;
-  _position.y = ::cos(glm::radians(_yaw + 90)) * _camRadius;
+  _position.x = _lookAt.x - ::sin(glm::radians(_yaw + 90)) * _camRadius;
+  _position.y = _lookAt.y + ::cos(glm::radians(_yaw + 90)) * _camRadius;
   updateFront();
 }
 
@@ -184,4 +168,5 @@ void Camera::updateAngles()
 void Camera::setLookAt(glm::vec3 p)
 {
   _lookAt = p;
+  logger._log.AddLog("%f, %f, %f \n", _lookAt.x, _lookAt.y, _lookAt.z);
 }

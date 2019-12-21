@@ -3,6 +3,7 @@
 #include "Terrain.h"
 
 Terrain::Terrain(Shader& shader,
+                 Camera& camera,
                  float bottomLeftX,
                  float bottomLeftY,
                  float topRightX,
@@ -11,7 +12,7 @@ Terrain::Terrain(Shader& shader,
                  float xyScale,
                  float zScale) :
   _shader(shader),
-  _xyScale(xyScale), _zScale(zScale)
+  _camera(camera), _xyScale(xyScale), _zScale(zScale)
 {
   _mainMesh.init(0,
                  0,

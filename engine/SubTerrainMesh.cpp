@@ -50,6 +50,7 @@ std::shared_ptr<LivingArea> SubTerrainMesh::addLivingArea(CircularRegion region,
   _livingAreas.push_back(livingArea);
   return livingArea;
 }
+
 void SubTerrainMesh::reloadLivingArea(std::shared_ptr<LivingArea> area)
 {
   glBindBuffer(GL_ARRAY_BUFFER, _vbo);

@@ -19,12 +19,9 @@ public:
   void render();
   void setOffsetZ(float offset);
   void setOffsetXY(float x, float y);
-  void setPitchAngle();
-  void setYawAngle(float angle);
   void setTexture(const std::string& filename);
   void setScaleX(float factor);
   void setScaleXY(float xFactor, float yFactor);
-  glm::vec4 getArea() const; // bottom left x, y; top right x, y
 
 private:
   Camera& _camera;

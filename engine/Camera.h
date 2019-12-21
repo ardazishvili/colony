@@ -19,13 +19,13 @@ public:
   void moveBackward();
   void moveLeft();
   void moveRight();
-  void tilt(double x, double y);
   void zoom(double factor);
   float fov() const;
   glm::vec3 eye() const;
   glm::vec3 reference() const;
   glm::vec3 up() const;
   float getPitch() const;
+  float getYaw() const;
   void setEye(glm::vec3 p);
   void setLookAt(glm::vec3 p);
 
@@ -48,8 +48,8 @@ private:
   float _lastY{ 300 };
   bool _firstMouse{ true };
   float _camRadius;
-  float _rotationSpeed{ 0.5 };
-  float _moveSpeed{ 0.2f };
+  float _rotationSpeed{ 0.3 };
+  float _moveSpeed{ 0.1f };
 };
 
 #endif

@@ -97,7 +97,6 @@ int main(int argc, char** argv)
   ImGui::StyleColorsDark();
   ImGui_ImplGlfw_InitForOpenGL(window, true);
   ImGui_ImplOpenGL3_Init(glsl_version);
-  bool show_demo_window = true;
   ImGui::GetStyle().WindowRounding = 0.0f;
   ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
   glfwMakeContextCurrent(window);
@@ -165,8 +164,15 @@ int main(int argc, char** argv)
 
   auto xyScale = 2.0f;
   auto zScale = 3.0f;
-  auto terrain = Terrain(
-    colorShader, -10.0f, -10.0f, 10.0f, 10.0f, 256 * 1, xyScale, zScale);
+  auto terrain = Terrain(colorShader,
+                         camera,
+                         -10.0f,
+                         -10.0f,
+                         10.0f,
+                         10.0f,
+                         256 * 1,
+                         xyScale,
+                         zScale);
   std::unique_ptr<Game> game = std::make_unique<Game>(window, view, projection);
   game->addTerrain(&terrain);
   eventManager = std::make_unique<EventManager>(view,

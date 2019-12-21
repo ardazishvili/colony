@@ -1,4 +1,5 @@
 #include "Surface.h"
+#include "../globals.h"
 
 Surface::Surface(Camera& camera,
                  Shader& shader,
@@ -24,6 +25,11 @@ Surface::Surface(Camera& camera,
 
 void Surface::render()
 {
+  _yawAngle = _camera.getYaw() - 90;
+  _pitchAngle = -_camera.getPitch();
+  /* logger._log.AddLog("pitch: %f \n", _pitchAngle); */
+  /* logger._log.AddLog("yaw: %f \n", _yawAngle); */
+
   auto model = glm::mat4(1.0f);
   model = glm::translate(model, _offset);
   model =
@@ -47,15 +53,15 @@ void Surface::setTexture(const std::string& filename)
   _mesh.loadTexture(filename, TexturePackType::Initial);
 }
 
-void Surface::setPitchAngle()
-{
-  _pitchAngle = -_camera.getPitch();
-}
+/* void Surface::setPitchAngle() */
+/* { */
+/*   _pitchAngle = -_camera.getPitch(); */
+/* } */
 
-void Surface::setYawAngle(float angle)
-{
-  _yawAngle = angle;
-}
+/* void Surface::setYawAngle(float angle) */
+/* { */
+/*   _yawAngle = angle; */
+/* } */
 
 void Surface::setOffsetXY(float x, float y)
 {
@@ -66,14 +72,6 @@ void Surface::setOffsetXY(float x, float y)
 void Surface::setScaleX(float factor)
 {
   _xScaleFactor = factor;
-}
-
-glm::vec4 Surface::getArea() const
-{
-  return glm::vec4(::min(_offset.x, _offset.x + _xScaleFactor),
-                   ::min(_offset.y, _offset.y + _yScaleFactor),
-                   ::max(_offset.x, _offset.x + _xScaleFactor),
-                   ::max(_offset.y, _offset.y + _yScaleFactor));
 }
 
 void Surface::setScaleXY(float xFactor, float yFactor)

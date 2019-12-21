@@ -8,9 +8,9 @@ class Logger
 {
 public:
   void log();
+  Log _log;
 
 private:
-  Log _log;
 };
 
 #endif

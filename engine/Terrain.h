@@ -8,6 +8,7 @@ class Terrain
 {
 public:
   Terrain(Shader& shader,
+          Camera& camera,
           float bottomLeftX,
           float bottomLeftY,
           float topRightX,
@@ -28,6 +29,7 @@ public:
 
 private:
   Shader& _shader;
+  Camera& _camera;
   MainTerrainMesh _mainMesh;
   SubTerrainMesh _subMesh;
   glm::vec3 _offset{ glm::vec3(0.0f) };

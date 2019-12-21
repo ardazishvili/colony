@@ -2,6 +2,7 @@
 
 #include <GL/glew.h>
 
+#include "../globals.h"
 #include "EventManager.h"
 #include "Hq.h"
 #include "Turbine.h"
@@ -182,6 +183,25 @@ void EventManager::handleMouseMove(GLFWwindow* window, double xpos, double ypos)
       _camera.moveRight();
     }
     _middleLastPressed = glm::vec2(xpos, ypos);
+    /* logger._log.AddLog("%f \n", _middleLastPressed.x); */
+    /* logger._log.AddLog("%f \n", _middleLastPressed.y); */
+  } else if (_middleButtonPressed) {
+    auto deltaX = xpos - _middleLastPressed.x;
+    auto deltaY = ypos - _middleLastPressed.y;
+
+    if (deltaY < 0) {
+      _camera.rotateUp();
+    } else if (deltaY > 0) {
+      _camera.rotateDown();
+    }
+    if (deltaX > 0) {
+      _camera.rotateLeft();
+    } else if (deltaX < 0) {
+      _camera.rotateRight();
+    }
+    _middleLastPressed = glm::vec2(xpos, ypos);
+    /* logger._log.AddLog("%f \n", _middleLastPressed.x); */
+    /* logger._log.AddLog("%f \n", _middleLastPressed.y); */
   }
   auto c = unProject(_window, _view, _projection);
   if (_structureToBuild && (_structureToBuildStage == BuildStage::SetAngle)) {
@@ -208,23 +228,6 @@ void EventManager::handleMouseMove(GLFWwindow* window, double xpos, double ypos)
     _selection.width = c.x - _selection.x;
     _selection.height = c.y - _selection.y;
   }
-
-  if (_middleButtonPressed) {
-    auto deltaX = xpos - _middleLastPressed.x;
-    auto deltaY = ypos - _middleLastPressed.y;
-
-    if (deltaY < 0) {
-      _camera.rotateUp();
-    } else if (deltaY > 0) {
-      _camera.rotateDown();
-    }
-    if (deltaX > 0) {
-      _camera.rotateLeft();
-    } else if (deltaX < 0) {
-      _camera.rotateRight();
-    }
-    _middleLastPressed = glm::vec2(xpos, ypos);
-  }
 }
 
 void EventManager::handleMousePressed(int button, int action)
@@ -246,7 +249,7 @@ void EventManager::handleMousePressed(int button, int action)
 
 void EventManager::handleMousePressedMiddle()
 {
-  _camera.setLookAt(unProject(_window, _view, _projection));
+  /* _camera.setLookAt(unProject(_window, _view, _projection)); */
   _middleButtonPressed = true;
   double xpos, ypos;
   glfwGetCursorPos(_window, &xpos, &ypos);

@@ -18,6 +18,5 @@ void UnitView::showHealthBar()
 {
   _healthBar.setOffsetXY(_position.x - 0.25, _position.y);
   _healthBar.setScaleX(_healthBarScaleFactor);
-  _healthBar.setPitchAngle();
   _healthBar.render();
 }
