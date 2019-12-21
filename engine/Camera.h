@@ -27,12 +27,11 @@ public:
   float getPitch() const;
   float getYaw() const;
   void setEye(glm::vec3 p);
-  void setLookAt(glm::vec3 p);
 
 private:
   void updatePosition();
   void updateFront();
-  void updateAngles();
+  void initAngles();
 
   glm::vec3 _position;
   glm::vec3 _lookAt;

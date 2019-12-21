@@ -249,7 +249,6 @@ void EventManager::handleMousePressed(int button, int action)
 
 void EventManager::handleMousePressedMiddle()
 {
-  /* _camera.setLookAt(unProject(_window, _view, _projection)); */
   _middleButtonPressed = true;
   double xpos, ypos;
   glfwGetCursorPos(_window, &xpos, &ypos);

@@ -1,16 +1,19 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
+#include <string>
+
 #include "../imgui/imgui.h"
 #include "Log.h"
 
 class Logger
 {
 public:
-  void log();
-  Log _log;
+  void log(const std::string& str, float f);
+  void log(const std::string& str);
 
 private:
+  Log _log;
 };
 
 #endif

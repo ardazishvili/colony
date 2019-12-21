@@ -9,7 +9,7 @@
 Camera::Camera(glm::vec3 position, glm::vec3 lookAt, glm::vec3 up) :
   _position(position), _lookAt(lookAt), _up(up)
 {
-  updateAngles();
+  initAngles();
   updateFront();
 }
 
@@ -59,36 +59,24 @@ void Camera::moveForward()
 {
   _position += _front * _moveSpeed;
   _lookAt += _front * _moveSpeed;
-  logger._log.AddLog("%f, %f, %f \n", _lookAt.x, _lookAt.y, _lookAt.z);
-  /* updateAngles(); */
-  /* updateFront(); */
 }
 
 void Camera::moveBackward()
 {
   _position -= _front * _moveSpeed;
   _lookAt -= _front * _moveSpeed;
-  logger._log.AddLog("%f, %f, %f \n", _lookAt.x, _lookAt.y, _lookAt.z);
-  /* updateAngles(); */
-  /* updateFront(); */
 }
 
 void Camera::moveLeft()
 {
   _position -= glm::normalize(glm::cross(_up, -_front)) * _moveSpeed;
   _lookAt -= glm::normalize(glm::cross(_up, -_front)) * _moveSpeed;
-  logger._log.AddLog("%f, %f, %f \n", _lookAt.x, _lookAt.y, _lookAt.z);
-  /* updateAngles(); */
-  /* updateFront(); */
 }
 
 void Camera::moveRight()
 {
   _position += glm::normalize(glm::cross(_up, -_front)) * _moveSpeed;
   _lookAt += glm::normalize(glm::cross(_up, -_front)) * _moveSpeed;
-  logger._log.AddLog("%f, %f, %f \n", _lookAt.x, _lookAt.y, _lookAt.z);
-  /* updateAngles(); */
-  /* updateFront(); */
 }
 
 void Camera::zoom(double factor)
@@ -150,11 +138,9 @@ void Camera::updatePosition()
 void Camera::setEye(glm::vec3 p)
 {
   _position = p;
-  /* updateAngles(); */
-  /* updateFront(); */
 }
 
-void Camera::updateAngles()
+void Camera::initAngles()
 {
   float a = ::abs(_position.z - _lookAt.z);
   auto rCamPosition = ::sqrt(::pow(_position.x, 2) + ::pow(_position.y, 2));
@@ -165,8 +151,3 @@ void Camera::updateAngles()
   _camRadius = b;
 }
 
-void Camera::setLookAt(glm::vec3 p)
-{
-  _lookAt = p;
-  logger._log.AddLog("%f, %f, %f \n", _lookAt.x, _lookAt.y, _lookAt.z);
-}

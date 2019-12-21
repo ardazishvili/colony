@@ -1,26 +1,21 @@
 #include "Logger.h"
 
-void Logger::log()
+void Logger::log(const std::string& str, float f)
 {
 
   ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
-  ImGui::Begin("Example: Log");
-  if (ImGui::SmallButton("[Debug] Add 5 entries")) {
-    static int counter = 0;
-    for (int n = 0; n < 5; n++) {
-      const char* categories[3] = { "info", "warn", "error" };
-      const char* words[] = { "Bumfuzzled",    "Cattywampus",  "Snickersnee",
-                              "Abibliophobia", "Absquatulate", "Nincompoop",
-                              "Pauciloquent" };
-      _log.AddLog(
-        "[%05d] [%s] Hello, current time is %.1f, here's a word: '%s'\n",
-        ImGui::GetFrameCount(),
-        categories[counter % IM_ARRAYSIZE(categories)],
-        ImGui::GetTime(),
-        words[counter % IM_ARRAYSIZE(words)]);
-      counter++;
-    }
-  }
+  ImGui::Begin("Log");
+  _log.AddLog("[%.1f] %s=%f\n", ImGui::GetTime(), str.c_str(), f);
   ImGui::End();
-  _log.Draw("Example: Log");
+  _log.Draw("Log");
+}
+
+void Logger::log(const std::string& str)
+{
+
+  ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
+  ImGui::Begin("Log");
+  _log.AddLog("[%.1f] %s\n", ImGui::GetTime(), str.c_str());
+  ImGui::End();
+  _log.Draw("Log");
 }

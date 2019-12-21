@@ -48,7 +48,6 @@ void processInput(GLFWwindow* window)
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
   eventManager->handleMouseMove(window, xpos, ypos);
-  /* camera.tilt(xpos, ypos); */
 }
 
 void keyboard_callback(GLFWwindow* window,
