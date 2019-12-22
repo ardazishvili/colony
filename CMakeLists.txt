@@ -157,4 +157,4 @@ add_executable(colony
     view/UnitView.h
 		)
 
-target_link_libraries(colony glfw dl GL GLEW assimp)
+target_link_libraries(colony glfw dl GL GLEW assimp pthread)

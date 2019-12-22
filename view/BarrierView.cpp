@@ -6,10 +6,11 @@
 
 float BarrierView::BARRIER_HEALTH_BAR_WIDTH = 1.2f;
 float BarrierView::BARRIER_HEALTH_BAR_HEIGHT = 0.15f;
-const float BarrierView::SHROUD_UP_SPEED = 0.03;
+float BarrierView::BARRIER_SCALE_INCREMENT = 1.0f;
+const float BarrierView::SHROUD_UP_SPEED = 0.09;
 const glm::vec3 BarrierView::SHROUD_OFFSET = glm::vec3(-6.0, 6.0, 6.0);
 const std::chrono::milliseconds BarrierView::SHROUD_CYCLE =
-  std::chrono::milliseconds(3000);
+  std::chrono::milliseconds(1000);
 
 BarrierView::BarrierView(Shader& textureShader,
                          Shader& linesShader,
@@ -140,4 +141,15 @@ glm::vec3 BarrierView::shroudPosition() const
 void BarrierView::startAnimation()
 {
   _animate = true;
+}
+
+void BarrierView::grow()
+{
+  _growFuture = std::async(std::launch::async, [this]() {
+    auto finalScale = _scaleFactor + BARRIER_SCALE_INCREMENT;
+    while (_scaleFactor < finalScale) {
+      _scaleFactor += 0.05;
+      std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    }
+  });
 }

@@ -19,6 +19,7 @@ Turbine::Turbine(Shader& textureShader,
                                   game->getNearestShroudPosition())),
   _game(game)
 {
+  _game->addBarrierPotential(this);
 }
 
 UnitBuilders Turbine::getUnitBuilders(Game* game)

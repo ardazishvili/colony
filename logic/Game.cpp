@@ -208,5 +208,11 @@ bool Game::panelIsEmpty(Panel::Type type)
 
 glm::vec3 Game::getNearestShroudPosition() const
 {
+
   return _barrier->shroudPosition();
+}
+
+void Game::addBarrierPotential(EnergyStructure* es)
+{
+  _barrier->addEnergyStructure(es);
 }

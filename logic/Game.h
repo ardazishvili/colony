@@ -37,6 +37,7 @@ public:
   void clearPanel(Panel::Type type);
   bool panelIsEmpty(Panel::Type type);
   glm::vec3 getNearestShroudPosition() const;
+  void addBarrierPotential(EnergyStructure* es);
 
 private:
   void updateTerrain();

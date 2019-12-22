@@ -1,6 +1,8 @@
 #ifndef BARRIER_VIEW_H
 #define BARRIER_VIEW_H
 
+#include <future>
+
 #include "../engine/Beam.h"
 #include "../engine/Terrain.h"
 #include "StructureView.h"
@@ -20,6 +22,7 @@ public:
   float radius() const;
   glm::vec3 shroudPosition() const;
   void startAnimation();
+  void grow();
 
 private:
   float _scaleFactor{ 1 };
@@ -33,10 +36,12 @@ private:
   Shader& _linesShader;
   bool _animate{ false };
   bool _setUp{ false };
+  std::future<void> _growFuture;
   static const float SHROUD_UP_SPEED;
   static const std::chrono::milliseconds SHROUD_CYCLE;
   static float BARRIER_HEALTH_BAR_WIDTH;
   static float BARRIER_HEALTH_BAR_HEIGHT;
+  static float BARRIER_SCALE_INCREMENT;
 };
 
 #endif

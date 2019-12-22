@@ -1,4 +1,5 @@
 #include "Barrier.h"
+#include "../globals.h"
 #include "PlantBuilder.h"
 #include "TreeBuilder.h"
 
@@ -23,7 +24,6 @@ Barrier::Barrier(Shader& textureShader,
 
 void Barrier::render()
 {
-
   if (_stage == BuildStage::Done) {
     // TODO downcast!
     BarrierView* v = dynamic_cast<BarrierView*>(_view.get());
@@ -88,4 +88,12 @@ glm::vec3 Barrier::shroudPosition() const
   BarrierView* v = dynamic_cast<BarrierView*>(_view.get());
   std::cout << "v->shroudPosition().z= " << v->shroudPosition().z << std::endl;
   return v->shroudPosition();
+}
+
+void Barrier::addEnergyStructure(EnergyStructure* es)
+{
+  _energyStructures.push_back(es);
+  // TODO downcast
+  BarrierView* v = dynamic_cast<BarrierView*>(_view.get());
+  v->grow();
 }
