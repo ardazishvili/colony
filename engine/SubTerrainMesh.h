@@ -41,11 +41,9 @@ public:
                        float max,
                        unsigned int width,
                        unsigned int augmentedWidth) override;
-  void selectSubTerrainRegion(RectangleRegion region, glm::vec4 rgba);
   std::shared_ptr<LivingArea> addLivingArea(CircularRegion region,
                                             glm::vec4 rgba);
   void updateLivingArea(std::shared_ptr<LivingArea> area);
-  void deselect();
 
   const static glm::vec4 SELECTION_COLOR;
   const static glm::vec4 DESELECTION_COLOR;

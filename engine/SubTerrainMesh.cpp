@@ -82,40 +82,6 @@ void SubTerrainMesh::updateLivingArea(std::shared_ptr<LivingArea> area)
   reloadLivingArea(area);
 }
 
-void SubTerrainMesh::selectSubTerrainRegion(RectangleRegion region,
-                                            glm::vec4 rgba)
-{
-  _lastSelected = region;
-
-  region.x += _width;
-  region.y += _height;
-
-  auto i = ::floor(region.x / _xStep / _xyScale);
-  auto j = ::floor(region.y / _yStep);
-  signed int xWidth = region.width / _xStep / _xyScale;
-  signed int yWidth = region.height / _yStep;
-  glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-  unsigned int leftXBound = std::min(i, i + xWidth);
-  unsigned int rightXBound = std::max(i, i + xWidth);
-  unsigned int leftYBound = std::min(j, j + yWidth);
-  unsigned int rightYBound = std::max(j, j + yWidth);
-  for (unsigned int k = leftXBound; k < rightXBound; ++k) {
-    auto index = _latticeWidth * k + leftYBound;
-    for (unsigned int n = leftYBound; n < rightYBound; ++n) {
-      _v.at(_latticeWidth * k + n).color = rgba;
-    }
-    glBufferSubData(GL_ARRAY_BUFFER,
-                    sizeof(VertexColor) * (index),
-                    sizeof(VertexColor) * ::abs(yWidth),
-                    &_v[index]);
-  }
-}
-
-void SubTerrainMesh::deselect()
-{
-  selectSubTerrainRegion(_lastSelected, DESELECTION_COLOR);
-}
-
 void SubTerrainMesh::calculateHeights(unsigned int width,
                                       float bottomLeftX,
                                       float bottomLeftY,

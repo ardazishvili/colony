@@ -71,11 +71,6 @@ glm::vec3 Terrain::getRgbColor(float x, float y) const
   return _mainMesh.getRgbColor(x, y);
 }
 
-void Terrain::selectSubTerrainRegion(RectangleRegion region, glm::vec4 rgba)
-{
-  _subMesh.selectSubTerrainRegion(region, rgba);
-}
-
 std::shared_ptr<LivingArea> Terrain::addLivingArea(CircularRegion region,
                                                    glm::vec4 rgba)
 {
@@ -85,11 +80,6 @@ std::shared_ptr<LivingArea> Terrain::addLivingArea(CircularRegion region,
 void Terrain::updateLivingArea(std::shared_ptr<LivingArea> area)
 {
   _subMesh.updateLivingArea(area);
-}
-
-void Terrain::deselect()
-{
-  _subMesh.deselect();
 }
 
 float Terrain::getMaxXy() const
