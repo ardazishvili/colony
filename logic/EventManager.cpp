@@ -38,7 +38,7 @@ EventManager::EventManager(glm::mat4& view,
   _view(view),
   _projection(projection), _window(window), _camera(camera), _game(game),
   _textureShader(textureShader), _colorShader(colorShader),
-  _linesShader(linesShader), _terrain(terrain)
+  _linesShader(linesShader), _terrain(terrain), _selection(linesShader, camera)
 {
   _game->setControl(
     std::make_unique<Control>(_game, this, _window, textureShader, _terrain));
@@ -49,9 +49,12 @@ void EventManager::tick()
   _textureShader.use();
   _textureShader.configure();
   if (_selectionActive) {
-    _terrain->deselect();
-    _terrain->selectSubTerrainRegion(_selection,
-                                     SubTerrainMesh::SELECTION_COLOR);
+    _selection.render();
+    auto yaw = _camera.getYaw();
+    /* logger.log("yaw", yaw); */
+    /* _terrain->deselect(); */
+    /* _terrain->selectSubTerrainRegion(_selection, */
+    /*                                  SubTerrainMesh::SELECTION_COLOR); */
   }
   _game->tick();
 }
@@ -225,8 +228,11 @@ void EventManager::handleMouseMove(GLFWwindow* window, double xpos, double ypos)
       _terrain->getXYZ(glm::vec2(position.x, position.y)));
   }
   if (_selectionActive) {
-    _selection.width = c.x - _selection.x;
-    _selection.height = c.y - _selection.y;
+    auto tmp = c;
+    tmp.z += 0.3;
+    _selection.setEnd(tmp);
+    /* _selection.width = c.x - _selection.x; */
+    /* _selection.height = c.y - _selection.y; */
   }
 }
 
@@ -263,23 +269,27 @@ void EventManager::handleMouseReleasedMiddle()
 void EventManager::handleMouseReleased()
 {
   std::cout << "mouse released" << std::endl;
-  if (_selection.width != 0 || _selection.height != 0) {
-    _tanksSelected = _game->getTanks(_selection);
-  }
+  /* if (_selection.width != 0 || _selection.height != 0) { */
+  /*   _tanksSelected = _game->getTanks(_selection); */
+  /* } */
 
   _selectionActive = false;
-  _selection.width = 0;
-  _selection.height = 0;
-  _terrain->deselect();
+  _selection.clear();
+  /* _selection.width = 0; */
+  /* _selection.height = 0; */
+  /* _terrain->deselect(); */
 }
 
 void EventManager::handleMousePressedLeft()
 {
   auto c = unProject(_window, _view, _projection);
   _selectionActive = true;
-  _selection.x = c.x;
-  _selection.y = c.y;
-  _tanksSelected.clear();
+  auto tmp = c;
+  tmp.z += 0.3;
+  _selection.setStart(tmp);
+  /* _selection.x = c.x; */
+  /* _selection.y = c.y; */
+  /* _tanksSelected.clear(); */
 
   _tankSelected = _game->getTank(c, true);
   _structureSelected = _game->getStructure(c);

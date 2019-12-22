@@ -80,8 +80,8 @@ int main(int argc, char** argv)
   int count;
   GLFWmonitor** monitors = glfwGetMonitors(&count);
   const GLFWvidmode* mode = glfwGetVideoMode(monitors[1]);
-  float screenWidth = mode->width;
-  float screenHeight = mode->height;
+  float screenWidth = mode->width - 200;
+  float screenHeight = mode->height - 200;
   GLFWwindow* window =
     glfwCreateWindow(screenWidth, screenHeight, "LearnOPenGl", NULL, NULL);
   if (window == NULL) {
@@ -187,6 +187,8 @@ int main(int argc, char** argv)
   createTank(game.get(), textureShader, terrain.getXYZ(glm::vec2(0.0, 0.0f)));
   createTank(game.get(), textureShader, terrain.getXYZ(glm::vec2(5.0, 5.0f)));
   createTank(game.get(), textureShader, terrain.getXYZ(glm::vec2(-5.0, -5.0f)));
+  createTank(game.get(), textureShader, terrain.getXYZ(glm::vec2(0.0, 5.0f)));
+  createTank(game.get(), textureShader, terrain.getXYZ(glm::vec2(0.0, -5.0f)));
 
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

@@ -36,35 +36,28 @@ void RectangleShape::render()
 void RectangleShape::init(glm::vec3 s, glm::vec3 e)
 {
   auto l = glm::distance(s, e);
-  float deltaY = ::cos(glm::radians(_camera.getYaw() - 90)) * l;
-  float deltaX = ::sin(glm::radians(_camera.getYaw() - 90)) * l;
 
   float a = glm::radians(_camera.getYaw() - 90);
   float ey = -e.x * ::sin(a) + e.y * ::cos(a);
   float ex = e.x * ::cos(a) + e.y * ::sin(a);
   float sy = -s.x * ::sin(a) + s.y * ::cos(a);
   float sx = s.x * ::cos(a) + s.y * ::sin(a);
-  float angle = ::atan((ey - sy) / (ex - sx));
+  float angle = ::atan((ey - sy) / ::abs(ex - sx));
   std::cout << "angle= " << glm::degrees(angle) << std::endl;
   std::cout << "ydelta= " << ::sin(angle) * l << std::endl;
   _v.at(0) = s;
   _v.at(1) = glm::vec3(
     s.x - ::sin(angle) * sin(a) * l, s.y + l * sin(angle) * cos(a), s.z);
 
-  _v.at(2) = glm::vec3(
-    s.x - ::sin(angle) * sin(a) * l, s.y + l * sin(angle) * cos(a), s.z);
-  _v.at(3) = e;
-
-  /* deltaY = ::cos(glm::radians(_camera.getYaw() - 90)) * (e.y - s.y); */
-  /* deltaX = ::sin(glm::radians(_camera.getYaw() - 90)) * (e.y - s.y); */
-  _v.at(4) = e;
-  _v.at(5) = e;
-
-  _v.at(6) = e;
-  _v.at(7) = s;
+  _v.at(2) = e;
+  _v.at(3) = glm::vec3(
+    e.x + ::sin(angle) * sin(a) * l, e.y - l * sin(angle) * cos(a), e.z);
 
   glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-  glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(glm::vec3) * _v.size(), &_v[0]);
+  glBufferSubData(GL_ARRAY_BUFFER,
+                  sizeof(glm::vec3) * 0,
+                  sizeof(glm::vec3) * _v.size(),
+                  &_v[0]);
 }
 
 void RectangleShape::setStart(glm::vec3 start)

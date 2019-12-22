@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 
 #include "../engine/Camera.h"
+#include "../engine/RectangleShape.h"
 #include "Game.h"
 #include "Tank.h"
 
@@ -60,7 +61,8 @@ private:
   Buildable* _structureUnderAttack{ nullptr };
 
   Terrain* _terrain;
-  RectangleRegion _selection;
+  /* RectangleRegion _selection; */
+  RectangleShape _selection;
   bool _selectionActive{ false };
 
   bool _middleButtonPressed{ false };
