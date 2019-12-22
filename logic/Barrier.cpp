@@ -98,3 +98,10 @@ void Barrier::addEnergyStructure(EnergyStructure* es)
   BarrierView* v = dynamic_cast<BarrierView*>(_view.get());
   v->grow(_livingArea);
 }
+
+float Barrier::radius() const
+{
+  // TODO downcast
+  BarrierView* v = dynamic_cast<BarrierView*>(_view.get());
+  return v->radius();
+}

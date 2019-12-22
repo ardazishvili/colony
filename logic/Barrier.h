@@ -23,6 +23,7 @@ public:
   void addEnergyStructure(EnergyStructure* es);
   void commit() override;
   glm::vec3 shroudPosition() const;
+  float radius() const;
 
 private:
   float _radius{ 1.0f };

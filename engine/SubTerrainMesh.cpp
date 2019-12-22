@@ -86,7 +86,8 @@ void SubTerrainMesh::growLivingArea(std::shared_ptr<LivingArea> area,
           index = _latticeWidth * k + n;
           indexIsSet = true;
         }
-        if (::sqrt(::pow(x - c.p.x, 2) + ::pow(y - c.p.y, 2)) >= prevRadius) {
+        if (::sqrt(::pow(x - c.p.x, 2) + ::pow(y - c.p.y, 2)) >=
+            prevRadius - 0.1) {
           _v.at(_latticeWidth * k + n).color = area->initRgba;
         }
 
