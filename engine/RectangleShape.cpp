@@ -43,8 +43,6 @@ void RectangleShape::init(glm::vec3 s, glm::vec3 e)
   float sy = -s.x * ::sin(a) + s.y * ::cos(a);
   float sx = s.x * ::cos(a) + s.y * ::sin(a);
   float angle = ::atan((ey - sy) / ::abs(ex - sx));
-  std::cout << "angle= " << glm::degrees(angle) << std::endl;
-  std::cout << "ydelta= " << ::sin(angle) * l << std::endl;
   _v.at(0) = s;
   _v.at(1) = glm::vec3(
     s.x - ::sin(angle) * sin(a) * l, s.y + l * sin(angle) * cos(a), s.z);

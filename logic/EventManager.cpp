@@ -50,9 +50,6 @@ void EventManager::tick()
   _textureShader.configure();
   if (_selectionActive) {
     _selection.render();
-    /* _terrain->deselect(); */
-    /* _terrain->selectSubTerrainRegion(_selection, */
-    /*                                  SubTerrainMesh::SELECTION_COLOR); */
   }
   _game->tick();
 }
@@ -184,8 +181,6 @@ void EventManager::handleMouseMove(GLFWwindow* window, double xpos, double ypos)
       _camera.moveRight();
     }
     _middleLastPressed = glm::vec2(xpos, ypos);
-    /* logger._log.AddLog("%f \n", _middleLastPressed.x); */
-    /* logger._log.AddLog("%f \n", _middleLastPressed.y); */
   } else if (_middleButtonPressed) {
     auto deltaX = xpos - _middleLastPressed.x;
     auto deltaY = ypos - _middleLastPressed.y;
@@ -201,8 +196,6 @@ void EventManager::handleMouseMove(GLFWwindow* window, double xpos, double ypos)
       _camera.rotateRight();
     }
     _middleLastPressed = glm::vec2(xpos, ypos);
-    /* logger._log.AddLog("%f \n", _middleLastPressed.x); */
-    /* logger._log.AddLog("%f \n", _middleLastPressed.y); */
   }
   auto c = unProject(_window, _view, _projection);
   if (_structureToBuild && (_structureToBuildStage == BuildStage::SetAngle)) {
@@ -229,8 +222,6 @@ void EventManager::handleMouseMove(GLFWwindow* window, double xpos, double ypos)
     auto tmp = c;
     tmp.z += 0.3;
     _selection.setEnd(tmp);
-    /* _selection.width = c.x - _selection.x; */
-    /* _selection.height = c.y - _selection.y; */
   }
 }
 
@@ -271,9 +262,6 @@ void EventManager::handleMouseReleased()
 
   _selectionActive = false;
   _selection.clear();
-  /* _selection.width = 0; */
-  /* _selection.height = 0; */
-  /* _terrain->deselect(); */
 }
 
 void EventManager::handleMousePressedLeft()
@@ -283,9 +271,6 @@ void EventManager::handleMousePressedLeft()
   auto tmp = c;
   tmp.z += 0.3;
   _selection.setStart(tmp);
-  /* _selection.x = c.x; */
-  /* _selection.y = c.y; */
-  /* _tanksSelected.clear(); */
 
   _tankSelected = _game->getTank(c, true);
   _structureSelected = _game->getStructure(c);
@@ -319,7 +304,6 @@ void EventManager::handleMousePressedRight()
   } else if (_structureToBuild &&
              (_structureToBuildStage == BuildStage::SetAngle)) {
     std::cout << "setting angle" << std::endl;
-    /* _structureToBuildStage = BuildStage::Done; */
     _structureToBuild->commit();
     _structureToBuild = nullptr;
   } else if (!_tanksSelected.empty()) {
