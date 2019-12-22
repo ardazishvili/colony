@@ -25,7 +25,7 @@ public:
   void grow(std::shared_ptr<LivingArea> area);
 
 private:
-  float _scaleFactor{ 1 };
+  float _scaleFactor{ BARRIER_INIT_SCALE };
   Terrain* _terrain;
   Timer _timer;
   std::shared_ptr<Model> _shroudModel;
@@ -42,6 +42,7 @@ private:
   static float BARRIER_HEALTH_BAR_WIDTH;
   static float BARRIER_HEALTH_BAR_HEIGHT;
   static float BARRIER_SCALE_INCREMENT;
+  static float BARRIER_INIT_SCALE;
 };
 
 #endif

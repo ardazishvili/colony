@@ -7,6 +7,7 @@
 float BarrierView::BARRIER_HEALTH_BAR_WIDTH = 1.2f;
 float BarrierView::BARRIER_HEALTH_BAR_HEIGHT = 0.15f;
 float BarrierView::BARRIER_SCALE_INCREMENT = 1.0f;
+float BarrierView::BARRIER_INIT_SCALE = 1.0f;
 const float BarrierView::SHROUD_UP_SPEED = 0.09;
 const glm::vec3 BarrierView::SHROUD_OFFSET = glm::vec3(-6.0, 6.0, 6.0);
 const std::chrono::milliseconds BarrierView::SHROUD_CYCLE =
@@ -19,7 +20,7 @@ BarrierView::BarrierView(Shader& textureShader,
   StructureView(
     textureShader,
     p,
-    1.41 / 2,
+    BARRIER_INIT_SCALE,
     { -0.3, 0, BARRIER_HEALTH_BAR_WIDTH, BARRIER_HEALTH_BAR_HEIGHT },
     TexturePackType::Initial),
   _terrain(terrain), _beam(linesShader,
@@ -152,5 +153,6 @@ void BarrierView::grow(std::shared_ptr<LivingArea> area)
       std::this_thread::sleep_for(std::chrono::milliseconds(40));
     }
     _terrain->growLivingArea(area, _scaleFactor);
+    _selectionRadius = _scaleFactor;
   });
 }
