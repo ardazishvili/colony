@@ -1,4 +1,3 @@
-#include "../imgui/imgui.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -7,21 +6,14 @@
 
 #include "Beam.h"
 
-float verts[] = { -0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f,
-                  -0.5f, 0.5f,  0.0f, 0.5f, 0.5f,  0.0f };
-
 Beam::Beam(Shader& shader,
            glm::vec3 begin,
            glm::vec3 end,
            float r,
            unsigned int numLines) :
-  _shader(shader),
+  LinesObject(shader),
   _r(r), _numLines(numLines)
 {
-  glGenVertexArrays(1, &_vao);
-  glBindVertexArray(_vao);
-  glGenBuffers(1, &_vbo);
-
   _offset = begin;
   init(begin, end);
 }
@@ -39,8 +31,7 @@ void Beam::render()
   _shader.setTransformation("model", glm::value_ptr(model));
   _shader.setBool("animated", false);
 
-  glBindVertexArray(_vao);
-  glDrawArrays(GL_LINES, 0, _v.size());
+  LinesObject::render();
 }
 
 void Beam::init(glm::vec3 begin, glm::vec3 end)
@@ -63,33 +54,26 @@ void Beam::init(glm::vec3 begin, glm::vec3 end)
   if (end.z < begin.z) {
     _oyAngle = -_oyAngle + M_PI;
   }
-  std::cout << "_oyAngle= " << glm::degrees(_oyAngle) << std::endl;
-  std::cout << "_ozAngle= " << glm::degrees(_ozAngle) << std::endl;
   auto height = ::sqrt(::pow(begin.x - end.x, 2) + ::pow(begin.y - end.y, 2) +
                        ::pow(begin.z - end.z, 2));
-  auto zStep = height / _fragmentsNum;
+  auto zStep = height / (_fragmentsNum - 1);
   for (unsigned int i = 0; i < _numLines; ++i) {
-    float r = !_reverse ? _r : 0;
+    _i.push_back(i * _fragmentsNum);
+    float r = _r;
+
     for (unsigned int j = 0; j < _fragmentsNum; ++j) {
       auto p1 = glm::vec3();
       p1.x = r * ::sin(angleStep * j + deltaAngle * i);
       p1.y = r * ::cos(angleStep * j + deltaAngle * i);
       p1.z = j * zStep;
       _v.push_back(p1);
-
       r -= rStep;
 
-      auto p2 = glm::vec3();
-      p2.x = r * ::sin(angleStep * (j + 1) + deltaAngle * i);
-      p2.y = r * ::cos(angleStep * (j + 1) + deltaAngle * i);
-      p2.z = (j + 1) * zStep;
-      _v.push_back(p2);
+      _i.push_back(i * _fragmentsNum + j);
+      _i.push_back(i * _fragmentsNum + j);
     }
+    _i.push_back(i * _fragmentsNum + _fragmentsNum - 1);
   }
 
-  glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-  glBufferData(
-    GL_ARRAY_BUFFER, sizeof(glm::vec3) * _v.size(), &_v[0], GL_DYNAMIC_DRAW);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
-  glEnableVertexAttribArray(0);
+  LinesObject::initBuffers();
 }

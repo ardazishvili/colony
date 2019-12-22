@@ -1,14 +1,9 @@
 #ifndef BEAM_H
 #define BEAM_H
 
-#include <vector>
+#include "LinesObject.h"
 
-#include <glm/glm.hpp>
-
-#include "Shader.h"
-
-using Points = std::vector<glm::vec3>;
-class Beam
+class Beam : public LinesObject
 {
 public:
   Beam(Shader& shader,
@@ -16,14 +11,11 @@ public:
        glm::vec3 end,
        float r,
        unsigned int numLines);
-  void init(glm::vec3 begin, glm::vec3 end);
   void render();
 
 private:
-  Shader& _shader;
-  unsigned int _vao;
-  unsigned int _vbo;
-  Points _v;
+  void init(glm::vec3 begin, glm::vec3 end);
+
   float _rotateSpeed{ 8.0f };
   unsigned int _fragmentsNum{ 10 };
   float _r;
@@ -31,13 +23,6 @@ private:
   float _ozAngle;
   float _oyAngle;
   glm::vec3 _offset;
-  bool _reverse{ false };
 };
-
-template<typename T>
-int sgn(T val)
-{
-  return (T(0) < val) - (val < T(0));
-}
 
 #endif
