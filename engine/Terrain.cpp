@@ -86,3 +86,8 @@ float Terrain::getMaxXy() const
 {
   return _maxXy;
 }
+
+void Terrain::growLivingArea(std::shared_ptr<LivingArea> area, float radius)
+{
+  _subMesh.growLivingArea(area, radius);
+}

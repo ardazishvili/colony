@@ -19,7 +19,6 @@ Turbine::Turbine(Shader& textureShader,
                                   game->getNearestShroudPosition())),
   _game(game)
 {
-  _game->addBarrierPotential(this);
 }
 
 UnitBuilders Turbine::getUnitBuilders(Game* game)
@@ -38,4 +37,5 @@ void Turbine::commit()
   // TODO downcast!
   TurbineView* v = dynamic_cast<TurbineView*>(_view.get());
   v->initBeam();
+  _game->addBarrierPotential(this);
 }

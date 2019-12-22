@@ -143,13 +143,14 @@ void BarrierView::startAnimation()
   _animate = true;
 }
 
-void BarrierView::grow()
+void BarrierView::grow(std::shared_ptr<LivingArea> area)
 {
-  _growFuture = std::async(std::launch::async, [this]() {
+  _growFuture = std::async(std::launch::async, [this, area]() {
     auto finalScale = _scaleFactor + BARRIER_SCALE_INCREMENT;
     while (_scaleFactor < finalScale) {
-      _scaleFactor += 0.05;
-      std::this_thread::sleep_for(std::chrono::milliseconds(200));
+      _scaleFactor += 0.01;
+      std::this_thread::sleep_for(std::chrono::milliseconds(40));
     }
+    _terrain->growLivingArea(area, _scaleFactor);
   });
 }

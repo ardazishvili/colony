@@ -22,7 +22,7 @@ public:
   float radius() const;
   glm::vec3 shroudPosition() const;
   void startAnimation();
-  void grow();
+  void grow(std::shared_ptr<LivingArea> area);
 
 private:
   float _scaleFactor{ 1 };

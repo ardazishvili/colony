@@ -56,7 +56,6 @@ void TurbineView::draw()
   _model->render();
   showHealthBar();
   if (_beam) {
-
     _beam->render();
   }
 }

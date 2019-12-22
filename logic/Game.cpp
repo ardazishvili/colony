@@ -38,6 +38,7 @@ void Game::tick()
   displayControl();
 
   showDebug();
+  logger.render();
 }
 
 void Game::updateTerrain()

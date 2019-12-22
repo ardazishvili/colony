@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 
+#include "../globals.h"
 #include "../math/Noise.h"
 #include "SubTerrainMesh.h"
 
@@ -45,10 +46,57 @@ std::shared_ptr<LivingArea> SubTerrainMesh::addLivingArea(CircularRegion region,
       }
     }
     livingArea->cells.push_back(std::make_pair(index, stride));
+    livingArea->region = region;
+    livingArea->initRgba = rgba;
   }
   reloadLivingArea(livingArea);
   _livingAreas.push_back(livingArea);
   return livingArea;
+}
+
+void SubTerrainMesh::growLivingArea(std::shared_ptr<LivingArea> area,
+                                    float radius)
+{
+  auto prevRadius = area->region.r;
+  area->region.r = radius;
+  auto region = area->region;
+  RectangleRegion rect = {
+    region.x - region.r, region.y - region.r, 2 * region.r, 2 * region.r
+  };
+  rect.x += _width;
+  rect.y += _height;
+  auto x = region.x + _width;
+  auto y = region.y + _height;
+  auto r = region.r;
+
+  auto i = ::floor(rect.x / _xStep / _xyScale);
+  auto j = ::floor(rect.y / _yStep);
+  signed int xWidth = rect.width / _xStep / _xyScale;
+  signed int yWidth = rect.height / _yStep;
+  auto cells = Cells();
+  for (unsigned int k = i; k <= i + xWidth; ++k) {
+    unsigned int index = 0;
+    unsigned int stride = 0;
+    auto indexIsSet = false;
+    for (unsigned int n = j; n < j + yWidth; ++n) {
+      auto c = _v.at(_latticeWidth * k + n);
+
+      if (::sqrt(::pow(x - c.p.x, 2) + ::pow(y - c.p.y, 2)) < r) {
+        if (!indexIsSet) {
+          index = _latticeWidth * k + n;
+          indexIsSet = true;
+        }
+        if (::sqrt(::pow(x - c.p.x, 2) + ::pow(y - c.p.y, 2)) >= prevRadius) {
+          _v.at(_latticeWidth * k + n).color = area->initRgba;
+        }
+
+        ++stride;
+      }
+    }
+    cells.push_back(std::make_pair(index, stride));
+  }
+  area->cells = cells;
+  reloadLivingArea(area);
 }
 
 void SubTerrainMesh::reloadLivingArea(std::shared_ptr<LivingArea> area)
@@ -64,22 +112,27 @@ void SubTerrainMesh::reloadLivingArea(std::shared_ptr<LivingArea> area)
 
 void SubTerrainMesh::updateLivingArea(std::shared_ptr<LivingArea> area)
 {
-  for (auto plant : area->plants) {
-    plant.x += _width;
-    plant.y += _height;
-    for (auto& cell : area->cells) {
-      for (unsigned int i = cell.first; i < cell.first + cell.second; ++i) {
-        auto cellX = _v.at(i).p.x;
-        auto cellY = _v.at(i).p.y;
-        float d = ::sqrt(::pow(cellX - plant.x, 2) + ::pow(cellY - plant.y, 2));
-        d /= 2.0;
-        double g = _v.at(i).color.y;
-        auto newColor = glm::lerp(g, 1.0, ::pow(1.0f - d / 3, 20) / 30);
-        _v.at(i).color.y = newColor;
+  logger.log("begin area update");
+  reloadLivingArea(area);
+  area->future = std::async(std::launch::async, [this, area]() {
+    for (auto plant : area->plants) {
+      plant.x += _width;
+      plant.y += _height;
+      for (auto& cell : area->cells) {
+        for (unsigned int i = cell.first; i < cell.first + cell.second; ++i) {
+          auto cellX = _v.at(i).p.x;
+          auto cellY = _v.at(i).p.y;
+          float d =
+            ::sqrt(::pow(cellX - plant.x, 2) + ::pow(cellY - plant.y, 2));
+          d /= 2.0;
+          double g = _v.at(i).color.y;
+          auto newColor = glm::lerp(g, 1.0, ::pow(1.0f - d / 3, 20) / 30);
+          _v.at(i).color.y = newColor;
+        }
       }
     }
-  }
-  reloadLivingArea(area);
+  });
+  logger.log("end area update");
 }
 
 void SubTerrainMesh::calculateHeights(unsigned int width,

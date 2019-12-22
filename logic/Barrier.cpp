@@ -36,6 +36,7 @@ void Barrier::render()
       Buildable::render();
       if (_livingArea != nullptr) {
         if (_clock.elapsed() >= _bioUpdateTime) {
+          logger.log("updating area...");
           _terrain->updateLivingArea(_livingArea);
           _clock.reload();
         }
@@ -95,5 +96,5 @@ void Barrier::addEnergyStructure(EnergyStructure* es)
   _energyStructures.push_back(es);
   // TODO downcast
   BarrierView* v = dynamic_cast<BarrierView*>(_view.get());
-  v->grow();
+  v->grow(_livingArea);
 }

@@ -23,6 +23,7 @@ public:
   std::shared_ptr<LivingArea> addLivingArea(CircularRegion region,
                                             glm::vec4 rgba);
   void updateLivingArea(std::shared_ptr<LivingArea> area);
+  void growLivingArea(std::shared_ptr<LivingArea> area, float radius);
   float getMaxXy() const;
 
 private:

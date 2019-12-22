@@ -11,6 +11,7 @@ class Logger
 public:
   void log(const std::string& str, float f);
   void log(const std::string& str);
+  void render();
 
 private:
   Log _log;

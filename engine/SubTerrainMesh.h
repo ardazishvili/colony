@@ -1,6 +1,7 @@
 #ifndef SUB_TERRAIN_MESH_H
 #define SUB_TERRAIN_MESH_H
 
+#include <future>
 #include <memory>
 #include <vector>
 
@@ -22,10 +23,14 @@ struct CircularRegion
   float r;
 };
 
+using Cells = std::vector<std::pair<unsigned int, unsigned int>>;
 struct LivingArea
 {
-  std::vector<std::pair<unsigned int, unsigned int>> cells;
+  Cells cells;
   std::vector<glm::vec2> plants;
+  CircularRegion region;
+  glm::vec4 initRgba;
+  std::future<void> future;
 };
 
 using LivingAreas = std::vector<std::shared_ptr<LivingArea>>;
@@ -43,6 +48,7 @@ public:
                        unsigned int augmentedWidth) override;
   std::shared_ptr<LivingArea> addLivingArea(CircularRegion region,
                                             glm::vec4 rgba);
+  void growLivingArea(std::shared_ptr<LivingArea> area, float radius);
   void updateLivingArea(std::shared_ptr<LivingArea> area);
 
   const static glm::vec4 SELECTION_COLOR;
@@ -52,7 +58,6 @@ private:
   void reloadLivingArea(std::shared_ptr<LivingArea> area);
   void selectSubTerrainRegion(CircularRegion region, glm::vec4 rgba);
 
-  RectangleRegion _lastSelected{ 0.0f, 0.0f, 0.0f, 0.0f };
   LivingAreas _livingAreas;
 };
 

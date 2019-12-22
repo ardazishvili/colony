@@ -27,9 +27,10 @@ void Surface::render()
 {
   _yawAngle = _camera.getYaw() - 90;
   _pitchAngle = -_camera.getPitch();
-  /* logger._log.AddLog("pitch: %f \n", _pitchAngle); */
-  /* logger._log.AddLog("yaw: %f \n", _yawAngle); */
 
+  _shader.use();
+  _shader.configure();
+  _shader.setBool("animated", false);
   auto model = glm::mat4(1.0f);
   model = glm::translate(model, _offset);
   model =
@@ -38,8 +39,6 @@ void Surface::render()
     glm::rotate(model, glm::radians(_pitchAngle), glm::vec3(1.0, 0.0f, 0.0f));
   model = glm::scale(model, glm::vec3(_xScaleFactor, _yScaleFactor, 1.0f));
   _shader.setTransformation("model", glm::value_ptr(model));
-  _shader.setBool("animated", false);
-  _shader.use();
   _mesh.render();
 }
 
