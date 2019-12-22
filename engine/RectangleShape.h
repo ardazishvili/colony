@@ -12,6 +12,9 @@ public:
   void setEnd(glm::vec3 end);
   void clear();
 
+  // start from bottom left -> clockwise
+  Points getPoints() const;
+
 private:
   void init(glm::vec3 start, glm::vec3 end);
 

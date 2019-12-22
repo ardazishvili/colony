@@ -31,7 +31,7 @@ public:
   void setControl(std::unique_ptr<Control> control);
 
   Tank* getTank(const glm::vec3& mousePoint, bool select = false);
-  VehicleGroup getTanks(RectangleRegion area);
+  VehicleGroup getTanks(Points area);
   Buildable* getStructure(const glm::vec3& mousePoint);
   void showDebug();
   void clearPanel(Panel::Type type);

@@ -117,17 +117,21 @@ void Tank::updateShells()
   }
 }
 
-bool Tank::isInsideArea(RectangleRegion area)
+bool Tank::isInsideArea(Points area)
 {
-  auto c = _view->position();
-  auto lowerX = std::min(area.x, area.x + area.width);
-  auto upperX = std::max(area.x, area.x + area.width);
-  auto lowerY = std::min(area.y, area.y + area.height);
-  auto upperY = std::max(area.y, area.y + area.height);
-  std::cout << "c.x= " << c.x << std::endl;
-  std::cout << "area.x= " << area.x << std::endl;
-  std::cout << "area.x + area.width= " << area.x + area.width << std::endl;
-  return (lowerX <= c.x && c.x <= upperX) && (lowerY <= c.y && c.y <= upperY);
+  auto tmp = _view->position();
+  auto m = glm::vec2(tmp.x, tmp.y);
+  auto a = glm::vec2(area.at(0).x, area.at(0).y);
+  auto b = glm::vec2(area.at(1).x, area.at(1).y);
+  auto d = glm::vec2(area.at(3).x, area.at(3).y);
+  glm::vec2 am = m - a;
+  glm::vec2 ab = b - a;
+  glm::vec2 ad = d - a;
+  const bool cond1 =
+    (0.0f < glm::dot(am, ab)) && (glm::dot(am, ab) < glm::dot(ab, ab));
+  const bool cond2 =
+    (0.0f < glm::dot(am, ad)) && (glm::dot(am, ad) < glm::dot(ad, ad));
+  return cond1 && cond2;
 }
 
 bool Tank::isShooting()

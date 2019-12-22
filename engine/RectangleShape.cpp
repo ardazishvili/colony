@@ -74,3 +74,8 @@ void RectangleShape::clear()
 {
   init(glm::vec3(), glm::vec3());
 }
+
+Points RectangleShape::getPoints() const
+{
+  return _v;
+}

@@ -50,8 +50,6 @@ void EventManager::tick()
   _textureShader.configure();
   if (_selectionActive) {
     _selection.render();
-    auto yaw = _camera.getYaw();
-    /* logger.log("yaw", yaw); */
     /* _terrain->deselect(); */
     /* _terrain->selectSubTerrainRegion(_selection, */
     /*                                  SubTerrainMesh::SELECTION_COLOR); */
@@ -269,9 +267,7 @@ void EventManager::handleMouseReleasedMiddle()
 void EventManager::handleMouseReleased()
 {
   std::cout << "mouse released" << std::endl;
-  /* if (_selection.width != 0 || _selection.height != 0) { */
-  /*   _tanksSelected = _game->getTanks(_selection); */
-  /* } */
+  _tanksSelected = _game->getTanks(_selection.getPoints());
 
   _selectionActive = false;
   _selection.clear();

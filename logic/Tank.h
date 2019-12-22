@@ -6,6 +6,7 @@
 #include <list>
 
 #include "../Timer.h"
+#include "../engine/LinesObject.h"
 #include "../engine/Terrain.h"
 #include "../view/TankView.h"
 #include "BuildableUnit.h"
@@ -28,7 +29,7 @@ public:
        HealthLevel healthLevel = HealthLevel::High,
        Shell::Size shellSize = Shell::Size::Small);
 
-  bool isInsideArea(RectangleRegion area);
+  bool isInsideArea(Points area);
   UnitBuilders getUnitBuilders(Game* game) override;
   StructureBuilders getStructureBuilders() override;
 

@@ -134,7 +134,7 @@ Tank* Game::getTank(const glm::vec3& mousePoint, bool select)
   return nullptr;
 }
 
-VehicleGroup Game::getTanks(RectangleRegion area)
+VehicleGroup Game::getTanks(Points area)
 {
   for (auto& tank : _tanks) {
     tank->deselect();
