@@ -1,4 +1,5 @@
 #include "BuildableUnit.h"
+#include "../globals.h"
 
 BuildableUnit::BuildableUnit(Shader& textureShader,
                              Shader& linesShader,
@@ -17,5 +18,7 @@ bool BuildableUnit::isUnderCursor(const glm::vec3& mousePoint)
 void BuildableUnit::render()
 {
   Buildable::render();
-  _path.render();
+  if (_path.isSettedUp()) {
+    _path.render();
+  }
 }

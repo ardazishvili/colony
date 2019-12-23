@@ -15,11 +15,11 @@ Path::Path(Shader& shader) : LinesObject(shader)
   _i.push_back(1);
 
   LinesObject::initBuffers();
+  clear();
 }
 
 void Path::render()
 {
-  logger.log("Path render");
   _shader.use();
   _shader.configure();
   auto model = glm::mat4(1.0f);
@@ -27,6 +27,15 @@ void Path::render()
   _shader.setBool("animated", false);
 
   LinesObject::render();
+}
+
+void Path::setUp(glm::vec3 s, glm::vec3 e)
+{
+  s.z += Z_OFFSET;
+  _v.push_back(s);
+  e.z += Z_OFFSET;
+  _v.push_back(e);
+  reloadData();
 }
 
 void Path::setStart(glm::vec3 s)
@@ -39,7 +48,7 @@ void Path::setStart(glm::vec3 s)
 void Path::setEnd(glm::vec3 e)
 {
   e.z += Z_OFFSET;
-  _v.at(1) = e;
+  _v.at(_v.size() - 1) = e;
   reloadData();
 }
 
@@ -53,6 +62,10 @@ void Path::reloadData()
 }
 void Path::clear()
 {
-  _v.at(0) = glm::vec3();
-  _v.at(1) = glm::vec3();
+  _v.clear();
+}
+
+bool Path::isSettedUp() const
+{
+  return !_v.empty();
 }
