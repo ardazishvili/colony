@@ -40,8 +40,8 @@ EventManager::EventManager(glm::mat4& view,
   _textureShader(textureShader), _colorShader(colorShader),
   _linesShader(linesShader), _terrain(terrain), _selection(linesShader, camera)
 {
-  _game->setControl(
-    std::make_unique<Control>(_game, this, _window, textureShader, _terrain));
+  _game->setControl(std::make_unique<Control>(
+    _game, this, _window, textureShader, linesShader, _terrain));
 }
 
 void EventManager::tick()
@@ -81,7 +81,7 @@ void EventManager::handleKeyPress(GLFWwindow* window,
       if (_structureToBuild == nullptr) {
         _structureToBuildStage = BuildStage::SetAngle;
         auto tankFactory = std::make_shared<TankFactory>(
-          _textureShader, unProject(_window, _view, _projection));
+          _textureShader, _linesShader, unProject(_window, _view, _projection));
         _game->addStructure(tankFactory);
         _structureToBuild = tankFactory;
       } else {
@@ -96,6 +96,7 @@ void EventManager::handleKeyPress(GLFWwindow* window,
         auto hq = std::make_shared<Hq>(_game,
                                        this,
                                        _textureShader,
+                                       _linesShader,
                                        unProject(_window, _view, _projection),
                                        _terrain);
         _game->addStructure(hq);

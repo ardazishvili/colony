@@ -11,7 +11,7 @@ class TankFactory : public BuildableStructure
 {
 public:
   TankFactory() = delete;
-  TankFactory(Shader& shader, glm::vec3 position);
+  TankFactory(Shader& textureShader, Shader& linesShader, glm::vec3 position);
 
   void createTank(Game* game,
                   Tank::Type tankType,

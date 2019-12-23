@@ -23,7 +23,8 @@ public:
   enum class Type { Light, Medium, Heavy };
 
   Tank() = delete;
-  Tank(Shader& shader,
+  Tank(Shader& textureShader,
+       Shader& linesShader,
        glm::vec3 position,
        Type type = Type::Light,
        HealthLevel healthLevel = HealthLevel::High,
@@ -66,7 +67,8 @@ private:
 };
 
 std::shared_ptr<Tank> createTank(Game* game,
-                                 Shader& shader,
+                                 Shader& textureShader,
+                                 Shader& linesShader,
                                  glm::vec3 position,
                                  Tank::Type type = Tank::Type::Light,
                                  HealthLevel health = HealthLevel::High,

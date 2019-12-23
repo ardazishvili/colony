@@ -9,7 +9,9 @@ enum class BuildStage { SetPosition, SetAngle, Done };
 class BuildableStructure : public Buildable
 {
 public:
-  BuildableStructure(Shader& shader, std::unique_ptr<StructureView> view);
+  BuildableStructure(Shader& textureShader,
+                     Shader& linesShader,
+                     std::unique_ptr<StructureView> view);
   bool isUnderCursor(const glm::vec3& mousePoint);
   virtual void commit();
   void setAngle(float angle);

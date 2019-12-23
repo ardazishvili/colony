@@ -8,8 +8,8 @@ BarrierBuilder::BarrierBuilder(Game* game,
                                Shader& textureShader,
                                Shader& linesShader,
                                Terrain* terrain) :
-  AbstractStructureBuilder(game, eventManager),
-  _textureShader(textureShader), _linesShader(linesShader), _terrain(terrain)
+  AbstractStructureBuilder(game, eventManager, textureShader, linesShader),
+  _terrain(terrain)
 {
 }
 

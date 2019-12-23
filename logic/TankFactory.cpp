@@ -3,9 +3,12 @@
 
 const int TankFactory::TANK_FACTORY_HP = 200;
 
-TankFactory::TankFactory(Shader& shader, glm::vec3 position) :
-  BuildableStructure(shader,
-                     std::make_unique<TankFactoryView>(shader, position))
+TankFactory::TankFactory(Shader& textureShader,
+                         Shader& linesShader,
+                         glm::vec3 position) :
+  BuildableStructure(textureShader,
+                     linesShader,
+                     std::make_unique<TankFactoryView>(textureShader, position))
 {
   std::cout << "position.x= " << position.x << std::endl;
   std::cout << "position.y= " << position.y << std::endl;
@@ -19,8 +22,13 @@ void TankFactory::createTank(Game* game,
                              Shell::Size shellSize)
 {
   auto p = position();
-  auto tank =
-    ::createTank(game, _shader, position(), tankType, healthLevel, shellSize);
+  auto tank = ::createTank(game,
+                           _textureShader,
+                           _linesShader,
+                           position(),
+                           tankType,
+                           healthLevel,
+                           shellSize);
   auto d = 3.0f;
   auto tankDestination =
     glm::vec3(p.x - d * ::cos(glm::radians(_view->angle())),
@@ -48,7 +56,7 @@ void TankFactory::addUnitBuilder(Game* game,
                                  Shell::Size shellSize)
 {
   std::unique_ptr<AbstractUnitBuilder> builder = std::make_unique<TankBuilder>(
-    _shader, game, *this, type, healthLevel, shellSize);
+    _textureShader, game, *this, type, healthLevel, shellSize);
   builders.push_back(std::move(builder));
 }
 

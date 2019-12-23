@@ -13,7 +13,8 @@ public:
   Control(Game* game,
           EventManager* eventManager,
           GLFWwindow* window,
-          Shader& shader,
+          Shader& textureShader,
+          Shader& linesShader,
           Terrain* terrain);
   void display();
   void populateUnitPanel(Game* game, Buildable* buildable);
@@ -30,7 +31,8 @@ private:
   EventManager* _eventManager;
   Panel _structurePanel;
   Panel _unitPanel;
-  Shader& _shader;
+  Shader& _textureShader;
+  Shader& _linesShader;
 };
 
 #endif

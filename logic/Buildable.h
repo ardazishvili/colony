@@ -20,7 +20,7 @@ using StructureBuilders =
 class Buildable
 {
 public:
-  Buildable(Shader& shader);
+  Buildable(Shader& textureShader, Shader& linesShader);
   virtual bool isUnderCursor(const glm::vec3& mousePoint) = 0;
   virtual UnitBuilders getUnitBuilders(Game* game) = 0;
   virtual StructureBuilders getStructureBuilders() = 0;
@@ -39,7 +39,8 @@ protected:
   float _health;
   float _maxHealth;
   Status _status;
-  Shader& _shader;
+  Shader& _textureShader;
+  Shader& _linesShader;
   SelectableView* _viewPtr;
 };
 

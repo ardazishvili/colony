@@ -9,18 +9,18 @@
 
 HqBuilder::HqBuilder(Game* game,
                      EventManager* eventManager,
-                     Shader& shader,
+                     Shader& textureShader,
+                     Shader& linesShader,
                      Terrain* terrain) :
-  AbstractStructureBuilder(game, eventManager),
-  _shader(shader), _terrain(terrain)
+  AbstractStructureBuilder(game, eventManager, textureShader, linesShader),
+  _terrain(terrain)
 {
 }
 
 void HqBuilder::create()
 {
-  std::cout << "hq builder create" << std::endl;
-  auto structure =
-    std::make_shared<Hq>(_game, _eventManager, _shader, glm::vec3(), _terrain);
+  auto structure = std::make_shared<Hq>(
+    _game, _eventManager, _textureShader, _linesShader, glm::vec3(), _terrain);
   _game->addStructure(structure);
   _eventManager->setStructureToBuild(structure);
   _eventManager->setStructureToBuildStage(BuildStage::SetPosition);

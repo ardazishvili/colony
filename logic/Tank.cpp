@@ -23,18 +23,17 @@ std::map<Tank::Type, float> speedMap = { { Tank::Type::Light, 0.05f },
                                          { Tank::Type::Medium, 0.033f },
                                          { Tank::Type::Heavy, 0.02f } };
 
-Tank::Tank(Shader& shader,
+Tank::Tank(Shader& textureShader,
+           Shader& linesShader,
            glm::vec3 position,
            Type type,
            HealthLevel healthLevel,
            Shell::Size sh) :
   BuildableUnit(
-    shader,
-    std::make_unique<TankView>(shader, position, tankSizeMap[type])),
-  _speed(speedMap[type]),
-  /* _view->shader, position, tankSizeMap[type]), _shader(shader), _type(type),
-   */
-  _shellSize(sh), _destination(-1, -1, -1)
+    textureShader,
+    linesShader,
+    std::make_unique<TankView>(textureShader, position, tankSizeMap[type])),
+  _speed(speedMap[type]), _shellSize(sh), _destination(-1, -1, -1)
 {
   _health = healthLevelMap[healthLevel] * tankHitPointsMap[type];
   _maxHealth = _health;
@@ -93,7 +92,7 @@ void Tank::shootTarget()
   float angle = getTargetAngle() + 90.0f;
   _view->rotateGun(getTargetAngle());
   // TODO magic number = tank length
-  Shell shell(_shader,
+  Shell shell(_textureShader,
               glm::vec3(_view->position().x, _view->position().y, 0.5f),
               glm::radians(angle),
               getTargetDistance(),
@@ -217,14 +216,15 @@ void Tank::setTerrain(Terrain* terrain)
 }
 
 std::shared_ptr<Tank> createTank(Game* game,
-                                 Shader& shader,
+                                 Shader& textureShader,
+                                 Shader& linesShader,
                                  glm::vec3 position,
                                  Tank::Type type,
                                  HealthLevel health,
                                  Shell::Size shellSize)
 {
-  auto newTank =
-    std::make_shared<Tank>(shader, position, type, health, shellSize);
+  auto newTank = std::make_shared<Tank>(
+    textureShader, linesShader, position, type, health, shellSize);
   game->addTank(newTank);
   return newTank;
 }

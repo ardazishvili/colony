@@ -9,16 +9,17 @@
 
 TankFactoryBuilder::TankFactoryBuilder(Game* game,
                                        EventManager* eventManager,
-                                       Shader& shader) :
-  AbstractStructureBuilder(game, eventManager),
-  _shader(shader)
+                                       Shader& textureShader,
+                                       Shader& linesShader) :
+  AbstractStructureBuilder(game, eventManager, textureShader, linesShader)
 {
 }
 
 void TankFactoryBuilder::create()
 {
   std::cout << "factory builder create" << std::endl;
-  auto structure = std::make_shared<TankFactory>(_shader, glm::vec3());
+  auto structure =
+    std::make_shared<TankFactory>(_textureShader, _linesShader, glm::vec3());
   _game->addStructure(structure);
   _eventManager->setStructureToBuild(structure);
   _eventManager->setStructureToBuildStage(BuildStage::SetPosition);

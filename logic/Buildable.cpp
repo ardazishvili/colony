@@ -1,6 +1,7 @@
 #include "Buildable.h"
 
-Buildable::Buildable(Shader& shader) : _shader(shader)
+Buildable::Buildable(Shader& textureShader, Shader& linesShader) :
+  _textureShader(textureShader), _linesShader(linesShader)
 {
 }
 

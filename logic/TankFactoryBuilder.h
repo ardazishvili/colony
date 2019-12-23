@@ -7,14 +7,14 @@
 class TankFactoryBuilder : public AbstractStructureBuilder
 {
 public:
-  TankFactoryBuilder(Game* game, EventManager* eventManager, Shader& shader);
+  TankFactoryBuilder(Game* game,
+                     EventManager* eventManager,
+                     Shader& textureShader,
+                     Shader& linesShader);
   ~TankFactoryBuilder();
 
   void create() override;
   MenuTextures getPreviewType() override;
-
-private:
-  Shader& _shader;
 };
 
 #endif

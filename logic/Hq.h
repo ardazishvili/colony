@@ -11,7 +11,8 @@ public:
   Hq() = delete;
   Hq(Game* game,
      EventManager* eventManager,
-     Shader& shader,
+     Shader& textureShader,
+     Shader& linesShader,
      glm::vec3 position,
      Terrain* terrain);
 

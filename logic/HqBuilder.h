@@ -10,7 +10,8 @@ class HqBuilder : public AbstractStructureBuilder
 public:
   HqBuilder(Game* game,
             EventManager* eventManager,
-            Shader& shader,
+            Shader& textureShader,
+            Shader& linesShader,
             Terrain* terrain);
   ~HqBuilder();
 
@@ -18,7 +19,6 @@ public:
   MenuTextures getPreviewType() override;
 
 private:
-  Shader& _shader;
   Terrain* _terrain;
 };
 

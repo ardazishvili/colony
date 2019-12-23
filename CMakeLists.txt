@@ -7,6 +7,8 @@ add_executable(colony
     engine/LinesObject.cpp
     engine/RectangleShape.h
     engine/RectangleShape.cpp
+    engine/Path.h
+    engine/Path.cpp
     logic/AbstractPlantBuilder.h
     logic/AbstractPlantBuilder.cpp
 		Timer.cpp

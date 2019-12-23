@@ -1,8 +1,9 @@
 #include "BuildableStructure.h"
 
-BuildableStructure::BuildableStructure(Shader& shader,
+BuildableStructure::BuildableStructure(Shader& textureShader,
+                                       Shader& linesShader,
                                        std::unique_ptr<StructureView> view) :
-  Buildable(shader),
+  Buildable(textureShader, linesShader),
   _view(std::move(view))
 {
   _viewPtr = _view.get();

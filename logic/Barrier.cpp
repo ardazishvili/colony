@@ -51,11 +51,11 @@ UnitBuilders Barrier::getUnitBuilders(Game* game)
 {
   auto builders = UnitBuilders();
   std::unique_ptr<AbstractUnitBuilder> pb =
-    std::make_unique<PlantBuilder>(_shader, game, *this, _terrain);
+    std::make_unique<PlantBuilder>(_textureShader, game, *this, _terrain);
   builders.push_back(std::move(pb));
 
   std::unique_ptr<AbstractUnitBuilder> tb =
-    std::make_unique<TreeBuilder>(_shader, game, *this, _terrain);
+    std::make_unique<TreeBuilder>(_textureShader, game, *this, _terrain);
   builders.push_back(std::move(tb));
 
   return builders;

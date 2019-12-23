@@ -7,8 +7,7 @@ TurbineBuilder::TurbineBuilder(Game* game,
                                EventManager* eventManager,
                                Shader& textureShader,
                                Shader& linesShader) :
-  AbstractStructureBuilder(game, eventManager),
-  _textureShader(textureShader), _linesShader(linesShader)
+  AbstractStructureBuilder(game, eventManager, textureShader, linesShader)
 {
 }
 

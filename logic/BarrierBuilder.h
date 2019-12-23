@@ -17,8 +17,6 @@ public:
   MenuTextures getPreviewType() override;
 
 private:
-  Shader& _textureShader;
-  Shader& _linesShader;
   Terrain* _terrain;
 };
 

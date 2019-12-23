@@ -1,7 +1,10 @@
 #include "BuildableUnit.h"
 
-BuildableUnit::BuildableUnit(Shader& shader, std::unique_ptr<UnitView> view) :
-  Buildable(shader), _view(std::move(view))
+BuildableUnit::BuildableUnit(Shader& textureShader,
+                             Shader& linesShader,
+                             std::unique_ptr<UnitView> view) :
+  Buildable(textureShader, linesShader),
+  _view(std::move(view)), _path(linesShader)
 {
   _viewPtr = _view.get();
 }

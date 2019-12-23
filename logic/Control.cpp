@@ -7,15 +7,17 @@
 Control::Control(Game* game,
                  EventManager* eventManager,
                  GLFWwindow* window,
-                 Shader& shader,
+                 Shader& textureShader,
+                 Shader& linesShader,
                  Terrain* terrain) :
   _game(game),
   _eventManager(eventManager),
-  _structurePanel(window, Panel::Type::Structures, shader),
-  _unitPanel(window, Panel::Type::Units, shader), _shader(shader)
+  _structurePanel(window, Panel::Type::Structures, textureShader),
+  _unitPanel(window, Panel::Type::Units, textureShader),
+  _textureShader(textureShader), _linesShader(linesShader)
 {
-  std::unique_ptr<AbstractBuilder> hqBuilder =
-    std::make_unique<HqBuilder>(_game, _eventManager, shader, terrain);
+  std::unique_ptr<AbstractBuilder> hqBuilder = std::make_unique<HqBuilder>(
+    _game, _eventManager, textureShader, linesShader, terrain);
   auto hqPanelItem = std::make_unique<PanelItem>(std::move(hqBuilder));
   _structurePanel.addItem(std::move(hqPanelItem));
 }

@@ -184,11 +184,26 @@ int main(int argc, char** argv)
                                                 linesShader,
                                                 &terrain);
 
-  createTank(game.get(), textureShader, terrain.getXYZ(glm::vec2(0.0, 0.0f)));
-  createTank(game.get(), textureShader, terrain.getXYZ(glm::vec2(5.0, 5.0f)));
-  createTank(game.get(), textureShader, terrain.getXYZ(glm::vec2(-5.0, -5.0f)));
-  createTank(game.get(), textureShader, terrain.getXYZ(glm::vec2(0.0, 5.0f)));
-  createTank(game.get(), textureShader, terrain.getXYZ(glm::vec2(0.0, -5.0f)));
+  createTank(game.get(),
+             textureShader,
+             linesShader,
+             terrain.getXYZ(glm::vec2(0.0, 0.0f)));
+  createTank(game.get(),
+             textureShader,
+             linesShader,
+             terrain.getXYZ(glm::vec2(5.0, 5.0f)));
+  createTank(game.get(),
+             textureShader,
+             linesShader,
+             terrain.getXYZ(glm::vec2(-5.0, -5.0f)));
+  createTank(game.get(),
+             textureShader,
+             linesShader,
+             terrain.getXYZ(glm::vec2(0.0, 5.0f)));
+  createTank(game.get(),
+             textureShader,
+             linesShader,
+             terrain.getXYZ(glm::vec2(0.0, -5.0f)));
 
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

@@ -10,9 +10,6 @@ public:
   EnergyStructure(Shader& textureShader,
                   Shader& linesShader,
                   std::unique_ptr<StructureView> view);
-
-protected:
-  Shader& _linesShader;
 };
 
 #endif
