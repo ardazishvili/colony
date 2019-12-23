@@ -14,6 +14,7 @@ public:
   bool isUnderCursor(const glm::vec3& mousePoint);
   virtual void startShooting(Buildable* other) = 0;
   virtual void startMoving(glm::vec3 endPoint) = 0;
+  virtual void render() override;
 
 protected:
   std::unique_ptr<UnitView> _view;

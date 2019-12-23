@@ -9,10 +9,12 @@ public:
   Path(Shader& shader);
   void render();
   void setStart(glm::vec3 s);
+  void setEnd(glm::vec3 e);
+  void clear();
 
 private:
-  glm::vec3 _s;
-  glm::vec3 _e;
+  void reloadData();
+  static const float Z_OFFSET;
 };
 
 #endif

@@ -52,6 +52,7 @@ void Tank::move()
   if (destinationIsReached || isDestroyed()) {
     stopMoving();
   }
+  _path.setStart(prev);
 }
 
 void Tank::startMoving(glm::vec3 endPoint)
@@ -67,11 +68,15 @@ void Tank::startMoving(glm::vec3 endPoint)
   _view->rotateBody(degreeAngle);
   _moveIncrement.x = _speed * ::sin(radianAngle);
   _moveIncrement.y = _speed * ::cos(radianAngle);
+
+  _path.setStart(_view->position());
+  _path.setEnd(endPoint);
 }
 
 void Tank::stopMoving()
 {
   _destination = glm::vec3(-1, -1, -1);
+  _path.clear();
 }
 
 bool Tank::isMoving()

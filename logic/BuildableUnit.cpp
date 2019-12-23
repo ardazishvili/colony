@@ -13,3 +13,9 @@ bool BuildableUnit::isUnderCursor(const glm::vec3& mousePoint)
 {
   return _view->contain(mousePoint);
 }
+
+void BuildableUnit::render()
+{
+  Buildable::render();
+  _path.render();
+}
