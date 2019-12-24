@@ -6,11 +6,11 @@
 class TerrainMeshSegment : public Mesh
 {
 public:
-  TerrainMeshSegment(Shader& colorShader, Terrain* terrain);
-  void addData(glm::vec2 bottomLeft, glm::vec2 topRight);
-  void clear();
+  TerrainMeshSegment(Shader& colorShader,
+                     Terrain* terrain,
+                     glm::vec2 bottomLeft,
+                     glm::vec2 topRight);
   void render();
-  bool settedUp() const;
 
 private:
   void calculateIndices(int divisionsX,

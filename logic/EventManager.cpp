@@ -33,13 +33,14 @@ EventManager::EventManager(glm::mat4& view,
                            Camera& camera,
                            Shader& textureShader,
                            Shader& colorShader,
+                           Shader& colorNonFlatShader,
                            Shader& linesShader,
                            Terrain* terrain) :
   _view(view),
   _projection(projection), _window(window), _camera(camera), _game(game),
   _textureShader(textureShader), _colorShader(colorShader),
-  _linesShader(linesShader), _terrain(terrain), _selection(linesShader, camera),
-  _terrainSegment(colorShader, terrain)
+  _colorNonFlatShader(colorNonFlatShader), _linesShader(linesShader),
+  _terrain(terrain), _selection(linesShader, camera)
 {
   _game->setControl(std::make_unique<Control>(
     _game, this, _window, textureShader, linesShader, _terrain));
@@ -52,9 +53,9 @@ void EventManager::tick()
   if (_selectionActive) {
     _selection.render();
   }
-  if (_terrainSegment.settedUp()) {
+  if (_terrainSegment) {
     logger.log("render segment");
-    _terrainSegment.render();
+    _terrainSegment->render();
   }
   _game->tick();
 }
@@ -266,7 +267,11 @@ void EventManager::handleMouseReleased()
   std::cout << "mouse released" << std::endl;
   if (_shiftPressed) {
 
-    _terrainSegment.addData(_selection.bottomLeft(), _selection.topRight());
+    _terrainSegment =
+      std::make_shared<TerrainMeshSegment>(_colorNonFlatShader,
+                                           _terrain,
+                                           _selection.bottomLeft(),
+                                           _selection.topRight());
   } else {
 
     _tanksSelected = _game->getTanks(_selection.getPoints());
@@ -282,7 +287,7 @@ void EventManager::handleMousePressedLeft()
   _selectionActive = true;
   auto tmp = c;
   tmp.z += 0.3;
-  _terrainSegment.clear();
+  _terrainSegment.reset();
   _selection.setStart(tmp);
 
   _tankSelected = _game->getTank(c, true);

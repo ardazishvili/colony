@@ -125,6 +125,13 @@ int main(int argc, char** argv)
                           projection,
                           "/home/roman/repos/colony/shaders/vertex_color.vs",
                           "/home/roman/repos/colony/shaders/fragment_color.fs");
+  PhongShader colorNonFlatShader(
+    light.get(),
+    camera,
+    view,
+    projection,
+    "/home/roman/repos/colony/shaders/vertex_color_nonflat.vs",
+    "/home/roman/repos/colony/shaders/fragment_color_nonflat.fs");
   PhongShader textureShader(
     light.get(),
     camera,
@@ -181,6 +188,7 @@ int main(int argc, char** argv)
                                                 camera,
                                                 textureShader,
                                                 colorShader,
+                                                colorNonFlatShader,
                                                 linesShader,
                                                 &terrain);
 

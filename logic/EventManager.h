@@ -19,6 +19,7 @@ public:
                Camera& camera,
                Shader& textureShader,
                Shader& colorShader,
+               Shader& colorNonFlatShader,
                Shader& linesShader,
                Terrain* terrain);
   void tick();
@@ -51,6 +52,7 @@ private:
   Game* _game;
   Shader& _textureShader;
   Shader& _colorShader;
+  Shader& _colorNonFlatShader;
   Shader& _linesShader;
   Tank* _tankSelected{ nullptr };
   VehicleGroup _tanksSelected;
@@ -69,7 +71,7 @@ private:
   glm::vec2 _middleLastPressed{ 0.0f, 0.0f };
   bool _shiftPressed{ false };
 
-  TerrainMeshSegment _terrainSegment;
+  std::shared_ptr<TerrainMeshSegment> _terrainSegment;
 };
 
 #endif
