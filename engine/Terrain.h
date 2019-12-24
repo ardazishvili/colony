@@ -25,6 +25,12 @@ public:
   void updateLivingArea(std::shared_ptr<LivingArea> area);
   void growLivingArea(std::shared_ptr<LivingArea> area, float radius);
   float getMaxXy() const;
+  void getSegmentVertices(glm::vec2 bottomLeft,
+                          glm::vec2 topRight,
+                          std::vector<VertexColor>& v,
+                          int& divisionsX,
+                          int& divisionsY,
+                          unsigned int& latticeWidth);
 
 private:
   Shader& _shader;

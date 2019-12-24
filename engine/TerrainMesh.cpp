@@ -1,4 +1,5 @@
 #include "TerrainMesh.h"
+#include "../globals.h"
 #include <iostream>
 
 void TerrainMesh::render()
@@ -31,57 +32,9 @@ void TerrainMesh::init(float bottomLeftX,
   auto augmentedWidth = divisions + 1 + (divisions + 1 - 2);
   _latticeWidth = augmentedWidth;
   _latticeHeight = width;
-  for (int i = 0; i < width - 1; ++i) {
-    for (int j = 0; j < augmentedWidth; ++j) {
-      glm::vec3 p0(0);
-      glm::vec3 p1(0);
-      glm::vec3 p2(0);
-      auto rectangleTypeNum = ((i % 2) * 2 + j) % 4;
-      if (rectangleTypeNum == 0) {
-        p1 = _v.at(augmentedWidth * i + j + 1 + augmentedWidth).p;
-        p2 = _v.at(augmentedWidth * i + j).p;
-        p0 = _v.at(augmentedWidth * i + j + augmentedWidth).p;
-      } else if (rectangleTypeNum == 1) {
-        p1 = _v.at(augmentedWidth * i + j - 1).p;
-        p2 = _v.at(augmentedWidth * i + j + augmentedWidth).p;
-        p0 = _v.at(augmentedWidth * i + j).p;
-      } else if (rectangleTypeNum == 2) {
-        p1 = _v.at(augmentedWidth * i + j + augmentedWidth).p;
-        p2 = _v.at(augmentedWidth * i + j + 1).p;
-        p0 = _v.at(augmentedWidth * i + j).p;
-      } else if (rectangleTypeNum == 3) {
-        p1 = _v.at(augmentedWidth * i + j).p;
-        p2 = _v.at(augmentedWidth * i + j - 1 + augmentedWidth).p;
-        p0 = _v.at(augmentedWidth * i + j + augmentedWidth).p;
-      }
-
-      _v[augmentedWidth * i + j].normal = glm::cross(p1 - p0, p2 - p0);
-    }
-  }
+  calculateNormals(width, _latticeWidth);
   calculateColors(min, max, width, augmentedWidth);
-  _indices.reserve(::pow(divisions, 2) * 2 * 3);
-  for (int i = 0; i < divisions; ++i) {
-    for (int j = 0; j < divisions; ++j) {
-      auto j2 = j * 2;
-      if (((i % 2) + j) % 2 == 0) {
-        _indices.push_back(i * augmentedWidth + j2);
-        _indices.push_back(i * augmentedWidth + j2 + augmentedWidth);
-        _indices.push_back(i * augmentedWidth + j2 + augmentedWidth + 1);
-
-        _indices.push_back(i * augmentedWidth + j2 + 1);
-        _indices.push_back(i * augmentedWidth + j2);
-        _indices.push_back(i * augmentedWidth + j2 + augmentedWidth + 1);
-      } else {
-        _indices.push_back(i * augmentedWidth + j2);
-        _indices.push_back(i * augmentedWidth + j2 + augmentedWidth);
-        _indices.push_back(i * augmentedWidth + j2 + 1);
-
-        _indices.push_back(i * augmentedWidth + j2 + 1);
-        _indices.push_back(i * augmentedWidth + j2 + augmentedWidth);
-        _indices.push_back(i * augmentedWidth + j2 + augmentedWidth + 1);
-      }
-    }
-  }
+  calculateIndices(divisions, divisions, _latticeWidth);
 
   glBindVertexArray(_vao);
   glBindBuffer(GL_ARRAY_BUFFER, _vbo);
@@ -114,4 +67,98 @@ void TerrainMesh::init(float bottomLeftX,
                GL_STATIC_DRAW);
 
   glBindVertexArray(0);
+}
+
+void TerrainMesh::calculateIndices(int divisionsX,
+                                   int divisionsY,
+                                   unsigned int latticeWidth)
+{
+  _indices.reserve(divisionsX * divisionsY * 2 * 3);
+  for (int i = 0; i < divisionsX; ++i) {
+    for (int j = 0; j < divisionsY; ++j) {
+      auto j2 = j * 2;
+      if (((i % 2) + j) % 2 == 0) {
+        _indices.push_back(i * latticeWidth + j2);
+        _indices.push_back(i * latticeWidth + j2 + latticeWidth);
+        _indices.push_back(i * latticeWidth + j2 + latticeWidth + 1);
+
+        _indices.push_back(i * latticeWidth + j2 + 1);
+        _indices.push_back(i * latticeWidth + j2);
+        _indices.push_back(i * latticeWidth + j2 + latticeWidth + 1);
+      } else {
+        _indices.push_back(i * latticeWidth + j2);
+        _indices.push_back(i * latticeWidth + j2 + latticeWidth);
+        _indices.push_back(i * latticeWidth + j2 + 1);
+
+        _indices.push_back(i * latticeWidth + j2 + 1);
+        _indices.push_back(i * latticeWidth + j2 + latticeWidth);
+        _indices.push_back(i * latticeWidth + j2 + latticeWidth + 1);
+      }
+    }
+  }
+}
+
+void TerrainMesh::calculateNormals(int width, unsigned int latticeWidth)
+{
+  for (int i = 0; i < width - 1; ++i) {
+    for (unsigned int j = 0; j < latticeWidth; ++j) {
+      glm::vec3 p0(0);
+      glm::vec3 p1(0);
+      glm::vec3 p2(0);
+      auto rectangleTypeNum = ((i % 2) * 2 + j) % 4;
+      if (rectangleTypeNum == 0) {
+        p1 = _v.at(latticeWidth * i + j + 1 + latticeWidth).p;
+        p2 = _v.at(latticeWidth * i + j).p;
+        p0 = _v.at(latticeWidth * i + j + latticeWidth).p;
+      } else if (rectangleTypeNum == 1) {
+        p1 = _v.at(latticeWidth * i + j - 1).p;
+        p2 = _v.at(latticeWidth * i + j + latticeWidth).p;
+        p0 = _v.at(latticeWidth * i + j).p;
+      } else if (rectangleTypeNum == 2) {
+        p1 = _v.at(latticeWidth * i + j + latticeWidth).p;
+        p2 = _v.at(latticeWidth * i + j + 1).p;
+        p0 = _v.at(latticeWidth * i + j).p;
+      } else if (rectangleTypeNum == 3) {
+        p1 = _v.at(latticeWidth * i + j).p;
+        p2 = _v.at(latticeWidth * i + j - 1 + latticeWidth).p;
+        p0 = _v.at(latticeWidth * i + j + latticeWidth).p;
+      }
+
+      _v[latticeWidth * i + j].normal = glm::cross(p1 - p0, p2 - p0);
+    }
+  }
+}
+
+void TerrainMesh::getSegmentVertices(glm::vec2 bottomLeft,
+                                     glm::vec2 topRight,
+                                     std::vector<VertexColor>& v,
+                                     int& divisionsX,
+                                     int& divisionsY,
+                                     unsigned int& latticeWidth)
+{
+  divisionsX = (topRight.x - bottomLeft.x) / (_xStep * _xyScale);
+  divisionsY = (topRight.y - bottomLeft.y) / (_yStep * _xyScale);
+
+  auto factor = (topRight.y - bottomLeft.y) / (_height * _xyScale);
+  /* std::cout << "_height= " << _height << std::endl; */
+  /* std::cout << "factor= " << factor << std::endl; */
+  latticeWidth = factor * _latticeWidth;
+
+  bottomLeft.x += _width * _xyScale / 2;
+  topRight.x += _width * _xyScale / 2;
+  bottomLeft.y += _height * _xyScale / 2;
+  topRight.y += _height * _xyScale / 2;
+  for (auto vertex : _v) {
+    if (bottomLeft.x <= vertex.p.x && vertex.p.x <= topRight.x &&
+        bottomLeft.y <= vertex.p.y && vertex.p.y <= topRight.y) {
+      vertex.p.x -= _width * _xyScale / 2;
+      vertex.p.y -= _height * _xyScale / 2;
+      vertex.p.z += 5.0f;
+      v.push_back(vertex);
+    }
+  }
+  std::cout << "bottomLeft.x= " << bottomLeft.x << std::endl;
+  std::cout << "bottomLeft.y= " << bottomLeft.y << std::endl;
+  std::cout << "topRight.x= " << topRight.x << std::endl;
+  std::cout << "topRight.y= " << topRight.y << std::endl;
 }

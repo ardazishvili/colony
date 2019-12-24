@@ -91,3 +91,13 @@ void Terrain::growLivingArea(std::shared_ptr<LivingArea> area, float radius)
 {
   _subMesh.growLivingArea(area, radius);
 }
+void Terrain::getSegmentVertices(glm::vec2 bottomLeft,
+                                 glm::vec2 topRight,
+                                 std::vector<VertexColor>& v,
+                                 int& divisionsX,
+                                 int& divisionsY,
+                                 unsigned int& latticeWidth)
+{
+  _mainMesh.getSegmentVertices(
+    bottomLeft, topRight, v, divisionsX, divisionsY, latticeWidth);
+}

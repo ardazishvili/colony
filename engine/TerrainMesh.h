@@ -34,8 +34,19 @@ public:
                                float max,
                                unsigned int width,
                                unsigned int augmentedWidth) = 0;
+  void getSegmentVertices(glm::vec2 bottomLeft,
+                          glm::vec2 topRight,
+                          std::vector<VertexColor>& v,
+                          int& divisions,
+                          int& divisionsY,
+                          unsigned int& latticeWidth);
 
 protected:
+  void calculateIndices(int divisionsX,
+                        int divisionsY,
+                        unsigned int latticeWidth);
+  void calculateNormals(int width, unsigned int latticeWidth);
+
   std::vector<VertexColor> _v;
   std::vector<unsigned int> _indices;
   float _width;

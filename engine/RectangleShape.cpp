@@ -77,3 +77,13 @@ Points RectangleShape::getPoints() const
 {
   return _v;
 }
+
+glm::vec2 RectangleShape::bottomLeft() const
+{
+  return glm::vec2(_v.at(0).x, _v.at(0).y);
+}
+
+glm::vec2 RectangleShape::topRight() const
+{
+  return glm::vec2(_v.at(2).x, _v.at(2).y);
+}

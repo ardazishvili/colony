@@ -5,6 +5,7 @@
 
 #include "../engine/Camera.h"
 #include "../engine/RectangleShape.h"
+#include "../engine/TerrainMeshSegment.h"
 #include "Game.h"
 #include "Tank.h"
 
@@ -61,13 +62,14 @@ private:
   Buildable* _structureUnderAttack{ nullptr };
 
   Terrain* _terrain;
-  /* RectangleRegion _selection; */
   RectangleShape _selection;
   bool _selectionActive{ false };
 
   bool _middleButtonPressed{ false };
   glm::vec2 _middleLastPressed{ 0.0f, 0.0f };
   bool _shiftPressed{ false };
+
+  TerrainMeshSegment _terrainSegment;
 };
 
 #endif

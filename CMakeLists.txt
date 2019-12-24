@@ -9,6 +9,8 @@ add_executable(colony
     engine/RectangleShape.cpp
     engine/Path.h
     engine/Path.cpp
+    engine/TerrainMeshSegment.h
+    engine/TerrainMeshSegment.cpp
     logic/AbstractPlantBuilder.h
     logic/AbstractPlantBuilder.cpp
 		Timer.cpp

@@ -14,6 +14,8 @@ public:
 
   // start from bottom left -> clockwise
   Points getPoints() const;
+  glm::vec2 bottomLeft() const;
+  glm::vec2 topRight() const;
 
 private:
   void init(glm::vec3 start, glm::vec3 end);
