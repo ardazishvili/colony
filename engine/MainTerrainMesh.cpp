@@ -155,17 +155,9 @@ void MainTerrainMesh::getSegmentObstaclesMap(glm::vec2 bottomLeft,
 
   unsigned int startI = _latticeHeight * bottomLeft.x / (_width * _xyScale);
   unsigned int startJ = _latticeWidth * bottomLeft.y / (_height * _xyScale);
-  int cc = 0;
   for (unsigned int i = startI; i < startI + divisionsX + 1; ++i) {
-    cc = 0;
     for (unsigned int j = startJ; j < startJ + divisionsY + 1; ++j) {
-      ++cc;
       m.push_back(_obstaclesMap.at(_latticeWidth * i + j));
     }
   }
-  std::cout << "m.size()= " << m.size() << std::endl;
-  std::cout << " obstacles divisionsX= " << divisionsX << std::endl;
-  std::cout << " obstacles divisionsY= " << divisionsY << std::endl;
-  std::cout << "cc= " << cc << std::endl;
-  std::cout << std::endl;
 }

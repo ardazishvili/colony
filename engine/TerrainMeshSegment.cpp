@@ -68,8 +68,6 @@ void TerrainMeshSegment::render()
 {
   _colorShader.use();
   _colorShader.configure();
-  /* auto color = glm::vec4(31, 188, 240, 150) / 255.0f; */
-  /* _colorShader.setVec4("color", color); */
   glEnable(GL_BLEND);
   glDepthMask(GL_FALSE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
