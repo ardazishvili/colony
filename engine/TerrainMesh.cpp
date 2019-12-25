@@ -148,11 +148,19 @@ void TerrainMesh::getSegmentVertices(glm::vec2 bottomLeft,
 
   float startI = _latticeHeight * bottomLeft.x / (_width * _xyScale);
   float startJ = _latticeAugmentedWidth * bottomLeft.y / (_height * _xyScale);
+  int c = 0;
   for (unsigned int i = startI; i < startI + divisionsX; ++i) {
+    c = 0;
     for (unsigned int j = startJ; j < startJ + divisionsY * 2; j += 2) {
+      ++c;
       v.push_back(_v.at(_latticeAugmentedWidth * i + j));
     }
   }
+  std::cout << "v.size()= " << v.size() << std::endl;
+  std::cout << "vert divisionsX= " << divisionsX << std::endl;
+  std::cout << "vert divisionsY= " << divisionsY << std::endl;
+  std::cout << "c= " << c << std::endl;
+  std::cout << std::endl;
 }
 
 float TerrainMesh::halfWidth() const

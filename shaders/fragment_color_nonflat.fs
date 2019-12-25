@@ -2,7 +2,6 @@
 
 in vec4 normals_colour;
 
-
 out vec4 FragColor;
 
 void main()

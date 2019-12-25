@@ -16,21 +16,6 @@ void TerrainMeshSegment::init()
   auto sd = initVertices();
   calculateIndices(sd);
 
-  /* _terrain->getSegmentObstaclesMap( */
-  /*   bottomLeft, topRight, _obstaclesMap, latticeWidth); */
-  /* std::cout << "_obstaclesMap.size()= " << _obstaclesMap.size() << std::endl;
-   */
-
-  /* std::cout << "latticeWidth= " << latticeWidth << std::endl; */
-  /* unsigned int latticeHeight = _obstaclesMap.size() / latticeWidth; */
-  /* std::cout << "latticeHeight= " << latticeHeight << std::endl; */
-  /* for (unsigned int i = 0; i < latticeWidth; ++i) { */
-  /*   for (unsigned int j = 0; j < latticeHeight; ++j) { */
-  /*     std::cout << _obstaclesMap.at(i * latticeHeight + j); */
-  /*   } */
-  /*   std::cout << std::endl; */
-  /* } */
-
   glBindVertexArray(_vao);
   glBindBuffer(GL_ARRAY_BUFFER, _vbo);
   glBufferData(
@@ -41,6 +26,14 @@ void TerrainMeshSegment::init()
 
   glEnableVertexAttribArray(1);
   glVertexAttribPointer(1,
+                        4,
+                        GL_FLOAT,
+                        GL_FALSE,
+                        sizeof(VertexColor),
+                        (void*)offsetof(VertexColor, color));
+
+  glEnableVertexAttribArray(2);
+  glVertexAttribPointer(2,
                         3,
                         GL_FLOAT,
                         GL_FALSE,
@@ -75,8 +68,8 @@ void TerrainMeshSegment::render()
 {
   _colorShader.use();
   _colorShader.configure();
-  auto color = glm::vec4(31, 188, 240, 150) / 255.0f;
-  _colorShader.setVec4("color", color);
+  /* auto color = glm::vec4(31, 188, 240, 150) / 255.0f; */
+  /* _colorShader.setVec4("color", color); */
   glEnable(GL_BLEND);
   glDepthMask(GL_FALSE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

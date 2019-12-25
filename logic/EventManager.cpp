@@ -57,7 +57,7 @@ void EventManager::tick()
     _heightsSegment->render();
   }
   if (_obstaclesSegment) {
-    /* _obstaclesSegment->render(); */
+    _obstaclesSegment->render();
   }
   _game->tick();
 }

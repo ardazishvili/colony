@@ -15,6 +15,9 @@ SegmentDimensions HeightsSegment::initVertices()
   unsigned int latticeWidth;
   _terrain->getSegmentVertices(
     _bottomLeft, _topRight, _v, divisionsX, divisionsY, latticeWidth);
+  for (auto& v : _v) {
+    v.color = glm::vec4(31, 188, 240, 150) / 255.0f;
+  }
   return { divisionsX, divisionsY, latticeWidth };
 }
 
