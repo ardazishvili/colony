@@ -267,11 +267,13 @@ void EventManager::handleMouseReleased()
   std::cout << "mouse released" << std::endl;
   if (_shiftPressed) {
 
-    _terrainSegment =
-      std::make_shared<TerrainMeshSegment>(_colorNonFlatShader,
-                                           _terrain,
-                                           _selection.bottomLeft(),
-                                           _selection.topRight());
+    auto bl = _selection.bottomLeft();
+    auto tr = _selection.topRight();
+    _terrainSegment = std::make_shared<TerrainMeshSegment>(
+      _colorNonFlatShader,
+      _terrain,
+      glm::vec2(::min(bl.x, tr.x), ::min(bl.y, tr.y)),
+      glm::vec2(::max(bl.x, tr.x), ::max(bl.y, tr.y)));
   } else {
 
     _tanksSelected = _game->getTanks(_selection.getPoints());

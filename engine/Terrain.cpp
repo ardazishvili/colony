@@ -101,3 +101,13 @@ void Terrain::getSegmentVertices(glm::vec2 bottomLeft,
   _mainMesh.getSegmentVertices(
     bottomLeft, topRight, v, divisionsX, divisionsY, latticeWidth);
 }
+
+float Terrain::halfWidth() const
+{
+  return _mainMesh.halfWidth();
+}
+
+float Terrain::halfHeight() const
+{
+  return _mainMesh.halfHeight();
+}

@@ -31,6 +31,7 @@ public:
   void setColor(const std::string& name, float value) const;
   void setVec3(const std::string& name, float f1, float f2, float f3) const;
   void setVec3(const std::string& name, glm::vec3& value) const;
+  void setVec4(const std::string& name, glm::vec4& value) const;
   void setVec2(const std::string& name, glm::vec2& value) const;
   void setTransformation(const std::string& name, const GLfloat* matrix) const;
   void setMat4(const std::string& name, const glm::mat4& mat) const;

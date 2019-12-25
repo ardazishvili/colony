@@ -31,6 +31,8 @@ public:
                           int& divisionsX,
                           int& divisionsY,
                           unsigned int& latticeWidth);
+  float halfWidth() const;
+  float halfHeight() const;
 
 private:
   Shader& _shader;

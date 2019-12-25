@@ -17,10 +17,12 @@ private:
                         int divisionsY,
                         unsigned int latticeWidth);
 
-  Shader& _colorShader;
   std::vector<VertexColor> _v;
   std::vector<unsigned int> _i;
+  Shader& _colorShader;
   Terrain* _terrain;
+  glm::vec2 _bottomLeft;
+  glm::vec2 _topRight;
 };
 
 #endif

@@ -136,18 +136,8 @@ void TerrainMesh::getSegmentVertices(glm::vec2 bottomLeft,
                                      int& divisionsY,
                                      unsigned int& latticeWidth)
 {
-  std::cout << "bottomLeft.x= " << bottomLeft.x << std::endl;
-  std::cout << "bottomLeft.y= " << bottomLeft.y << std::endl;
-  std::cout << "topRight.x= " << topRight.x << std::endl;
-  std::cout << "topRight.y= " << topRight.y << std::endl;
-
   divisionsX = (topRight.x - bottomLeft.x) / (_xStep * _xyScale);
   divisionsY = (topRight.y - bottomLeft.y) / (_yStep * _xyScale);
-
-  auto factor = (topRight.y - bottomLeft.y) / (_height * _xyScale);
-  /* std::cout << "_height= " << _height << std::endl; */
-  /* std::cout << "factor= " << factor << std::endl; */
-  /* latticeWidth = factor * _latticeWidth; */
   latticeWidth = divisionsY + 1;
 
   bottomLeft.x += _width * _xyScale / 2;
@@ -157,18 +147,18 @@ void TerrainMesh::getSegmentVertices(glm::vec2 bottomLeft,
 
   float startI = _latticeHeight * bottomLeft.x / (_width * _xyScale);
   float startJ = _latticeWidth * bottomLeft.y / (_height * _xyScale);
-  std::cout << "startI= " << startI << std::endl;
-  std::cout << "startJ= " << startJ << std::endl;
   for (unsigned int i = startI; i < startI + divisionsX; ++i) {
     for (unsigned int j = startJ; j < startJ + divisionsY * 2; j += 2) {
-      /* std::cout << "i= " << i << std::endl; */
-      /* std::cout << "j= " << j << std::endl; */
-      auto vertex = _v.at(_latticeWidth * i + j);
-      vertex.p.x -= _width * _xyScale / 2;
-      vertex.p.y -= _height * _xyScale / 2;
-      vertex.p.z += 5.0f;
-      vertex.color = glm::vec4(31, 188, 240, 100) / 255.0f;
-      v.push_back(vertex);
+      v.push_back(_v.at(_latticeWidth * i + j));
     }
   }
+}
+float TerrainMesh::halfWidth() const
+{
+  return _width * _xyScale / 2;
+}
+
+float TerrainMesh::halfHeight() const
+{
+  return _height * _xyScale / 2;
 }

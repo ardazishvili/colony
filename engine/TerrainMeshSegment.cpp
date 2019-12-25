@@ -6,32 +6,14 @@ TerrainMeshSegment::TerrainMeshSegment(Shader& colorShader,
                                        glm::vec2 bottomLeft,
                                        glm::vec2 topRight) :
   _colorShader(colorShader),
-  _terrain(terrain)
+  _terrain(terrain), _bottomLeft(bottomLeft), _topRight(topRight)
 {
-
-  /* std::cout << "bottomLeft.x= " << bottomLeft.x << std::endl; */
-  /* std::cout << "bottomLeft.y= " << bottomLeft.y << std::endl; */
-  /* std::cout << "topRight.x= " << topRight.x << std::endl; */
-  /* std::cout << "topRight.y= " << topRight.y << std::endl; */
   int divisionsX;
   int divisionsY;
   unsigned int latticeWidth;
   _terrain->getSegmentVertices(
     bottomLeft, topRight, _v, divisionsX, divisionsY, latticeWidth);
-  std::cout << "divisionsX= " << divisionsX << std::endl;
-  std::cout << "divisionsY= " << divisionsY << std::endl;
-  std::cout << "latticeWidth= " << latticeWidth << std::endl;
   calculateIndices(divisionsX, divisionsY, latticeWidth);
-  for (auto v : _v) {
-    std::cout << " v.p.x= " << v.p.x;
-    std::cout << " v.p.y= " << v.p.y;
-    std::cout << " v.p.z= " << v.p.z;
-    std::cout << std::endl;
-    std::cout << std::endl;
-  }
-  for (auto i : _i) {
-    std::cout << "i= " << i << std::endl;
-  }
 
   glBindVertexArray(_vao);
   glBindBuffer(GL_ARRAY_BUFFER, _vbo);
@@ -43,14 +25,6 @@ TerrainMeshSegment::TerrainMeshSegment(Shader& colorShader,
 
   glEnableVertexAttribArray(1);
   glVertexAttribPointer(1,
-                        4,
-                        GL_FLOAT,
-                        GL_FALSE,
-                        sizeof(VertexColor),
-                        (void*)offsetof(VertexColor, color));
-
-  glEnableVertexAttribArray(2);
-  glVertexAttribPointer(2,
                         3,
                         GL_FLOAT,
                         GL_FALSE,
@@ -64,7 +38,7 @@ TerrainMeshSegment::TerrainMeshSegment(Shader& colorShader,
   glBindVertexArray(0);
 }
 
-// TODO copypaste from TerrainMesh
+// TODO copypaste from PlainMesh
 void TerrainMeshSegment::calculateIndices(int divisionsX,
                                           int divisionsY,
                                           unsigned int latticeWidth)
@@ -87,11 +61,14 @@ void TerrainMeshSegment::render()
 {
   _colorShader.use();
   _colorShader.configure();
+  auto color = glm::vec4(31, 188, 240, 150) / 255.0f;
+  _colorShader.setVec4("color", color);
   glEnable(GL_BLEND);
   glDepthMask(GL_FALSE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   auto model = glm::mat4(1.0f);
-  /* model = glm::translate(model, _offset * _xyScale); */
+  model = glm::translate(
+    model, glm::vec3(-_terrain->halfWidth(), -_terrain->halfHeight(), 5.0f));
   _colorShader.setTransformation("model", glm::value_ptr(model));
   _colorShader.setBool("animated", false);
 

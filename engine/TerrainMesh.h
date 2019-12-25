@@ -40,6 +40,8 @@ public:
                           int& divisions,
                           int& divisionsY,
                           unsigned int& latticeWidth);
+  float halfWidth() const;
+  float halfHeight() const;
 
 protected:
   void calculateIndices(int divisionsX,
