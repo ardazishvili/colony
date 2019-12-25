@@ -7,6 +7,10 @@ add_executable(colony
     engine/LinesObject.cpp
     engine/RectangleShape.h
     engine/RectangleShape.cpp
+    engine/HeightsSegment.h
+    engine/HeightsSegment.cpp
+    engine/ObstaclesSegment.h
+    engine/ObstaclesSegment.cpp
     engine/Path.h
     engine/Path.cpp
     engine/TerrainMeshSegment.h

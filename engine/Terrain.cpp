@@ -94,8 +94,8 @@ void Terrain::growLivingArea(std::shared_ptr<LivingArea> area, float radius)
 void Terrain::getSegmentVertices(glm::vec2 bottomLeft,
                                  glm::vec2 topRight,
                                  std::vector<VertexColor>& v,
-                                 int& divisionsX,
-                                 int& divisionsY,
+                                 unsigned int& divisionsX,
+                                 unsigned int& divisionsY,
                                  unsigned int& latticeWidth)
 {
   _mainMesh.getSegmentVertices(
@@ -110,4 +110,15 @@ float Terrain::halfWidth() const
 float Terrain::halfHeight() const
 {
   return _mainMesh.halfHeight();
+}
+
+void Terrain::getSegmentObstaclesMap(glm::vec2 bottomLeft,
+                                     glm::vec2 topRight,
+                                     std::vector<bool>& m,
+                                     unsigned int& divisionsX,
+                                     unsigned int& divisionsY,
+                                     unsigned int& latticeWidth)
+{
+  _mainMesh.getSegmentObstaclesMap(
+    bottomLeft, topRight, m, divisionsX, divisionsY, latticeWidth);
 }

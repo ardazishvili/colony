@@ -37,8 +37,8 @@ public:
   void getSegmentVertices(glm::vec2 bottomLeft,
                           glm::vec2 topRight,
                           std::vector<VertexColor>& v,
-                          int& divisions,
-                          int& divisionsY,
+                          unsigned int& divisions,
+                          unsigned int& divisionsY,
                           unsigned int& latticeWidth);
   float halfWidth() const;
   float halfHeight() const;
@@ -53,6 +53,7 @@ protected:
   std::vector<unsigned int> _indices;
   float _width;
   float _height;
+  unsigned int _latticeAugmentedWidth;
   unsigned int _latticeWidth;
   unsigned int _latticeHeight;
   float _xStep;

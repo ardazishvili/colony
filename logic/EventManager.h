@@ -4,8 +4,9 @@
 #include <GLFW/glfw3.h>
 
 #include "../engine/Camera.h"
+#include "../engine/HeightsSegment.h"
+#include "../engine/ObstaclesSegment.h"
 #include "../engine/RectangleShape.h"
-#include "../engine/TerrainMeshSegment.h"
 #include "Game.h"
 #include "Tank.h"
 
@@ -71,7 +72,8 @@ private:
   glm::vec2 _middleLastPressed{ 0.0f, 0.0f };
   bool _shiftPressed{ false };
 
-  std::shared_ptr<TerrainMeshSegment> _terrainSegment;
+  std::shared_ptr<HeightsSegment> _heightsSegment;
+  std::shared_ptr<ObstaclesSegment> _obstaclesSegment;
 };
 
 #endif

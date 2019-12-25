@@ -68,7 +68,15 @@ void MainTerrainMesh::calculateHeights(unsigned int width,
                               5);
       vertex.p.x *= _xyScale;
       vertex.p.y *= _xyScale;
-      vertex.p.z = std::max(nv * _zScale, plainZ.at(i * width + j));
+      auto nonPlain = nv * _zScale;
+      auto plain = plainZ.at(i * width + j);
+      if (nonPlain > plain) {
+        vertex.p.z = nonPlain;
+        _obstaclesMap.push_back(true);
+      } else {
+        vertex.p.z = plain;
+        _obstaclesMap.push_back(false);
+      }
       min = std::min(min, vertex.p.z);
       max = std::max(max, vertex.p.z);
       vertex.normal = glm::vec3(0.0f);
@@ -115,7 +123,7 @@ float MainTerrainMesh::getZ(float x, float y) const
   auto i = ::floor(x / _xStep / _xyScale);
   auto j = ::floor(y / _yStep / _xyScale);
   auto mappedJ = (j == 0) ? 0 : 2 * j - 1;
-  return _v.at(i * _latticeWidth + mappedJ).p.z;
+  return _v.at(i * _latticeAugmentedWidth + mappedJ).p.z;
 }
 
 glm::vec3 MainTerrainMesh::getRgbColor(float x, float y) const
@@ -125,7 +133,35 @@ glm::vec3 MainTerrainMesh::getRgbColor(float x, float y) const
   auto i = ::floor(x / _xStep / _xyScale);
   auto j = ::floor(y / _yStep / _xyScale);
   auto mappedJ = (j == 0) ? 0 : 2 * j - 1;
-  auto c = _v.at(i * _latticeWidth + mappedJ).color;
+  auto c = _v.at(i * _latticeAugmentedWidth + mappedJ).color;
   return glm::vec3(c.x, c.y, c.z);
 }
 
+void MainTerrainMesh::getSegmentObstaclesMap(glm::vec2 bottomLeft,
+                                             glm::vec2 topRight,
+                                             std::vector<bool>& m,
+                                             unsigned int& divisionsX,
+                                             unsigned int& divisionsY,
+                                             unsigned int& latticeWidth)
+{
+  divisionsX = (topRight.x - bottomLeft.x) / (_xStep * _xyScale);
+  divisionsY = (topRight.y - bottomLeft.y) / (_yStep * _xyScale);
+  latticeWidth = divisionsY + 1;
+
+  bottomLeft.x += _width * _xyScale / 2;
+  topRight.x += _width * _xyScale / 2;
+  bottomLeft.y += _height * _xyScale / 2;
+  topRight.y += _height * _xyScale / 2;
+
+  unsigned int startI = _latticeHeight * bottomLeft.x / (_width * _xyScale);
+  unsigned int startJ = _latticeWidth * bottomLeft.y / (_height * _xyScale);
+  std::cout << "divisionsX= " << divisionsX << std::endl;
+  std::cout << "divisionsY= " << divisionsY << std::endl;
+  for (unsigned int j = startJ + divisionsY - 1; j >= startJ; --j) {
+    for (unsigned int i = startI; i < startI + divisionsX; ++i) {
+      /* std::cout << _obstaclesMap.at(_latticeWidth * i + j); */
+      m.push_back(_obstaclesMap.at(_latticeWidth * i + j));
+    }
+    /* std::cout << std::endl; */
+  }
+}

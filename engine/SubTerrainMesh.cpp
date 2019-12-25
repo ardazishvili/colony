@@ -33,14 +33,14 @@ std::shared_ptr<LivingArea> SubTerrainMesh::addLivingArea(CircularRegion region,
     unsigned int stride = 0;
     auto indexIsSet = false;
     for (unsigned int n = j; n < j + yWidth; ++n) {
-      auto c = _v.at(_latticeWidth * k + n);
+      auto c = _v.at(_latticeAugmentedWidth * k + n);
 
       if (::sqrt(::pow(x - c.p.x, 2) + ::pow(y - c.p.y, 2)) < r) {
         if (!indexIsSet) {
-          index = _latticeWidth * k + n;
+          index = _latticeAugmentedWidth * k + n;
           indexIsSet = true;
         }
-        _v.at(_latticeWidth * k + n).color = rgba;
+        _v.at(_latticeAugmentedWidth * k + n).color = rgba;
 
         ++stride;
       }
@@ -79,16 +79,16 @@ void SubTerrainMesh::growLivingArea(std::shared_ptr<LivingArea> area,
     unsigned int stride = 0;
     auto indexIsSet = false;
     for (unsigned int n = j; n < j + yWidth; ++n) {
-      auto c = _v.at(_latticeWidth * k + n);
+      auto c = _v.at(_latticeAugmentedWidth * k + n);
 
       if (::sqrt(::pow(x - c.p.x, 2) + ::pow(y - c.p.y, 2)) < r) {
         if (!indexIsSet) {
-          index = _latticeWidth * k + n;
+          index = _latticeAugmentedWidth * k + n;
           indexIsSet = true;
         }
         if (::sqrt(::pow(x - c.p.x, 2) + ::pow(y - c.p.y, 2)) >=
             prevRadius - 0.1) {
-          _v.at(_latticeWidth * k + n).color = area->initRgba;
+          _v.at(_latticeAugmentedWidth * k + n).color = area->initRgba;
         }
 
         ++stride;

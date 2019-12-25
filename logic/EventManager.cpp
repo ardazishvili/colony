@@ -53,9 +53,11 @@ void EventManager::tick()
   if (_selectionActive) {
     _selection.render();
   }
-  if (_terrainSegment) {
-    logger.log("render segment");
-    _terrainSegment->render();
+  if (_heightsSegment) {
+    _heightsSegment->render();
+  }
+  if (_obstaclesSegment) {
+    /* _obstaclesSegment->render(); */
   }
   _game->tick();
 }
@@ -269,11 +271,16 @@ void EventManager::handleMouseReleased()
 
     auto bl = _selection.bottomLeft();
     auto tr = _selection.topRight();
-    _terrainSegment = std::make_shared<TerrainMeshSegment>(
-      _colorNonFlatShader,
-      _terrain,
-      glm::vec2(::min(bl.x, tr.x), ::min(bl.y, tr.y)),
-      glm::vec2(::max(bl.x, tr.x), ::max(bl.y, tr.y)));
+    _heightsSegment =
+      ::makeHeightsSegment(_colorNonFlatShader,
+                           _terrain,
+                           glm::vec2(::min(bl.x, tr.x), ::min(bl.y, tr.y)),
+                           glm::vec2(::max(bl.x, tr.x), ::max(bl.y, tr.y)));
+    _obstaclesSegment =
+      ::makeObstaclesSegment(_colorNonFlatShader,
+                             _terrain,
+                             glm::vec2(::min(bl.x, tr.x), ::min(bl.y, tr.y)),
+                             glm::vec2(::max(bl.x, tr.x), ::max(bl.y, tr.y)));
   } else {
 
     _tanksSelected = _game->getTanks(_selection.getPoints());
@@ -289,7 +296,8 @@ void EventManager::handleMousePressedLeft()
   _selectionActive = true;
   auto tmp = c;
   tmp.z += 0.3;
-  _terrainSegment.reset();
+  _heightsSegment.reset();
+  _obstaclesSegment.reset();
   _selection.setStart(tmp);
 
   _tankSelected = _game->getTank(c, true);

@@ -18,6 +18,15 @@ public:
                        unsigned int augmentedWidth) override;
   float getZ(float x, float y) const;
   glm::vec3 getRgbColor(float x, float y) const;
+  void getSegmentObstaclesMap(glm::vec2 bottomLeft,
+                              glm::vec2 topRight,
+                              std::vector<bool>& m,
+                              unsigned int& divisionsX,
+                              unsigned int& divisionsY,
+                              unsigned int& latticeWidth);
+
+private:
+  std::vector<bool> _obstaclesMap;
 };
 
 #endif

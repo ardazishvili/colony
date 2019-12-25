@@ -30,11 +30,12 @@ void TerrainMesh::init(float bottomLeftX,
   float max = 0.0f;
   calculateHeights(width, bottomLeftX, bottomLeftY, min, max);
   auto augmentedWidth = divisions + 1 + (divisions + 1 - 2);
-  _latticeWidth = augmentedWidth;
+  _latticeAugmentedWidth = augmentedWidth;
+  _latticeWidth = width;
   _latticeHeight = width;
-  calculateNormals(width, _latticeWidth);
+  calculateNormals(width, _latticeAugmentedWidth);
   calculateColors(min, max, width, augmentedWidth);
-  calculateIndices(divisions, divisions, _latticeWidth);
+  calculateIndices(divisions, divisions, _latticeAugmentedWidth);
 
   glBindVertexArray(_vao);
   glBindBuffer(GL_ARRAY_BUFFER, _vbo);
@@ -132,8 +133,8 @@ void TerrainMesh::calculateNormals(int width, unsigned int latticeWidth)
 void TerrainMesh::getSegmentVertices(glm::vec2 bottomLeft,
                                      glm::vec2 topRight,
                                      std::vector<VertexColor>& v,
-                                     int& divisionsX,
-                                     int& divisionsY,
+                                     unsigned int& divisionsX,
+                                     unsigned int& divisionsY,
                                      unsigned int& latticeWidth)
 {
   divisionsX = (topRight.x - bottomLeft.x) / (_xStep * _xyScale);
@@ -146,13 +147,14 @@ void TerrainMesh::getSegmentVertices(glm::vec2 bottomLeft,
   topRight.y += _height * _xyScale / 2;
 
   float startI = _latticeHeight * bottomLeft.x / (_width * _xyScale);
-  float startJ = _latticeWidth * bottomLeft.y / (_height * _xyScale);
+  float startJ = _latticeAugmentedWidth * bottomLeft.y / (_height * _xyScale);
   for (unsigned int i = startI; i < startI + divisionsX; ++i) {
     for (unsigned int j = startJ; j < startJ + divisionsY * 2; j += 2) {
-      v.push_back(_v.at(_latticeWidth * i + j));
+      v.push_back(_v.at(_latticeAugmentedWidth * i + j));
     }
   }
 }
+
 float TerrainMesh::halfWidth() const
 {
   return _width * _xyScale / 2;

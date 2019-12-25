@@ -4,16 +4,32 @@
 TerrainMeshSegment::TerrainMeshSegment(Shader& colorShader,
                                        Terrain* terrain,
                                        glm::vec2 bottomLeft,
-                                       glm::vec2 topRight) :
+                                       glm::vec2 topRight,
+                                       float zOffset) :
   _colorShader(colorShader),
-  _terrain(terrain), _bottomLeft(bottomLeft), _topRight(topRight)
+  _terrain(terrain), _bottomLeft(bottomLeft), _topRight(topRight),
+  _zOffset(zOffset)
 {
-  int divisionsX;
-  int divisionsY;
-  unsigned int latticeWidth;
-  _terrain->getSegmentVertices(
-    bottomLeft, topRight, _v, divisionsX, divisionsY, latticeWidth);
-  calculateIndices(divisionsX, divisionsY, latticeWidth);
+}
+void TerrainMeshSegment::init()
+{
+  auto sd = initVertices();
+  calculateIndices(sd);
+
+  /* _terrain->getSegmentObstaclesMap( */
+  /*   bottomLeft, topRight, _obstaclesMap, latticeWidth); */
+  /* std::cout << "_obstaclesMap.size()= " << _obstaclesMap.size() << std::endl;
+   */
+
+  /* std::cout << "latticeWidth= " << latticeWidth << std::endl; */
+  /* unsigned int latticeHeight = _obstaclesMap.size() / latticeWidth; */
+  /* std::cout << "latticeHeight= " << latticeHeight << std::endl; */
+  /* for (unsigned int i = 0; i < latticeWidth; ++i) { */
+  /*   for (unsigned int j = 0; j < latticeHeight; ++j) { */
+  /*     std::cout << _obstaclesMap.at(i * latticeHeight + j); */
+  /*   } */
+  /*   std::cout << std::endl; */
+  /* } */
 
   glBindVertexArray(_vao);
   glBindBuffer(GL_ARRAY_BUFFER, _vbo);
@@ -39,20 +55,18 @@ TerrainMeshSegment::TerrainMeshSegment(Shader& colorShader,
 }
 
 // TODO copypaste from PlainMesh
-void TerrainMeshSegment::calculateIndices(int divisionsX,
-                                          int divisionsY,
-                                          unsigned int latticeWidth)
+void TerrainMeshSegment::calculateIndices(SegmentDimensions sd)
 {
-  _i.reserve(divisionsX * divisionsY * 2 * 3);
-  for (int i = 0; i < divisionsX; ++i) {
-    for (int j = 0; j < divisionsY; ++j) {
-      _i.push_back((i * latticeWidth) + j);
-      _i.push_back((i * latticeWidth) + j + 1);
-      _i.push_back((i * latticeWidth) + j + latticeWidth);
+  _i.reserve(sd.divisionsX * sd.divisionsY * 2 * 3);
+  for (unsigned int i = 0; i < sd.divisionsX; ++i) {
+    for (unsigned int j = 0; j < sd.divisionsY; ++j) {
+      _i.push_back((i * sd.latticeWidth) + j);
+      _i.push_back((i * sd.latticeWidth) + j + 1);
+      _i.push_back((i * sd.latticeWidth) + j + sd.latticeWidth);
 
-      _i.push_back((i * latticeWidth) + j + 1);
-      _i.push_back((i * latticeWidth) + j + latticeWidth);
-      _i.push_back((i * latticeWidth) + j + latticeWidth + 1);
+      _i.push_back((i * sd.latticeWidth) + j + 1);
+      _i.push_back((i * sd.latticeWidth) + j + sd.latticeWidth);
+      _i.push_back((i * sd.latticeWidth) + j + sd.latticeWidth + 1);
     }
   }
 }
@@ -68,7 +82,8 @@ void TerrainMeshSegment::render()
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   auto model = glm::mat4(1.0f);
   model = glm::translate(
-    model, glm::vec3(-_terrain->halfWidth(), -_terrain->halfHeight(), 5.0f));
+    model,
+    glm::vec3(-_terrain->halfWidth(), -_terrain->halfHeight(), _zOffset));
   _colorShader.setTransformation("model", glm::value_ptr(model));
   _colorShader.setBool("animated", false);
 
