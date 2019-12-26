@@ -10,23 +10,27 @@ ObstaclesSegment::ObstaclesSegment(Shader& colorShader,
 
 SegmentDimensions ObstaclesSegment::initVertices()
 {
-  unsigned int divisionsX;
-  unsigned int divisionsY;
-  unsigned int latticeWidth;
-  std::vector<bool> obstaclesMap;
-  _terrain->getSegmentObstaclesMap(
-    _bottomLeft, _topRight, obstaclesMap, divisionsX, divisionsY, latticeWidth);
-  _terrain->getSegmentVertices(
-    _bottomLeft, _topRight, _v, divisionsX, divisionsY, latticeWidth);
+  _terrain->getSegmentObstaclesMap(_bottomLeft,
+                                   _topRight,
+                                   _o,
+                                   _sd.divisionsX,
+                                   _sd.divisionsY,
+                                   _sd.latticeWidth);
+  _terrain->getSegmentVertices(_bottomLeft,
+                               _topRight,
+                               _v,
+                               _sd.divisionsX,
+                               _sd.divisionsY,
+                               _sd.latticeWidth);
   for (unsigned int i = 0; i < _v.size(); ++i) {
-    if (obstaclesMap.at(i)) {
+    if (_o.at(i)) {
       _v.at(i).color = glm::vec4(255, 0, 0, 255) / 255.0f;
     } else {
       _v.at(i).color = glm::vec4(0, 0, 255, 255) / 255.0f;
     }
     _v.at(i).p.z = 0.0f;
   }
-  return { divisionsX, divisionsY, latticeWidth };
+  return _sd;
 }
 
 std::shared_ptr<ObstaclesSegment> makeObstaclesSegment(Shader& colorShader,
@@ -39,4 +43,19 @@ std::shared_ptr<ObstaclesSegment> makeObstaclesSegment(Shader& colorShader,
     colorShader, terrain, bottomLeft, topRight);
   hs->init();
   return hs;
+}
+
+const std::vector<VertexColor>& ObstaclesSegment::vertices() const
+{
+  return _v;
+}
+
+const std::vector<bool>& ObstaclesSegment::obstacles() const
+{
+  return _o;
+}
+
+SegmentDimensions ObstaclesSegment::dimensions() const
+{
+  return _sd;
 }

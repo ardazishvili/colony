@@ -13,6 +13,8 @@ add_executable(colony
     engine/ObstaclesSegment.cpp
     engine/Path.h
     engine/Path.cpp
+    math/AStar.h
+    math/AStar.cpp
     engine/TerrainMeshSegment.h
     engine/TerrainMeshSegment.cpp
     logic/AbstractPlantBuilder.h

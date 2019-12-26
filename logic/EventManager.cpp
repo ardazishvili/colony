@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 
 #include "../globals.h"
+#include "../math/AStar.h"
 #include "EventManager.h"
 #include "Hq.h"
 #include "Turbine.h"
@@ -281,6 +282,10 @@ void EventManager::handleMouseReleased()
                              _terrain,
                              glm::vec2(::min(bl.x, tr.x), ::min(bl.y, tr.y)),
                              glm::vec2(::max(bl.x, tr.x), ::max(bl.y, tr.y)));
+    auto a = AStar();
+    a.init(_obstaclesSegment->vertices(),
+           _obstaclesSegment->obstacles(),
+           _obstaclesSegment->dimensions());
   } else {
 
     _tanksSelected = _game->getTanks(_selection.getPoints());
