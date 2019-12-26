@@ -181,6 +181,13 @@ int main(int argc, char** argv)
                          zScale);
   std::unique_ptr<Game> game = std::make_unique<Game>(window, view, projection);
   game->addTerrain(&terrain);
+  auto mapObstacles = ::makeObstaclesSegment(colorNonFlatShader,
+                                             &terrain,
+                                             glm::vec2(-20.0, -20.0),
+                                             glm::vec2(20.0, 20.0));
+  auto astar = AStar(mapObstacles->vertices(),
+                     mapObstacles->obstacles(),
+                     mapObstacles->dimensions());
   eventManager = std::make_unique<EventManager>(view,
                                                 projection,
                                                 window,
@@ -190,27 +197,34 @@ int main(int argc, char** argv)
                                                 colorShader,
                                                 colorNonFlatShader,
                                                 linesShader,
-                                                &terrain);
+                                                &terrain,
+                                                mapObstacles,
+                                                &astar);
 
   createTank(game.get(),
              textureShader,
              linesShader,
+             &astar,
              terrain.getXYZ(glm::vec2(0.0, 0.0f)));
   createTank(game.get(),
              textureShader,
              linesShader,
+             &astar,
              terrain.getXYZ(glm::vec2(5.0, 5.0f)));
   createTank(game.get(),
              textureShader,
              linesShader,
+             &astar,
              terrain.getXYZ(glm::vec2(-5.0, -5.0f)));
   createTank(game.get(),
              textureShader,
              linesShader,
+             &astar,
              terrain.getXYZ(glm::vec2(0.0, 5.0f)));
   createTank(game.get(),
              textureShader,
              linesShader,
+             &astar,
              terrain.getXYZ(glm::vec2(0.0, -5.0f)));
 
   ImGui::Render();
@@ -271,7 +285,7 @@ int main(int argc, char** argv)
     skybox.render();
 
     auto s = Sphere(colorShader, glm::vec3(0.0f, 0.0f, 5.0f), 1.0f, 50);
-    s.render();
+    /* s.render(); */
 
     terrain.renderSub();
 

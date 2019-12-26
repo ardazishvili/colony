@@ -7,6 +7,7 @@
 
 #include "../math/Noise.h"
 #include "MainTerrainMesh.h"
+#include "TerrainMeshSegment.h"
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/compatibility.hpp>
@@ -140,13 +141,15 @@ glm::vec3 MainTerrainMesh::getRgbColor(float x, float y) const
 void MainTerrainMesh::getSegmentObstaclesMap(glm::vec2 bottomLeft,
                                              glm::vec2 topRight,
                                              std::vector<bool>& m,
-                                             unsigned int& divisionsX,
-                                             unsigned int& divisionsY,
-                                             unsigned int& latticeWidth)
+                                             SegmentDimensions* sd)
 {
-  divisionsX = (topRight.x - bottomLeft.x) / (_xStep * _xyScale);
-  divisionsY = (topRight.y - bottomLeft.y) / (_yStep * _xyScale);
-  latticeWidth = divisionsY + 1;
+  sd->divisionsX = (topRight.x - bottomLeft.x) / (_xStep * _xyScale);
+  sd->divisionsY = (topRight.y - bottomLeft.y) / (_yStep * _xyScale);
+  sd->latticeWidth = sd->divisionsY + 1;
+  sd->xStep = _xStep * _xyScale;
+  sd->yStep = _yStep * _xyScale;
+  sd->xOffset = _width;
+  sd->yOffset = _height;
 
   bottomLeft.x += _width * _xyScale / 2;
   topRight.x += _width * _xyScale / 2;
@@ -155,8 +158,8 @@ void MainTerrainMesh::getSegmentObstaclesMap(glm::vec2 bottomLeft,
 
   unsigned int startI = _latticeHeight * bottomLeft.x / (_width * _xyScale);
   unsigned int startJ = _latticeWidth * bottomLeft.y / (_height * _xyScale);
-  for (unsigned int i = startI; i < startI + divisionsX + 1; ++i) {
-    for (unsigned int j = startJ; j < startJ + divisionsY + 1; ++j) {
+  for (unsigned int i = startI; i < startI + sd->divisionsX + 1; ++i) {
+    for (unsigned int j = startJ; j < startJ + sd->divisionsY + 1; ++j) {
       m.push_back(_obstaclesMap.at(_latticeWidth * i + j));
     }
   }

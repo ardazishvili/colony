@@ -10,18 +10,8 @@ ObstaclesSegment::ObstaclesSegment(Shader& colorShader,
 
 SegmentDimensions ObstaclesSegment::initVertices()
 {
-  _terrain->getSegmentObstaclesMap(_bottomLeft,
-                                   _topRight,
-                                   _o,
-                                   _sd.divisionsX,
-                                   _sd.divisionsY,
-                                   _sd.latticeWidth);
-  _terrain->getSegmentVertices(_bottomLeft,
-                               _topRight,
-                               _v,
-                               _sd.divisionsX,
-                               _sd.divisionsY,
-                               _sd.latticeWidth);
+  _terrain->getSegmentObstaclesMap(_bottomLeft, _topRight, _o, &_sd);
+  _terrain->getSegmentVertices(_bottomLeft, _topRight, _v, &_sd);
   for (unsigned int i = 0; i < _v.size(); ++i) {
     if (_o.at(i)) {
       _v.at(i).color = glm::vec4(255, 0, 0, 255) / 255.0f;

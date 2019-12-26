@@ -15,7 +15,8 @@ public:
           GLFWwindow* window,
           Shader& textureShader,
           Shader& linesShader,
-          Terrain* terrain);
+          Terrain* terrain,
+          AStar* router);
   void display();
   void populateUnitPanel(Game* game, Buildable* buildable);
   void populateStructurePanel(Buildable* buildable);
@@ -33,6 +34,7 @@ private:
   Panel _unitPanel;
   Shader& _textureShader;
   Shader& _linesShader;
+  AStar* _router;
 };
 
 #endif

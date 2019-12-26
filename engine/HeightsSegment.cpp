@@ -13,12 +13,12 @@ SegmentDimensions HeightsSegment::initVertices()
   unsigned int divisionsX;
   unsigned int divisionsY;
   unsigned int latticeWidth;
-  _terrain->getSegmentVertices(
-    _bottomLeft, _topRight, _v, divisionsX, divisionsY, latticeWidth);
+  SegmentDimensions sd;
+  _terrain->getSegmentVertices(_bottomLeft, _topRight, _v, &sd);
   for (auto& v : _v) {
     v.color = glm::vec4(31, 188, 240, 150) / 255.0f;
   }
-  return { divisionsX, divisionsY, latticeWidth };
+  return sd;
 }
 
 std::shared_ptr<HeightsSegment> makeHeightsSegment(Shader& colorShader,

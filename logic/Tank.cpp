@@ -25,6 +25,7 @@ std::map<Tank::Type, float> speedMap = { { Tank::Type::Light, 0.05f },
 
 Tank::Tank(Shader& textureShader,
            Shader& linesShader,
+           AStar* router,
            glm::vec3 position,
            Type type,
            HealthLevel healthLevel,
@@ -32,7 +33,8 @@ Tank::Tank(Shader& textureShader,
   BuildableUnit(
     textureShader,
     linesShader,
-    std::make_unique<TankView>(textureShader, position, tankSizeMap[type])),
+    std::make_unique<TankView>(textureShader, position, tankSizeMap[type]),
+    router),
   _speed(speedMap[type]), _shellSize(sh), _destination(-1, -1, -1)
 {
   _health = healthLevelMap[healthLevel] * tankHitPointsMap[type];
@@ -222,13 +224,14 @@ void Tank::setTerrain(Terrain* terrain)
 std::shared_ptr<Tank> createTank(Game* game,
                                  Shader& textureShader,
                                  Shader& linesShader,
+                                 AStar* router,
                                  glm::vec3 position,
                                  Tank::Type type,
                                  HealthLevel health,
                                  Shell::Size shellSize)
 {
   auto newTank = std::make_shared<Tank>(
-    textureShader, linesShader, position, type, health, shellSize);
+    textureShader, linesShader, router, position, type, health, shellSize);
   game->addTank(newTank);
   return newTank;
 }

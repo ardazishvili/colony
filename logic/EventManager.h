@@ -7,6 +7,7 @@
 #include "../engine/HeightsSegment.h"
 #include "../engine/ObstaclesSegment.h"
 #include "../engine/RectangleShape.h"
+#include "../math/AStar.h"
 #include "Game.h"
 #include "Tank.h"
 
@@ -22,7 +23,9 @@ public:
                Shader& colorShader,
                Shader& colorNonFlatShader,
                Shader& linesShader,
-               Terrain* terrain);
+               Terrain* terrain,
+               std::shared_ptr<ObstaclesSegment> mo,
+               AStar* astar);
   void tick();
   void handleKeyPress(GLFWwindow* window,
                       int key,
@@ -74,6 +77,8 @@ private:
 
   std::shared_ptr<HeightsSegment> _heightsSegment;
   std::shared_ptr<ObstaclesSegment> _obstaclesSegment;
+  std::shared_ptr<ObstaclesSegment> _mapObstacles;
+  AStar* _astar;
 };
 
 #endif

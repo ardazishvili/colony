@@ -1,5 +1,6 @@
 #include "TerrainMesh.h"
 #include "../globals.h"
+#include "TerrainMeshSegment.h"
 #include <iostream>
 
 void TerrainMesh::render()
@@ -133,13 +134,15 @@ void TerrainMesh::calculateNormals(int width, unsigned int latticeWidth)
 void TerrainMesh::getSegmentVertices(glm::vec2 bottomLeft,
                                      glm::vec2 topRight,
                                      std::vector<VertexColor>& v,
-                                     unsigned int& divisionsX,
-                                     unsigned int& divisionsY,
-                                     unsigned int& latticeWidth)
+                                     SegmentDimensions* sd)
 {
-  divisionsX = (topRight.x - bottomLeft.x) / (_xStep * _xyScale);
-  divisionsY = (topRight.y - bottomLeft.y) / (_yStep * _xyScale);
-  latticeWidth = divisionsY + 1;
+  sd->divisionsX = (topRight.x - bottomLeft.x) / (_xStep * _xyScale);
+  sd->divisionsY = (topRight.y - bottomLeft.y) / (_yStep * _xyScale);
+  sd->latticeWidth = sd->divisionsY + 1;
+  sd->xStep = _xStep * _xyScale;
+  sd->yStep = _yStep * _xyScale;
+  sd->xOffset = _width;
+  sd->yOffset = _height;
 
   bottomLeft.x += _width * _xyScale / 2;
   topRight.x += _width * _xyScale / 2;
@@ -148,8 +151,8 @@ void TerrainMesh::getSegmentVertices(glm::vec2 bottomLeft,
 
   float startI = _latticeHeight * bottomLeft.x / (_width * _xyScale);
   float startJ = _latticeAugmentedWidth * bottomLeft.y / (_height * _xyScale);
-  for (unsigned int i = startI; i < startI + divisionsX; ++i) {
-    for (unsigned int j = startJ; j < startJ + divisionsY * 2; j += 2) {
+  for (unsigned int i = startI; i < startI + sd->divisionsX; ++i) {
+    for (unsigned int j = startJ; j < startJ + sd->divisionsY * 2; j += 2) {
       v.push_back(_v.at(_latticeAugmentedWidth * i + j));
     }
   }

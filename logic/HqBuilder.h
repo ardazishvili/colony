@@ -5,6 +5,7 @@
 #include "../engine/Terrain.h"
 #include "AbstractStructureBuilder.h"
 
+struct AStar;
 class HqBuilder : public AbstractStructureBuilder
 {
 public:
@@ -12,7 +13,8 @@ public:
             EventManager* eventManager,
             Shader& textureShader,
             Shader& linesShader,
-            Terrain* terrain);
+            Terrain* terrain,
+            AStar* router);
   ~HqBuilder();
 
   void create() override;
@@ -20,6 +22,7 @@ public:
 
 private:
   Terrain* _terrain;
+  AStar* _router;
 };
 
 #endif

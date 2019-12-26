@@ -8,6 +8,10 @@ struct SegmentDimensions
   unsigned int divisionsX;
   unsigned int divisionsY;
   unsigned int latticeWidth;
+  float xStep;
+  float yStep;
+  float xOffset;
+  float yOffset;
 };
 
 class TerrainMeshSegment : public Mesh

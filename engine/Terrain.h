@@ -28,15 +28,11 @@ public:
   void getSegmentVertices(glm::vec2 bottomLeft,
                           glm::vec2 topRight,
                           std::vector<VertexColor>& v,
-                          unsigned int& divisionsX,
-                          unsigned int& divisionsY,
-                          unsigned int& latticeWidth);
+                          SegmentDimensions* sd);
   void getSegmentObstaclesMap(glm::vec2 bottomLeft,
                               glm::vec2 topRight,
                               std::vector<bool>& m,
-                              unsigned int& divisionsX,
-                              unsigned int& divisionsY,
-                              unsigned int& latticeWidth);
+                              SegmentDimensions* sd);
   float halfWidth() const;
   float halfHeight() const;
 

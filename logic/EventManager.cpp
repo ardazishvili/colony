@@ -3,7 +3,6 @@
 #include <GL/glew.h>
 
 #include "../globals.h"
-#include "../math/AStar.h"
 #include "EventManager.h"
 #include "Hq.h"
 #include "Turbine.h"
@@ -36,15 +35,18 @@ EventManager::EventManager(glm::mat4& view,
                            Shader& colorShader,
                            Shader& colorNonFlatShader,
                            Shader& linesShader,
-                           Terrain* terrain) :
+                           Terrain* terrain,
+                           std::shared_ptr<ObstaclesSegment> mo,
+                           AStar* astar) :
   _view(view),
   _projection(projection), _window(window), _camera(camera), _game(game),
   _textureShader(textureShader), _colorShader(colorShader),
   _colorNonFlatShader(colorNonFlatShader), _linesShader(linesShader),
-  _terrain(terrain), _selection(linesShader, camera)
+  _terrain(terrain), _selection(linesShader, camera), _mapObstacles(mo),
+  _astar(astar)
 {
   _game->setControl(std::make_unique<Control>(
-    _game, this, _window, textureShader, linesShader, _terrain));
+    _game, this, _window, textureShader, linesShader, _terrain, _astar));
 }
 
 void EventManager::tick()
@@ -89,8 +91,11 @@ void EventManager::handleKeyPress(GLFWwindow* window,
       std::cout << "X pressed" << std::endl;
       if (_structureToBuild == nullptr) {
         _structureToBuildStage = BuildStage::SetAngle;
-        auto tankFactory = std::make_shared<TankFactory>(
-          _textureShader, _linesShader, unProject(_window, _view, _projection));
+        auto tankFactory =
+          std::make_shared<TankFactory>(_textureShader,
+                                        _linesShader,
+                                        _astar,
+                                        unProject(_window, _view, _projection));
         _game->addStructure(tankFactory);
         _structureToBuild = tankFactory;
       } else {
@@ -106,6 +111,7 @@ void EventManager::handleKeyPress(GLFWwindow* window,
                                        this,
                                        _textureShader,
                                        _linesShader,
+                                       _astar,
                                        unProject(_window, _view, _projection),
                                        _terrain);
         _game->addStructure(hq);
@@ -282,10 +288,6 @@ void EventManager::handleMouseReleased()
                              _terrain,
                              glm::vec2(::min(bl.x, tr.x), ::min(bl.y, tr.y)),
                              glm::vec2(::max(bl.x, tr.x), ::max(bl.y, tr.y)));
-    auto a = AStar();
-    a.init(_obstaclesSegment->vertices(),
-           _obstaclesSegment->obstacles(),
-           _obstaclesSegment->dimensions());
   } else {
 
     _tanksSelected = _game->getTanks(_selection.getPoints());

@@ -6,7 +6,7 @@
 
 const float Path::Z_OFFSET = 0.1;
 
-Path::Path(Shader& shader) : LinesObject(shader)
+Path::Path(Shader& shader, AStar* router) : LinesObject(shader), _router(router)
 {
   _v.push_back(glm::vec3());
   _v.push_back(glm::vec3());
@@ -35,6 +35,7 @@ void Path::setUp(glm::vec3 s, glm::vec3 e)
   _v.push_back(s);
   e.z += Z_OFFSET;
   _v.push_back(e);
+  auto route = _router->getPath(glm::vec2(s.x, s.y), glm::vec2(e.x, e.y));
   reloadData();
 }
 

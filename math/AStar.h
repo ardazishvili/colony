@@ -15,13 +15,21 @@ struct ANode
   ANode* parent{ nullptr };
 };
 
+using APath = std::vector<glm::vec2>;
 class AStar
 {
 public:
-  AStar() = default;
-  void init(const std::vector<VertexColor>& v,
-            const std::vector<bool>& o,
-            SegmentDimensions sd);
+  AStar(const std::vector<VertexColor>& v,
+        const std::vector<bool>& o,
+        SegmentDimensions sd);
+  // Get path from start to end
+  APath getPath(glm::vec2 s, glm::vec2 e);
+
+private:
+  float h(glm::vec2 c, glm::vec2 goal);
+  const std::vector<VertexColor>& _v;
+  const std::vector<bool>& _o;
+  SegmentDimensions _sd;
 };
 
 #endif

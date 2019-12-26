@@ -21,9 +21,7 @@ public:
   void getSegmentObstaclesMap(glm::vec2 bottomLeft,
                               glm::vec2 topRight,
                               std::vector<bool>& m,
-                              unsigned int& divisionsX,
-                              unsigned int& divisionsY,
-                              unsigned int& latticeWidth);
+                              SegmentDimensions* sd);
 
 private:
   std::vector<bool> _obstaclesMap;

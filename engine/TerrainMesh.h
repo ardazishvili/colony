@@ -14,6 +14,7 @@ struct VertexColor
   glm::vec4 color;
 };
 
+struct SegmentDimensions;
 class TerrainMesh : public Mesh
 {
 public:
@@ -37,9 +38,7 @@ public:
   void getSegmentVertices(glm::vec2 bottomLeft,
                           glm::vec2 topRight,
                           std::vector<VertexColor>& v,
-                          unsigned int& divisions,
-                          unsigned int& divisionsY,
-                          unsigned int& latticeWidth);
+                          SegmentDimensions* sd);
   float halfWidth() const;
   float halfHeight() const;
 

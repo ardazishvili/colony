@@ -11,7 +11,10 @@ class TankFactory : public BuildableStructure
 {
 public:
   TankFactory() = delete;
-  TankFactory(Shader& textureShader, Shader& linesShader, glm::vec3 position);
+  TankFactory(Shader& textureShader,
+              Shader& linesShader,
+              AStar* router,
+              glm::vec3 position);
 
   void createTank(Game* game,
                   Tank::Type tankType,
@@ -28,6 +31,7 @@ private:
                       Shell::Size shellSize);
 
   static const int TANK_FACTORY_HP;
+  AStar* _router{ nullptr };
 };
 
 #endif

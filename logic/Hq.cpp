@@ -10,12 +10,13 @@ Hq::Hq(Game* game,
        EventManager* eventManager,
        Shader& textureShader,
        Shader& linesShader,
+       AStar* router,
        glm::vec3 position,
        Terrain* terrain) :
   BuildableStructure(textureShader,
                      linesShader,
                      std::make_unique<HqView>(textureShader, position)),
-  _game(game), _eventManager(eventManager), _terrain(terrain)
+  _game(game), _eventManager(eventManager), _terrain(terrain), _router(router)
 {
   _health = HQ_HP;
   _maxHealth = _health;
@@ -31,7 +32,7 @@ StructureBuilders Hq::getStructureBuilders()
   StructureBuilders builders = StructureBuilders();
   std::unique_ptr<AbstractStructureBuilder> tfBuilder =
     std::make_unique<TankFactoryBuilder>(
-      _game, _eventManager, _textureShader, _linesShader);
+      _game, _eventManager, _textureShader, _linesShader, _router);
   builders.push_back(std::move(tfBuilder));
 
   std::unique_ptr<AbstractStructureBuilder> bBuilder =

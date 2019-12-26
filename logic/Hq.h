@@ -5,6 +5,7 @@
 #include "../view/HqView.h"
 #include "BuildableStructure.h"
 
+struct AStar;
 class Hq : public BuildableStructure
 {
 public:
@@ -13,6 +14,7 @@ public:
      EventManager* eventManager,
      Shader& textureShader,
      Shader& linesShader,
+     AStar* router,
      glm::vec3 position,
      Terrain* terrain);
 
@@ -23,6 +25,7 @@ private:
   Game* _game;
   EventManager* _eventManager;
   Terrain* _terrain;
+  AStar* _router;
   static const int HQ_HP;
 };
 

@@ -3,9 +3,10 @@
 
 BuildableUnit::BuildableUnit(Shader& textureShader,
                              Shader& linesShader,
-                             std::unique_ptr<UnitView> view) :
+                             std::unique_ptr<UnitView> view,
+                             AStar* router) :
   Buildable(textureShader, linesShader),
-  _view(std::move(view)), _path(linesShader)
+  _view(std::move(view)), _path(linesShader, router)
 {
   _viewPtr = _view.get();
 }
