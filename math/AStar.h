@@ -3,16 +3,24 @@
 
 #include "../engine/ObstaclesSegment.h"
 
+struct APoint
+{
+  unsigned int x;
+  unsigned int y;
+};
+
+bool operator==(const APoint& lhs, const APoint& rhs);
+
 // f = g + h;
 struct ANode
 {
-  float x;
-  float y;
-  float h{ 0 };
-  float g{ 0 };
-  float f{ 0 };
-  bool isObstacle{ false };
-  ANode* parent{ nullptr };
+  glm::vec2 p;
+  APoint integerP;
+  /* float h{ 0 }; */
+  /* float g{ 0 }; */
+  /* float f{ 0 }; */
+  /* bool isObstacle{ false }; */
+  /* ANode* parent{ nullptr }; */
 };
 
 using APath = std::vector<glm::vec2>;
@@ -27,6 +35,9 @@ public:
 
 private:
   float h(glm::vec2 c, glm::vec2 goal);
+  APath reconstructPath(ANode* node);
+  std::vector<ANode> getNeighbors(ANode* node);
+
   const std::vector<VertexColor>& _v;
   const std::vector<bool>& _o;
   SegmentDimensions _sd;
