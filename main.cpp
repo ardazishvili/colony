@@ -183,8 +183,8 @@ int main(int argc, char** argv)
   game->addTerrain(&terrain);
   auto mapObstacles = ::makeObstaclesSegment(colorNonFlatShader,
                                              &terrain,
-                                             glm::vec2(-20.0, -20.0),
-                                             glm::vec2(20.0, 20.0));
+                                             glm::vec2(-19.99, -19.99),
+                                             glm::vec2(19.99, 19.99));
   auto astar = AStar(mapObstacles->vertices(),
                      mapObstacles->obstacles(),
                      mapObstacles->dimensions());

@@ -46,7 +46,7 @@ Tank::Tank(Shader& textureShader,
 void Tank::move()
 {
   auto prev = _view->position();
-  _path.setStart(prev);
+  /* _path.setStart(prev); */
   auto c = _terrain->getXYZ(glm::vec2(prev.x, prev.y) + _moveIncrement);
   _view->move(c);
   bool destinationIsReached =
@@ -71,13 +71,15 @@ void Tank::startMoving(glm::vec3 endPoint)
   _moveIncrement.x = _speed * ::sin(radianAngle);
   _moveIncrement.y = _speed * ::cos(radianAngle);
 
-  _path.setUp(_view->position(), endPoint);
+  std::cout << "startMoving" << std::endl;
+  _path =
+    std::make_shared<Path>(_linesShader, _router, _view->position(), endPoint);
 }
 
 void Tank::stopMoving()
 {
   _destination = glm::vec3(-1, -1, -1);
-  _path.clear();
+  /* _path.clear(); */
 }
 
 bool Tank::isMoving()

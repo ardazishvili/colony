@@ -20,7 +20,7 @@ public:
 
 protected:
   std::unique_ptr<UnitView> _view;
-  Path _path;
+  std::shared_ptr<Path> _path;
   AStar* _router;
 };
 

@@ -6,7 +6,7 @@ BuildableUnit::BuildableUnit(Shader& textureShader,
                              std::unique_ptr<UnitView> view,
                              AStar* router) :
   Buildable(textureShader, linesShader),
-  _view(std::move(view)), _path(linesShader, router)
+  _view(std::move(view)), _router(router)
 {
   _viewPtr = _view.get();
 }
@@ -19,7 +19,7 @@ bool BuildableUnit::isUnderCursor(const glm::vec3& mousePoint)
 void BuildableUnit::render()
 {
   Buildable::render();
-  if (_path.isSettedUp()) {
-    _path.render();
+  if (_path != nullptr) {
+    _path->render();
   }
 }
