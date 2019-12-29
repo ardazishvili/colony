@@ -81,7 +81,7 @@ int main(int argc, char** argv)
   GLFWmonitor** monitors = glfwGetMonitors(&count);
   const GLFWvidmode* mode = glfwGetVideoMode(monitors[1]);
   float screenWidth = mode->width;
-  float screenHeight = mode->height;
+  float screenHeight = mode->height - 150;
   GLFWwindow* window =
     glfwCreateWindow(screenWidth, screenHeight, "LearnOPenGl", NULL, NULL);
   if (window == NULL) {
@@ -238,6 +238,7 @@ int main(int argc, char** argv)
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
+    logger.render();
 
     int display_w, display_h;
     glfwGetFramebufferSize(window, &display_w, &display_h);

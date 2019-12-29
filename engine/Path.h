@@ -7,18 +7,21 @@
 class Path : public LinesObject
 {
 public:
-  Path(Shader& shader, AStar* router, glm::vec3 s, glm::vec3 e);
+  Path(Shader& shader, AStar* router);
   void render();
-  /* void setUp(glm::vec3 s, glm::vec3 e); */
+  APath route() const;
+  bool init(glm::vec3 s, glm::vec3 e);
   /* void setStart(glm::vec3 s); */
-  /* void setEnd(glm::vec3 e); */
-  /* void clear(); */
-  /* bool isSettedUp() const; */
 
 private:
-  /* void reloadData(); */
   static const float Z_OFFSET;
   AStar* _router;
+  APath _route;
 };
+
+std::shared_ptr<Path> makePath(Shader& shader,
+                               AStar* router,
+                               glm::vec3 s,
+                               glm::vec3 e);
 
 #endif

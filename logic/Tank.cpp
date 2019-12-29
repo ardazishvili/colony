@@ -2,8 +2,11 @@
 
 #include <GL/glew.h> // Initialize with glewInit()
 
+#include "../globals.h"
 #include "Game.h"
 #include "Tank.h"
+
+const float Tank::MOVE_STOP_TOL = 0.02;
 
 std::map<Tank::Type, float> tankSizeMap = {
   { Tank::Type::Light, 0.4f },
@@ -35,7 +38,7 @@ Tank::Tank(Shader& textureShader,
     linesShader,
     std::make_unique<TankView>(textureShader, position, tankSizeMap[type]),
     router),
-  _speed(speedMap[type]), _shellSize(sh), _destination(-1, -1, -1)
+  _speed(speedMap[type]), _shellSize(sh), _destination(-1, -1)
 {
   _health = healthLevelMap[healthLevel] * tankHitPointsMap[type];
   _maxHealth = _health;
@@ -53,13 +56,30 @@ void Tank::move()
     ::sqrt(::pow(_view->position().x - _destination.x, 2) +
            ::pow(_view->position().y - _destination.y, 2)) < _speed;
   if (destinationIsReached || isDestroyed()) {
-    stopMoving();
+    _movingRoute.pop_back();
+    if (!_movingRoute.empty()) {
+      startMoving(_movingRoute.at(_movingRoute.size() - 1));
+    } else {
+      stopMoving();
+    }
   }
 }
 
-void Tank::startMoving(glm::vec3 endPoint)
+void Tank::setRoute(glm::vec3 endPoint)
 {
-  _destination = endPoint;
+  _path = ::makePath(_linesShader, _router, _view->position(), endPoint);
+  if (_path != nullptr) {
+    _movingRoute = _path->route();
+    startMoving(_movingRoute.at(_movingRoute.size() - 1));
+  } else {
+    std::cout << "No path to endpoint!" << std::endl;
+  }
+}
+
+void Tank::startMoving(glm::vec2 endPoint)
+{
+  _destination = glm::vec2(endPoint.x, endPoint.y);
+
   float dy = _destination.y - _view->position().y;
   float dx = _destination.x - _view->position().x;
   float radianAngle = ::atan(dx / dy);
@@ -70,10 +90,6 @@ void Tank::startMoving(glm::vec3 endPoint)
   _view->rotateBody(degreeAngle);
   _moveIncrement.x = _speed * ::sin(radianAngle);
   _moveIncrement.y = _speed * ::cos(radianAngle);
-
-  std::cout << "startMoving" << std::endl;
-  _path =
-    std::make_shared<Path>(_linesShader, _router, _view->position(), endPoint);
 }
 
 void Tank::stopMoving()
@@ -84,7 +100,7 @@ void Tank::stopMoving()
 
 bool Tank::isMoving()
 {
-  return _destination != glm::vec3(-1, -1, -1);
+  return _destination != glm::vec2(-1, -1);
 }
 
 void Tank::shootTarget()

@@ -12,7 +12,7 @@ public:
   void add(BuildableUnit* unit);
   bool empty() const;
   void startShooting(Buildable* target);
-  void startMoving(glm::vec3 destination);
+  void setRoute(glm::vec3 destination);
   void clear();
 
 private:

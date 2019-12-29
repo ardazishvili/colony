@@ -329,7 +329,7 @@ void EventManager::handleMousePressedRight()
     } else if (_structureUnderAttack) {
       _tankSelected->startShooting(_structureUnderAttack);
     } else {
-      _tankSelected->startMoving(c);
+      _tankSelected->setRoute(c);
     }
   }
   if (_structureToBuild &&
@@ -349,7 +349,7 @@ void EventManager::handleMousePressedRight()
     } else if (_structureUnderAttack) {
       _tanksSelected.startShooting(_structureUnderAttack);
     } else {
-      _tanksSelected.startMoving(c);
+      _tanksSelected.setRoute(c);
     }
   }
 }

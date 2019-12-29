@@ -17,10 +17,10 @@ void VehicleGroup::startShooting(Buildable* target)
   }
 }
 
-void VehicleGroup::startMoving(glm::vec3 destination)
+void VehicleGroup::setRoute(glm::vec3 destination)
 {
   for (auto& vehicle : _selected) {
-    vehicle->startMoving(destination);
+    vehicle->setRoute(destination);
   }
 }
 

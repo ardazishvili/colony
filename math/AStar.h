@@ -1,8 +1,8 @@
 #ifndef ASTAR_H
 #define ASTAR_H
 
-#include <list>
 #include <map>
+#include <optional>
 
 #include "../engine/ObstaclesSegment.h"
 
@@ -44,7 +44,7 @@ public:
         const std::vector<bool>& o,
         SegmentDimensions sd);
   // Get path from start to end
-  APath getPath(glm::vec2 s, glm::vec2 e);
+  std::optional<APath> getPath(glm::vec2 s, glm::vec2 e);
 
 private:
   float h(glm::vec2 c, glm::vec2 goal);
@@ -54,6 +54,8 @@ private:
   const std::vector<VertexColor>& _v;
   const std::vector<bool>& _o;
   SegmentDimensions _sd;
+
+  static const unsigned int MAX_ITER;
 };
 
 #endif

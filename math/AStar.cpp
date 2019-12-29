@@ -4,6 +4,8 @@
 #include "../globals.h"
 #include "AStar.h"
 
+const unsigned int AStar::MAX_ITER = 2000;
+
 AStar::AStar(const std::vector<VertexColor>& v,
              const std::vector<bool>& o,
              SegmentDimensions sd) :
@@ -12,7 +14,7 @@ AStar::AStar(const std::vector<VertexColor>& v,
 {
 }
 
-APath AStar::getPath(glm::vec2 s, glm::vec2 e)
+std::optional<APath> AStar::getPath(glm::vec2 s, glm::vec2 e)
 {
   s.x += _sd.xOffset;
   s.y += _sd.yOffset;
@@ -32,13 +34,15 @@ APath AStar::getPath(glm::vec2 s, glm::vec2 e)
   std::set<std::shared_ptr<ANode>> frontier;
   frontier.emplace(start);
   std::set<std::shared_ptr<ANode>> closed;
-  std::cout << "sta position: (" << start->integerP.x << ", "
-            << start->integerP.y << ")" << std::endl;
-  std::cout << "end position: (" << end->integerP.x << ", " << end->integerP.y
-            << ")" << std::endl;
 
-  auto iterations = 0;
+  unsigned int it = 0;
   while (!frontier.empty()) {
+    /* std::cout << "it= " << it << std::endl; */
+    ++it;
+    // TODO add more elegant solution
+    if (it > MAX_ITER) {
+      break;
+    }
     auto currentIt = std::min_element(
       frontier.begin(),
       frontier.end(),
@@ -55,7 +59,8 @@ APath AStar::getPath(glm::vec2 s, glm::vec2 e)
     frontier.erase(currentIt);
     auto neighbors = getNeighbors(current.get());
     for (auto& n : neighbors) {
-      auto tmp = current->g + 0.01;
+      /* auto tmp = current->g + 0.01; */
+      auto tmp = current->g + _sd.xStep;
       auto fIt = std::find_if(
         frontier.begin(), frontier.end(), [&n](std::shared_ptr<ANode> node) {
           return (node->integerP == n.integerP);
@@ -88,8 +93,7 @@ APath AStar::getPath(glm::vec2 s, glm::vec2 e)
     }
   }
 
-  std::cout << "FAILURE of ASTAR" << std::endl;
-  return APath();
+  return std::nullopt;
 }
 
 float AStar::h(glm::vec2 c, glm::vec2 goal)
@@ -101,6 +105,8 @@ APath AStar::reconstructPath(ANode* current)
 {
   auto path = APath();
   while (current->parent != nullptr) {
+    /* std::cout << "current= " << current << std::endl; */
+    /* std::cout << "current->parent= " << current->parent << std::endl; */
     auto p = glm::vec2(current->p.x - _sd.xOffset, current->p.y - _sd.yOffset);
     path.push_back(p);
     current = current->parent;

@@ -36,7 +36,8 @@ public:
   StructureBuilders getStructureBuilders() override;
 
   void move();
-  void startMoving(glm::vec3 endPoint) override;
+  void setRoute(glm::vec3 endPoint) override;
+  void startMoving(glm::vec2 endPoint) override;
   void stopMoving();
   bool isMoving();
 
@@ -61,10 +62,13 @@ private:
   Shell::Size _shellSize;
   Shells _shells;
   Buildable* _target;
-  glm::vec3 _destination;
+  glm::vec2 _destination;
   Timer _clock;
   std::chrono::milliseconds _shellLoadTime{ 200 };
   Terrain* _terrain;
+
+  APath _movingRoute;
+  static const float MOVE_STOP_TOL;
 };
 
 std::shared_ptr<Tank> createTank(Game* game,

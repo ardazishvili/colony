@@ -15,7 +15,8 @@ public:
                 AStar* router);
   bool isUnderCursor(const glm::vec3& mousePoint) override;
   virtual void startShooting(Buildable* other) = 0;
-  virtual void startMoving(glm::vec3 endPoint) = 0;
+  virtual void startMoving(glm::vec2 endPoint) = 0;
+  virtual void setRoute(glm::vec3 endPoint) = 0;
   virtual void render() override;
 
 protected:
