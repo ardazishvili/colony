@@ -31,10 +31,8 @@ struct ANode
 
   glm::vec2 p;
   APoint integerP;
-  /* float h{ 0 }; */
   float g{ 0 };
   float f{ 0 };
-  /* bool isObstacle{ false }; */
   ANode* parent{ nullptr };
 };
 

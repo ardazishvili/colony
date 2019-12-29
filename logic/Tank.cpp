@@ -79,7 +79,7 @@ void Tank::startMoving(glm::vec3 endPoint)
 void Tank::stopMoving()
 {
   _destination = glm::vec3(-1, -1, -1);
-  /* _path.clear(); */
+  /* _path.reset(); */
 }
 
 bool Tank::isMoving()
