@@ -1,8 +1,9 @@
 #ifndef ASTAR_H
 #define ASTAR_H
 
-#include <map>
+/* #include <map> */
 #include <optional>
+#include <set>
 
 #include "../engine/ObstaclesSegment.h"
 
@@ -36,9 +37,6 @@ struct ANode
   ANode* parent{ nullptr };
 };
 
-/* bool operator<(const std::shared_ptr<ANode>& lhs, */
-/*                const std::shared_ptr<ANode>& rhs); */
-
 using APath = std::vector<glm::vec2>;
 class AStar
 {
@@ -52,11 +50,12 @@ public:
 private:
   float h(glm::vec2 c, glm::vec2 goal);
   APath reconstructPath(ANode* current);
-  std::vector<ANode> getNeighbors(const ANode* const node);
+  std::vector<std::shared_ptr<ANode>> getNeighbors(const ANode* const node);
 
   const std::vector<VertexColor>& _v;
   const std::vector<bool>& _o;
   SegmentDimensions _sd;
+  std::set<std::shared_ptr<ANode>> _cache;
 
   static const unsigned int MAX_ITER;
 };

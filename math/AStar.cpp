@@ -1,5 +1,4 @@
 #include <iomanip>
-#include <set>
 
 #include "../globals.h"
 #include "AStar.h"
@@ -21,10 +20,12 @@ std::optional<APath> AStar::getPath(glm::vec2 s, glm::vec2 e)
   e.x += _sd.xOffset;
   e.y += _sd.yOffset;
   auto result = APath();
+  _cache.clear();
 
   unsigned int sxi = s.x / _sd.xStep;
   unsigned int syi = s.y / _sd.yStep;
   auto start = std::make_shared<ANode>(s, APoint{ sxi, syi });
+  _cache.emplace(start);
   unsigned int exi = e.x / _sd.xStep;
   unsigned int eyi = e.y / _sd.yStep;
   auto end = std::make_shared<ANode>(e, APoint{ exi, eyi });
@@ -58,26 +59,19 @@ std::optional<APath> AStar::getPath(glm::vec2 s, glm::vec2 e)
     auto neighbors = getNeighbors(current.get());
     for (auto& n : neighbors) {
       auto tmp = current->g + _sd.xStep;
-      auto fIt = std::find_if(
-        frontier.begin(), frontier.end(), [&n](std::shared_ptr<ANode> node) {
-          return (node->integerP == n.integerP);
-        });
+      auto fIt = frontier.find(n);
       if (fIt != frontier.end() && tmp < (*fIt)->g) {
         frontier.erase(fIt);
       }
-      auto cIt = std::find_if(
-        closed.begin(), closed.end(), [&n](std::shared_ptr<ANode> node) {
-          return (node->integerP == n.integerP);
-        });
+      auto cIt = closed.find(n);
       if (cIt != closed.end() && tmp < (*cIt)->g) {
         closed.erase(cIt);
       }
       if (fIt == frontier.end() && cIt == closed.end()) {
-        auto a = std::make_shared<ANode>(n);
-        a->g = tmp;
-        a->f = tmp + h(a->p, end->p);
-        a->parent = current.get();
-        frontier.insert(a);
+        n->g = tmp;
+        n->f = tmp + h(n->p, end->p);
+        n->parent = current.get();
+        frontier.insert(n);
       }
     }
   }
@@ -107,13 +101,8 @@ bool operator==(const APoint& lhs, const APoint& rhs)
   return lhs.x == rhs.x && lhs.y == rhs.y;
 }
 
-/* bool operator<(const std::shared_ptr<ANode>& lhs, */
-/*                const std::shared_ptr<ANode>& rhs) */
-/* { */
-/*   return lhs->f < rhs->f; */
-/* } */
-
-std::vector<ANode> AStar::getNeighbors(const ANode* const current)
+std::vector<std::shared_ptr<ANode>> AStar::getNeighbors(
+  const ANode* const current)
 {
   auto cx = current->integerP.x;
   auto cy = current->integerP.y;
@@ -124,16 +113,24 @@ std::vector<ANode> AStar::getNeighbors(const ANode* const current)
   };
   std::vector<Offset> offsets = { { -1, 0 },  { 1, 0 },  { 0, -1 }, { 0, 1 },
                                   { -1, -1 }, { -1, 1 }, { 1, -1 }, { 1, 1 } };
-  std::vector<ANode> res;
+  std::vector<std::shared_ptr<ANode>> res;
   for (auto& offset : offsets) {
-
     unsigned int i = cx + offset.x;
     unsigned int j = cy + offset.y;
     if (!_o.at(i * _sd.latticeWidth + j)) {
-      float x = _v.at(i * _sd.latticeWidth + j).p.x;
-      float y = _v.at(i * _sd.latticeWidth + j).p.y;
-      auto n = ANode(glm::vec2(x, y), APoint(i, j));
-      res.push_back(n);
+      auto it = std::find_if(
+        _cache.begin(), _cache.end(), [i, j](std::shared_ptr<ANode> node) {
+          return (node->integerP == APoint(i, j));
+        });
+      if (it == _cache.end()) {
+        float x = _v.at(i * _sd.latticeWidth + j).p.x;
+        float y = _v.at(i * _sd.latticeWidth + j).p.y;
+        auto n = std::make_shared<ANode>(glm::vec2(x, y), APoint(i, j));
+        _cache.emplace(n);
+        res.push_back(n);
+      } else {
+        res.push_back(*it);
+      }
     }
   }
   return res;
