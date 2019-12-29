@@ -31,24 +31,22 @@ std::optional<APath> AStar::getPath(glm::vec2 s, glm::vec2 e)
   start->g = 0;
   start->f = start->g + h(start->p, end->p);
 
-  std::set<std::shared_ptr<ANode>> frontier;
+  auto comp = [](const std::shared_ptr<ANode>& lhs,
+                 const std::shared_ptr<ANode>& rhs) {
+    return lhs->f < rhs->f;
+  };
+  auto frontier = std::set<std::shared_ptr<ANode>, decltype(comp)>(comp);
   frontier.emplace(start);
   std::set<std::shared_ptr<ANode>> closed;
 
   unsigned int it = 0;
   while (!frontier.empty()) {
-    /* std::cout << "it= " << it << std::endl; */
     ++it;
     // TODO add more elegant solution
     if (it > MAX_ITER) {
       break;
     }
-    auto currentIt = std::min_element(
-      frontier.begin(),
-      frontier.end(),
-      [](std::shared_ptr<ANode> lhs, std::shared_ptr<ANode> rhs) {
-        return lhs->f < rhs->f;
-      });
+    auto currentIt = frontier.begin();
     auto current = *currentIt;
 
     if (current->integerP == end->integerP) {
@@ -59,7 +57,6 @@ std::optional<APath> AStar::getPath(glm::vec2 s, glm::vec2 e)
     frontier.erase(currentIt);
     auto neighbors = getNeighbors(current.get());
     for (auto& n : neighbors) {
-      /* auto tmp = current->g + 0.01; */
       auto tmp = current->g + _sd.xStep;
       auto fIt = std::find_if(
         frontier.begin(), frontier.end(), [&n](std::shared_ptr<ANode> node) {
@@ -75,14 +72,6 @@ std::optional<APath> AStar::getPath(glm::vec2 s, glm::vec2 e)
       if (cIt != closed.end() && tmp < (*cIt)->g) {
         closed.erase(cIt);
       }
-      fIt = std::find_if(
-        frontier.begin(), frontier.end(), [&n](std::shared_ptr<ANode> node) {
-          return (node->integerP == n.integerP);
-        });
-      cIt = std::find_if(
-        closed.begin(), closed.end(), [&n](std::shared_ptr<ANode> node) {
-          return (node->integerP == n.integerP);
-        });
       if (fIt == frontier.end() && cIt == closed.end()) {
         auto a = std::make_shared<ANode>(n);
         a->g = tmp;
@@ -105,8 +94,6 @@ APath AStar::reconstructPath(ANode* current)
 {
   auto path = APath();
   while (current->parent != nullptr) {
-    /* std::cout << "current= " << current << std::endl; */
-    /* std::cout << "current->parent= " << current->parent << std::endl; */
     auto p = glm::vec2(current->p.x - _sd.xOffset, current->p.y - _sd.yOffset);
     path.push_back(p);
     current = current->parent;
@@ -119,6 +106,12 @@ bool operator==(const APoint& lhs, const APoint& rhs)
 {
   return lhs.x == rhs.x && lhs.y == rhs.y;
 }
+
+/* bool operator<(const std::shared_ptr<ANode>& lhs, */
+/*                const std::shared_ptr<ANode>& rhs) */
+/* { */
+/*   return lhs->f < rhs->f; */
+/* } */
 
 std::vector<ANode> AStar::getNeighbors(const ANode* const current)
 {

@@ -1,0 +1,412 @@
+[
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/LinesObject.cpp.o -c /home/roman/repos/colony/engine/LinesObject.cpp",
+  "file": "/home/roman/repos/colony/engine/LinesObject.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/RectangleShape.cpp.o -c /home/roman/repos/colony/engine/RectangleShape.cpp",
+  "file": "/home/roman/repos/colony/engine/RectangleShape.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/HeightsSegment.cpp.o -c /home/roman/repos/colony/engine/HeightsSegment.cpp",
+  "file": "/home/roman/repos/colony/engine/HeightsSegment.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/ObstaclesSegment.cpp.o -c /home/roman/repos/colony/engine/ObstaclesSegment.cpp",
+  "file": "/home/roman/repos/colony/engine/ObstaclesSegment.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/Path.cpp.o -c /home/roman/repos/colony/engine/Path.cpp",
+  "file": "/home/roman/repos/colony/engine/Path.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/math/AStar.cpp.o -c /home/roman/repos/colony/math/AStar.cpp",
+  "file": "/home/roman/repos/colony/math/AStar.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/TerrainMeshSegment.cpp.o -c /home/roman/repos/colony/engine/TerrainMeshSegment.cpp",
+  "file": "/home/roman/repos/colony/engine/TerrainMeshSegment.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/AbstractPlantBuilder.cpp.o -c /home/roman/repos/colony/logic/AbstractPlantBuilder.cpp",
+  "file": "/home/roman/repos/colony/logic/AbstractPlantBuilder.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/Timer.cpp.o -c /home/roman/repos/colony/Timer.cpp",
+  "file": "/home/roman/repos/colony/Timer.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/Animation.cpp.o -c /home/roman/repos/colony/engine/Animation.cpp",
+  "file": "/home/roman/repos/colony/engine/Animation.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/Camera.cpp.o -c /home/roman/repos/colony/engine/Camera.cpp",
+  "file": "/home/roman/repos/colony/engine/Camera.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/Light.cpp.o -c /home/roman/repos/colony/engine/Light.cpp",
+  "file": "/home/roman/repos/colony/engine/Light.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/Model.cpp.o -c /home/roman/repos/colony/engine/Model.cpp",
+  "file": "/home/roman/repos/colony/engine/Model.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/ModelLoader.cpp.o -c /home/roman/repos/colony/engine/ModelLoader.cpp",
+  "file": "/home/roman/repos/colony/engine/ModelLoader.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/ModelMesh.cpp.o -c /home/roman/repos/colony/engine/ModelMesh.cpp",
+  "file": "/home/roman/repos/colony/engine/ModelMesh.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/PhongShader.cpp.o -c /home/roman/repos/colony/engine/PhongShader.cpp",
+  "file": "/home/roman/repos/colony/engine/PhongShader.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/Shader.cpp.o -c /home/roman/repos/colony/engine/Shader.cpp",
+  "file": "/home/roman/repos/colony/engine/Shader.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/Terrain.cpp.o -c /home/roman/repos/colony/engine/Terrain.cpp",
+  "file": "/home/roman/repos/colony/engine/Terrain.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/Texture.cpp.o -c /home/roman/repos/colony/engine/Texture.cpp",
+  "file": "/home/roman/repos/colony/engine/Texture.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/globals.cpp.o -c /home/roman/repos/colony/globals.cpp",
+  "file": "/home/roman/repos/colony/globals.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/imgui/imgui.cpp.o -c /home/roman/repos/colony/imgui/imgui.cpp",
+  "file": "/home/roman/repos/colony/imgui/imgui.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/imgui/imgui_demo.cpp.o -c /home/roman/repos/colony/imgui/imgui_demo.cpp",
+  "file": "/home/roman/repos/colony/imgui/imgui_demo.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/imgui/imgui_draw.cpp.o -c /home/roman/repos/colony/imgui/imgui_draw.cpp",
+  "file": "/home/roman/repos/colony/imgui/imgui_draw.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/imgui/imgui_impl_glfw.cpp.o -c /home/roman/repos/colony/imgui/imgui_impl_glfw.cpp",
+  "file": "/home/roman/repos/colony/imgui/imgui_impl_glfw.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/imgui/imgui_impl_opengl3.cpp.o -c /home/roman/repos/colony/imgui/imgui_impl_opengl3.cpp",
+  "file": "/home/roman/repos/colony/imgui/imgui_impl_opengl3.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/imgui/imgui_widgets.cpp.o -c /home/roman/repos/colony/imgui/imgui_widgets.cpp",
+  "file": "/home/roman/repos/colony/imgui/imgui_widgets.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/Buildable.cpp.o -c /home/roman/repos/colony/logic/Buildable.cpp",
+  "file": "/home/roman/repos/colony/logic/Buildable.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/Control.cpp.o -c /home/roman/repos/colony/logic/Control.cpp",
+  "file": "/home/roman/repos/colony/logic/Control.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/EventManager.cpp.o -c /home/roman/repos/colony/logic/EventManager.cpp",
+  "file": "/home/roman/repos/colony/logic/EventManager.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/Game.cpp.o -c /home/roman/repos/colony/logic/Game.cpp",
+  "file": "/home/roman/repos/colony/logic/Game.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/Hq.cpp.o -c /home/roman/repos/colony/logic/Hq.cpp",
+  "file": "/home/roman/repos/colony/logic/Hq.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/HqBuilder.cpp.o -c /home/roman/repos/colony/logic/HqBuilder.cpp",
+  "file": "/home/roman/repos/colony/logic/HqBuilder.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/Panel.cpp.o -c /home/roman/repos/colony/logic/Panel.cpp",
+  "file": "/home/roman/repos/colony/logic/Panel.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/PanelItem.cpp.o -c /home/roman/repos/colony/logic/PanelItem.cpp",
+  "file": "/home/roman/repos/colony/logic/PanelItem.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/Shell.cpp.o -c /home/roman/repos/colony/logic/Shell.cpp",
+  "file": "/home/roman/repos/colony/logic/Shell.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/Tank.cpp.o -c /home/roman/repos/colony/logic/Tank.cpp",
+  "file": "/home/roman/repos/colony/logic/Tank.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/TankBuilder.cpp.o -c /home/roman/repos/colony/logic/TankBuilder.cpp",
+  "file": "/home/roman/repos/colony/logic/TankBuilder.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/TankFactory.cpp.o -c /home/roman/repos/colony/logic/TankFactory.cpp",
+  "file": "/home/roman/repos/colony/logic/TankFactory.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/TankFactoryBuilder.cpp.o -c /home/roman/repos/colony/logic/TankFactoryBuilder.cpp",
+  "file": "/home/roman/repos/colony/logic/TankFactoryBuilder.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/VehicleGroup.cpp.o -c /home/roman/repos/colony/logic/VehicleGroup.cpp",
+  "file": "/home/roman/repos/colony/logic/VehicleGroup.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/view/HqView.cpp.o -c /home/roman/repos/colony/view/HqView.cpp",
+  "file": "/home/roman/repos/colony/view/HqView.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/view/ShellView.cpp.o -c /home/roman/repos/colony/view/ShellView.cpp",
+  "file": "/home/roman/repos/colony/view/ShellView.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/view/TankFactoryView.cpp.o -c /home/roman/repos/colony/view/TankFactoryView.cpp",
+  "file": "/home/roman/repos/colony/view/TankFactoryView.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/view/TankView.cpp.o -c /home/roman/repos/colony/view/TankView.cpp",
+  "file": "/home/roman/repos/colony/view/TankView.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/view/View.cpp.o -c /home/roman/repos/colony/view/View.cpp",
+  "file": "/home/roman/repos/colony/view/View.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/Beam.cpp.o -c /home/roman/repos/colony/engine/Beam.cpp",
+  "file": "/home/roman/repos/colony/engine/Beam.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/LinesShader.cpp.o -c /home/roman/repos/colony/engine/LinesShader.cpp",
+  "file": "/home/roman/repos/colony/engine/LinesShader.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/MainTerrainMesh.cpp.o -c /home/roman/repos/colony/engine/MainTerrainMesh.cpp",
+  "file": "/home/roman/repos/colony/engine/MainTerrainMesh.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/Mesh.cpp.o -c /home/roman/repos/colony/engine/Mesh.cpp",
+  "file": "/home/roman/repos/colony/engine/Mesh.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/PlainMesh.cpp.o -c /home/roman/repos/colony/engine/PlainMesh.cpp",
+  "file": "/home/roman/repos/colony/engine/PlainMesh.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/Skybox.cpp.o -c /home/roman/repos/colony/engine/Skybox.cpp",
+  "file": "/home/roman/repos/colony/engine/Skybox.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/SkyboxShader.cpp.o -c /home/roman/repos/colony/engine/SkyboxShader.cpp",
+  "file": "/home/roman/repos/colony/engine/SkyboxShader.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/Sphere.cpp.o -c /home/roman/repos/colony/engine/Sphere.cpp",
+  "file": "/home/roman/repos/colony/engine/Sphere.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/SphereMesh.cpp.o -c /home/roman/repos/colony/engine/SphereMesh.cpp",
+  "file": "/home/roman/repos/colony/engine/SphereMesh.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/SubTerrainMesh.cpp.o -c /home/roman/repos/colony/engine/SubTerrainMesh.cpp",
+  "file": "/home/roman/repos/colony/engine/SubTerrainMesh.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/Surface.cpp.o -c /home/roman/repos/colony/engine/Surface.cpp",
+  "file": "/home/roman/repos/colony/engine/Surface.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/TerrainMesh.cpp.o -c /home/roman/repos/colony/engine/TerrainMesh.cpp",
+  "file": "/home/roman/repos/colony/engine/TerrainMesh.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/engine/Vertex.cpp.o -c /home/roman/repos/colony/engine/Vertex.cpp",
+  "file": "/home/roman/repos/colony/engine/Vertex.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/AbstractPlant.cpp.o -c /home/roman/repos/colony/logic/AbstractPlant.cpp",
+  "file": "/home/roman/repos/colony/logic/AbstractPlant.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/Barrier.cpp.o -c /home/roman/repos/colony/logic/Barrier.cpp",
+  "file": "/home/roman/repos/colony/logic/Barrier.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/BarrierBuilder.cpp.o -c /home/roman/repos/colony/logic/BarrierBuilder.cpp",
+  "file": "/home/roman/repos/colony/logic/BarrierBuilder.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/BuildableStructure.cpp.o -c /home/roman/repos/colony/logic/BuildableStructure.cpp",
+  "file": "/home/roman/repos/colony/logic/BuildableStructure.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/BuildableUnit.cpp.o -c /home/roman/repos/colony/logic/BuildableUnit.cpp",
+  "file": "/home/roman/repos/colony/logic/BuildableUnit.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/EnergyStructure.cpp.o -c /home/roman/repos/colony/logic/EnergyStructure.cpp",
+  "file": "/home/roman/repos/colony/logic/EnergyStructure.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/Plant.cpp.o -c /home/roman/repos/colony/logic/Plant.cpp",
+  "file": "/home/roman/repos/colony/logic/Plant.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/PlantBuilder.cpp.o -c /home/roman/repos/colony/logic/PlantBuilder.cpp",
+  "file": "/home/roman/repos/colony/logic/PlantBuilder.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/Tree.cpp.o -c /home/roman/repos/colony/logic/Tree.cpp",
+  "file": "/home/roman/repos/colony/logic/Tree.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/TreeBuilder.cpp.o -c /home/roman/repos/colony/logic/TreeBuilder.cpp",
+  "file": "/home/roman/repos/colony/logic/TreeBuilder.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/Turbine.cpp.o -c /home/roman/repos/colony/logic/Turbine.cpp",
+  "file": "/home/roman/repos/colony/logic/Turbine.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/logic/TurbineBuilder.cpp.o -c /home/roman/repos/colony/logic/TurbineBuilder.cpp",
+  "file": "/home/roman/repos/colony/logic/TurbineBuilder.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/main.cpp.o -c /home/roman/repos/colony/main.cpp",
+  "file": "/home/roman/repos/colony/main.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/math/Noise.cpp.o -c /home/roman/repos/colony/math/Noise.cpp",
+  "file": "/home/roman/repos/colony/math/Noise.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/misc/Log.cpp.o -c /home/roman/repos/colony/misc/Log.cpp",
+  "file": "/home/roman/repos/colony/misc/Log.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/misc/Logger.cpp.o -c /home/roman/repos/colony/misc/Logger.cpp",
+  "file": "/home/roman/repos/colony/misc/Logger.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/view/AbstractPlantView.cpp.o -c /home/roman/repos/colony/view/AbstractPlantView.cpp",
+  "file": "/home/roman/repos/colony/view/AbstractPlantView.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/view/BarrierView.cpp.o -c /home/roman/repos/colony/view/BarrierView.cpp",
+  "file": "/home/roman/repos/colony/view/BarrierView.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/view/PlantView.cpp.o -c /home/roman/repos/colony/view/PlantView.cpp",
+  "file": "/home/roman/repos/colony/view/PlantView.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/view/SelectableView.cpp.o -c /home/roman/repos/colony/view/SelectableView.cpp",
+  "file": "/home/roman/repos/colony/view/SelectableView.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/view/StructureView.cpp.o -c /home/roman/repos/colony/view/StructureView.cpp",
+  "file": "/home/roman/repos/colony/view/StructureView.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/view/TreeView.cpp.o -c /home/roman/repos/colony/view/TreeView.cpp",
+  "file": "/home/roman/repos/colony/view/TreeView.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/view/TurbineView.cpp.o -c /home/roman/repos/colony/view/TurbineView.cpp",
+  "file": "/home/roman/repos/colony/view/TurbineView.cpp"
+},
+{
+  "directory": "/home/roman/repos/colony/cbuild",
+  "command": "/usr/bin/c++     -g -g   -std=gnu++1z -o CMakeFiles/colony.dir/view/UnitView.cpp.o -c /home/roman/repos/colony/view/UnitView.cpp",
+  "file": "/home/roman/repos/colony/view/UnitView.cpp"
+}
+]

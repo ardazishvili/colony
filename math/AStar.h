@@ -36,6 +36,9 @@ struct ANode
   ANode* parent{ nullptr };
 };
 
+/* bool operator<(const std::shared_ptr<ANode>& lhs, */
+/*                const std::shared_ptr<ANode>& rhs); */
+
 using APath = std::vector<glm::vec2>;
 class AStar
 {

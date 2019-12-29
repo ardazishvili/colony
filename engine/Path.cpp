@@ -19,10 +19,7 @@ bool Path::init(glm::vec3 s, glm::vec3 e)
     return false;
   }
   _route = *route;
-  /* std::reverse(_route.begin(), _route.end()); */
   for (unsigned int i = 0; i < _route.size() - 1; ++i) {
-    /* std::cout << "p.x= " << _route.at(i).x << std::endl; */
-    /* std::cout << "p.y= " << _route.at(i).y << std::endl; */
     glm::vec3 start{ _route.at(i).x, _route.at(i).y, s.z + Z_OFFSET };
     _v.push_back(start);
     _i.push_back(i);
