@@ -247,7 +247,7 @@ int main(int argc, char** argv)
     ImGui::Begin("camera");
     static float camera_z = 20.0f;
     ImGui::SetWindowPos(ImVec2(0, 210));
-    ImGui::SetWindowSize(ImVec2(500, 100));
+    ImGui::SetWindowSize(ImVec2(500, 50));
     ImGui::SliderFloat("camera z", &camera_z, 0.0f, 20.0f);
     ImGui::End();
     auto eye = camera.eye();

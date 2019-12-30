@@ -20,13 +20,14 @@ struct Light {
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
-
+ 
 uniform Light light;
 uniform Material material;
 uniform vec3 viewPos;
-uniform vec3 camPosition;
 
 flat out vec4 normals_colour;
+out vec3 worldPos;
+out vec3 lightAmbient;
 
 vec3 calculateLighting() {
   vec3 fragPos = vec3(model * vec4(position, 1.0));
@@ -43,17 +44,12 @@ vec3 calculateLighting() {
   return ambient + diffuse;
 }
 
-vec3 applyFog(in vec3 rgb, in float distance) {
-  float b = 0.05;
-  float fogAmount = 1.0 - exp(-distance* b);
-  vec3 fogColor = vec3(0.5, 0.6, 0.7);
-  return mix(rgb, fogColor, fogAmount);
-}
-
 void main()
 {
   gl_Position = projection * view * model * vec4(position, 1.0);
-  float camToPoint = distance(gl_Position.xyz, camPosition);
-  vec3 rgb = applyFog(calculateLighting(), camToPoint);
-  normals_colour = vec4(rgb, color.w);
+  vec4 wp = model * vec4(position, 1.0);
+  worldPos = wp.xyz;
+
+  normals_colour = vec4(calculateLighting(), color.w);
+  lightAmbient = light.ambient;
 }

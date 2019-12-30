@@ -2,6 +2,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "../imgui/imgui.h"
+#include "../imgui/imgui_impl_glfw.h"
+#include "../imgui/imgui_impl_opengl3.h"
+
 #include "Light.h"
 #include "PhongShader.h"
 
@@ -31,8 +35,21 @@ void PhongShader::configure()
   setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
   setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
+  ImGui::Begin("fog");
+  static float b = 0.002;
+  static float e = 0.004;
+  static float h = 15.0f;
+  ImGui::SetWindowPos(ImVec2(0, 710));
+  ImGui::SetWindowSize(ImVec2(200, 100));
+  ImGui::SliderFloat("b", &b, 0.0f, 0.1f);
+  ImGui::SliderFloat("e", &e, 0.0f, 0.1f);
+  ImGui::SliderFloat("h", &h, 0.0f, 15.0f);
+  ImGui::End();
   auto cp = _camera.eye();
   setVec3("camPosition", cp);
+  setFloat("b", b);
+  setFloat("e", e);
+  setFloat("h", h);
 
   setTransformation("view", glm::value_ptr(_view));
   setTransformation("projection", glm::value_ptr(_projection));
