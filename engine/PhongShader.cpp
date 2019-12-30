@@ -31,6 +31,9 @@ void PhongShader::configure()
   setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
   setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
+  auto cp = _camera.eye();
+  setVec3("camPosition", cp);
+
   setTransformation("view", glm::value_ptr(_view));
   setTransformation("projection", glm::value_ptr(_projection));
 }

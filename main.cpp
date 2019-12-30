@@ -1,5 +1,3 @@
-#include <math.h>
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -11,7 +9,6 @@
 #include <GL/glew.h> // Initialize with glewInit()
 #include <GLFW/glfw3.h>
 
-#include "engine/Beam.h"
 #include "engine/Light.h"
 #include "engine/LinesShader.h"
 #include "engine/PhongShader.h"

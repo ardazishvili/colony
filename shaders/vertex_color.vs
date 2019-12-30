@@ -24,8 +24,8 @@ uniform mat4 projection;
 uniform Light light;
 uniform Material material;
 uniform vec3 viewPos;
+uniform vec3 camPosition;
 
-uniform float alfa;
 flat out vec4 normals_colour;
 
 vec3 calculateLighting() {
@@ -43,8 +43,17 @@ vec3 calculateLighting() {
   return ambient + diffuse;
 }
 
+vec3 applyFog(in vec3 rgb, in float distance) {
+  float b = 0.05;
+  float fogAmount = 1.0 - exp(-distance* b);
+  vec3 fogColor = vec3(0.5, 0.6, 0.7);
+  return mix(rgb, fogColor, fogAmount);
+}
+
 void main()
 {
   gl_Position = projection * view * model * vec4(position, 1.0);
-  normals_colour = vec4(calculateLighting(), color.w);
+  float camToPoint = distance(gl_Position.xyz, camPosition);
+  vec3 rgb = applyFog(calculateLighting(), camToPoint);
+  normals_colour = vec4(rgb, color.w);
 }
