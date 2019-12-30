@@ -17,6 +17,8 @@ public:
   void render();
 
 protected:
+  virtual unsigned int indicesToRender();
+
   Shader& _shader;
   unsigned int _vao;
   unsigned int _vbo;

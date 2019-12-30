@@ -49,7 +49,6 @@ Tank::Tank(Shader& textureShader,
 void Tank::move()
 {
   auto prev = _view->position();
-  /* _path.setStart(prev); */
   auto c = _terrain->getXYZ(glm::vec2(prev.x, prev.y) + _moveIncrement);
   _view->move(c);
   bool destinationIsReached =
@@ -57,6 +56,7 @@ void Tank::move()
            ::pow(_view->position().y - _destination.y, 2)) < _speed;
   if (destinationIsReached || isDestroyed()) {
     _movingRoute.pop_back();
+    _path->popLine();
     if (!_movingRoute.empty()) {
       startMoving(_movingRoute.at(_movingRoute.size() - 1));
     } else {
@@ -95,7 +95,7 @@ void Tank::startMoving(glm::vec2 endPoint)
 void Tank::stopMoving()
 {
   _destination = glm::vec3(-1, -1, -1);
-  /* _path.reset(); */
+  _path.reset();
 }
 
 bool Tank::isMoving()

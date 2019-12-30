@@ -26,5 +26,10 @@ void LinesObject::initBuffers()
 void LinesObject::render()
 {
   glBindVertexArray(_vao);
-  glDrawElements(GL_LINES, _i.size() * 2, GL_UNSIGNED_INT, 0);
+  glDrawElements(GL_LINES, indicesToRender(), GL_UNSIGNED_INT, 0);
+}
+
+unsigned int LinesObject::indicesToRender()
+{
+  return _i.size() * 2;
 }

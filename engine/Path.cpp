@@ -19,6 +19,7 @@ bool Path::init(glm::vec3 s, glm::vec3 e)
     return false;
   }
   _route = *route;
+  std::cout << "_route.size()= " << _route.size() << std::endl;
   for (unsigned int i = 0; i < _route.size() - 1; ++i) {
     glm::vec3 start{ _route.at(i).x, _route.at(i).y, s.z + Z_OFFSET };
     _v.push_back(start);
@@ -30,6 +31,7 @@ bool Path::init(glm::vec3 s, glm::vec3 e)
                    s.z + Z_OFFSET };
   _v.push_back(start);
 
+  _indicesToRender = _i.size();
   LinesObject::initBuffers();
   return true;
 }
@@ -50,13 +52,6 @@ void Path::render()
   LinesObject::render();
 }
 
-/* void Path::setStart(glm::vec3 s) */
-/* { */
-/*   s.z += Z_OFFSET; */
-/*   _v.at(0) = s; */
-/*   reloadData(); */
-/* } */
-
 std::shared_ptr<Path> makePath(Shader& shader,
                                AStar* router,
                                glm::vec3 s,
@@ -68,3 +63,14 @@ std::shared_ptr<Path> makePath(Shader& shader,
   }
   return nullptr;
 }
+
+void Path::popLine()
+{
+  _indicesToRender -= 2;
+}
+
+unsigned int Path::indicesToRender()
+{
+  return _indicesToRender;
+}
+

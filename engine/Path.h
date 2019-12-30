@@ -11,12 +11,14 @@ public:
   void render();
   APath route() const;
   bool init(glm::vec3 s, glm::vec3 e);
-  /* void setStart(glm::vec3 s); */
+  void popLine();
 
 private:
+  unsigned int indicesToRender() override;
   static const float Z_OFFSET;
   AStar* _router;
   APath _route;
+  unsigned int _indicesToRender;
 };
 
 std::shared_ptr<Path> makePath(Shader& shader,
