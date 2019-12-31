@@ -38,7 +38,7 @@ void TankFactory::createTank(Game* game,
     glm::vec3(p.x - d * ::cos(glm::radians(_view->angle())),
               p.y - d * ::sin(glm::radians(_view->angle())),
               p.z);
-  tank->startMoving(tankDestination);
+  tank->setRoute(tankDestination);
 }
 
 UnitBuilders TankFactory::getUnitBuilders(Game* game)
