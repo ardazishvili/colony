@@ -35,10 +35,8 @@ public:
   UnitBuilders getUnitBuilders(Game* game) override;
   StructureBuilders getStructureBuilders() override;
 
-  void move();
   void setRoute(glm::vec3 endPoint) override;
-  void startMoving(glm::vec2 endPoint) override;
-  void stopMoving();
+  void move();
   bool isMoving();
 
   void shootTarget();
@@ -50,6 +48,8 @@ public:
   void setTerrain(Terrain* terrain);
 
 private:
+  void startMoving(glm::vec2 endPoint) override;
+  void stopMoving();
   float getTargetAngle();
   float getTargetDistance();
   float getMouseAngle(int mouseX, int mouseY);
