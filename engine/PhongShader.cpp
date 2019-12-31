@@ -36,13 +36,13 @@ void PhongShader::configure()
   setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
   ImGui::Begin("fog");
-  static float b = 0.002;
-  static float e = 0.004;
-  static float h = 15.0f;
+  static float b = 0.5;
+  static float e = 8.8;
+  static float h = 1.4f;
   ImGui::SetWindowPos(ImVec2(0, 710));
   ImGui::SetWindowSize(ImVec2(200, 100));
-  ImGui::SliderFloat("b", &b, 0.0f, 0.1f);
-  ImGui::SliderFloat("e", &e, 0.0f, 0.1f);
+  ImGui::SliderFloat("b", &b, 0.0f, 10.0f);
+  ImGui::SliderFloat("e", &e, 0.0f, 10.0f);
   ImGui::SliderFloat("h", &h, 0.0f, 15.0f);
   ImGui::End();
   auto cp = _camera.eye();
