@@ -38,7 +38,8 @@ void PhongShader::configure()
   ImGui::Begin("fog");
   static float b = 0.5;
   static float e = 8.8;
-  static float h = 1.4f;
+  /* static float h = 1.4f; */
+  static float h = 2.0f;
   ImGui::SetWindowPos(ImVec2(0, 710));
   ImGui::SetWindowSize(ImVec2(200, 100));
   ImGui::SliderFloat("b", &b, 0.0f, 10.0f);
