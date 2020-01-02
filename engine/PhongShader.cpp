@@ -35,19 +35,28 @@ void PhongShader::configure()
   setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
   setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
-  ImGui::Begin("fog");
-  static float b = 0.5;
-  static float e = 8.8;
-  /* static float h = 1.4f; */
-  static float h = 2.0f;
-  ImGui::SetWindowPos(ImVec2(0, 710));
-  ImGui::SetWindowSize(ImVec2(200, 100));
-  ImGui::SliderFloat("b", &b, 0.0f, 10.0f);
-  ImGui::SliderFloat("e", &e, 0.0f, 10.0f);
-  ImGui::SliderFloat("h", &h, 0.0f, 15.0f);
-  ImGui::End();
-  auto cp = _camera.eye();
-  setVec3("camPosition", cp);
+  static bool fog = false;
+  static float b;
+  static float e;
+  static float h;
+  if (fog) {
+    ImGui::Begin("fog");
+    b = 0.5;
+    e = 8.8;
+    h = 2.0f;
+    ImGui::SetWindowPos(ImVec2(0, 710));
+    ImGui::SetWindowSize(ImVec2(200, 85));
+    ImGui::SliderFloat("b", &b, 0.0f, 10.0f);
+    ImGui::SliderFloat("e", &e, 0.0f, 10.0f);
+    ImGui::SliderFloat("h", &h, 0.0f, 15.0f);
+    ImGui::End();
+    auto cp = _camera.eye();
+    setVec3("camPosition", cp);
+  } else {
+    b = 0.5;
+    e = 8.8;
+    h = -20.0f;
+  }
   setFloat("b", b);
   setFloat("e", e);
   setFloat("h", h);
