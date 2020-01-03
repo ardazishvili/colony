@@ -38,6 +38,13 @@ void MainTerrainMesh::calculateHeights(unsigned int width,
   static float frequency_plain = 0.077;
   static float frequencyFactor_plain = 3.0;
   static float amplitudeFactor_plain = 0.366;
+  ImGui::Begin("nonPlain");
+  ImGui::SetWindowPos(ImVec2(0, 610));
+  ImGui::SetWindowSize(ImVec2(300, 100));
+  ImGui::SliderFloat("frequency", &frequency, 0.0f, 1.0f);
+  ImGui::SliderFloat("frequencyFactor", &frequencyFactor, 0.0f, 3.0f);
+  ImGui::SliderFloat("amplitudeFactor", &amplitudeFactor, 0.0f, 1.0f);
+  ImGui::End();
   auto noise = Noise(777);
   std::vector<float> plainZ;
   float x, y;
@@ -55,12 +62,34 @@ void MainTerrainMesh::calculateHeights(unsigned int width,
       plainZ.push_back(nv_plain);
     }
   }
+  float f = 1.0;
+  float t = 1.0;
   for (unsigned int i = 0; i < width; ++i) {
     for (unsigned int j = 0; j < width; ++j) {
       VertexColor vertex;
       vertex.p.x = bottomLeftX + static_cast<float>(i) * _xStep;
       vertex.p.y = bottomLeftY + static_cast<float>(j) * _yStep;
       glm::vec2 derivs;
+      float coef = 1.0f / 8;
+      auto a = (vertex.p.x - bottomLeftX) / _width;
+      auto topRightX = bottomLeftX + _width;
+      auto b = (topRightX - vertex.p.x) / _width;
+      auto c = (vertex.p.y - bottomLeftY) / _height;
+      auto topRightY = bottomLeftY + _height;
+      auto d = (topRightY - vertex.p.y) / _height;
+      f = 1.0f;
+      t = 1.0f;
+      if (a < coef) {
+        f = a / coef;
+      } else if (b < coef) {
+        f = b / coef;
+      }
+      if (c < coef) {
+        t = c / coef;
+      } else if (d < coef) {
+        t = d / coef;
+      }
+
       auto nv = noise.fractal(glm::vec2(vertex.p.x, vertex.p.y),
                               derivs,
                               frequency,
@@ -70,6 +99,17 @@ void MainTerrainMesh::calculateHeights(unsigned int width,
       vertex.p.x *= _xyScale;
       vertex.p.y *= _xyScale;
       auto nonPlain = nv * _zScale;
+      if (a < coef) {
+        nonPlain *= f;
+      } else if (b < coef) {
+        nonPlain *= f;
+      }
+      if (c < coef) {
+        nonPlain *= t;
+      } else if (d < coef) {
+        nonPlain *= t;
+      }
+
       auto plain = plainZ.at(i * width + j);
       if (nonPlain > plain) {
         vertex.p.z = nonPlain;

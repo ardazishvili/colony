@@ -21,7 +21,7 @@
 #include "logic/Game.h"
 
 #include "globals.h"
-Camera camera(glm::vec3(0.0f, -15.0f, 15.0f),
+Camera camera(glm::vec3(0.0f, -35.0f, 40.0f),
               glm::vec3(0.0f, 0.0f, 0.0f),
               glm::vec3(0.0f, 0.0f, 1.0f));
 
@@ -245,10 +245,10 @@ int main(int argc, char** argv)
     glProvokingVertex(GL_FIRST_VERTEX_CONVENTION);
 
     ImGui::Begin("camera");
-    static float camera_z = 20.0f;
+    static float camera_z = 40.0f;
     ImGui::SetWindowPos(ImVec2(0, 210));
     ImGui::SetWindowSize(ImVec2(500, 50));
-    ImGui::SliderFloat("camera z", &camera_z, 0.0f, 20.0f);
+    ImGui::SliderFloat("camera z", &camera_z, 0.0f, 100.0f);
     ImGui::End();
     auto eye = camera.eye();
     eye.z = camera_z;
@@ -276,16 +276,25 @@ int main(int argc, char** argv)
     projection = glm::perspective(
       glm::radians(camera.fov()), screenWidth / screenHeight, 0.01f, 1000.0f);
 
+    /* auto terrain = Terrain(colorShader, */
+    /*                        camera, */
+    /*                        -10.0f, */
+    /*                        -10.0f, */
+    /*                        10.0f, */
+    /*                        10.0f, */
+    /*                        256 * 1, */
+    /*                        xyScale, */
+    /*                        zScale); */
     terrain.render();
 
     eventManager->tick();
 
     skybox.render();
 
-    auto s = Sphere(colorShader, glm::vec3(0.0f, 0.0f, 5.0f), 1.0f, 50);
+    /* auto s = Sphere(colorShader, glm::vec3(0.0f, 0.0f, 5.0f), 1.0f, 50); */
     /* s.render(); */
 
-    terrain.renderSub();
+    /* terrain.renderSub(); */
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
