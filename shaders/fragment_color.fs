@@ -17,7 +17,8 @@ vec3 applyFog(in vec3 rgb,
 
   float maxFogHeight = h;
 
-  vec3 fogColor = vec3(0.5,0.6,0.7);
+  /* vec3 fogColor = vec3(0.5,0.6,0.7); */
+  vec3 fogColor = vec3(0.0,0.8,1.0);
   float distance = length(camToPointVec);
   if(worldPos.z >= maxFogHeight - 1 / e)
   {		

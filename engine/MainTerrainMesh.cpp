@@ -79,16 +79,21 @@ void MainTerrainMesh::calculateHeights(unsigned int width,
       auto d = (topRightY - vertex.p.y) / _height;
       f = 1.0f;
       t = 1.0f;
+      auto func = [coef](float x) {
+        return x / (coef);
+      };
       if (a < coef) {
-        f = a / coef;
+        f = func(a);
       } else if (b < coef) {
-        f = b / coef;
+        f = func(b);
       }
       if (c < coef) {
-        t = c / coef;
+        t = func(c);
       } else if (d < coef) {
-        t = d / coef;
+        t = func(d);
       }
+      /* std::cout << "f= " << f << std::endl; */
+      /* std::cout << "t= " << t << std::endl; */
 
       auto nv = noise.fractal(glm::vec2(vertex.p.x, vertex.p.y),
                               derivs,
@@ -99,20 +104,29 @@ void MainTerrainMesh::calculateHeights(unsigned int width,
       vertex.p.x *= _xyScale;
       vertex.p.y *= _xyScale;
       auto nonPlain = nv * _zScale;
+      auto plain = plainZ.at(i * width + j);
+      auto m = [](float& np, float& p, float mult) {
+        float npf = 1;
+        np = np * mult - (npf - mult);
+        p = p * mult - (npf - mult) * (npf - mult);
+      };
       if (a < coef) {
-        nonPlain *= f;
+        m(nonPlain, plain, f);
       } else if (b < coef) {
-        nonPlain *= f;
+        m(nonPlain, plain, f);
       }
       if (c < coef) {
-        nonPlain *= t;
+        m(nonPlain, plain, t);
       } else if (d < coef) {
-        nonPlain *= t;
+        m(nonPlain, plain, t);
       }
 
-      auto plain = plainZ.at(i * width + j);
       if (nonPlain > plain) {
         vertex.p.z = nonPlain;
+        /* if (a == 0) { */
+        /*   std::cout << "nonPlain= " << nonPlain << std::endl; */
+        /*   std::cout << "plain= " << plainZ.at(i * width + j) << std::endl; */
+        /* } */
         _obstaclesMap.push_back(true);
       } else {
         vertex.p.z = plain;
