@@ -9,6 +9,7 @@
 
 struct VertexColor
 {
+  float z;
   glm::vec3 p;
   glm::vec3 normal;
   glm::vec4 color;
@@ -24,7 +25,8 @@ public:
             float topRightX,
             float topRightY,
             int divisions,
-            float xyScale,
+            float xScale,
+            float yScale,
             float zScale);
   virtual void calculateHeights(unsigned int width,
                                 float bottomLeftX,
@@ -57,7 +59,8 @@ protected:
   unsigned int _latticeHeight;
   float _xStep;
   float _yStep;
-  float _xyScale;
+  float _xScale;
+  float _yScale;
   float _zScale;
 };
 

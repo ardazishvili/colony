@@ -21,7 +21,7 @@
 #include "logic/Game.h"
 
 #include "globals.h"
-Camera camera(glm::vec3(0.0f, -35.0f, 40.0f),
+Camera camera(glm::vec3(0.0f, -45.0f, 60.0f),
               glm::vec3(0.0f, 0.0f, 0.0f),
               glm::vec3(0.0f, 0.0f, 1.0f));
 
@@ -165,26 +165,28 @@ int main(int argc, char** argv)
   ImGui_ImplGlfw_NewFrame();
   ImGui::NewFrame();
 
-  auto xyScale = 2.0f;
-  auto zScale = 3.0f;
+  auto xScale = 4.0f;
+  auto yScale = 2.0f;
+  auto zScale = 2.0f;
   auto terrain = Terrain(colorShader,
                          camera,
-                         -10.0f,
-                         -10.0f,
-                         10.0f,
-                         10.0f,
+                         -10.0f * xScale,
+                         -10.0f * yScale,
+                         10.0f * xScale,
+                         10.0f * yScale,
                          256 * 1,
-                         xyScale,
+                         1,
+                         1,
                          zScale);
   std::unique_ptr<Game> game = std::make_unique<Game>(window, view, projection);
   game->addTerrain(&terrain);
-  auto mapObstacles = ::makeObstaclesSegment(colorNonFlatShader,
-                                             &terrain,
-                                             glm::vec2(-19.99, -19.99),
-                                             glm::vec2(19.99, 19.99));
-  auto astar = AStar(mapObstacles->vertices(),
-                     mapObstacles->obstacles(),
-                     mapObstacles->dimensions());
+  /* auto mapObstacles = ::makeObstaclesSegment(colorNonFlatShader, */
+  /*                                            &terrain, */
+  /*                                            glm::vec2(-19.99, -19.99), */
+  /*                                            glm::vec2(19.99, 19.99)); */
+  /* auto astar = AStar(mapObstacles->vertices(), */
+  /*                    mapObstacles->obstacles(), */
+  /*                    mapObstacles->dimensions()); */
   eventManager = std::make_unique<EventManager>(view,
                                                 projection,
                                                 window,
@@ -195,34 +197,34 @@ int main(int argc, char** argv)
                                                 colorNonFlatShader,
                                                 linesShader,
                                                 &terrain,
-                                                mapObstacles,
-                                                &astar);
+                                                nullptr,
+                                                nullptr);
 
-  createTank(game.get(),
-             textureShader,
-             linesShader,
-             &astar,
-             terrain.getXYZ(glm::vec2(0.0, 0.0f)));
-  createTank(game.get(),
-             textureShader,
-             linesShader,
-             &astar,
-             terrain.getXYZ(glm::vec2(5.0, 5.0f)));
-  createTank(game.get(),
-             textureShader,
-             linesShader,
-             &astar,
-             terrain.getXYZ(glm::vec2(-5.0, -5.0f)));
-  createTank(game.get(),
-             textureShader,
-             linesShader,
-             &astar,
-             terrain.getXYZ(glm::vec2(0.0, 5.0f)));
-  createTank(game.get(),
-             textureShader,
-             linesShader,
-             &astar,
-             terrain.getXYZ(glm::vec2(0.0, -5.0f)));
+  /* createTank(game.get(), */
+  /*            textureShader, */
+  /*            linesShader, */
+  /*            &astar, */
+  /*            terrain.getXYZ(glm::vec2(0.0, 0.0f))); */
+  /* createTank(game.get(), */
+  /*            textureShader, */
+  /*            linesShader, */
+  /*            &astar, */
+  /*            terrain.getXYZ(glm::vec2(5.0, 5.0f))); */
+  /* createTank(game.get(), */
+  /*            textureShader, */
+  /*            linesShader, */
+  /*            &astar, */
+  /*            terrain.getXYZ(glm::vec2(-5.0, -5.0f))); */
+  /* createTank(game.get(), */
+  /*            textureShader, */
+  /*            linesShader, */
+  /*            &astar, */
+  /*            terrain.getXYZ(glm::vec2(0.0, 5.0f))); */
+  /* createTank(game.get(), */
+  /*            textureShader, */
+  /*            linesShader, */
+  /*            &astar, */
+  /*            terrain.getXYZ(glm::vec2(0.0, -5.0f))); */
 
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -245,10 +247,10 @@ int main(int argc, char** argv)
     glProvokingVertex(GL_FIRST_VERTEX_CONVENTION);
 
     ImGui::Begin("camera");
-    static float camera_z = 40.0f;
+    static float camera_z = 60.0f;
     ImGui::SetWindowPos(ImVec2(0, 210));
     ImGui::SetWindowSize(ImVec2(500, 50));
-    ImGui::SliderFloat("camera z", &camera_z, 0.0f, 100.0f);
+    ImGui::SliderFloat("camera z", &camera_z, -100.0f, 100.0f);
     ImGui::End();
     auto eye = camera.eye();
     eye.z = camera_z;
@@ -263,12 +265,12 @@ int main(int argc, char** argv)
     ImGui::Begin("light");
     static float x = 1.2;
     static float y = 0.0;
-    static float z = 10.0;
+    static float z = 90.0;
     ImGui::SetWindowPos(ImVec2(0, 110));
     ImGui::SetWindowSize(ImVec2(500, 100));
     ImGui::SliderFloat("light x", &x, -10.0f, 10.0f);
     ImGui::SliderFloat("light y", &y, -10.0f, 10.0f);
-    ImGui::SliderFloat("light z", &z, -10.0f, 100.0f);
+    ImGui::SliderFloat("light z", &z, -100.0f, 100.0f);
     ImGui::End();
     light->setPosition(glm::vec3(x, y, z));
 

@@ -15,7 +15,8 @@ void TerrainMesh::init(float bottomLeftX,
                        float topRightX,
                        float topRightY,
                        int divisions,
-                       float xyScale,
+                       float xScale,
+                       float yScale,
                        float zScale)
 {
   _v.reserve((divisions + 1) * 2 * divisions);
@@ -23,7 +24,8 @@ void TerrainMesh::init(float bottomLeftX,
   _height = topRightY - bottomLeftY;
   _xStep = (topRightX - bottomLeftX) / divisions;
   _yStep = (topRightY - bottomLeftY) / divisions;
-  _xyScale = xyScale;
+  _xScale = xScale;
+  _yScale = yScale;
   _zScale = zScale;
   int width = divisions + 1;
 
@@ -43,8 +45,12 @@ void TerrainMesh::init(float bottomLeftX,
   glBufferData(
     GL_ARRAY_BUFFER, sizeof(VertexColor) * _v.size(), &_v[0], GL_DYNAMIC_DRAW);
   glEnableVertexAttribArray(0);
-  glVertexAttribPointer(
-    0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexColor), (void*)0);
+  glVertexAttribPointer(0,
+                        3,
+                        GL_FLOAT,
+                        GL_FALSE,
+                        sizeof(VertexColor),
+                        (void*)offsetof(VertexColor, p));
 
   glEnableVertexAttribArray(1);
   glVertexAttribPointer(1,
@@ -136,34 +142,39 @@ void TerrainMesh::getSegmentVertices(glm::vec2 bottomLeft,
                                      std::vector<VertexColor>& v,
                                      SegmentDimensions* sd)
 {
-  sd->divisionsX = (topRight.x - bottomLeft.x) / (_xStep * _xyScale);
-  sd->divisionsY = (topRight.y - bottomLeft.y) / (_yStep * _xyScale);
-  sd->latticeWidth = sd->divisionsY + 1;
-  sd->xStep = _xStep * _xyScale;
-  sd->yStep = _yStep * _xyScale;
-  sd->xOffset = _width;
-  sd->yOffset = _height;
+  // FIXME temporarily broken due to introducing of x/yScale
+  /* sd->divisionsX = (topRight.x - bottomLeft.x) / (_xStep * _xyScale); */
+  /* sd->divisionsY = (topRight.y - bottomLeft.y) / (_yStep * _xyScale); */
+  /* sd->latticeWidth = sd->divisionsY + 1; */
+  /* sd->xStep = _xStep * _xyScale; */
+  /* sd->yStep = _yStep * _xyScale; */
+  /* sd->xOffset = _width; */
+  /* sd->yOffset = _height; */
 
-  bottomLeft.x += _width * _xyScale / 2;
-  topRight.x += _width * _xyScale / 2;
-  bottomLeft.y += _height * _xyScale / 2;
-  topRight.y += _height * _xyScale / 2;
+  /* bottomLeft.x += _width * _xyScale / 2; */
+  /* topRight.x += _width * _xyScale / 2; */
+  /* bottomLeft.y += _height * _xyScale / 2; */
+  /* topRight.y += _height * _xyScale / 2; */
 
-  float startI = _latticeHeight * bottomLeft.x / (_width * _xyScale);
-  float startJ = _latticeAugmentedWidth * bottomLeft.y / (_height * _xyScale);
-  for (unsigned int i = startI; i < startI + sd->divisionsX; ++i) {
-    for (unsigned int j = startJ; j < startJ + sd->divisionsY * 2; j += 2) {
-      v.push_back(_v.at(_latticeAugmentedWidth * i + j));
-    }
-  }
+  /* float startI = _latticeHeight * bottomLeft.x / (_width * _xyScale); */
+  /* float startJ = _latticeAugmentedWidth * bottomLeft.y / (_height *
+   * _xyScale); */
+  /* for (unsigned int i = startI; i < startI + sd->divisionsX; ++i) { */
+  /*   for (unsigned int j = startJ; j < startJ + sd->divisionsY * 2; j += 2) {
+   */
+  /*     v.push_back(_v.at(_latticeAugmentedWidth * i + j)); */
+  /*   } */
+  /* } */
 }
 
 float TerrainMesh::halfWidth() const
 {
-  return _width * _xyScale / 2;
+  // TODO check
+  return _width * _xScale / 2;
 }
 
 float TerrainMesh::halfHeight() const
 {
-  return _height * _xyScale / 2;
+  // TODO check
+  return _height * _yScale / 2;
 }

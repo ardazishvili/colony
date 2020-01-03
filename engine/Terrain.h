@@ -14,7 +14,8 @@ public:
           float topRightX,
           float topRightY,
           int divisions,
-          float xyScale,
+          float xScale,
+          float yScale,
           float zScale);
   void render();
   void renderSub();
@@ -43,7 +44,8 @@ private:
   SubTerrainMesh _subMesh;
   glm::vec3 _offset{ glm::vec3(0.0f) };
   float _maxXy;
-  float _xyScale;
+  float _xScale;
+  float _yScale;
   float _zScale;
 };
 

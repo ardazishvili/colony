@@ -9,28 +9,32 @@ Terrain::Terrain(Shader& shader,
                  float topRightX,
                  float topRightY,
                  int divisions,
-                 float xyScale,
+                 float xScale,
+                 float yScale,
                  float zScale) :
   _shader(shader),
-  _camera(camera), _xyScale(xyScale), _zScale(zScale)
+  _camera(camera), _xScale(xScale), _yScale(yScale), _zScale(zScale)
 {
   _mainMesh.init(0,
                  0,
                  topRightX - bottomLeftX,
                  topRightY - bottomLeftY,
                  divisions,
-                 xyScale,
+                 xScale,
+                 yScale,
                  zScale);
   _subMesh.init(0,
                 0,
                 topRightX - bottomLeftX,
                 topRightY - bottomLeftY,
                 divisions * 3,
-                xyScale,
+                xScale,
+                yScale,
                 zScale);
   _offset.x = bottomLeftX;
   _offset.y = bottomLeftY;
-  _maxXy = std::max(topRightX, bottomLeftY) * xyScale;
+  // FIXME temporarily broken
+  _maxXy = std::max(topRightX, bottomLeftY) * xScale;
 }
 
 void Terrain::render()
@@ -38,7 +42,7 @@ void Terrain::render()
   _shader.use();
   _shader.configure();
   auto model = glm::mat4(1.0f);
-  model = glm::translate(model, _offset * _xyScale);
+  /* model = glm::translate(model, _offset * _xyScale); */
   _shader.setTransformation("model", glm::value_ptr(model));
   _shader.setBool("animated", false);
   _mainMesh.render();
@@ -52,7 +56,7 @@ void Terrain::renderSub()
   glDepthMask(GL_FALSE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   auto model = glm::mat4(1.0f);
-  model = glm::translate(model, _offset * _xyScale);
+  /* model = glm::translate(model, _offset * _xyScale); */
   _shader.setTransformation("model", glm::value_ptr(model));
   _shader.setBool("animated", false);
   _subMesh.render();

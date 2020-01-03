@@ -52,6 +52,7 @@ void MainTerrainMesh::calculateHeights(unsigned int width,
     for (unsigned int j = 0; j < width; ++j) {
       auto dummy = glm::vec2();
       x = bottomLeftX + static_cast<float>(i) * _xStep;
+      /* y = bottomLeftY + static_cast<float>(j) * _yStep - _height / 2; */
       y = bottomLeftY + static_cast<float>(j) * _yStep;
       auto nv_plain = noise.fractal(glm::vec2(x, y),
                                     dummy,
@@ -67,12 +68,15 @@ void MainTerrainMesh::calculateHeights(unsigned int width,
     for (unsigned int j = 0; j < width; ++j) {
       auto dummy = glm::vec2();
       x = bottomLeftX + static_cast<float>(i) * _xStep;
+      /* y = bottomLeftY + static_cast<float>(j) * _yStep - _height / 2; */
       y = bottomLeftY + static_cast<float>(j) * _yStep;
       waterZ.push_back(-0.3f);
     }
   }
   float f = 1.0;
   float t = 1.0;
+  float R = 4.01 * M_PI;
+  float S = 6.0 * M_PI;
   for (unsigned int i = 0; i < width; ++i) {
     for (unsigned int j = 0; j < width; ++j) {
       VertexColor vertex;
@@ -110,8 +114,8 @@ void MainTerrainMesh::calculateHeights(unsigned int width,
                               frequencyFactor,
                               amplitudeFactor,
                               5);
-      vertex.p.x *= _xyScale;
-      vertex.p.y *= _xyScale;
+      vertex.p.x *= _xScale;
+      vertex.p.y *= _yScale;
       auto nonPlain = nv * _zScale;
       auto plain = plainZ.at(i * width + j);
       auto water = waterZ.at(i * width + j);
@@ -138,6 +142,17 @@ void MainTerrainMesh::calculateHeights(unsigned int width,
         vertex.p.z = std::max(plain, water);
         _obstaclesMap.push_back(false);
       }
+      vertex.z = vertex.p.z;
+
+      vertex.p.y -= _height / (2.0f / _xScale);
+      vertex.p.x -= _width / (2.0f / _yScale);
+      float longitude = vertex.p.x / R;
+      float latitude = 2 * ::atan(::exp(vertex.p.y / R)) - M_PI / 2;
+      /* latitude /= 1.48427 / (M_PI / 2 - 0.00); */
+      /* vertex.p.x = (S + vertex.z) * ::cos(latitude) * ::cos(longitude); */
+      /* vertex.p.y = (S + vertex.z) * ::cos(latitude) * ::sin(longitude); */
+      /* vertex.p.z = (S + vertex.z) * ::sin(latitude); */
+
       min = std::min(min, vertex.p.z);
       max = std::max(max, vertex.p.z);
       vertex.normal = glm::vec3(0.0f);
@@ -158,10 +173,10 @@ void MainTerrainMesh::calculateColors(float min,
   auto amplitude = max - min;
   for (unsigned int i = 0; i < width; ++i) {
     for (unsigned int j = 0; j < augmentedWidth; ++j) {
-      auto z = _v[augmentedWidth * i + j].p.z;
+      auto z = _v[augmentedWidth * i + j].z;
       if (z != -0.3f) {
         RgbColor a, b;
-        auto h = (_v[augmentedWidth * i + j].p.z - min) / amplitude;
+        auto h = (_v[augmentedWidth * i + j].z - min) / amplitude;
         if (h <= amplitude * 0.2) {
           a = colorMapping[0.0f];
           b = colorMapping[0.5f];
@@ -176,7 +191,7 @@ void MainTerrainMesh::calculateColors(float min,
         _v[augmentedWidth * i + j].color.z = glm::lerp(a.b, b.b, h);
         _v[augmentedWidth * i + j].color.w = 1.0;
       } else {
-        std::cout << "color water" << std::endl;
+        /* std::cout << "color water" << std::endl; */
         _v[augmentedWidth * i + j].color.x = 0.0;
         _v[augmentedWidth * i + j].color.y = 0.8;
         _v[augmentedWidth * i + j].color.z = 1.0;
@@ -190,8 +205,8 @@ float MainTerrainMesh::getZ(float x, float y) const
 {
   x += _width / 2;
   y += _height / 2;
-  auto i = ::floor(x / _xStep / _xyScale);
-  auto j = ::floor(y / _yStep / _xyScale);
+  auto i = ::floor(x / _xStep / _xScale);
+  auto j = ::floor(y / _yStep / _yScale);
   auto mappedJ = (j == 0) ? 0 : 2 * j - 1;
   return _v.at(i * _latticeAugmentedWidth + mappedJ).p.z;
 }
@@ -200,8 +215,8 @@ glm::vec3 MainTerrainMesh::getRgbColor(float x, float y) const
 {
   x += _width / 2;
   y += _height / 2;
-  auto i = ::floor(x / _xStep / _xyScale);
-  auto j = ::floor(y / _yStep / _xyScale);
+  auto i = ::floor(x / _xStep / _xScale);
+  auto j = ::floor(y / _yStep / _yScale);
   auto mappedJ = (j == 0) ? 0 : 2 * j - 1;
   auto c = _v.at(i * _latticeAugmentedWidth + mappedJ).color;
   return glm::vec3(c.x, c.y, c.z);
@@ -212,24 +227,27 @@ void MainTerrainMesh::getSegmentObstaclesMap(glm::vec2 bottomLeft,
                                              std::vector<bool>& m,
                                              SegmentDimensions* sd)
 {
-  sd->divisionsX = (topRight.x - bottomLeft.x) / (_xStep * _xyScale);
-  sd->divisionsY = (topRight.y - bottomLeft.y) / (_yStep * _xyScale);
-  sd->latticeWidth = sd->divisionsY + 1;
-  sd->xStep = _xStep * _xyScale;
-  sd->yStep = _yStep * _xyScale;
-  sd->xOffset = _width;
-  sd->yOffset = _height;
+  // FIXME temporarily broken due to introducing of x/yScale
+  /* sd->divisionsX = (topRight.x - bottomLeft.x) / (_xStep * _xyScale); */
+  /* sd->divisionsY = (topRight.y - bottomLeft.y) / (_yStep * _xyScale); */
+  /* sd->latticeWidth = sd->divisionsY + 1; */
+  /* sd->xStep = _xStep * _xyScale; */
+  /* sd->yStep = _yStep * _xyScale; */
+  /* sd->xOffset = _width; */
+  /* sd->yOffset = _height; */
 
-  bottomLeft.x += _width * _xyScale / 2;
-  topRight.x += _width * _xyScale / 2;
-  bottomLeft.y += _height * _xyScale / 2;
-  topRight.y += _height * _xyScale / 2;
+  /* bottomLeft.x += _width * _xyScale / 2; */
+  /* topRight.x += _width * _xyScale / 2; */
+  /* bottomLeft.y += _height * _xyScale / 2; */
+  /* topRight.y += _height * _xyScale / 2; */
 
-  unsigned int startI = _latticeHeight * bottomLeft.x / (_width * _xyScale);
-  unsigned int startJ = _latticeWidth * bottomLeft.y / (_height * _xyScale);
-  for (unsigned int i = startI; i < startI + sd->divisionsX + 1; ++i) {
-    for (unsigned int j = startJ; j < startJ + sd->divisionsY + 1; ++j) {
-      m.push_back(_obstaclesMap.at(_latticeWidth * i + j));
-    }
-  }
+  /* unsigned int startI = _latticeHeight * bottomLeft.x / (_width * _xyScale);
+   */
+  /* unsigned int startJ = _latticeWidth * bottomLeft.y / (_height * _xyScale);
+   */
+  /* for (unsigned int i = startI; i < startI + sd->divisionsX + 1; ++i) { */
+  /*   for (unsigned int j = startJ; j < startJ + sd->divisionsY + 1; ++j) { */
+  /*     m.push_back(_obstaclesMap.at(_latticeWidth * i + j)); */
+  /*   } */
+  /* } */
 }
