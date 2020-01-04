@@ -179,13 +179,14 @@ int main(int argc, char** argv)
                          zScale);
   std::unique_ptr<Game> game = std::make_unique<Game>(window, view, projection);
   game->addTerrain(&terrain);
-  /* auto mapObstacles = ::makeObstaclesSegment(colorNonFlatShader, */
-  /*                                            &terrain, */
-  /*                                            glm::vec2(-19.99, -19.99), */
-  /*                                            glm::vec2(19.99, 19.99)); */
-  /* auto astar = AStar(mapObstacles->vertices(), */
-  /*                    mapObstacles->obstacles(), */
-  /*                    mapObstacles->dimensions()); */
+  auto mapObstacles =
+    ::makeObstaclesSegment(colorNonFlatShader,
+                           &terrain,
+                           glm::vec2(-10 * xScale + 0.01, -10 * yScale + 0.01),
+                           glm::vec2(10 * xScale - 0.01, 10 * yScale - 0.01));
+  auto astar = AStar(mapObstacles->vertices(),
+                     mapObstacles->obstacles(),
+                     mapObstacles->dimensions());
   eventManager = std::make_unique<EventManager>(view,
                                                 projection,
                                                 window,
@@ -196,34 +197,34 @@ int main(int argc, char** argv)
                                                 colorNonFlatShader,
                                                 linesShader,
                                                 &terrain,
-                                                nullptr,
-                                                nullptr);
+                                                mapObstacles,
+                                                &astar);
 
-  /* createTank(game.get(), */
-  /*            textureShader, */
-  /*            linesShader, */
-  /*            &astar, */
-  /*            terrain.getXYZ(glm::vec2(0.0, 0.0f))); */
-  /* createTank(game.get(), */
-  /*            textureShader, */
-  /*            linesShader, */
-  /*            &astar, */
-  /*            terrain.getXYZ(glm::vec2(5.0, 5.0f))); */
-  /* createTank(game.get(), */
-  /*            textureShader, */
-  /*            linesShader, */
-  /*            &astar, */
-  /*            terrain.getXYZ(glm::vec2(-5.0, -5.0f))); */
-  /* createTank(game.get(), */
-  /*            textureShader, */
-  /*            linesShader, */
-  /*            &astar, */
-  /*            terrain.getXYZ(glm::vec2(0.0, 5.0f))); */
-  /* createTank(game.get(), */
-  /*            textureShader, */
-  /*            linesShader, */
-  /*            &astar, */
-  /*            terrain.getXYZ(glm::vec2(0.0, -5.0f))); */
+  createTank(game.get(),
+             textureShader,
+             linesShader,
+             &astar,
+             terrain.getXYZ(glm::vec2(0.0, 0.0f)));
+  createTank(game.get(),
+             textureShader,
+             linesShader,
+             &astar,
+             terrain.getXYZ(glm::vec2(5.0, 5.0f)));
+  createTank(game.get(),
+             textureShader,
+             linesShader,
+             &astar,
+             terrain.getXYZ(glm::vec2(-5.0, -5.0f)));
+  createTank(game.get(),
+             textureShader,
+             linesShader,
+             &astar,
+             terrain.getXYZ(glm::vec2(0.0, 5.0f)));
+  createTank(game.get(),
+             textureShader,
+             linesShader,
+             &astar,
+             terrain.getXYZ(glm::vec2(0.0, -5.0f)));
 
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

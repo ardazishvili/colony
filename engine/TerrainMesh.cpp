@@ -138,29 +138,24 @@ void TerrainMesh::getSegmentVertices(glm::vec2 bottomLeft,
                                      std::vector<VertexColor>& v,
                                      SegmentDimensions* sd)
 {
-  // FIXME temporarily broken due to introducing of x/yScale
-  /* sd->divisionsX = (topRight.x - bottomLeft.x) / (_xStep * _xyScale); */
-  /* sd->divisionsY = (topRight.y - bottomLeft.y) / (_yStep * _xyScale); */
-  /* sd->latticeWidth = sd->divisionsY + 1; */
-  /* sd->xStep = _xStep * _xyScale; */
-  /* sd->yStep = _yStep * _xyScale; */
-  /* sd->xOffset = _width; */
-  /* sd->yOffset = _height; */
+  sd->divisionsX = (topRight.x - bottomLeft.x) / _xStep;
+  sd->divisionsY = (topRight.y - bottomLeft.y) / _yStep;
+  sd->latticeWidth = sd->divisionsY + 1;
+  sd->xStep = _xStep;
+  sd->yStep = _yStep;
 
-  /* bottomLeft.x += _width * _xyScale / 2; */
-  /* topRight.x += _width * _xyScale / 2; */
-  /* bottomLeft.y += _height * _xyScale / 2; */
-  /* topRight.y += _height * _xyScale / 2; */
+  bottomLeft.x += _width / 2;
+  topRight.x += _width / 2;
+  bottomLeft.y += _height / 2;
+  topRight.y += _height / 2;
 
-  /* float startI = _latticeHeight * bottomLeft.x / (_width * _xyScale); */
-  /* float startJ = _latticeAugmentedWidth * bottomLeft.y / (_height *
-   * _xyScale); */
-  /* for (unsigned int i = startI; i < startI + sd->divisionsX; ++i) { */
-  /*   for (unsigned int j = startJ; j < startJ + sd->divisionsY * 2; j += 2) {
-   */
-  /*     v.push_back(_v.at(_latticeAugmentedWidth * i + j)); */
-  /*   } */
-  /* } */
+  float startI = _latticeHeight * bottomLeft.x / _width;
+  float startJ = _latticeAugmentedWidth * bottomLeft.y / _height;
+  for (unsigned int i = startI; i < startI + sd->divisionsX; ++i) {
+    for (unsigned int j = startJ; j < startJ + sd->divisionsY * 2; j += 2) {
+      v.push_back(_v.at(_latticeAugmentedWidth * i + j));
+    }
+  }
 }
 
 float TerrainMesh::halfWidth() const

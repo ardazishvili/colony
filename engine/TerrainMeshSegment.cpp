@@ -72,9 +72,7 @@ void TerrainMeshSegment::render()
   glDepthMask(GL_FALSE);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   auto model = glm::mat4(1.0f);
-  model = glm::translate(
-    model,
-    glm::vec3(-_terrain->halfWidth(), -_terrain->halfHeight(), _zOffset));
+  model = glm::translate(model, glm::vec3(0, 0, _zOffset));
   _colorShader.setTransformation("model", glm::value_ptr(model));
   _colorShader.setBool("animated", false);
 

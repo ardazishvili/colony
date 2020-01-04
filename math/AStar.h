@@ -9,11 +9,6 @@
 
 struct APoint
 {
-  /* APoint(unsigned int xc, unsigned int yc) : x(xc), y(yc) */
-  /* { */
-  /* } */
-  /* unsigned int x; */
-  /* unsigned int y; */
   APoint(int xc, int yc) : x(xc), y(yc)
   {
   }
