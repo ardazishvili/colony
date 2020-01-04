@@ -32,11 +32,11 @@ void MainTerrainMesh::calculateHeights(unsigned int width,
                                        float& min,
                                        float& max)
 {
-  static float frequency = 0.3;
+  static float frequency = 0.204;
   static float frequencyFactor = 2.0;
   static float amplitudeFactor = 0.6;
   static float frequency_plain = 0.077;
-  static float frequencyFactor_plain = 3.0;
+  static float frequencyFactor_plain = 4.0;
   static float amplitudeFactor_plain = 0.366;
   ImGui::Begin("nonPlain");
   ImGui::SetWindowPos(ImVec2(0, 610));
@@ -77,13 +77,19 @@ void MainTerrainMesh::calculateHeights(unsigned int width,
   float t = 1.0;
   float R = 4.01 * M_PI;
   float S = 6.0 * M_PI;
+  static float coefLongitude = 2.0f / 8;
+  static float coefLatitude = 2.0f / 8;
   for (unsigned int i = 0; i < width; ++i) {
     for (unsigned int j = 0; j < width; ++j) {
       VertexColor vertex;
       vertex.p.x = bottomLeftX + static_cast<float>(i) * _xStep;
       vertex.p.y = bottomLeftY + static_cast<float>(j) * _yStep;
       glm::vec2 derivs;
-      float coef = 1.0f / 8;
+      ImGui::Begin("coefLatitude");
+      ImGui::SetWindowPos(ImVec2(0, 400));
+      ImGui::SetWindowSize(ImVec2(200, 50));
+      ImGui::SliderFloat("coefLatitude", &coefLatitude, 0.0f, 1.0f);
+      ImGui::End();
       auto a = (vertex.p.x - bottomLeftX) / _width;
       auto topRightX = bottomLeftX + _width;
       auto b = (topRightX - vertex.p.x) / _width;
@@ -92,21 +98,19 @@ void MainTerrainMesh::calculateHeights(unsigned int width,
       auto d = (topRightY - vertex.p.y) / _height;
       f = 1.0f;
       t = 1.0f;
-      auto func = [coef](float x) {
+      auto func = [](float x, float coef) {
         return x / (coef);
       };
-      if (a < coef) {
-        f = func(a);
-      } else if (b < coef) {
-        f = func(b);
+      if (a < coefLongitude) {
+        f = func(a, coefLongitude);
+      } else if (b < coefLongitude) {
+        f = func(b, coefLongitude);
       }
-      if (c < coef) {
-        t = func(c);
-      } else if (d < coef) {
-        t = func(d);
+      if (c < coefLatitude) {
+        t = func(c, coefLatitude);
+      } else if (d < coefLatitude) {
+        t = func(d, coefLatitude);
       }
-      /* std::cout << "f= " << f << std::endl; */
-      /* std::cout << "t= " << t << std::endl; */
 
       auto nv = noise.fractal(glm::vec2(vertex.p.x, vertex.p.y),
                               derivs,
@@ -124,14 +128,14 @@ void MainTerrainMesh::calculateHeights(unsigned int width,
         np = np * mult - (npf - mult);
         p = p * mult - (npf - mult) * (npf - mult);
       };
-      if (a < coef) {
+      if (a < coefLongitude) {
         m(nonPlain, plain, f);
-      } else if (b < coef) {
+      } else if (b < coefLongitude) {
         m(nonPlain, plain, f);
       }
-      if (c < coef) {
+      if (c < coefLatitude) {
         m(nonPlain, plain, t);
-      } else if (d < coef) {
+      } else if (d < coefLatitude) {
         m(nonPlain, plain, t);
       }
 
@@ -146,15 +150,27 @@ void MainTerrainMesh::calculateHeights(unsigned int width,
 
       vertex.p.y -= _height / (2.0f / _xScale);
       vertex.p.x -= _width / (2.0f / _yScale);
-      float longitude = vertex.p.x / R;
-      float latitude = 2 * ::atan(::exp(vertex.p.y / R)) - M_PI / 2;
-      /* latitude /= 1.48427 / (M_PI / 2 - 0.00); */
-      /* vertex.p.x = (S + vertex.z) * ::cos(latitude) * ::cos(longitude); */
-      /* vertex.p.y = (S + vertex.z) * ::cos(latitude) * ::sin(longitude); */
-      /* vertex.p.z = (S + vertex.z) * ::sin(latitude); */
 
-      min = std::min(min, vertex.p.z);
-      max = std::max(max, vertex.p.z);
+      // Mercator
+      /* float longitude = vertex.p.x / R; */
+      /* float latitude = 2 * ::atan(::exp(vertex.p.y / R)) - M_PI / 2; */
+      /* latitude /= 1.48427 / (M_PI / 2 + 0.40); */
+
+      // Miller
+      /* float longitude = vertex.p.x; */
+      /* float latitude = */
+      /*   (5.0f / 4.0f) * ::atan(glm::sinh(4.0f * vertex.p.y / 5.0f)); */
+
+      // Gall
+      float longitude = vertex.p.x * ::sqrt(2.0f) / R;
+      float latitude = 2 * ::atan(vertex.p.y / (R * (1 + ::sqrt(2) / 2.0f)));
+
+      vertex.p.x = (S + vertex.z) * ::cos(latitude) * ::cos(longitude);
+      vertex.p.y = (S + vertex.z) * ::cos(latitude) * ::sin(longitude);
+      vertex.p.z = (S + vertex.z) * ::sin(latitude);
+
+      min = std::min(min, vertex.z);
+      max = std::max(max, vertex.z);
       vertex.normal = glm::vec3(0.0f);
 
       _v.push_back(vertex);

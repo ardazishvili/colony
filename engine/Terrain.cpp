@@ -23,14 +23,14 @@ Terrain::Terrain(Shader& shader,
                  xScale,
                  yScale,
                  zScale);
-  _subMesh.init(0,
-                0,
-                topRightX - bottomLeftX,
-                topRightY - bottomLeftY,
-                divisions * 3,
-                xScale,
-                yScale,
-                zScale);
+  /* _subMesh.init(0, */
+  /*               0, */
+  /*               topRightX - bottomLeftX, */
+  /*               topRightY - bottomLeftY, */
+  /*               divisions * 3, */
+  /*               xScale, */
+  /*               yScale, */
+  /*               zScale); */
   _offset.x = bottomLeftX;
   _offset.y = bottomLeftY;
   // FIXME temporarily broken

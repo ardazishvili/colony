@@ -78,7 +78,8 @@ int main(int argc, char** argv)
   GLFWmonitor** monitors = glfwGetMonitors(&count);
   const GLFWvidmode* mode = glfwGetVideoMode(monitors[1]);
   float screenWidth = mode->width;
-  float screenHeight = mode->height - 150;
+  /* float screenHeight = mode->height - 150; */
+  float screenHeight = mode->height;
   GLFWwindow* window =
     glfwCreateWindow(screenWidth, screenHeight, "LearnOPenGl", NULL, NULL);
   if (window == NULL) {
@@ -165,8 +166,8 @@ int main(int argc, char** argv)
   ImGui_ImplGlfw_NewFrame();
   ImGui::NewFrame();
 
-  auto xScale = 4.0f;
-  auto yScale = 2.0f;
+  auto xScale = 2.85f;
+  auto yScale = 2.15f;
   auto zScale = 2.0f;
   auto terrain = Terrain(colorShader,
                          camera,
@@ -174,7 +175,7 @@ int main(int argc, char** argv)
                          -10.0f * yScale,
                          10.0f * xScale,
                          10.0f * yScale,
-                         256 * 1,
+                         256 * 2,
                          1,
                          1,
                          zScale);
@@ -278,14 +279,23 @@ int main(int argc, char** argv)
     projection = glm::perspective(
       glm::radians(camera.fov()), screenWidth / screenHeight, 0.01f, 1000.0f);
 
+    /* ImGui::Begin("xScale"); */
+    /* static float xs = 2.85f; */
+    /* static float ys = 2.15f; */
+    /* ImGui::SetWindowPos(ImVec2(0, 500)); */
+    /* ImGui::SetWindowSize(ImVec2(200, 80)); */
+    /* ImGui::SliderFloat("x scale", &xs, 2.8f, 2.9f); */
+    /* ImGui::SliderFloat("y scale", &ys, 2.1f, 2.2f); */
+    /* ImGui::End(); */
     /* auto terrain = Terrain(colorShader, */
     /*                        camera, */
-    /*                        -10.0f, */
-    /*                        -10.0f, */
-    /*                        10.0f, */
-    /*                        10.0f, */
+    /*                        -10.0f * xs, */
+    /*                        -10.0f * ys, */
+    /*                        10.0f * xs, */
+    /*                        10.0f * ys, */
     /*                        256 * 1, */
-    /*                        xyScale, */
+    /*                        1, */
+    /*                        1, */
     /*                        zScale); */
     terrain.render();
 
