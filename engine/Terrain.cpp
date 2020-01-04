@@ -21,8 +21,6 @@ Terrain::Terrain(Shader& shader,
                 topRightY - bottomLeftY,
                 divisions * 3,
                 zScale);
-  _offset.x = bottomLeftX;
-  _offset.y = bottomLeftY;
   _maxXy = std::max(topRightX, bottomLeftY);
 }
 
@@ -53,8 +51,7 @@ void Terrain::renderSub()
 
 glm::vec3 Terrain::getXYZ(glm::vec2 xy) const
 {
-  return glm::vec3(
-    xy.x, xy.y, _mainMesh.getZ(xy.x - _offset.x, xy.y - _offset.y));
+  return glm::vec3(xy.x, xy.y, _mainMesh.getZ(xy.x, xy.y));
 }
 
 glm::vec3 Terrain::getRgbColor(float x, float y) const

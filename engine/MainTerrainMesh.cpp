@@ -187,7 +187,6 @@ void MainTerrainMesh::calculateColors(float min,
         _v[augmentedWidth * i + j].color.z = glm::lerp(a.b, b.b, h);
         _v[augmentedWidth * i + j].color.w = 1.0;
       } else {
-        /* std::cout << "color water" << std::endl; */
         _v[augmentedWidth * i + j].color.x = 0.0;
         _v[augmentedWidth * i + j].color.y = 0.8;
         _v[augmentedWidth * i + j].color.z = 1.0;

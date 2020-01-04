@@ -40,7 +40,6 @@ private:
   Camera& _camera;
   MainTerrainMesh _mainMesh;
   SubTerrainMesh _subMesh;
-  glm::vec3 _offset{ glm::vec3(0.0f) };
   float _maxXy;
   float _zScale;
 };
