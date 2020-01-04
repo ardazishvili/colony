@@ -24,6 +24,7 @@ uniform mat4 projection;
 uniform Light light;
 uniform Material material;
 uniform vec3 viewPos;
+uniform bool flatView;
 
 flat out vec4 normals_colour;
 out vec3 worldPos;
@@ -46,7 +47,22 @@ vec3 calculateLighting() {
 
 void main()
 {
-  gl_Position = projection * view * model * vec4(position, 1.0);
+  if (!flatView) {
+    // Gall
+    float R = 4.0 * 3.1415;
+    float S = 6.0 * 3.1415;
+    float longitude = position.x * sqrt(2.0f) / R;
+    float latitude = 2 * atan(position.y / (R * (1 + sqrt(2) / 2.0f)));
+
+    vec3 p;
+    p.x = (S + position.z) * cos(latitude) * cos(longitude);
+    p.y = (S + position.z) * cos(latitude) * sin(longitude);
+    p.z = (S + position.z) * sin(latitude);
+    gl_Position = projection * view * model * vec4(p, 1.0);
+  } else {
+    gl_Position = projection * view * model * vec4(position, 1.0);
+  }
+
   vec4 wp = model * vec4(position, 1.0);
   worldPos = wp.xyz;
 

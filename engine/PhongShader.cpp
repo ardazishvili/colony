@@ -52,6 +52,14 @@ void PhongShader::configure()
   setFloat("e", e);
   setFloat("h", h);
 
+  static bool flatView = true;
+  ImGui::Begin("view");
+  ImGui::SetWindowPos(ImVec2(0, 310));
+  ImGui::SetWindowSize(ImVec2(200, 40));
+  ImGui::Checkbox("state", &flatView);
+  ImGui::End();
+  setBool("flatView", flatView);
+
   setTransformation("view", glm::value_ptr(_view));
   setTransformation("projection", glm::value_ptr(_projection));
 }

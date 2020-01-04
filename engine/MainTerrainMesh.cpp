@@ -75,8 +75,8 @@ void MainTerrainMesh::calculateHeights(unsigned int width,
   }
   float f = 1.0;
   float t = 1.0;
-  float R = 4.01 * M_PI;
-  float S = 6.0 * M_PI;
+  static float R = 4.0 * M_PI;
+  static float S = 6.0 * M_PI;
   static float coefLongitude = 2.0f / 8;
   static float coefLatitude = 2.0f / 8;
   for (unsigned int i = 0; i < width; ++i) {
@@ -85,10 +85,11 @@ void MainTerrainMesh::calculateHeights(unsigned int width,
       vertex.p.x = bottomLeftX + static_cast<float>(i) * _xStep;
       vertex.p.y = bottomLeftY + static_cast<float>(j) * _yStep;
       glm::vec2 derivs;
-      ImGui::Begin("coefLatitude");
-      ImGui::SetWindowPos(ImVec2(0, 400));
-      ImGui::SetWindowSize(ImVec2(200, 50));
-      ImGui::SliderFloat("coefLatitude", &coefLatitude, 0.0f, 1.0f);
+      ImGui::Begin("R");
+      ImGui::SetWindowPos(ImVec2(0, 350));
+      ImGui::SetWindowSize(ImVec2(200, 80));
+      ImGui::SliderFloat("R", &R, 0.0f, 100.0f * M_PI);
+      ImGui::SliderFloat("S", &S, 0.0f, 100.0f * M_PI);
       ImGui::End();
       auto a = (vertex.p.x - bottomLeftX) / _width;
       auto topRightX = bottomLeftX + _width;
@@ -146,31 +147,12 @@ void MainTerrainMesh::calculateHeights(unsigned int width,
         vertex.p.z = std::max(plain, water);
         _obstaclesMap.push_back(false);
       }
-      vertex.z = vertex.p.z;
 
       vertex.p.y -= _height / (2.0f / _xScale);
       vertex.p.x -= _width / (2.0f / _yScale);
 
-      // Mercator
-      /* float longitude = vertex.p.x / R; */
-      /* float latitude = 2 * ::atan(::exp(vertex.p.y / R)) - M_PI / 2; */
-      /* latitude /= 1.48427 / (M_PI / 2 + 0.40); */
-
-      // Miller
-      /* float longitude = vertex.p.x; */
-      /* float latitude = */
-      /*   (5.0f / 4.0f) * ::atan(glm::sinh(4.0f * vertex.p.y / 5.0f)); */
-
-      // Gall
-      float longitude = vertex.p.x * ::sqrt(2.0f) / R;
-      float latitude = 2 * ::atan(vertex.p.y / (R * (1 + ::sqrt(2) / 2.0f)));
-
-      vertex.p.x = (S + vertex.z) * ::cos(latitude) * ::cos(longitude);
-      vertex.p.y = (S + vertex.z) * ::cos(latitude) * ::sin(longitude);
-      vertex.p.z = (S + vertex.z) * ::sin(latitude);
-
-      min = std::min(min, vertex.z);
-      max = std::max(max, vertex.z);
+      min = std::min(min, vertex.p.z);
+      max = std::max(max, vertex.p.z);
       vertex.normal = glm::vec3(0.0f);
 
       _v.push_back(vertex);
@@ -189,10 +171,10 @@ void MainTerrainMesh::calculateColors(float min,
   auto amplitude = max - min;
   for (unsigned int i = 0; i < width; ++i) {
     for (unsigned int j = 0; j < augmentedWidth; ++j) {
-      auto z = _v[augmentedWidth * i + j].z;
+      auto z = _v[augmentedWidth * i + j].p.z;
       if (z != -0.3f) {
         RgbColor a, b;
-        auto h = (_v[augmentedWidth * i + j].z - min) / amplitude;
+        auto h = (_v[augmentedWidth * i + j].p.z - min) / amplitude;
         if (h <= amplitude * 0.2) {
           a = colorMapping[0.0f];
           b = colorMapping[0.5f];

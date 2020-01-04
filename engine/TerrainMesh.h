@@ -9,7 +9,6 @@
 
 struct VertexColor
 {
-  float z;
   glm::vec3 p;
   glm::vec3 normal;
   glm::vec4 color;
