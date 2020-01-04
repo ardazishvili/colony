@@ -119,8 +119,6 @@ void MainTerrainMesh::calculateHeights(unsigned int width,
                               frequencyFactor,
                               amplitudeFactor,
                               5);
-      vertex.p.x *= _xScale;
-      vertex.p.y *= _yScale;
       auto nonPlain = nv * _zScale;
       auto plain = plainZ.at(i * width + j);
       auto water = waterZ.at(i * width + j);
@@ -148,8 +146,8 @@ void MainTerrainMesh::calculateHeights(unsigned int width,
         _obstaclesMap.push_back(false);
       }
 
-      vertex.p.y -= _height / (2.0f / _xScale);
-      vertex.p.x -= _width / (2.0f / _yScale);
+      vertex.p.y -= _height / 2.0f;
+      vertex.p.x -= _width / 2.0f;
 
       min = std::min(min, vertex.p.z);
       max = std::max(max, vertex.p.z);
@@ -203,8 +201,8 @@ float MainTerrainMesh::getZ(float x, float y) const
 {
   x += _width / 2;
   y += _height / 2;
-  auto i = ::floor(x / _xStep / _xScale);
-  auto j = ::floor(y / _yStep / _yScale);
+  auto i = ::floor(x / _xStep);
+  auto j = ::floor(y / _yStep);
   auto mappedJ = (j == 0) ? 0 : 2 * j - 1;
   return _v.at(i * _latticeAugmentedWidth + mappedJ).p.z;
 }
@@ -213,8 +211,8 @@ glm::vec3 MainTerrainMesh::getRgbColor(float x, float y) const
 {
   x += _width / 2;
   y += _height / 2;
-  auto i = ::floor(x / _xStep / _xScale);
-  auto j = ::floor(y / _yStep / _yScale);
+  auto i = ::floor(x / _xStep);
+  auto j = ::floor(y / _yStep);
   auto mappedJ = (j == 0) ? 0 : 2 * j - 1;
   auto c = _v.at(i * _latticeAugmentedWidth + mappedJ).color;
   return glm::vec3(c.x, c.y, c.z);

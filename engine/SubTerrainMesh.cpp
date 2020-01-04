@@ -23,9 +23,9 @@ std::shared_ptr<LivingArea> SubTerrainMesh::addLivingArea(CircularRegion region,
   auto y = region.y + _height;
   auto r = region.r;
 
-  auto i = ::floor(rect.x / _xStep / _xScale);
+  auto i = ::floor(rect.x / _xStep);
   auto j = ::floor(rect.y / _yStep);
-  signed int xWidth = rect.width / _xStep / _xScale;
+  signed int xWidth = rect.width / _xStep;
   signed int yWidth = rect.height / _yStep;
   auto livingArea = std::make_shared<LivingArea>();
   for (unsigned int k = i; k <= i + xWidth; ++k) {
@@ -69,9 +69,9 @@ void SubTerrainMesh::growLivingArea(std::shared_ptr<LivingArea> area,
   auto y = region.y + _height;
   auto r = region.r;
 
-  auto i = ::floor(rect.x / _xStep / _xScale);
+  auto i = ::floor(rect.x / _xStep);
   auto j = ::floor(rect.y / _yStep);
-  signed int xWidth = rect.width / _xStep / _xScale;
+  signed int xWidth = rect.width / _xStep;
   signed int yWidth = rect.height / _yStep;
   auto cells = Cells();
   for (unsigned int k = i; k <= i + xWidth; ++k) {
@@ -159,8 +159,6 @@ void SubTerrainMesh::calculateHeights(unsigned int width,
                               frequencyFactor,
                               amplitudeFactor,
                               5);
-      vertex.p.x *= _xScale;
-      vertex.p.y *= _yScale;
       vertex.p.z = nv + 0.03f;
       vertex.normal = glm::vec3(0.0f);
       vertex.color = glm::vec4(0.0f, 0.0f, 1.0f, 0.0);

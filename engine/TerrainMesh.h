@@ -24,8 +24,6 @@ public:
             float topRightX,
             float topRightY,
             int divisions,
-            float xScale,
-            float yScale,
             float zScale);
   virtual void calculateHeights(unsigned int width,
                                 float bottomLeftX,
@@ -58,8 +56,6 @@ protected:
   unsigned int _latticeHeight;
   float _xStep;
   float _yStep;
-  float _xScale;
-  float _yScale;
   float _zScale;
 };
 

@@ -15,8 +15,6 @@ void TerrainMesh::init(float bottomLeftX,
                        float topRightX,
                        float topRightY,
                        int divisions,
-                       float xScale,
-                       float yScale,
                        float zScale)
 {
   _v.reserve((divisions + 1) * 2 * divisions);
@@ -24,8 +22,6 @@ void TerrainMesh::init(float bottomLeftX,
   _height = topRightY - bottomLeftY;
   _xStep = (topRightX - bottomLeftX) / divisions;
   _yStep = (topRightY - bottomLeftY) / divisions;
-  _xScale = xScale;
-  _yScale = yScale;
   _zScale = zScale;
   int width = divisions + 1;
 
@@ -170,11 +166,11 @@ void TerrainMesh::getSegmentVertices(glm::vec2 bottomLeft,
 float TerrainMesh::halfWidth() const
 {
   // TODO check
-  return _width * _xScale / 2;
+  return _width / 2;
 }
 
 float TerrainMesh::halfHeight() const
 {
   // TODO check
-  return _height * _yScale / 2;
+  return _height / 2;
 }
