@@ -9,11 +9,16 @@
 
 struct APoint
 {
-  APoint(unsigned int xc, unsigned int yc) : x(xc), y(yc)
+  /* APoint(unsigned int xc, unsigned int yc) : x(xc), y(yc) */
+  /* { */
+  /* } */
+  /* unsigned int x; */
+  /* unsigned int y; */
+  APoint(int xc, int yc) : x(xc), y(yc)
   {
   }
-  unsigned int x;
-  unsigned int y;
+  int x;
+  int y;
 };
 
 bool operator==(const APoint& lhs, const APoint& rhs);
