@@ -52,7 +52,6 @@ void MainTerrainMesh::calculateHeights(unsigned int width,
     for (unsigned int j = 0; j < width; ++j) {
       auto dummy = glm::vec2();
       x = bottomLeftX + static_cast<float>(i) * _xStep;
-      /* y = bottomLeftY + static_cast<float>(j) * _yStep - _height / 2; */
       y = bottomLeftY + static_cast<float>(j) * _yStep;
       auto nv_plain = noise.fractal(glm::vec2(x, y),
                                     dummy,

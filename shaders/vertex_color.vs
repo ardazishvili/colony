@@ -30,8 +30,8 @@ flat out vec4 normals_colour;
 out vec3 worldPos;
 out vec3 lightAmbient;
 
-vec3 calculateLighting() {
-  vec3 fragPos = vec3(model * vec4(position, 1.0));
+vec3 calculateLighting(in vec3 pos) {
+  vec3 fragPos = vec3(model * vec4(pos, 1.0));
   vec3 normal = mat3(transpose(inverse(model))) * normals;
   vec3 c = color.xyz;
 
@@ -47,6 +47,7 @@ vec3 calculateLighting() {
 
 void main()
 {
+  vec3 p;
   if (!flatView) {
     // Gall
     float R = 4.0 * 3.1415;
@@ -54,18 +55,17 @@ void main()
     float longitude = position.x * sqrt(2.0f) / R;
     float latitude = 2 * atan(position.y / (R * (1 + sqrt(2) / 2.0f)));
 
-    vec3 p;
     p.x = (S + position.z) * cos(latitude) * cos(longitude);
     p.y = (S + position.z) * cos(latitude) * sin(longitude);
     p.z = (S + position.z) * sin(latitude);
-    gl_Position = projection * view * model * vec4(p, 1.0);
   } else {
-    gl_Position = projection * view * model * vec4(position, 1.0);
+    p = position;
   }
 
+  gl_Position = projection * view * model * vec4(p, 1.0);
   vec4 wp = model * vec4(position, 1.0);
   worldPos = wp.xyz;
 
-  normals_colour = vec4(calculateLighting(), color.w);
+  normals_colour = vec4(calculateLighting(p), color.w);
   lightAmbient = light.ambient;
 }

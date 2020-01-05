@@ -37,13 +37,14 @@ void PhongShader::configure()
 
   static float b = 0.5;
   static float e = 8.8;
-  static float h = -3000.0f;
+  static float h = -0.3f;
   ImGui::Begin("fog");
   ImGui::SetWindowPos(ImVec2(0, 710));
   ImGui::SetWindowSize(ImVec2(200, 85));
   ImGui::SliderFloat("b", &b, 0.0f, 10.0f);
   ImGui::SliderFloat("e", &e, 0.0f, 10.0f);
-  ImGui::SliderFloat("h", &h, 0.0f, 2.0f);
+  ImGui::SliderFloat("h", &h, -1.0f, 1.0f);
+  /* ImGui::SliderFloat("h", &h, -0.31f, -0.29f); */
   ImGui::End();
   auto cp = _camera.eye();
   setVec3("camPosition", cp);

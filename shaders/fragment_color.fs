@@ -17,16 +17,17 @@ vec3 applyFog(in vec3 rgb,
 
   float maxFogHeight = h;
 
-  /* vec3 fogColor = vec3(0.5,0.6,0.7); */
-  vec3 fogColor = vec3(0.0,0.8,1.0);
+  vec3 fogColor = vec3(0.5,0.6,0.7);
+  /* vec3 fogColor = vec3(0.0,0.8,1.0); */
   float distance = length(camToPointVec);
-  if(worldPos.z >= maxFogHeight - 1 / e)
-  {		
-      return rgb;
-  }
+  /* if(worldPos.z >= maxFogHeight - 1 / e) */
+  /* { */		
+  /*     return rgb; */
+  /* } */
   
-  float distInFog = distance * (maxFogHeight - worldPos.z) / 
-                               (camPosition.z - worldPos.z );
+  /* float distInFog = distance * (maxFogHeight - worldPos.z) / */ 
+  /*                              (camPosition.z - worldPos.z ); */
+  float distInFog = 45 * (maxFogHeight - worldPos.z);
   float fogAmount = (log(distInFog * e) - 1) * b;
   fogAmount = clamp(fogAmount, 0, 1);
   return mix(rgb, fogColor, fogAmount);
