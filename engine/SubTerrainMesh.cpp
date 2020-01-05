@@ -17,30 +17,32 @@ std::shared_ptr<LivingArea> SubTerrainMesh::addLivingArea(CircularRegion region,
   RectangleRegion rect = {
     region.x - region.r, region.y - region.r, 2 * region.r, 2 * region.r
   };
-  rect.x += _width;
-  rect.y += _height;
-  auto x = region.x + _width;
-  auto y = region.y + _height;
+  auto x = region.x;
+  auto y = region.y;
   auto r = region.r;
 
-  auto i = ::floor(rect.x / _xStep);
-  auto j = ::floor(rect.y / _yStep);
+  // *2 due vertex doubling
+  auto i = ::floor(rect.x / _xStep) + _latticeWidth / 2;
+  auto j = ::floor(rect.y / _yStep) * 2 + _latticeAugmentedWidth / 2;
   signed int xWidth = rect.width / _xStep;
-  signed int yWidth = rect.height / _yStep;
+  signed int yWidth = rect.height * 2 / _yStep;
   auto livingArea = std::make_shared<LivingArea>();
+  auto center = glm::vec2(x, y);
   for (unsigned int k = i; k <= i + xWidth; ++k) {
     unsigned int index = 0;
     unsigned int stride = 0;
     auto indexIsSet = false;
     for (unsigned int n = j; n < j + yWidth; ++n) {
-      auto c = _v.at(_latticeAugmentedWidth * k + n);
+      auto m = k * _latticeAugmentedWidth + n;
+      auto c = _v.at(m);
 
-      if (::sqrt(::pow(x - c.p.x, 2) + ::pow(y - c.p.y, 2)) < r) {
+      auto point = glm::vec2(c.p.x, c.p.y);
+      if (glm::distance(point, center) < r) {
         if (!indexIsSet) {
-          index = _latticeAugmentedWidth * k + n;
+          index = m;
           indexIsSet = true;
         }
-        _v.at(_latticeAugmentedWidth * k + n).color = rgba;
+        _v.at(m).color = rgba;
 
         ++stride;
       }
@@ -63,32 +65,33 @@ void SubTerrainMesh::growLivingArea(std::shared_ptr<LivingArea> area,
   RectangleRegion rect = {
     region.x - region.r, region.y - region.r, 2 * region.r, 2 * region.r
   };
-  rect.x += _width;
-  rect.y += _height;
-  auto x = region.x + _width;
-  auto y = region.y + _height;
+  auto x = region.x;
+  auto y = region.y;
   auto r = region.r;
 
-  auto i = ::floor(rect.x / _xStep);
-  auto j = ::floor(rect.y / _yStep);
+  auto i = ::floor(rect.x / _xStep) + _latticeWidth / 2;
+  auto j = ::floor(rect.y / _yStep) * 2 + _latticeAugmentedWidth / 2;
   signed int xWidth = rect.width / _xStep;
-  signed int yWidth = rect.height / _yStep;
+  signed int yWidth = rect.height * 2 / _yStep;
   auto cells = Cells();
+  auto center = glm::vec2(x, y);
   for (unsigned int k = i; k <= i + xWidth; ++k) {
     unsigned int index = 0;
     unsigned int stride = 0;
     auto indexIsSet = false;
     for (unsigned int n = j; n < j + yWidth; ++n) {
-      auto c = _v.at(_latticeAugmentedWidth * k + n);
+      auto m = k * _latticeAugmentedWidth + n;
+      auto c = _v.at(m);
 
-      if (::sqrt(::pow(x - c.p.x, 2) + ::pow(y - c.p.y, 2)) < r) {
+      auto point = glm::vec2(c.p.x, c.p.y);
+      auto distance = glm::distance(point, center);
+      if (distance < r) {
         if (!indexIsSet) {
-          index = _latticeAugmentedWidth * k + n;
+          index = m;
           indexIsSet = true;
         }
-        if (::sqrt(::pow(x - c.p.x, 2) + ::pow(y - c.p.y, 2)) >=
-            prevRadius - 0.1) {
-          _v.at(_latticeAugmentedWidth * k + n).color = area->initRgba;
+        if (distance >= prevRadius - 0.1) {
+          _v.at(m).color = area->initRgba;
         }
 
         ++stride;
@@ -117,8 +120,6 @@ void SubTerrainMesh::updateLivingArea(std::shared_ptr<LivingArea> area)
   reloadLivingArea(area);
   area->future = std::async(std::launch::async, [this, area]() {
     for (auto plant : area->plants) {
-      plant.x += _width;
-      plant.y += _height;
       for (auto& cell : area->cells) {
         for (unsigned int i = cell.first; i < cell.first + cell.second; ++i) {
           auto cellX = _v.at(i).p.x;
@@ -143,7 +144,7 @@ void SubTerrainMesh::calculateHeights(unsigned int width,
                                       float& max)
 {
   static float frequency = 0.077;
-  static float frequencyFactor = 3.0;
+  static float frequencyFactor = 4.0;
   static float amplitudeFactor = 0.366;
   auto noise = Noise(777);
   std::vector<float> plainZ;
@@ -159,7 +160,9 @@ void SubTerrainMesh::calculateHeights(unsigned int width,
                               frequencyFactor,
                               amplitudeFactor,
                               5);
-      vertex.p.z = nv + 0.03f;
+      vertex.p.y -= _height / 2.0f;
+      vertex.p.x -= _width / 2.0f;
+      vertex.p.z = nv + 0.1;
       vertex.normal = glm::vec3(0.0f);
       vertex.color = glm::vec4(0.0f, 0.0f, 1.0f, 0.0);
 
