@@ -7,6 +7,8 @@
 
 #include "Mesh.h"
 
+enum class TerrainType { Main, Sub };
+
 struct VertexColor
 {
   glm::vec3 p;
@@ -24,7 +26,8 @@ public:
             float topRightX,
             float topRightY,
             int divisions,
-            float zScale);
+            float zScale,
+            TerrainType type);
   virtual void calculateHeights(unsigned int width,
                                 float bottomLeftX,
                                 float bottomLeftY,
@@ -42,9 +45,9 @@ public:
   float halfHeight() const;
 
 protected:
-  void calculateIndices(int divisionsX,
-                        int divisionsY,
-                        unsigned int latticeWidth);
+  virtual void calculateIndices(int divisionsX,
+                                int divisionsY,
+                                unsigned int latticeWidth);
   void calculateNormals(int width, unsigned int latticeWidth);
 
   std::vector<VertexColor> _v;

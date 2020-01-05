@@ -21,11 +21,10 @@ std::shared_ptr<LivingArea> SubTerrainMesh::addLivingArea(CircularRegion region,
   auto y = region.y;
   auto r = region.r;
 
-  // *2 due vertex doubling
   auto i = ::floor(rect.x / _xStep) + _latticeWidth / 2;
-  auto j = ::floor(rect.y / _yStep) * 2 + _latticeAugmentedWidth / 2;
+  auto j = ::floor(rect.y / _yStep) + _latticeAugmentedWidth / 2;
   signed int xWidth = rect.width / _xStep;
-  signed int yWidth = rect.height * 2 / _yStep;
+  signed int yWidth = rect.height / _yStep;
   auto livingArea = std::make_shared<LivingArea>();
   auto center = glm::vec2(x, y);
   for (unsigned int k = i; k <= i + xWidth; ++k) {
@@ -70,9 +69,9 @@ void SubTerrainMesh::growLivingArea(std::shared_ptr<LivingArea> area,
   auto r = region.r;
 
   auto i = ::floor(rect.x / _xStep) + _latticeWidth / 2;
-  auto j = ::floor(rect.y / _yStep) * 2 + _latticeAugmentedWidth / 2;
+  auto j = ::floor(rect.y / _yStep) + _latticeAugmentedWidth / 2;
   signed int xWidth = rect.width / _xStep;
-  signed int yWidth = rect.height * 2 / _yStep;
+  signed int yWidth = rect.height / _yStep;
   auto cells = Cells();
   auto center = glm::vec2(x, y);
   for (unsigned int k = i; k <= i + xWidth; ++k) {
@@ -160,16 +159,28 @@ void SubTerrainMesh::calculateHeights(unsigned int width,
                               frequencyFactor,
                               amplitudeFactor,
                               5);
-      vertex.p.y -= _height / 2.0f;
       vertex.p.x -= _width / 2.0f;
+      vertex.p.y -= _height / 2.0f;
       vertex.p.z = nv + 0.1;
-      vertex.normal = glm::vec3(0.0f);
-      vertex.color = glm::vec4(0.0f, 0.0f, 1.0f, 0.0);
-
       _v.push_back(vertex);
-      if (j != 0 && j != (width - 1)) {
-        _v.push_back(vertex);
-      }
+    }
+  }
+}
+
+void SubTerrainMesh::calculateIndices(int divisionsX,
+                                      int divisionsY,
+                                      unsigned int latticeWidth)
+{
+  _indices.reserve(divisionsX * divisionsY * 2 * 3);
+  for (int i = 0; i < divisionsX; ++i) {
+    for (int j = 0; j < divisionsY; ++j) {
+      _indices.push_back((i * latticeWidth) + j);
+      _indices.push_back((i * latticeWidth) + j + 1);
+      _indices.push_back((i * latticeWidth) + j + latticeWidth);
+
+      _indices.push_back((i * latticeWidth) + j + 1);
+      _indices.push_back((i * latticeWidth) + j + latticeWidth);
+      _indices.push_back((i * latticeWidth) + j + latticeWidth + 1);
     }
   }
 }

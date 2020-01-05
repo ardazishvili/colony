@@ -67,7 +67,6 @@ void MainTerrainMesh::calculateHeights(unsigned int width,
     for (unsigned int j = 0; j < width; ++j) {
       auto dummy = glm::vec2();
       x = bottomLeftX + static_cast<float>(i) * _xStep;
-      /* y = bottomLeftY + static_cast<float>(j) * _yStep - _height / 2; */
       y = bottomLeftY + static_cast<float>(j) * _yStep;
       waterZ.push_back(-0.3f);
     }
@@ -186,9 +185,12 @@ void MainTerrainMesh::calculateColors(float min,
         _v[augmentedWidth * i + j].color.z = glm::lerp(a.b, b.b, h);
         _v[augmentedWidth * i + j].color.w = 1.0;
       } else {
-        _v[augmentedWidth * i + j].color.x = 0.0;
-        _v[augmentedWidth * i + j].color.y = 0.8;
-        _v[augmentedWidth * i + j].color.z = 1.0;
+        /* _v[augmentedWidth * i + j].color.x = 0.0; */
+        /* _v[augmentedWidth * i + j].color.y = 0.8; */
+        /* _v[augmentedWidth * i + j].color.z = 1.0; */
+        _v[augmentedWidth * i + j].color.x = 0.0f;
+        _v[augmentedWidth * i + j].color.y = 0.0f;
+        _v[augmentedWidth * i + j].color.z = 0.0f;
         _v[augmentedWidth * i + j].color.w = 1.0;
       }
     }

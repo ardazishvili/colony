@@ -13,14 +13,20 @@ Terrain::Terrain(Shader& shader,
   _shader(shader),
   _camera(camera), _zScale(zScale)
 {
-  _mainMesh.init(
-    0, 0, topRightX - bottomLeftX, topRightY - bottomLeftY, divisions, zScale);
+  _mainMesh.init(0,
+                 0,
+                 topRightX - bottomLeftX,
+                 topRightY - bottomLeftY,
+                 divisions,
+                 zScale,
+                 TerrainType::Main);
   _subMesh.init(0,
                 0,
                 topRightX - bottomLeftX,
                 topRightY - bottomLeftY,
                 divisions * 3,
-                zScale);
+                zScale,
+                TerrainType::Sub);
   _maxXy = std::max(topRightX, bottomLeftY);
 }
 

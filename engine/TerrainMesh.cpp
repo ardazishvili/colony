@@ -6,7 +6,7 @@
 void TerrainMesh::render()
 {
   glBindVertexArray(_vao);
-  glDrawElements(GL_TRIANGLES, _v.size() * 3, GL_UNSIGNED_INT, 0);
+  glDrawElements(GL_TRIANGLES, _indices.size(), GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);
 }
 
@@ -15,7 +15,8 @@ void TerrainMesh::init(float bottomLeftX,
                        float topRightX,
                        float topRightY,
                        int divisions,
-                       float zScale)
+                       float zScale,
+                       TerrainType type)
 {
   _v.reserve((divisions + 1) * 2 * divisions);
   _width = topRightX - bottomLeftX;
@@ -28,13 +29,18 @@ void TerrainMesh::init(float bottomLeftX,
   float min = 0.0f;
   float max = 0.0f;
   calculateHeights(width, bottomLeftX, bottomLeftY, min, max);
-  auto augmentedWidth = divisions + 1 + (divisions + 1 - 2);
-  _latticeAugmentedWidth = augmentedWidth;
   _latticeWidth = width;
   _latticeHeight = width;
-  calculateNormals(width, _latticeAugmentedWidth);
-  calculateColors(min, max, width, augmentedWidth);
-  calculateIndices(divisions, divisions, _latticeAugmentedWidth);
+  unsigned int w;
+  if (type == TerrainType::Main) {
+    w = divisions + 1 + (divisions + 1 - 2);
+  } else {
+    w = width;
+  }
+  _latticeAugmentedWidth = w;
+  calculateNormals(width, w);
+  calculateColors(min, max, width, w);
+  calculateIndices(divisions, divisions, w);
 
   glBindVertexArray(_vao);
   glBindBuffer(GL_ARRAY_BUFFER, _vbo);
@@ -77,6 +83,8 @@ void TerrainMesh::calculateIndices(int divisionsX,
                                    int divisionsY,
                                    unsigned int latticeWidth)
 {
+  std::cout << "divisionsX= " << divisionsX << std::endl;
+  std::cout << "divisionsY= " << divisionsY << std::endl;
   _indices.reserve(divisionsX * divisionsY * 2 * 3);
   for (int i = 0; i < divisionsX; ++i) {
     for (int j = 0; j < divisionsY; ++j) {

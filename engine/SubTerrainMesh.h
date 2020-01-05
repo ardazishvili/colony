@@ -54,6 +54,11 @@ public:
   const static glm::vec4 SELECTION_COLOR;
   const static glm::vec4 DESELECTION_COLOR;
 
+protected:
+  void calculateIndices(int divisionsX,
+                        int divisionsY,
+                        unsigned int latticeWidth) override;
+
 private:
   void reloadLivingArea(std::shared_ptr<LivingArea> area);
   void selectSubTerrainRegion(CircularRegion region, glm::vec4 rgba);

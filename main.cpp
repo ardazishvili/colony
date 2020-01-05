@@ -166,7 +166,8 @@ int main(int argc, char** argv)
   ImGui_ImplGlfw_NewFrame();
   ImGui::NewFrame();
 
-  auto xScale = 2.85f;
+  /* auto xScale = 2.85f; */
+  auto xScale = 2.15f;
   auto yScale = 2.15f;
   auto zScale = 2.0f;
   auto terrain = Terrain(colorShader,
@@ -175,7 +176,7 @@ int main(int argc, char** argv)
                          -10.0f * yScale,
                          10.0f * xScale,
                          10.0f * yScale,
-                         256 * 2,
+                         256 / 1,
                          zScale);
   std::unique_ptr<Game> game = std::make_unique<Game>(window, view, projection);
   game->addTerrain(&terrain);
@@ -287,7 +288,7 @@ int main(int argc, char** argv)
     /* auto s = Sphere(colorShader, glm::vec3(0.0f, 0.0f, 5.0f), 1.0f, 50); */
     /* s.render(); */
 
-    /* terrain.renderSub(); */
+    terrain.renderSub();
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
