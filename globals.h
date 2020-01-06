@@ -6,5 +6,6 @@
 
 extern std::unique_ptr<ModelLoader> modelLoader;
 extern Logger logger;
+extern bool flatView;
 
 #endif

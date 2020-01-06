@@ -6,6 +6,7 @@
 #include "../imgui/imgui_impl_glfw.h"
 #include "../imgui/imgui_impl_opengl3.h"
 
+#include "../globals.h"
 #include "Light.h"
 #include "PhongShader.h"
 
@@ -61,7 +62,7 @@ void PhongShader::configure()
   setFloat("water_e", water_e);
   setFloat("water_h", water_h);
 
-  static bool flatView = true;
+  /* static bool flatView = true; */
   ImGui::Begin("view");
   ImGui::SetWindowPos(ImVec2(0, 310));
   ImGui::SetWindowSize(ImVec2(200, 40));
