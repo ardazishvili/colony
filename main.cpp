@@ -166,8 +166,7 @@ int main(int argc, char** argv)
   ImGui_ImplGlfw_NewFrame();
   ImGui::NewFrame();
 
-  /* auto xScale = 2.85f; */
-  auto xScale = 2.15f;
+  auto xScale = 2.85f;
   auto yScale = 2.15f;
   auto zScale = 2.0f;
   auto terrain = Terrain(colorShader,
@@ -176,7 +175,7 @@ int main(int argc, char** argv)
                          -10.0f * yScale,
                          10.0f * xScale,
                          10.0f * yScale,
-                         256 / 1,
+                         256 * 2,
                          zScale);
   std::unique_ptr<Game> game = std::make_unique<Game>(window, view, projection);
   game->addTerrain(&terrain);

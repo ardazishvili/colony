@@ -35,23 +35,31 @@ void PhongShader::configure()
   setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
   setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
-  static float b = 0.5;
-  static float e = 8.8;
-  static float h = -0.3f;
-  ImGui::Begin("fog");
+  static float fog_b = 0.603;
+  static float fog_e = 8.276;
+  static float fog_h = 1.0f;
+  static float water_b = 1000;
+  static float water_e = 1000;
+  static float water_h = -0.287f;
+  ImGui::Begin("fogWater");
   ImGui::SetWindowPos(ImVec2(0, 710));
-  ImGui::SetWindowSize(ImVec2(200, 85));
-  ImGui::SliderFloat("b", &b, 0.0f, 10.0f);
-  ImGui::SliderFloat("e", &e, 0.0f, 10.0f);
-  ImGui::SliderFloat("h", &h, -1.0f, 1.0f);
-  /* ImGui::SliderFloat("h", &h, -0.31f, -0.29f); */
+  ImGui::SetWindowSize(ImVec2(200, 160));
+  ImGui::SliderFloat("fog_b", &fog_b, 0.0f, 10.0f);
+  ImGui::SliderFloat("fog_e", &fog_e, 0.0f, 10.0f);
+  ImGui::SliderFloat("fog_h", &fog_h, -1.0f, 1.0f);
+  ImGui::SliderFloat("water_b", &water_b, 0.0f, 1000.0f);
+  ImGui::SliderFloat("water_e", &water_e, 0.0f, 1000.0f);
+  ImGui::SliderFloat("water_h", &water_h, -0.31f, -0.25f);
   ImGui::End();
   auto cp = _camera.eye();
   setVec3("camPosition", cp);
 
-  setFloat("b", b);
-  setFloat("e", e);
-  setFloat("h", h);
+  setFloat("fog_b", fog_b);
+  setFloat("fog_e", fog_e);
+  setFloat("fog_h", fog_h);
+  setFloat("water_b", water_b);
+  setFloat("water_e", water_e);
+  setFloat("water_h", water_h);
 
   static bool flatView = true;
   ImGui::Begin("view");
