@@ -42,11 +42,14 @@ BarrierView::BarrierView(Shader& textureShader,
 void BarrierView::draw()
 {
   static bool bd = true;
+  static float gLongitude = 0.0f;
   ImGui::Begin("Barriers display");
-  ImGui::SetWindowPos(ImVec2(0, 680));
-  ImGui::SetWindowSize(ImVec2(200, 40));
+  ImGui::SetWindowPos(ImVec2(0, 640));
+  ImGui::SetWindowSize(ImVec2(200, 80));
   ImGui::Checkbox("state", &bd);
+  ImGui::SliderFloat("lat", &gLongitude, 0, M_PI);
   ImGui::End();
+
   if (bd) {
     _shader.use();
     _shader.configure();
@@ -55,9 +58,12 @@ void BarrierView::draw()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     _shader.setBool("animated", false);
     auto model = glm::mat4(1.0f);
-    model = glm::translate(model, _position);
-    model =
-      glm::rotate(model, glm::radians(_angle), glm::vec3(0.0f, 0.0f, 1.0f));
+    model = glm::translate(model, position());
+    if (!flatView) {
+      model = glm::rotate(model, longitude(), glm::vec3(0, 0, 1));
+      model = glm::rotate(model, latitude(), glm::vec3(0, 1, 0));
+    }
+    model = glm::rotate(model, glm::radians(_angle), glm::vec3(0, 0, 1));
     model = glm::scale(model, glm::vec3(_scaleFactor));
     _shader.setTransformation("model", glm::value_ptr(model));
     _model->setActiveTexturesPack(_texturesType);

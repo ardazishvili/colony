@@ -17,6 +17,8 @@ public:
   View(Shader& shader, glm::vec3 position);
   virtual void draw() = 0;
   virtual glm::vec3 position() const;
+  float longitude() const;
+  float latitude() const;
 
 protected:
   bool _hasAnimation{ false };

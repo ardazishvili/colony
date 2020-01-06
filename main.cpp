@@ -78,8 +78,8 @@ int main(int argc, char** argv)
   GLFWmonitor** monitors = glfwGetMonitors(&count);
   const GLFWvidmode* mode = glfwGetVideoMode(monitors[1]);
   float screenWidth = mode->width;
-  /* float screenHeight = mode->height - 150; */
-  float screenHeight = mode->height;
+  float screenHeight = mode->height - 150;
+  /* float screenHeight = mode->height; */
   GLFWwindow* window =
     glfwCreateWindow(screenWidth, screenHeight, "LearnOPenGl", NULL, NULL);
   if (window == NULL) {
@@ -175,7 +175,7 @@ int main(int argc, char** argv)
                          -10.0f * yScale,
                          10.0f * xScale,
                          10.0f * yScale,
-                         256 * 2,
+                         256 / 2,
                          zScale);
   std::unique_ptr<Game> game = std::make_unique<Game>(window, view, projection);
   game->addTerrain(&terrain);
@@ -200,31 +200,31 @@ int main(int argc, char** argv)
                                                 mapObstacles,
                                                 &astar);
 
-  createTank(game.get(),
-             textureShader,
-             linesShader,
-             &astar,
-             terrain.getXYZ(glm::vec2(0.0, 0.0f)));
-  createTank(game.get(),
-             textureShader,
-             linesShader,
-             &astar,
-             terrain.getXYZ(glm::vec2(5.0, 5.0f)));
-  createTank(game.get(),
-             textureShader,
-             linesShader,
-             &astar,
-             terrain.getXYZ(glm::vec2(-5.0, -5.0f)));
-  createTank(game.get(),
-             textureShader,
-             linesShader,
-             &astar,
-             terrain.getXYZ(glm::vec2(0.0, 5.0f)));
-  createTank(game.get(),
-             textureShader,
-             linesShader,
-             &astar,
-             terrain.getXYZ(glm::vec2(0.0, -5.0f)));
+  /* createTank(game.get(), */
+  /*            textureShader, */
+  /*            linesShader, */
+  /*            &astar, */
+  /*            terrain.getXYZ(glm::vec2(0.0, 0.0f))); */
+  /* createTank(game.get(), */
+  /*            textureShader, */
+  /*            linesShader, */
+  /*            &astar, */
+  /*            terrain.getXYZ(glm::vec2(5.0, 5.0f))); */
+  /* createTank(game.get(), */
+  /*            textureShader, */
+  /*            linesShader, */
+  /*            &astar, */
+  /*            terrain.getXYZ(glm::vec2(-5.0, -5.0f))); */
+  /* createTank(game.get(), */
+  /*            textureShader, */
+  /*            linesShader, */
+  /*            &astar, */
+  /*            terrain.getXYZ(glm::vec2(0.0, 5.0f))); */
+  /* createTank(game.get(), */
+  /*            textureShader, */
+  /*            linesShader, */
+  /*            &astar, */
+  /*            terrain.getXYZ(glm::vec2(0.0, -5.0f))); */
 
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
