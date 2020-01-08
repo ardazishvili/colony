@@ -5,8 +5,12 @@
 #include "../math/Noise.h"
 #include "SubTerrainMesh.h"
 
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/compatibility.hpp>
+/* #define GLM_ENABLE_EXPERIMENTAL */
+/* #include <glm/gtx/compatibility.hpp> */
+float lerp(float a, float b, float f)
+{
+  return (a * (1.0 - f)) + (b * f);
+}
 
 const glm::vec4 SubTerrainMesh::SELECTION_COLOR{ 0.0f, 0.0f, 1.0f, 0.3f };
 const glm::vec4 SubTerrainMesh::DESELECTION_COLOR{ 0.0f, 0.0f, 1.0f, 0.0f };
@@ -41,7 +45,8 @@ std::shared_ptr<LivingArea> SubTerrainMesh::addLivingArea(CircularRegion region,
           index = m;
           indexIsSet = true;
         }
-        _v.at(m).color = rgba;
+        /* _v.at(m).color = rgba; */
+        _v.at(m).color = glm::vec4(0, 1, 0, 1);
 
         ++stride;
       }
@@ -90,7 +95,8 @@ void SubTerrainMesh::growLivingArea(std::shared_ptr<LivingArea> area,
           indexIsSet = true;
         }
         if (distance >= prevRadius - 0.1) {
-          _v.at(m).color = area->initRgba;
+          /* _v.at(m).color = area->initRgba; */
+          _v.at(m).color = glm::vec4(0, 1, 0, 1);
         }
 
         ++stride;
@@ -116,18 +122,31 @@ void SubTerrainMesh::reloadLivingArea(std::shared_ptr<LivingArea> area)
 void SubTerrainMesh::updateLivingArea(std::shared_ptr<LivingArea> area)
 {
   logger.log("begin area update");
+  logger.log("area->region.r", area->region.r);
   reloadLivingArea(area);
-  area->future = std::async(std::launch::async, [this, area]() {
-    for (auto plant : area->plants) {
-      for (auto& cell : area->cells) {
+  AreaPlants plants = area->plants;
+  area->future = std::async(std::launch::async, [this, plants, area]() {
+    for (const auto& plant : plants) {
+      for (const auto& cell : area->cells) {
         for (unsigned int i = cell.first; i < cell.first + cell.second; ++i) {
           auto cellX = _v.at(i).p.x;
           auto cellY = _v.at(i).p.y;
-          float d =
-            ::sqrt(::pow(cellX - plant.x, 2) + ::pow(cellY - plant.y, 2));
-          d /= 2.0;
+          auto cellPos = glm::vec2(cellX, cellY);
+          float d = glm::distance(plant, cellPos);
+          // norm distance: maximum of d is equal to "2 * radius"
+          d /= 2 * area->region.r;
           double g = _v.at(i).color.y;
-          auto newColor = glm::lerp(g, 1.0, ::pow(1.0f - d / 3, 20) / 30);
+          auto factor = ::pow(1.0f - d, 30) / 100;
+          auto newColor = lerp(g, 1.0, factor);
+          /* if ((factor < 0.0) || (factor > 1.0)) { */
+          /*   std::cout << "alarma!!!" << std::endl; */
+          /*   std::cout << "factor= " << factor << std::endl; */
+          /*   std::cout << "d= " << d << std::endl; */
+          /*   std::cout << "plant= " << plant.x << ", " << plant.y <<
+           * std::endl; */
+          /*   std::cout << "cellPos= " << cellPos.x << ", " << cellPos.y */
+          /*             << std::endl; */
+          /* } */
           _v.at(i).color.y = newColor;
         }
       }
@@ -162,6 +181,7 @@ void SubTerrainMesh::calculateHeights(unsigned int width,
       vertex.p.x -= _width / 2.0f;
       vertex.p.y -= _height / 2.0f;
       vertex.p.z = nv + 0.1;
+      /* vertex.color = glm::vec4(0, 0, 1, 1); */
       _v.push_back(vertex);
     }
   }

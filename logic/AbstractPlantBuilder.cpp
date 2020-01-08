@@ -21,7 +21,9 @@ glm::vec2 AbstractPlantBuilder::generateUniformPosition() const
   std::uniform_real_distribution<float> dReal(0, 2 * M_PI);
   auto getRandomAngle = std::bind(dReal, generator);
   auto randomAngle = getRandomAngle();
-  auto randomR = getRandomAngle() * _barrier.radius() / (2 * M_PI);
+  // don't put plant closer than offset to barrier border
+  auto offset = 0.1;
+  auto randomR = getRandomAngle() * (_barrier.radius() - offset) / (2 * M_PI);
 
   return glm::vec2(randomR * ::cos(randomAngle), randomR * ::sin(randomAngle));
 }

@@ -36,5 +36,15 @@ float View::longitude() const
 float View::latitude() const
 {
   float R = 4.0 * 3.1415;
-  return -2 * atan(_position.y / (R * (1 + sqrt(2) / 2.0f))) + M_PI / 2;
+  return 2 * atan(_position.y / (R * (1 + sqrt(2) / 2.0f)));
+}
+
+float View::h(float phi) const
+{
+  return (1 + (::sqrt(2) / 2.0)) * (0.5 / ::pow(::cos(phi / 2.0), 2));
+}
+
+float View::k(float phi) const
+{
+  return 1.0 / (::cos(phi) * ::sqrt(2.0));
 }

@@ -39,16 +39,65 @@ BarrierView::BarrierView(Shader& textureShader,
   _shroudModel->setActiveTexturesPack(TexturePackType::Initial);
 }
 
+glm::vec3 mapper(glm::vec3 p)
+{
+  float R = 4.0 * 3.1415;
+  float S = 6.0 * 3.1415;
+  float longitude = p.x * sqrt(2.0f) / R;
+  float latitude = 2 * atan(p.y / (R * (1 + sqrt(2) / 2.0f)));
+
+  return glm::vec3((S + p.z) * cos(latitude) * cos(longitude),
+                   (S + p.z) * cos(latitude) * sin(longitude),
+                   (S + p.z) * sin(latitude));
+}
+
+float xs(float xStart, float xEnd)
+{
+  float R = 4.0 * 3.1415;
+  float S = 6.0 * 3.1415;
+  float longStart = xStart * sqrt(2.0f) / R;
+  float longEnd = xEnd * sqrt(2.0f) / R;
+  return S * (longEnd - longStart);
+}
+
+float ys(float yStart, float yEnd)
+{
+  float R = 4.0 * 3.1415;
+  float S = 6.0 * 3.1415;
+  float latStart = 2 * atan(yStart / (R * (1 + sqrt(2) / 2.0f)));
+  float latEnd = 2 * atan(yEnd / (R * (1 + sqrt(2) / 2.0f)));
+  std::cout << "latStart= " << latStart << std::endl;
+  std::cout << "latEnd= " << latEnd << std::endl;
+  return S * (latEnd - latStart);
+}
+
 void BarrierView::draw()
 {
   static bool bd = true;
-  static float gLongitude = 0.0f;
+  static float a = 1.0f;
+  static float b = 1.0f;
   ImGui::Begin("Barriers display");
   ImGui::SetWindowPos(ImVec2(0, 640));
   ImGui::SetWindowSize(ImVec2(200, 80));
   ImGui::Checkbox("state", &bd);
-  ImGui::SliderFloat("lat", &gLongitude, 0, M_PI);
+  ImGui::SliderFloat("a", &a, 0, 4);
+  ImGui::SliderFloat("b", &b, 0, 4);
   ImGui::End();
+  /* std::cout << "_position.x= " << _position.x << std::endl; */
+  /* std::cout << "_position.y= " << _position.y << std::endl; */
+  auto p = _position;
+  auto dx = glm::distance(mapper(glm::vec3(p.x - 1, p.y, p.z)),
+                          mapper(glm::vec3(p.x + 1, p.y, p.z))) /
+            2;
+  /* std::cout << "dx= " << dx << std::endl; */
+  auto dy = glm::distance(mapper(glm::vec3(p.x, p.y - 1, p.z)),
+                          mapper(glm::vec3(p.x, p.y + 1, p.z))) /
+            2;
+  /* std::cout << "dy= " << dy << std::endl; */
+  auto xss = xs(p.x - 1, p.x + 1);
+  auto yss = ys(p.y - 1, p.y + 1);
+  std::cout << "xs(p.x -1, p.x + 1)= " << xss << std::endl;
+  std::cout << "ys(p.y -1, p.y + 1)= " << yss << std::endl;
 
   if (bd) {
     _shader.use();
@@ -59,12 +108,17 @@ void BarrierView::draw()
     _shader.setBool("animated", false);
     auto model = glm::mat4(1.0f);
     model = glm::translate(model, position());
+    auto lat = latitude();
     if (!flatView) {
       model = glm::rotate(model, longitude(), glm::vec3(0, 0, 1));
-      model = glm::rotate(model, latitude(), glm::vec3(0, 1, 0));
+      model = glm::rotate(
+        model, -lat + static_cast<float>(M_PI / 2.0), glm::vec3(0, 1, 0));
+      model = glm::scale(model, glm::vec3(_scaleFactor));
+      model = glm::scale(model, glm::vec3(1.552 / h(lat), 1.552 / k(lat), 1));
+    } else {
+      model = glm::rotate(model, glm::radians(_angle), glm::vec3(0, 0, 1));
+      model = glm::scale(model, glm::vec3(_scaleFactor));
     }
-    model = glm::rotate(model, glm::radians(_angle), glm::vec3(0, 0, 1));
-    model = glm::scale(model, glm::vec3(_scaleFactor));
     _shader.setTransformation("model", glm::value_ptr(model));
     _model->setActiveTexturesPack(_texturesType);
     _model->render();
@@ -156,7 +210,7 @@ void BarrierView::grow(std::shared_ptr<LivingArea> area)
     auto finalScale = _scaleFactor + BARRIER_SCALE_INCREMENT;
     while (_scaleFactor < finalScale) {
       _scaleFactor += 0.01;
-      std::this_thread::sleep_for(std::chrono::milliseconds(40));
+      std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
     _terrain->growLivingArea(area, _scaleFactor);
     _selectionRadius = _scaleFactor;

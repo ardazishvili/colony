@@ -19,6 +19,8 @@ public:
   virtual glm::vec3 position() const;
   float longitude() const;
   float latitude() const;
+  float h(float phi) const;
+  float k(float phi) const;
 
 protected:
   bool _hasAnimation{ false };

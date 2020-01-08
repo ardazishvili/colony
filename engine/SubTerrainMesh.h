@@ -24,10 +24,11 @@ struct CircularRegion
 };
 
 using Cells = std::vector<std::pair<unsigned int, unsigned int>>;
+using AreaPlants = std::vector<glm::vec2>;
 struct LivingArea
 {
   Cells cells;
-  std::vector<glm::vec2> plants;
+  AreaPlants plants;
   CircularRegion region;
   glm::vec4 initRgba;
   std::future<void> future;
