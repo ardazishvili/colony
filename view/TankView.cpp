@@ -39,11 +39,18 @@ void TankView::draw()
   _model->animate(_shader, Animation::Type::OneShot, percent);
 
   auto model = glm::mat4(1.0f);
-  model = glm::translate(model, _position);
-  model =
-    glm::rotate(model, glm::radians(_bodyAngle), glm::vec3(0.0f, 0.0f, 1.0f));
-  model = glm::scale(model, glm::vec3(_tankTypeScaleFactor));
-  model = glm::scale(model, glm::vec3(VIEW_SCALE));
+  if (!flatView) {
+    model = glm::translate(model, position());
+    model = glm::rotate(model, longitude(), glm::vec3(0, 0, 1));
+    model = glm::rotate(
+      model, -latitude() + static_cast<float>(M_PI / 2.0), glm::vec3(0, 1, 0));
+    model = glm::scale(model, glm::vec3(_tankTypeScaleFactor * VIEW_SCALE));
+  } else {
+    model = glm::translate(model, position());
+    model =
+      glm::rotate(model, glm::radians(_bodyAngle), glm::vec3(0.0f, 0.0f, 1.0f));
+    model = glm::scale(model, glm::vec3(_tankTypeScaleFactor * VIEW_SCALE));
+  }
   _shader.setTransformation("model", glm::value_ptr(model));
   _model->setActiveTexturesPack(_texturesType);
   _model->render();
@@ -96,12 +103,4 @@ void TankView::updateGun()
     }
   }
 }
-
-/* void TankView::showHealthBar() */
-/* { */
-/*   _healthBar.setOffsetXY(_position.x - 0.25, _position.y); */
-/*   _healthBar.setScaleX(_healthBarScaleFactor); */
-/*   _healthBar.setPitchAngle(-camera.getPitch()); */
-/*   _healthBar.render(); */
-/* } */
 

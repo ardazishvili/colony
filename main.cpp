@@ -200,31 +200,31 @@ int main(int argc, char** argv)
                                                 mapObstacles,
                                                 &astar);
 
-  /* createTank(game.get(), */
-  /*            textureShader, */
-  /*            linesShader, */
-  /*            &astar, */
-  /*            terrain.getXYZ(glm::vec2(0.0, 0.0f))); */
-  /* createTank(game.get(), */
-  /*            textureShader, */
-  /*            linesShader, */
-  /*            &astar, */
-  /*            terrain.getXYZ(glm::vec2(5.0, 5.0f))); */
-  /* createTank(game.get(), */
-  /*            textureShader, */
-  /*            linesShader, */
-  /*            &astar, */
-  /*            terrain.getXYZ(glm::vec2(-5.0, -5.0f))); */
-  /* createTank(game.get(), */
-  /*            textureShader, */
-  /*            linesShader, */
-  /*            &astar, */
-  /*            terrain.getXYZ(glm::vec2(0.0, 5.0f))); */
-  /* createTank(game.get(), */
-  /*            textureShader, */
-  /*            linesShader, */
-  /*            &astar, */
-  /*            terrain.getXYZ(glm::vec2(0.0, -5.0f))); */
+  createTank(game.get(),
+             textureShader,
+             linesShader,
+             &astar,
+             terrain.getXYZ(glm::vec2(0.0, 0.0f)));
+  createTank(game.get(),
+             textureShader,
+             linesShader,
+             &astar,
+             terrain.getXYZ(glm::vec2(5.0, 5.0f)));
+  createTank(game.get(),
+             textureShader,
+             linesShader,
+             &astar,
+             terrain.getXYZ(glm::vec2(-5.0, -5.0f)));
+  createTank(game.get(),
+             textureShader,
+             linesShader,
+             &astar,
+             terrain.getXYZ(glm::vec2(0.0, 5.0f)));
+  createTank(game.get(),
+             textureShader,
+             linesShader,
+             &astar,
+             terrain.getXYZ(glm::vec2(0.0, -5.0f)));
 
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

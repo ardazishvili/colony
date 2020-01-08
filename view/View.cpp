@@ -6,6 +6,8 @@
 #include "View.h"
 
 float View::VIEW_SCALE = 0.5f;
+const float View::R = 4 * M_PI;
+const float View::S = 6 * M_PI;
 
 View::View(Shader& shader, glm::vec3 position) :
   _shader(shader), _position(position)
@@ -15,8 +17,6 @@ View::View(Shader& shader, glm::vec3 position) :
 glm::vec3 View::position() const
 {
   if (!flatView) {
-    float R = 4.0 * 3.1415;
-    float S = 6.0 * 3.1415;
     float longitude = _position.x * sqrt(2.0f) / R;
     float latitude = 2 * atan(_position.y / (R * (1 + sqrt(2) / 2.0f)));
 
@@ -29,13 +29,11 @@ glm::vec3 View::position() const
 
 float View::longitude() const
 {
-  float R = 4.0 * 3.1415;
   return _position.x * sqrt(2.0f) / R;
 }
 
 float View::latitude() const
 {
-  float R = 4.0 * 3.1415;
   return 2 * atan(_position.y / (R * (1 + sqrt(2) / 2.0f)));
 }
 

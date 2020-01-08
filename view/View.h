@@ -27,6 +27,9 @@ protected:
   std::shared_ptr<Model> _model;
   Shader& _shader;
   glm::vec3 _position;
+
+  static const float R;
+  static const float S;
 };
 
 #endif
