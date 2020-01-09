@@ -27,18 +27,18 @@ bool Shroud::setUp() const
 {
   // TODO downcast!
   ShroudView* v = dynamic_cast<ShroudView*>(_view.get());
-  return v->shroudSetUp();
+  return v->setUp();
 }
-glm::vec3 Shroud::shroudPositionFlat() const
+glm::vec3 Shroud::positionFlat() const
 {
   // TODO downcast!
   ShroudView* v = dynamic_cast<ShroudView*>(_view.get());
-  return v->shroudPositionFlat();
+  return v->positionFlat();
 }
 
-glm::vec3 Shroud::shroudPositionGlobe() const
+glm::vec3 Shroud::positionGlobe() const
 {
   // TODO downcast!
   ShroudView* v = dynamic_cast<ShroudView*>(_view.get());
-  return v->shroudPositionGlobe();
+  return v->positionGlobe();
 }

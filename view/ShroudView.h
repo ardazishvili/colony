@@ -15,28 +15,28 @@ public:
   void rotateBody(float degreeAngle) override{};
   void rotateGun(float degreeAngle) override{};
 
-  glm::vec3 shroudPositionFlat() const;
-  glm::vec3 shroudPositionGlobe() const;
+  glm::vec3 positionFlat() const;
+  glm::vec3 positionGlobe() const;
   void startAnimation();
-  bool shroudSetUp() const;
+  bool setUp() const;
   bool onOrbit() const;
 
 private:
-  std::shared_ptr<Model> _shroudModel;
+  std::shared_ptr<Model> _model;
   Timer _timer;
   bool _animate{ false };
   bool _setUp{ false };
   Beam _beamFlat;
   Beam _beamGlobe;
-  glm::vec3 _shroudPosGlobe{ 0.0f };
-  glm::vec3 _shroudPosFlat{ 0.0f };
+  glm::vec3 _posGlobe{ 0.0f };
+  glm::vec3 _posFlat{ 0.0f };
 
   static float HEALTH_BAR_WIDTH;
   static float HEALTH_BAR_HEIGHT;
-  static const std::chrono::milliseconds SHROUD_CYCLE;
-  static const glm::vec3 SHROUD_FLAT_OFFSET;
-  static const glm::vec3 SHROUD_GLOBE_OFFSET;
-  static const float SHROUD_UP_SPEED;
+  static const std::chrono::milliseconds CYCLE;
+  static const glm::vec3 FLAT_OFFSET;
+  static const glm::vec3 GLOBE_OFFSET;
+  static const float UP_SPEED;
 };
 
 #endif

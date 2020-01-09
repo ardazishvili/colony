@@ -26,16 +26,8 @@ Barrier::Barrier(Shader& textureShader,
 void Barrier::render()
 {
   if (_stage == BuildStage::Done) {
-    // TODO downcast!
-    /* BarrierView* v = dynamic_cast<BarrierView*>(_view.get()); */
-    /* v->drawShroud(); */
     _shroud.render();
-    /* if (v->onOrbit()) { */
-    /*   v->startAnimation(); */
-    /* } */
-    /* if (v->shroudSetUp()) { */
     if (_shroud.setUp()) {
-      /* v->drawBeam(); */
       Buildable::render();
       if (_livingArea != nullptr) {
         if (_clock.elapsed() >= _bioUpdateTime) {
@@ -90,18 +82,12 @@ void Barrier::commit()
 
 glm::vec3 Barrier::shroudPositionFlat() const
 {
-  /* // TODO downcast */
-  /* BarrierView* v = dynamic_cast<BarrierView*>(_view.get()); */
-  /* return v->shroudPositionFlat(); */
-  return _shroud.shroudPositionFlat();
+  return _shroud.positionFlat();
 }
 
 glm::vec3 Barrier::shroudPositionGlobe() const
 {
-  /* // TODO downcast */
-  /* BarrierView* v = dynamic_cast<BarrierView*>(_view.get()); */
-  /* return v->shroudPositionGlobe(); */
-  return _shroud.shroudPositionGlobe();
+  return _shroud.positionGlobe();
 }
 
 void Barrier::addEnergyStructure(EnergyStructure* es)

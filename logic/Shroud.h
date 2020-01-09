@@ -13,8 +13,8 @@ public:
          glm::vec3 position);
   void render() override;
   bool setUp() const;
-  glm::vec3 shroudPositionFlat() const;
-  glm::vec3 shroudPositionGlobe() const;
+  glm::vec3 positionFlat() const;
+  glm::vec3 positionGlobe() const;
 
   // FIXME stubs for now
   void startShooting(Buildable* other) override{};
