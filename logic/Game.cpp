@@ -16,7 +16,6 @@ Game::Game(GLFWwindow* window, glm::mat4& view, glm::mat4& projection) :
 
 void Game::tick()
 {
-  updateTerrain();
   for (auto& tank : _tanks) {
     if (tank->isDestroyed()) {
       tank->stopShooting();
@@ -40,13 +39,6 @@ void Game::tick()
   showDebug();
 }
 
-void Game::updateTerrain()
-{
-  /* for (auto& plant : _plants) { */
-  /*   _terrain->updateColor(plant->position()); */
-  /* } */
-}
-
 void Game::addTank(std::shared_ptr<Tank> tank)
 {
   tank->setTerrain(_terrain);
@@ -63,9 +55,9 @@ void Game::addPlant(std::shared_ptr<AbstractPlant> plant)
   _plants.push_back(plant);
 }
 
-void Game::addBarrier(std::shared_ptr<Barrier> barrier)
+void Game::addShroud(std::shared_ptr<Shroud> shroud)
 {
-  _barrier = barrier;
+  _shrouds.push_back(shroud);
 }
 
 void Game::addTerrain(Terrain* terrain)
@@ -208,15 +200,15 @@ bool Game::panelIsEmpty(Panel::Type type)
 
 glm::vec3 Game::getNearestShroudPositionFlat() const
 {
-  return _barrier->shroudPositionFlat();
+  return _shrouds.at(0)->positionFlat();
 }
 
 glm::vec3 Game::getNearestShroudPositionGlobe() const
 {
-  return _barrier->shroudPositionGlobe();
+  return _shrouds.at(0)->positionGlobe();
 }
 
 void Game::addBarrierPotential(EnergyStructure* es)
 {
-  _barrier->addEnergyStructure(es);
+  _shrouds.at(0)->barrier().addEnergyStructure(es);
 }

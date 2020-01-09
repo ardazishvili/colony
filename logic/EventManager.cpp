@@ -132,7 +132,7 @@ void EventManager::handleKeyPress(GLFWwindow* window,
                                     _terrain,
                                     _astar);
         _game->addStructure(b);
-        _game->addBarrier(b);
+        _game->addShroud(b->shroud());
         _structureToBuild = b;
       } else {
         _structureToBuild->commit();

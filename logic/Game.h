@@ -12,11 +12,12 @@
 #include "Control.h"
 #include "VehicleGroup.h"
 
-using Tanks = std::vector<std::shared_ptr<Tank>>;
-using Structures = std::vector<std::shared_ptr<BuildableStructure>>;
-
 class Tank;
 class AbstractStructureBuilder;
+
+using Tanks = std::vector<std::shared_ptr<Tank>>;
+using Structures = std::vector<std::shared_ptr<BuildableStructure>>;
+using Shrouds = std::vector<std::shared_ptr<Shroud>>;
 
 class Game
 {
@@ -25,7 +26,8 @@ public:
   void tick();
   void addTank(std::shared_ptr<Tank> tank);
   void addStructure(std::shared_ptr<BuildableStructure> buildable);
-  void addBarrier(std::shared_ptr<Barrier> barrier);
+  /* void addBarrier(std::shared_ptr<Barrier> barrier); */
+  void addShroud(std::shared_ptr<Shroud> shroud);
   void addPlant(std::shared_ptr<AbstractPlant> plant);
   void addTerrain(Terrain* terrain);
   void setControl(std::unique_ptr<Control> control);
@@ -41,7 +43,6 @@ public:
   void addBarrierPotential(EnergyStructure* es);
 
 private:
-  void updateTerrain();
   void displayTanks();
   void displayShells();
   void displayStructures();
@@ -53,7 +54,8 @@ private:
   glm::mat4& _projection;
   Tanks _tanks;
   Structures _structures;
-  std::shared_ptr<Barrier> _barrier;
+  /* std::shared_ptr<Barrier> _barrier; */
+  Shrouds _shrouds;
   Plants _plants;
   std::unique_ptr<Control> _control;
   Tank* _selectedTank = nullptr;

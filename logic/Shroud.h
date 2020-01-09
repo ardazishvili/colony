@@ -3,6 +3,7 @@
 
 #include "BuildableUnit.h"
 
+class Barrier;
 class Shroud : public BuildableUnit
 {
 public:
@@ -10,7 +11,8 @@ public:
   Shroud(Shader& textureShader,
          Shader& linesShader,
          AStar* router,
-         glm::vec3 position);
+         glm::vec3 position,
+         Barrier& barrier);
   void render() override;
   bool setUp() const;
   glm::vec3 positionFlat() const;
@@ -28,6 +30,10 @@ public:
   {
     return StructureBuilders();
   };
+  Barrier& barrier();
+
+private:
+  Barrier& _barrier;
 };
 
 #endif

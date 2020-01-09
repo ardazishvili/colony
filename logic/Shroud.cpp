@@ -4,12 +4,14 @@
 Shroud::Shroud(Shader& textureShader,
                Shader& linesShader,
                AStar* router,
-               glm::vec3 position) :
+               glm::vec3 position,
+               Barrier& barrier) :
   BuildableUnit(
     textureShader,
     linesShader,
     std::make_unique<ShroudView>(textureShader, linesShader, position),
-    router)
+    router),
+  _barrier(barrier)
 {
 }
 
@@ -41,4 +43,9 @@ glm::vec3 Shroud::positionGlobe() const
   // TODO downcast!
   ShroudView* v = dynamic_cast<ShroudView*>(_view.get());
   return v->positionGlobe();
+}
+
+Barrier& Shroud::barrier()
+{
+  return _barrier;
 }

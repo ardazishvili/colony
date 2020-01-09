@@ -16,7 +16,8 @@ Barrier::Barrier(Shader& textureShader,
                                                 linesShader,
                                                 position,
                                                 terrain)),
-  _shroud(textureShader, linesShader, router, position), _terrain(terrain)
+  _shroud(textureShader, linesShader, router, position, *this),
+  _terrain(terrain)
 {
 
   _health = BARRIER_HP;
@@ -80,16 +81,6 @@ void Barrier::commit()
   BuildableStructure::commit();
 }
 
-glm::vec3 Barrier::shroudPositionFlat() const
-{
-  return _shroud.positionFlat();
-}
-
-glm::vec3 Barrier::shroudPositionGlobe() const
-{
-  return _shroud.positionGlobe();
-}
-
 void Barrier::addEnergyStructure(EnergyStructure* es)
 {
   _energyStructures.push_back(es);
@@ -103,4 +94,9 @@ float Barrier::radius() const
   // TODO downcast
   BarrierView* v = dynamic_cast<BarrierView*>(_view.get());
   return v->radius();
+}
+
+std::shared_ptr<Shroud> Barrier::shroud()
+{
+  return std::shared_ptr<Shroud>(&_shroud);
 }
