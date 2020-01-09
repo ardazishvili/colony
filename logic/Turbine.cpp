@@ -16,7 +16,8 @@ Turbine::Turbine(Shader& textureShader,
     std::make_unique<TurbineView>(textureShader,
                                   linesShader,
                                   position,
-                                  game->getNearestShroudPosition())),
+                                  game->getNearestShroudPositionFlat(),
+                                  game->getNearestShroudPositionGlobe())),
   _game(game)
 {
 }

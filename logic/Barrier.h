@@ -22,7 +22,8 @@ public:
   void addPlant(std::shared_ptr<AbstractPlant> p);
   void addEnergyStructure(EnergyStructure* es);
   void commit() override;
-  glm::vec3 shroudPosition() const;
+  glm::vec3 shroudPositionFlat() const;
+  glm::vec3 shroudPositionGlobe() const;
   float radius() const;
 
 private:

@@ -206,10 +206,14 @@ bool Game::panelIsEmpty(Panel::Type type)
   return _control->panelIsEmpty(type);
 }
 
-glm::vec3 Game::getNearestShroudPosition() const
+glm::vec3 Game::getNearestShroudPositionFlat() const
 {
+  return _barrier->shroudPositionFlat();
+}
 
-  return _barrier->shroudPosition();
+glm::vec3 Game::getNearestShroudPositionGlobe() const
+{
+  return _barrier->shroudPositionGlobe();
 }
 
 void Game::addBarrierPotential(EnergyStructure* es)

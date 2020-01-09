@@ -15,14 +15,15 @@ std::chrono::milliseconds TurbineView::TURBINE_CYCLE =
 TurbineView::TurbineView(Shader& textureShader,
                          Shader& linesShader,
                          glm::vec3 p,
-                         glm::vec3 sp) :
+                         glm::vec3 spFlat,
+                         glm::vec3 spGlobe) :
   StructureView(
     textureShader,
     p,
     0.75,
     { -0.3, 0, TURBINE_HEALTH_BAR_WIDTH, TURBINE_HEALTH_BAR_HEIGHT },
     TexturePackType::PreBuild),
-  _linesShader(linesShader), _shroudPos(sp)
+  _linesShader(linesShader), _shroudPosFlat(spFlat), _shroudPosGlobe(spGlobe)
 {
   _objScale = TURBINE_SCALE_FACTOR;
   _model = modelLoader->models()[Models::Turbine];
@@ -74,7 +75,7 @@ void TurbineView::initBeam()
               _position.y,
               _position.z +
                 TURBINE_MODEL_HEIGHT * VIEW_SCALE * TURBINE_SCALE_FACTOR - 0.1),
-    glm::vec3(_shroudPos.x, _shroudPos.y, _shroudPos.z),
+    _shroudPosFlat,
     0.06f,
     10);
   _beamGlobe = std::make_unique<Beam>(
@@ -84,7 +85,7 @@ void TurbineView::initBeam()
       _position.y,
       _position.z + TURBINE_MODEL_HEIGHT * VIEW_SCALE * TURBINE_SCALE_FACTOR -
         0.1)),
-    globeMapper(glm::vec3(_shroudPos.x, _shroudPos.y, _shroudPos.z)),
+    globeMapper(_shroudPosGlobe),
     0.06f,
     10);
 }

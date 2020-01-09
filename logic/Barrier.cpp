@@ -85,12 +85,18 @@ void Barrier::commit()
   BuildableStructure::commit();
 }
 
-glm::vec3 Barrier::shroudPosition() const
+glm::vec3 Barrier::shroudPositionFlat() const
 {
   // TODO downcast
   BarrierView* v = dynamic_cast<BarrierView*>(_view.get());
-  std::cout << "v->shroudPosition().z= " << v->shroudPosition().z << std::endl;
-  return v->shroudPosition();
+  return v->shroudPositionFlat();
+}
+
+glm::vec3 Barrier::shroudPositionGlobe() const
+{
+  // TODO downcast
+  BarrierView* v = dynamic_cast<BarrierView*>(_view.get());
+  return v->shroudPositionGlobe();
 }
 
 void Barrier::addEnergyStructure(EnergyStructure* es)

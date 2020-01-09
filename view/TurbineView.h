@@ -10,7 +10,8 @@ public:
   TurbineView(Shader& textureShader,
               Shader& linesShader,
               glm::vec3 position,
-              glm::vec3 shroudPosition);
+              glm::vec3 shroudPositionFlat,
+              glm::vec3 shroudPositionGlobe);
   void draw() override;
   void initBeam();
 
@@ -19,7 +20,8 @@ private:
   Timer _timer;
   std::unique_ptr<Beam> _beamFlat;
   std::unique_ptr<Beam> _beamGlobe;
-  glm::vec3 _shroudPos;
+  glm::vec3 _shroudPosFlat;
+  glm::vec3 _shroudPosGlobe;
   static std::chrono::milliseconds TURBINE_CYCLE;
   static float TURBINE_HEALTH_BAR_WIDTH;
   static float TURBINE_HEALTH_BAR_HEIGHT;

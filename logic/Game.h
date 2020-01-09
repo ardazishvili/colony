@@ -36,7 +36,8 @@ public:
   void showDebug();
   void clearPanel(Panel::Type type);
   bool panelIsEmpty(Panel::Type type);
-  glm::vec3 getNearestShroudPosition() const;
+  glm::vec3 getNearestShroudPositionFlat() const;
+  glm::vec3 getNearestShroudPositionGlobe() const;
   void addBarrierPotential(EnergyStructure* es);
 
 private:

@@ -20,7 +20,8 @@ public:
   bool shroudSetUp() const;
   bool onOrbit() const;
   float radius() const;
-  glm::vec3 shroudPosition() const;
+  glm::vec3 shroudPositionFlat() const;
+  glm::vec3 shroudPositionGlobe() const;
   void startAnimation();
   void grow(std::shared_ptr<LivingArea> area);
 
@@ -32,8 +33,10 @@ private:
   Beam _beamFlat;
   Beam _beamGlobe;
   float _beamRotateSpeed{ 1.0f };
-  glm::vec3 _shroudPos{ 0.0f };
-  static const glm::vec3 SHROUD_OFFSET;
+  glm::vec3 _shroudPosGlobe{ 0.0f };
+  glm::vec3 _shroudPosFlat{ 0.0f };
+  static const glm::vec3 SHROUD_FLAT_OFFSET;
+  static const glm::vec3 SHROUD_GLOBE_OFFSET;
   Shader& _linesShader;
   bool _animate{ false };
   bool _setUp{ false };
