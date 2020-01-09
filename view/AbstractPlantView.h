@@ -8,9 +8,6 @@ class AbstractPlantView : public View
 public:
   AbstractPlantView(Shader& shader, glm::vec3 position);
   virtual void draw();
-
-protected:
-  float _scaleFactor{ 1.0f };
 };
 
 #endif

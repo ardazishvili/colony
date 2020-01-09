@@ -51,3 +51,4 @@ float SelectableView::angle() const
 {
   return _angle - 180;
 }
+

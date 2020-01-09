@@ -25,9 +25,11 @@ void HqView::draw()
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   _shader.setBool("animated", false);
   auto model = glm::mat4(1.0f);
-  model = glm::translate(model, _position);
-  model = glm::rotate(model, glm::radians(_angle), glm::vec3(0.0f, 0.0f, 1.0f));
-  model = glm::scale(model, glm::vec3(VIEW_SCALE));
+  if (!flatView) {
+    model = globeModel();
+  } else {
+    model = flatModel();
+  }
   _shader.setTransformation("model", glm::value_ptr(model));
   _model->setActiveTexturesPack(_texturesType);
   _shader.use();

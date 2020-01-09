@@ -19,6 +19,7 @@ TankView::TankView(Shader& shader, glm::vec3 position, float tankTypeScaling) :
            TexturePackType::Initial),
   _tankTypeScaleFactor(tankTypeScaling)
 {
+  _objScale = tankTypeScaling;
   _model = modelLoader->models()[Models::Tank];
   _hasAnimation = true;
   _healthBar.setOffsetZ(position.z + 0.3);
@@ -40,17 +41,9 @@ void TankView::draw()
 
   auto model = glm::mat4(1.0f);
   if (!flatView) {
-    model = glm::translate(model, position());
-    model = glm::rotate(
-      model, glm::radians(_angle + 90), glm::vec3(glm::normalize(position())));
-    model = glm::rotate(model, longitude(), glm::vec3(0, 0, 1));
-    model = glm::rotate(
-      model, -latitude() + static_cast<float>(M_PI / 2), glm::vec3(0, 1, 0));
-    model = glm::scale(model, glm::vec3(_tankTypeScaleFactor * VIEW_SCALE));
+    model = globeModel();
   } else {
-    model = glm::translate(model, position());
-    model = glm::rotate(model, glm::radians(_angle), glm::vec3(0, 0, 1));
-    model = glm::scale(model, glm::vec3(_tankTypeScaleFactor * VIEW_SCALE));
+    model = flatModel();
   }
   _shader.setTransformation("model", glm::value_ptr(model));
   _model->setActiveTexturesPack(_texturesType);

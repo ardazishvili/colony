@@ -24,6 +24,7 @@ TurbineView::TurbineView(Shader& textureShader,
     TexturePackType::PreBuild),
   _linesShader(linesShader), _shroudPos(sp)
 {
+  _objScale = TURBINE_SCALE_FACTOR;
   _model = modelLoader->models()[Models::Turbine];
   _model->setActiveTexturesPack(TexturePackType::PreBuild);
   _healthBar.setOffsetZ(1.3f);
@@ -48,9 +49,11 @@ void TurbineView::draw()
   _shader.configure();
   _shader.setBool("animated", true);
   auto model = glm::mat4(1.0f);
-  model = glm::translate(model, _position);
-  model = glm::rotate(model, glm::radians(_angle), glm::vec3(0.0f, 0.0f, 1.0f));
-  model = glm::scale(model, glm::vec3(VIEW_SCALE * TURBINE_SCALE_FACTOR));
+  if (!flatView) {
+    model = globeModel();
+  } else {
+    model = flatModel();
+  }
   _shader.setTransformation("model", glm::value_ptr(model));
   _model->setActiveTexturesPack(_texturesType);
   _model->render();

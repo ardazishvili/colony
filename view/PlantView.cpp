@@ -6,10 +6,10 @@ PlantView::PlantView(Shader& shader, glm::vec3 position) :
   AbstractPlantView(shader, position)
 {
   _model = modelLoader->models()[Models::Plant];
+  _objScale = 0.01;
 }
 
 void PlantView::draw()
 {
-  _scaleFactor = 0.01;
   AbstractPlantView::draw();
 }

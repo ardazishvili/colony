@@ -33,7 +33,6 @@ protected:
   float _selectionRadius{ 0.0f };
   float _healthBarScaleFactor{ 1.0 };
   Surface _healthBar;
-  float _angle{ 0.0f };
   TexturePackType _texturesType;
 };
 

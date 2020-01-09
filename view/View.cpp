@@ -46,3 +46,25 @@ float View::k(float phi) const
 {
   return 1.0 / (::cos(phi) * ::sqrt(2.0));
 }
+
+glm::mat4 View::flatModel() const
+{
+  auto model = glm::mat4(1.0f);
+  model = glm::translate(model, position());
+  model = glm::rotate(model, glm::radians(_angle), glm::vec3(0, 0, 1));
+  model = glm::scale(model, glm::vec3(VIEW_SCALE * _objScale));
+  return model;
+}
+
+glm::mat4 View::globeModel() const
+{
+  auto model = glm::mat4(1.0f);
+  model = glm::translate(model, position());
+  model = glm::rotate(
+    model, glm::radians(_angle + 90), glm::vec3(glm::normalize(position())));
+  model = glm::rotate(model, longitude(), glm::vec3(0, 0, 1));
+  model = glm::rotate(
+    model, -latitude() + static_cast<float>(M_PI / 2), glm::vec3(0, 1, 0));
+  model = glm::scale(model, glm::vec3(VIEW_SCALE * _objScale));
+  return model;
+}

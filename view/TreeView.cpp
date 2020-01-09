@@ -5,10 +5,10 @@ TreeView::TreeView(Shader& shader, glm::vec3 position) :
   AbstractPlantView(shader, position)
 {
   _model = modelLoader->models()[Models::Tree];
+  _objScale = 0.03;
 }
 
 void TreeView::draw()
 {
-  _scaleFactor = 0.03;
   AbstractPlantView::draw();
 }
