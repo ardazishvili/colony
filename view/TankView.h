@@ -15,7 +15,6 @@ public:
 private:
   void updateGun();
 
-  /* float _bodyAngle{ 0.0f }; */
   float _targetGunAngle{ 1.001f };  // TODO animation issue
   float _currentGunAngle{ 0.001f }; // TODO animation issue
   float _tankTypeScaleFactor;

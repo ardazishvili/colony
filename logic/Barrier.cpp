@@ -8,14 +8,15 @@ const int Barrier::BARRIER_HP = 200;
 Barrier::Barrier(Shader& textureShader,
                  Shader& linesShader,
                  glm::vec3 position,
-                 Terrain* terrain) :
+                 Terrain* terrain,
+                 AStar* router) :
   EnergyStructure(textureShader,
                   linesShader,
                   std::make_unique<BarrierView>(textureShader,
                                                 linesShader,
                                                 position,
                                                 terrain)),
-  _terrain(terrain)
+  _shroud(textureShader, linesShader, router, position), _terrain(terrain)
 {
 
   _health = BARRIER_HP;
@@ -26,13 +27,15 @@ void Barrier::render()
 {
   if (_stage == BuildStage::Done) {
     // TODO downcast!
-    BarrierView* v = dynamic_cast<BarrierView*>(_view.get());
-    v->drawShroud();
-    if (v->onOrbit()) {
-      v->startAnimation();
-    }
-    if (v->shroudSetUp()) {
-      v->drawBeam();
+    /* BarrierView* v = dynamic_cast<BarrierView*>(_view.get()); */
+    /* v->drawShroud(); */
+    _shroud.render();
+    /* if (v->onOrbit()) { */
+    /*   v->startAnimation(); */
+    /* } */
+    /* if (v->shroudSetUp()) { */
+    if (_shroud.setUp()) {
+      /* v->drawBeam(); */
       Buildable::render();
       if (_livingArea != nullptr) {
         if (_clock.elapsed() >= _bioUpdateTime) {
@@ -87,16 +90,18 @@ void Barrier::commit()
 
 glm::vec3 Barrier::shroudPositionFlat() const
 {
-  // TODO downcast
-  BarrierView* v = dynamic_cast<BarrierView*>(_view.get());
-  return v->shroudPositionFlat();
+  /* // TODO downcast */
+  /* BarrierView* v = dynamic_cast<BarrierView*>(_view.get()); */
+  /* return v->shroudPositionFlat(); */
+  return _shroud.shroudPositionFlat();
 }
 
 glm::vec3 Barrier::shroudPositionGlobe() const
 {
-  // TODO downcast
-  BarrierView* v = dynamic_cast<BarrierView*>(_view.get());
-  return v->shroudPositionGlobe();
+  /* // TODO downcast */
+  /* BarrierView* v = dynamic_cast<BarrierView*>(_view.get()); */
+  /* return v->shroudPositionGlobe(); */
+  return _shroud.shroudPositionGlobe();
 }
 
 void Barrier::addEnergyStructure(EnergyStructure* es)

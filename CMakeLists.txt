@@ -20,6 +20,10 @@ add_executable(colony
     engine/TerrainMeshSegment.cpp
     logic/AbstractPlantBuilder.h
     logic/AbstractPlantBuilder.cpp
+    logic/Shroud.h
+    logic/Shroud.cpp
+    view/ShroudView.h
+    view/ShroudView.cpp
 		Timer.cpp
 		Timer.h
 		engine/Animation.cpp

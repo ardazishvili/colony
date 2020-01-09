@@ -40,7 +40,8 @@ StructureBuilders Hq::getStructureBuilders()
                                      _eventManager,
                                      _textureShader,
                                      _eventManager->getLinesShader(),
-                                     _terrain);
+                                     _terrain,
+                                     _router);
   builders.push_back(std::move(bBuilder));
 
   std::unique_ptr<AbstractStructureBuilder> tBuilder =

@@ -129,7 +129,8 @@ void EventManager::handleKeyPress(GLFWwindow* window,
           std::make_shared<Barrier>(_textureShader,
                                     _linesShader,
                                     unProject(_window, _view, _projection),
-                                    _terrain);
+                                    _terrain,
+                                    _astar);
         _game->addStructure(b);
         _game->addBarrier(b);
         _structureToBuild = b;

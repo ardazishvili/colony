@@ -7,6 +7,7 @@
 #include "../view/BarrierView.h"
 #include "AbstractPlant.h"
 #include "EnergyStructure.h"
+#include "Shroud.h"
 
 using EnergyStructures = std::vector<EnergyStructure*>;
 class Barrier : public EnergyStructure
@@ -15,7 +16,8 @@ public:
   Barrier(Shader& textureShader,
           Shader& linesShader,
           glm::vec3 position,
-          Terrain* terrain);
+          Terrain* terrain,
+          AStar* router);
   void render() override;
   UnitBuilders getUnitBuilders(Game* game) override;
   StructureBuilders getStructureBuilders() override;
@@ -27,6 +29,8 @@ public:
   float radius() const;
 
 private:
+  Shroud _shroud;
+
   float _radius{ 1.0f };
   Terrain* _terrain;
   std::shared_ptr<LivingArea> _livingArea{ nullptr };
