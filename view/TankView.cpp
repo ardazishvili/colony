@@ -41,14 +41,15 @@ void TankView::draw()
   auto model = glm::mat4(1.0f);
   if (!flatView) {
     model = glm::translate(model, position());
+    model = glm::rotate(
+      model, glm::radians(_angle + 90), glm::vec3(glm::normalize(position())));
     model = glm::rotate(model, longitude(), glm::vec3(0, 0, 1));
     model = glm::rotate(
-      model, -latitude() + static_cast<float>(M_PI / 2.0), glm::vec3(0, 1, 0));
+      model, -latitude() + static_cast<float>(M_PI / 2), glm::vec3(0, 1, 0));
     model = glm::scale(model, glm::vec3(_tankTypeScaleFactor * VIEW_SCALE));
   } else {
     model = glm::translate(model, position());
-    model =
-      glm::rotate(model, glm::radians(_bodyAngle), glm::vec3(0.0f, 0.0f, 1.0f));
+    model = glm::rotate(model, glm::radians(_angle), glm::vec3(0, 0, 1));
     model = glm::scale(model, glm::vec3(_tankTypeScaleFactor * VIEW_SCALE));
   }
   _shader.setTransformation("model", glm::value_ptr(model));
@@ -64,12 +65,12 @@ void TankView::move(glm::vec3 newPosition)
 
 void TankView::rotateBody(float degreeAngle)
 {
-  _bodyAngle = -degreeAngle;
+  _angle = -degreeAngle;
 }
 
 void TankView::rotateGun(float degreeAngle)
 {
-  _targetGunAngle = degreeAngle - _bodyAngle;
+  _targetGunAngle = degreeAngle - _angle;
   if (_targetGunAngle > 360.0f) {
     _targetGunAngle -= 360.0f;
   }

@@ -46,3 +46,8 @@ void SelectableView::setTexture(Status status)
     _model->setActiveTexturesPack(_texturesType);
   }
 }
+
+float SelectableView::angle() const
+{
+  return _angle - 180;
+}

@@ -25,6 +25,7 @@ public:
   bool contain(glm::vec3 point) const;
   void setHealthBarScaleFactor(float factor);
   void setTexture(Status status);
+  float angle() const;
 
 protected:
   virtual void showHealthBar() = 0;
@@ -32,6 +33,7 @@ protected:
   float _selectionRadius{ 0.0f };
   float _healthBarScaleFactor{ 1.0 };
   Surface _healthBar;
+  float _angle{ 0.0f };
   TexturePackType _texturesType;
 };
 

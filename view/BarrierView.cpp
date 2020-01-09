@@ -44,7 +44,7 @@ void BarrierView::draw()
   static bool bd = true;
   ImGui::Begin("Barriers display");
   ImGui::SetWindowPos(ImVec2(0, 640));
-  ImGui::SetWindowSize(ImVec2(200, 80));
+  ImGui::SetWindowSize(ImVec2(200, 40));
   ImGui::Checkbox("state", &bd);
   ImGui::End();
 

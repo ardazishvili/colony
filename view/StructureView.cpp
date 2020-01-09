@@ -20,11 +20,6 @@ void StructureView::showHealthBar()
   _healthBar.render();
 }
 
-float StructureView::angle() const
-{
-  return _angle - 180;
-}
-
 void StructureView::rotate(float degreeAngle)
 {
   _angle = degreeAngle + 180;
