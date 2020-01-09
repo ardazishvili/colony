@@ -43,7 +43,7 @@ public:
   void addBarrierPotential(EnergyStructure* es);
 
 private:
-  const Shroud* getNearestShroud(glm::vec3 p) const;
+  Shroud* getNearestShroud(glm::vec3 p) const;
   void displayTanks();
   void displayShells();
   void displayStructures();

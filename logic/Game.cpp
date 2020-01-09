@@ -200,20 +200,22 @@ bool Game::panelIsEmpty(Panel::Type type)
 
 glm::vec3 Game::getNearestShroudPositionFlat(glm::vec3 p) const
 {
+  const Shroud* shroud = getNearestShroud(p);
   return getNearestShroud(p)->positionFlat();
 }
 
 glm::vec3 Game::getNearestShroudPositionGlobe(glm::vec3 p) const
 {
+  const Shroud* shroud = getNearestShroud(p);
   return getNearestShroud(p)->positionGlobe();
 }
 
 void Game::addBarrierPotential(EnergyStructure* es)
 {
-  _shrouds.at(0)->barrier().addEnergyStructure(es);
+  getNearestShroud(es->position())->barrier().addEnergyStructure(es);
 }
 
-const Shroud* Game::getNearestShroud(glm::vec3 p) const
+Shroud* Game::getNearestShroud(glm::vec3 p) const
 {
   auto it = std::min_element(_shrouds.begin(),
                              _shrouds.end(),
