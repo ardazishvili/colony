@@ -10,14 +10,14 @@ Turbine::Turbine(Shader& textureShader,
                  Shader& linesShader,
                  Game* game,
                  glm::vec3 position) :
-  EnergyStructure(
-    textureShader,
-    linesShader,
-    std::make_unique<TurbineView>(textureShader,
-                                  linesShader,
-                                  position,
-                                  game->getNearestShroudPositionFlat(),
-                                  game->getNearestShroudPositionGlobe())),
+  EnergyStructure(textureShader,
+                  linesShader,
+                  std::make_unique<TurbineView>(
+                    textureShader,
+                    linesShader,
+                    position,
+                    game->getNearestShroudPositionFlat(position),
+                    game->getNearestShroudPositionGlobe(position))),
   _game(game)
 {
 }
