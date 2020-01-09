@@ -58,20 +58,33 @@ void TurbineView::draw()
   _model->setActiveTexturesPack(_texturesType);
   _model->render();
   showHealthBar();
-  if (_beam) {
-    _beam->render();
-  }
+  if (_beamFlat && _beamGlobe)
+    if (!flatView) {
+      _beamGlobe->render();
+    } else {
+      _beamFlat->render();
+    }
 }
 
 void TurbineView::initBeam()
 {
-  _beam = std::make_unique<Beam>(
+  _beamFlat = std::make_unique<Beam>(
     _linesShader,
     glm::vec3(_position.x,
               _position.y,
               _position.z +
                 TURBINE_MODEL_HEIGHT * VIEW_SCALE * TURBINE_SCALE_FACTOR - 0.1),
     glm::vec3(_shroudPos.x, _shroudPos.y, _shroudPos.z),
+    0.06f,
+    10);
+  _beamGlobe = std::make_unique<Beam>(
+    _linesShader,
+    globeMapper(glm::vec3(
+      _position.x,
+      _position.y,
+      _position.z + TURBINE_MODEL_HEIGHT * VIEW_SCALE * TURBINE_SCALE_FACTOR -
+        0.1)),
+    globeMapper(glm::vec3(_shroudPos.x, _shroudPos.y, _shroudPos.z)),
     0.06f,
     10);
 }

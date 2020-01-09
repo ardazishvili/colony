@@ -17,12 +17,7 @@ View::View(Shader& shader, glm::vec3 position) :
 glm::vec3 View::position() const
 {
   if (!flatView) {
-    float longitude = _position.x * sqrt(2.0f) / R;
-    float latitude = 2 * atan(_position.y / (R * (1 + sqrt(2) / 2.0f)));
-
-    return glm::vec3((S + _position.z) * cos(latitude) * cos(longitude),
-                     (S + _position.z) * cos(latitude) * sin(longitude),
-                     (S + _position.z) * sin(latitude));
+    return globeMapper(_position);
   }
   return _position;
 }
@@ -67,4 +62,14 @@ glm::mat4 View::globeModel() const
     model, -latitude() + static_cast<float>(M_PI / 2), glm::vec3(0, 1, 0));
   model = glm::scale(model, glm::vec3(VIEW_SCALE * _objScale));
   return model;
+}
+
+glm::vec3 View::globeMapper(glm::vec3 p) const
+{
+  float longitude = p.x * sqrt(2.0f) / R;
+  float latitude = 2 * atan(p.y / (R * (1 + sqrt(2) / 2.0f)));
+
+  return glm::vec3((S + p.z) * cos(latitude) * cos(longitude),
+                   (S + p.z) * cos(latitude) * sin(longitude),
+                   (S + p.z) * sin(latitude));
 }

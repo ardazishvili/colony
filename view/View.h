@@ -25,6 +25,7 @@ public:
   glm::mat4 globeModel() const;
 
 protected:
+  glm::vec3 globeMapper(glm::vec3 p) const;
   bool _hasAnimation{ false };
   std::shared_ptr<Model> _model;
   Shader& _shader;

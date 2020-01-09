@@ -9,7 +9,8 @@ float BarrierView::BARRIER_HEALTH_BAR_HEIGHT = 0.15f;
 float BarrierView::BARRIER_SCALE_INCREMENT = 1.0f;
 float BarrierView::BARRIER_INIT_SCALE = 1.0f;
 const float BarrierView::SHROUD_UP_SPEED = 0.09;
-const glm::vec3 BarrierView::SHROUD_OFFSET = glm::vec3(-6.0, 6.0, 6.0);
+/* const glm::vec3 BarrierView::SHROUD_OFFSET = glm::vec3(-6.0, 6.0, 6.0); */
+const glm::vec3 BarrierView::SHROUD_OFFSET = glm::vec3(0, 0, 12.0);
 const std::chrono::milliseconds BarrierView::SHROUD_CYCLE =
   std::chrono::milliseconds(1000);
 
@@ -23,11 +24,16 @@ BarrierView::BarrierView(Shader& textureShader,
     BARRIER_INIT_SCALE,
     { -0.3, 0, BARRIER_HEALTH_BAR_WIDTH, BARRIER_HEALTH_BAR_HEIGHT },
     TexturePackType::Initial),
-  _terrain(terrain), _beam(linesShader,
-                           p + SHROUD_OFFSET,
-                           glm::vec3(p.x, p.y, p.z + _scaleFactor),
-                           0.05f,
-                           5),
+  _terrain(terrain), _beamFlat(linesShader,
+                               p + SHROUD_OFFSET,
+                               glm::vec3(p.x, p.y, p.z + _scaleFactor),
+                               0.05f,
+                               5),
+  _beamGlobe(linesShader,
+             globeMapper(p + SHROUD_OFFSET),
+             globeMapper(glm::vec3(p.x, p.y, p.z + _scaleFactor)),
+             0.05f,
+             5),
   _shroudPos(p), _linesShader(linesShader)
 {
   _model = modelLoader->models()[Models::Barrier];
@@ -100,23 +106,38 @@ void BarrierView::drawShroud()
   _shroudModel->animate(_shader, Animation::Type::OneShot, p);
   _shader.configure();
   _shader.setBool("animated", true);
-  auto model = glm::mat4(1.0f);
   _shroudPos.z =
     ::min(_position.z + SHROUD_OFFSET.z, _shroudPos.z + SHROUD_UP_SPEED);
-  auto xFactor = ::abs(SHROUD_OFFSET.z / SHROUD_OFFSET.x);
-  auto yFactor = ::abs(SHROUD_OFFSET.z / SHROUD_OFFSET.y);
-  _shroudPos.x = ::max(_position.x + SHROUD_OFFSET.x,
-                       _shroudPos.x - SHROUD_UP_SPEED / xFactor);
-  _shroudPos.y = ::min(_position.y + SHROUD_OFFSET.y,
-                       _shroudPos.y + SHROUD_UP_SPEED / yFactor);
-  glm::vec3 co = _shroudPos - _position;
-  float oyAngle =
-    -M_PI / 2 + ::abs(::atan(co.z / ::sqrt(::pow(co.x, 2) + ::pow(co.y, 2))));
-  float ozAngle = M_PI / 2 - ::atan(co.z / co.y);
+  /* auto xFactor = ::abs(SHROUD_OFFSET.z / SHROUD_OFFSET.x); */
+  /* auto yFactor = ::abs(SHROUD_OFFSET.z / SHROUD_OFFSET.y); */
+  /* _shroudPos.x = ::max(_position.x + SHROUD_OFFSET.x, */
+  /*                      _shroudPos.x - SHROUD_UP_SPEED / xFactor); */
+  /* _shroudPos.y = ::min(_position.y + SHROUD_OFFSET.y, */
+  /*                      _shroudPos.y + SHROUD_UP_SPEED / yFactor); */
+  /* glm::vec3 co = _shroudPos - _position; */
+  /* float oyAngle = */
+  /*   -M_PI / 2 + ::abs(::atan(co.z / ::sqrt(::pow(co.x, 2) + ::pow(co.y,
+   * 2)))); */
+  /* float ozAngle = M_PI / 2 - ::atan(co.z / co.y); */
 
-  model = glm::translate(model, _shroudPos);
-  model = glm::rotate(model, -ozAngle, glm::vec3(0.0f, 0.0f, 1.0f));
-  model = glm::rotate(model, oyAngle, glm::vec3(0.0f, 1.0f, 0.0f));
+  auto model = glm::mat4(1.0f);
+  if (!flatView) {
+    auto sp = globeMapper(_shroudPos);
+    model = glm::translate(model, sp);
+    model = glm::rotate(
+      model, glm::radians(_angle + 90), glm::vec3(glm::normalize(position())));
+    model =
+      glm::rotate(model, _shroudPos.x * sqrt(2.0f) / R, glm::vec3(0, 0, 1));
+    model = glm::rotate(
+      model,
+      -static_cast<float>(2 * atan(_shroudPos.y / (R * (1 + sqrt(2) / 2.0f)))) +
+        static_cast<float>(M_PI / 2),
+      glm::vec3(0, 1, 0));
+  } else {
+    model = glm::translate(model, _shroudPos);
+    /* model = glm::rotate(model, -ozAngle, glm::vec3(0.0f, 0.0f, 1.0f)); */
+    /* model = glm::rotate(model, oyAngle, glm::vec3(0.0f, 1.0f, 0.0f)); */
+  }
   _shader.setTransformation("model", glm::value_ptr(model));
 
   _shroudModel->render();
@@ -125,7 +146,11 @@ void BarrierView::drawShroud()
 
 void BarrierView::drawBeam()
 {
-  _beam.render();
+  if (!flatView) {
+    _beamGlobe.render();
+  } else {
+    _beamFlat.render();
+  }
 }
 
 float BarrierView::radius() const

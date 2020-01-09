@@ -17,7 +17,8 @@ public:
 private:
   Shader& _linesShader;
   Timer _timer;
-  std::unique_ptr<Beam> _beam;
+  std::unique_ptr<Beam> _beamFlat;
+  std::unique_ptr<Beam> _beamGlobe;
   glm::vec3 _shroudPos;
   static std::chrono::milliseconds TURBINE_CYCLE;
   static float TURBINE_HEALTH_BAR_WIDTH;

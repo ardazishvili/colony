@@ -29,7 +29,8 @@ private:
   Terrain* _terrain;
   Timer _timer;
   std::shared_ptr<Model> _shroudModel;
-  Beam _beam;
+  Beam _beamFlat;
+  Beam _beamGlobe;
   float _beamRotateSpeed{ 1.0f };
   glm::vec3 _shroudPos{ 0.0f };
   static const glm::vec3 SHROUD_OFFSET;
