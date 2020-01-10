@@ -1,4 +1,7 @@
 cbuild/**
+build/**
+doc/**
 .directory
 *.swp
 *.blend1
+*.ini
