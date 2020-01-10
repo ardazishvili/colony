@@ -1,28 +1,29 @@
 #include "Selectable.h"
 #include "BuildableAttackUnit.h"
+#include "BuildableStructure.h"
 
 template<typename T>
 Selectable<T>::Selectable(SelectableView* view) : _view(view)
 {
 }
 
-/* template<typename T> */
-/* void Selectable<T>::select() */
-/* { */
-/*   T* derived = static_cast<T*>(this); */
-/*   derived->_status = Status::Selected; */
-/*   _view->setTexture(Status::Selected); */
-/* } */
+template<typename T>
+void Selectable<T>::select()
+{
+  T* derived = static_cast<T*>(this);
+  derived->_status = Status::Selected;
+  _view->setTexture(Status::Selected);
+}
 
-/* template<typename T> */
-/* void Selectable<T>::deselect() */
-/* { */
-/*   T* derived = static_cast<T*>(this); */
-/*   if (derived->_status != Status::Destroyed) { */
-/*     derived->_status = Status::None; */
-/*     _view->setTexture(Status::None); */
-/*   } */
-/* } */
+template<typename T>
+void Selectable<T>::deselect()
+{
+  T* derived = static_cast<T*>(this);
+  if (derived->_status != Status::Destroyed) {
+    derived->_status = Status::None;
+    _view->setTexture(Status::None);
+  }
+}
 
 template<typename T>
 bool Selectable<T>::isUnderCursor(const glm::vec3& mousePoint)
@@ -50,3 +51,4 @@ bool Selectable<T>::isInsideArea(Points area)
 
 // instantiatiating
 template class Selectable<BuildableAttackUnit>;
+template class Selectable<BuildableStructure>;

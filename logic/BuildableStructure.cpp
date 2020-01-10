@@ -4,14 +4,9 @@ BuildableStructure::BuildableStructure(Shader& textureShader,
                                        Shader& linesShader,
                                        std::unique_ptr<StructureView> view) :
   Buildable(textureShader, linesShader),
-  _view(std::move(view))
+  Selectable<BuildableStructure>(view.get()), _view(std::move(view))
 {
   _viewPtr = _view.get();
-}
-
-bool BuildableStructure::isUnderCursor(const glm::vec3& mousePoint)
-{
-  return _view->contain(mousePoint);
 }
 
 void BuildableStructure::commit()

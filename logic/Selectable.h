@@ -12,8 +12,8 @@ public:
 
   bool isUnderCursor(const glm::vec3& mousePoint);
   bool isInsideArea(Points area);
-  /* void select(); */
-  /* void deselect(); */
+  void select();
+  void deselect();
 
 private:
   SelectableView* _view;
