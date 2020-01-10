@@ -6,6 +6,8 @@ project(Colony)
 add_executable(colony
     logic/Attacking.h
     logic/Attacking.cpp
+    logic/Moving.h
+    logic/Moving.cpp
     view/AttackUnitView.h
     view/AttackUnitView.cpp
     logic/BuildableAttackUnit.h

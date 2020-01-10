@@ -34,41 +34,23 @@ public:
   bool isInsideArea(Points area);
   UnitBuilders getUnitBuilders(Game* game) override;
   StructureBuilders getStructureBuilders() override;
-
-  void setRoute(glm::vec3 endPoint) override;
-  void move();
-  bool isMoving();
-
-  /* void shootTarget() override; */
-  /* void startShooting(Buildable* other) override; */
-  /* void stopShooting() override; */
-  /* bool isShooting() override; */
-
-  /* void updateShells(); */
-  void setTerrain(Terrain* terrain);
+  /* void setRoute(glm::vec3 endPoint) override; */
+  /* void move(); */
+  /* bool isMoving(); */
+  /* void setTerrain(Terrain* terrain); */
 
 private:
-  void startMoving(glm::vec2 endPoint) override;
-  void stopMoving();
-  /* float getTargetAngle(); */
-  /* float getTargetDistance(); */
-  float getMouseAngle(int mouseX, int mouseY);
-  /* void reload(); */
-  /* bool isShellLoaded(); */
+  /* void startMoving(glm::vec2 endPoint) override; */
+  /* void stopMoving() override; */
+  /* float getMouseAngle(int mouseX, int mouseY); */
 
-  float _speed;
-  glm::vec2 _moveIncrement{ 0, 0 };
+  /* float _speed; */
+  /* glm::vec2 _moveIncrement{ 0, 0 }; */
   Type _type;
-  /* Shell::Size _shellSize; */
-  /* Shells _shells; */
-  /* Buildable* _target; */
-  glm::vec2 _destination;
-  /* Timer _clock; */
-  /* std::chrono::milliseconds _shellLoadTime{ 200 }; */
-  Terrain* _terrain;
-
-  APath _movingRoute;
-  static const float MOVE_STOP_TOL;
+  /* glm::vec2 _destination; */
+  /* Terrain* _terrain; */
+  /* APath _movingRoute; */
+  /* static const float MOVE_STOP_TOL; */
 };
 
 std::shared_ptr<Tank> createTank(Game* game,

@@ -6,7 +6,7 @@
 #include "Game.h"
 #include "Tank.h"
 
-const float Tank::MOVE_STOP_TOL = 0.02;
+/* const float Tank::MOVE_STOP_TOL = 0.02; */
 
 std::map<Tank::Type, float> tankSizeMap = {
   { Tank::Type::Light, 0.4f },
@@ -38,109 +38,69 @@ Tank::Tank(Shader& textureShader,
     linesShader,
     std::make_unique<TankView>(textureShader, position, tankSizeMap[type]),
     router,
-    sh),
-  _speed(speedMap[type]),
-  /* _shellSize(sh), */
-  _destination(-1, -1)
+    sh,
+    speedMap[type])
+/* _speed(speedMap[type]), _destination(-1, -1) */
 {
   _health = healthLevelMap[healthLevel] * tankHitPointsMap[type];
   _maxHealth = _health;
-  /* _target = nullptr; */
-  /* reload(); */
 }
 
-void Tank::move()
-{
-  auto prev = _view->position();
-  auto c = _terrain->getXYZ(glm::vec2(prev.x, prev.y) + _moveIncrement);
-  _view->move(c);
-  bool destinationIsReached =
-    ::sqrt(::pow(_view->position().x - _destination.x, 2) +
-           ::pow(_view->position().y - _destination.y, 2)) < _speed;
-  if (destinationIsReached || isDestroyed()) {
-    _movingRoute.pop_back();
-    _path->popLine();
-    if (!_movingRoute.empty()) {
-      startMoving(_movingRoute.at(_movingRoute.size() - 1));
-    } else {
-      stopMoving();
-    }
-  }
-}
-
-void Tank::setRoute(glm::vec3 endPoint)
-{
-  _path = ::makePath(_linesShader, _router, _view->position(), endPoint);
-  if (_path != nullptr) {
-    _movingRoute = _path->route();
-    startMoving(_movingRoute.at(_movingRoute.size() - 1));
-  } else {
-    std::cout << "No path to endpoint!" << std::endl;
-  }
-}
-
-void Tank::startMoving(glm::vec2 endPoint)
-{
-  _destination = glm::vec2(endPoint.x, endPoint.y);
-
-  float dy = _destination.y - _view->position().y;
-  float dx = _destination.x - _view->position().x;
-  float radianAngle = ::atan(dx / dy);
-  if (dy < 0) {
-    radianAngle += M_PI;
-  }
-  float degreeAngle = radianAngle * 180.0f / M_PI - 90;
-  _view->rotateBody(degreeAngle);
-  _moveIncrement.x = _speed * ::sin(radianAngle);
-  _moveIncrement.y = _speed * ::cos(radianAngle);
-}
-
-void Tank::stopMoving()
-{
-  _destination = glm::vec3(-1, -1, -1);
-  _path.reset();
-}
-
-bool Tank::isMoving()
-{
-  return _destination != glm::vec2(-1, -1);
-}
-
-/* void Tank::shootTarget() */
+/* void Tank::move() */
 /* { */
-/*   if (!isShellLoaded()) { */
-/*     return; */
+/*   auto prev = _view->position(); */
+/*   auto c = _terrain->getXYZ(glm::vec2(prev.x, prev.y) + _moveIncrement); */
+/*   _view->move(c); */
+/*   bool destinationIsReached = */
+/*     ::sqrt(::pow(_view->position().x - _destination.x, 2) + */
+/*            ::pow(_view->position().y - _destination.y, 2)) < _speed; */
+/*   if (destinationIsReached || isDestroyed()) { */
+/*     _movingRoute.pop_back(); */
+/*     _path->popLine(); */
+/*     if (!_movingRoute.empty()) { */
+/*       startMoving(_movingRoute.at(_movingRoute.size() - 1)); */
+/*     } else { */
+/*       stopMoving(); */
+/*     } */
 /*   } */
-/*   if (_target->isDestroyed()) { */
-/*     stopShooting(); */
-/*     return; */
-/*   } */
-
-/*   float angle = getTargetAngle() + 90.0f; */
-/*   _view->rotateGun(getTargetAngle()); */
-/*   // TODO magic number = tank length */
-/*   Shell shell(_textureShader, */
-/*               glm::vec3(_view->position().x, _view->position().y, 0.5f), */
-/*               glm::radians(angle), */
-/*               getTargetDistance(), */
-/*               _shellSize); */
-/*   _shells.push_back(shell); */
-/*   _target->takeDamage(_shellSize); */
-/*   reload(); */
 /* } */
 
-/* void Tank::updateShells() */
+/* void Tank::setRoute(glm::vec3 endPoint) */
 /* { */
-/*   bool pop = false; */
-/*   for (auto& shell : _shells) { */
-/*     if (shell.isDone()) { */
-/*       pop = true; */
-/*     } */
-/*     shell.update(); */
+/*   _path = ::makePath(_linesShader, _router, _view->position(), endPoint); */
+/*   if (_path != nullptr) { */
+/*     _movingRoute = _path->route(); */
+/*     startMoving(_movingRoute.at(_movingRoute.size() - 1)); */
+/*   } else { */
+/*     std::cout << "No path to endpoint!" << std::endl; */
 /*   } */
-/*   if (pop) { */
-/*     _shells.pop_front(); */
+/* } */
+
+/* void Tank::startMoving(glm::vec2 endPoint) */
+/* { */
+/*   _destination = glm::vec2(endPoint.x, endPoint.y); */
+
+/*   float dy = _destination.y - _view->position().y; */
+/*   float dx = _destination.x - _view->position().x; */
+/*   float radianAngle = ::atan(dx / dy); */
+/*   if (dy < 0) { */
+/*     radianAngle += M_PI; */
 /*   } */
+/*   float degreeAngle = radianAngle * 180.0f / M_PI - 90; */
+/*   _view->rotateBody(degreeAngle); */
+/*   _moveIncrement.x = _speed * ::sin(radianAngle); */
+/*   _moveIncrement.y = _speed * ::cos(radianAngle); */
+/* } */
+
+/* void Tank::stopMoving() */
+/* { */
+/*   _destination = glm::vec3(-1, -1, -1); */
+/*   _path.reset(); */
+/* } */
+
+/* bool Tank::isMoving() */
+/* { */
+/*   return _destination != glm::vec2(-1, -1); */
 /* } */
 
 bool Tank::isInsideArea(Points area)
@@ -160,71 +120,6 @@ bool Tank::isInsideArea(Points area)
   return cond1 && cond2;
 }
 
-/* bool Tank::isShooting() */
-/* { */
-/*   return _target != nullptr; */
-/* } */
-
-/* void Tank::startShooting(Buildable* other) */
-/* { */
-/*   if (other == this) { */
-/*     return; */
-/*   } */
-/*   _target = other; */
-/* } */
-
-/* void Tank::stopShooting() */
-/* { */
-/*   _target = nullptr; */
-/* } */
-
-/* void Tank::reload() */
-/* { */
-/*   _clock.reload(); */
-/* } */
-
-/* bool Tank::isShellLoaded() */
-/* { */
-/*   return _clock.elapsed() >= _shellLoadTime; */
-/* } */
-
-/* float Tank::getTargetAngle() */
-/* { */
-/*   float targetX = _target->position().x; */
-/*   float targetY = _target->position().y; */
-/*   float thisX = this->position().x; */
-/*   float thisY = this->position().y; */
-/*   float radianAngle = ::atan((targetY - thisY) / (targetX - thisX)); */
-/*   float degreeAngle = radianAngle * 180.0f / M_PI; */
-/*   if (targetX - thisX < 0) { */
-/*     degreeAngle += 180.0f; */
-/*   } */
-
-/*   return degreeAngle; */
-/* } */
-
-/* float Tank::getTargetDistance() */
-/* { */
-/*   float targetX = _target->position().x; */
-/*   float targetY = _target->position().y; */
-/*   float thisX = this->position().x; */
-/*   float thisY = this->position().y; */
-/*   return ::sqrt(::pow(targetX - thisX, 2) + ::pow(targetY - thisY, 2)); */
-/* } */
-
-/* float Tank::getMouseAngle(int mouseX, int mouseY) */
-/* { */
-/*   float thisX = this->position().x; */
-/*   float thisY = this->position().y; */
-/*   float radianAngle = ::atan((mouseY - thisY) / (mouseX - thisX)); */
-/*   float degreeAngle = radianAngle * 180.0f / M_PI; */
-/*   if (mouseX - thisX < 0) { */
-/*     degreeAngle += 180.0f; */
-/*   } */
-
-/*   return degreeAngle; */
-/* } */
-
 UnitBuilders Tank::getUnitBuilders(Game* game)
 {
   // TODO
@@ -237,10 +132,10 @@ StructureBuilders Tank::getStructureBuilders()
   return StructureBuilders();
 }
 
-void Tank::setTerrain(Terrain* terrain)
-{
-  _terrain = terrain;
-}
+/* void Tank::setTerrain(Terrain* terrain) */
+/* { */
+/*   _terrain = terrain; */
+/* } */
 
 std::shared_ptr<Tank> createTank(Game* game,
                                  Shader& textureShader,
