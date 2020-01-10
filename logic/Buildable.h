@@ -28,6 +28,10 @@ public:
   virtual void render() = 0;
 
   virtual ~Buildable() = default;
+  Buildable(const Buildable&) = delete;
+  Buildable(Buildable&&) = delete;
+  Buildable& operator=(const Buildable&) = delete;
+  Buildable& operator=(Buildable&&) = delete;
 
 protected:
   void updateHealthBar();

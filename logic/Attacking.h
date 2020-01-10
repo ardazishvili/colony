@@ -12,6 +12,11 @@ class Attacking
 {
 public:
   Attacking(Shader& textureShader, Shell::Size sh, AttackUnitView* view);
+  virtual ~Attacking() = default;
+  Attacking(const Attacking&) = delete;
+  Attacking(Attacking&&) = delete;
+  Attacking& operator=(const Attacking&) = delete;
+  Attacking& operator=(Attacking&&) = delete;
 
   void shootTarget();
   void startShooting(Buildable* other);

@@ -12,6 +12,12 @@ class Structure
 {
 public:
   Structure(StructureView* view);
+  virtual ~Structure() = default;
+  Structure(const Structure&) = delete;
+  Structure(Structure&&) = delete;
+  Structure& operator=(const Structure&) = delete;
+  Structure& operator=(Structure&&) = delete;
+
   virtual void commit();
   void setAngle(float angle);
   void setPosition(glm::vec3 position);

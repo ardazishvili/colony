@@ -10,6 +10,11 @@ class Moving
 {
 public:
   Moving(Shader& linesShader, UnitView* view, float speed);
+  virtual ~Moving() = default;
+  Moving(const Moving&) = delete;
+  Moving(Moving&&) = delete;
+  Moving& operator=(const Moving&) = delete;
+  Moving& operator=(Moving&&) = delete;
 
   void move();
   bool isMoving();
