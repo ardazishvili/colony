@@ -16,6 +16,12 @@ public:
   void initBuffers();
   void render();
 
+  virtual ~LinesObject() = default;
+  LinesObject(const LinesObject&) = delete;
+  LinesObject(LinesObject&&) = delete;
+  LinesObject& operator=(const LinesObject&) = delete;
+  LinesObject& operator=(LinesObject&&) = delete;
+
 protected:
   virtual unsigned int indicesToRender();
 
