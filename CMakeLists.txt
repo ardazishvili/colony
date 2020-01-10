@@ -4,40 +4,6 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
 project(Colony)
 
 add_executable(colony
-    logic/GroundStructure.h
-    logic/GroundStructure.cpp
-    logic/Attacking.h
-    logic/Attacking.cpp
-    logic/Moving.h
-    logic/Moving.cpp
-    logic/Selectable.h
-    logic/Selectable.cpp
-    view/AttackUnitView.h
-    view/AttackUnitView.cpp
-    logic/AttackUnit.h
-    logic/AttackUnit.cpp
-    logic/NonAttackUnit.h
-    logic/NonAttackUnit.cpp
-    engine/LinesObject.h
-    engine/LinesObject.cpp
-    engine/RectangleShape.h
-    engine/RectangleShape.cpp
-    engine/HeightsSegment.h
-    engine/HeightsSegment.cpp
-    engine/ObstaclesSegment.h
-    engine/ObstaclesSegment.cpp
-    engine/Path.h
-    engine/Path.cpp
-    math/AStar.h
-    math/AStar.cpp
-    engine/TerrainMeshSegment.h
-    engine/TerrainMeshSegment.cpp
-    logic/AbstractPlantBuilder.h
-    logic/AbstractPlantBuilder.cpp
-    logic/Shroud.h
-    logic/Shroud.cpp
-    view/ShroudView.h
-    view/ShroudView.cpp
 		Timer.cpp
 		Timer.h
 		engine/Animation.cpp
@@ -115,14 +81,24 @@ add_executable(colony
     # engine/CircleMesh.h
     engine/Beam.cpp
     engine/Beam.h
+    engine/HeightsSegment.cpp
+    engine/HeightsSegment.h
+    engine/LinesObject.cpp
+    engine/LinesObject.h
     engine/LinesShader.cpp
     engine/LinesShader.h
     engine/MainTerrainMesh.cpp
     engine/MainTerrainMesh.h
     engine/Mesh.cpp
     engine/Mesh.h
+    engine/ObstaclesSegment.cpp
+    engine/ObstaclesSegment.h
+    engine/Path.cpp
+    engine/Path.h
     engine/PlainMesh.cpp
     engine/PlainMesh.h
+    engine/RectangleShape.cpp
+    engine/RectangleShape.h
     engine/Skybox.cpp
     engine/Skybox.h
     engine/SkyboxShader.cpp
@@ -137,24 +113,40 @@ add_executable(colony
     engine/Surface.h
     engine/TerrainMesh.cpp
     engine/TerrainMesh.h
+    engine/TerrainMeshSegment.cpp
+    engine/TerrainMeshSegment.h
     engine/Vertex.cpp
     engine/Vertex.h
     logic/AbstractPlant.cpp
     logic/AbstractPlant.h
+    logic/AbstractPlantBuilder.cpp
+    logic/AbstractPlantBuilder.h
+    logic/AttackUnit.cpp
+    logic/AttackUnit.h
+    logic/Attacking.cpp
+    logic/Attacking.h
     logic/Barrier.cpp
     logic/Barrier.h
     logic/BarrierBuilder.cpp
     logic/BarrierBuilder.h
-    logic/Structure.cpp
-    logic/Structure.h
-    logic/Unit.cpp
-    logic/Unit.h
     logic/EnergyStructure.cpp
     logic/EnergyStructure.h
+    logic/GroundStructure.cpp
+    logic/GroundStructure.h
+    logic/Moving.cpp
+    logic/Moving.h
+    logic/NonAttackUnit.cpp
+    logic/NonAttackUnit.h
     logic/Plant.cpp
     logic/Plant.h
     logic/PlantBuilder.cpp
     logic/PlantBuilder.h
+    logic/Selectable.cpp
+    logic/Selectable.h
+    logic/Shroud.cpp
+    logic/Shroud.h
+    logic/Structure.cpp
+    logic/Structure.h
     logic/Tree.cpp
     logic/Tree.h
     logic/TreeBuilder.cpp
@@ -163,7 +155,11 @@ add_executable(colony
     logic/Turbine.h
     logic/TurbineBuilder.cpp
     logic/TurbineBuilder.h
+    logic/Unit.cpp
+    logic/Unit.h
     main.cpp 
+    math/AStar.cpp
+    math/AStar.h
     math/Noise.cpp
     math/Noise.h
     misc/Log.cpp
@@ -172,12 +168,16 @@ add_executable(colony
     misc/Logger.h
     view/AbstractPlantView.cpp
     view/AbstractPlantView.h
+    view/AttackUnitView.cpp
+    view/AttackUnitView.h
     view/BarrierView.cpp
     view/BarrierView.h
     view/PlantView.cpp
     view/PlantView.h
     view/SelectableView.cpp
     view/SelectableView.h
+    view/ShroudView.cpp
+    view/ShroudView.h
     view/StructureView.cpp
     view/StructureView.h
     view/TreeView.cpp

@@ -64,8 +64,6 @@ StructureBuilders Barrier::getStructureBuilders()
 
 void Barrier::addPlant(std::shared_ptr<AbstractPlant> p)
 {
-  std::cout << "p.x= " << p->position().x << std::endl;
-  std::cout << "p.y= " << p->position().y << std::endl;
   _livingArea->plants.push_back(p->position());
   _plants.push_back(p);
 }
