@@ -1,5 +1,5 @@
-#ifndef BUILDABLE_STRUCTURE_H
-#define BUILDABLE_STRUCTURE_H
+#ifndef STRUCTURE_H
+#define STRUCTURE_H
 
 #include "../view/StructureView.h"
 #include "Buildable.h"

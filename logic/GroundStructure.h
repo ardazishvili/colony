@@ -2,8 +2,8 @@
 #define GROUND_STRUCTURE_H
 
 #include "Buildable.h"
-#include "BuildableStructure.h"
 #include "Selectable.h"
+#include "Structure.h"
 
 class GroundStructure
   : public Buildable

@@ -1,5 +1,5 @@
 #include "Selectable.h"
-#include "BuildableAttackUnit.h"
+#include "AttackUnit.h"
 #include "GroundStructure.h"
 
 template<typename T>
@@ -50,5 +50,5 @@ bool Selectable<T>::isInsideArea(Points area)
 }
 
 // instantiating
-template class Selectable<BuildableAttackUnit>;
+template class Selectable<AttackUnit>;
 template class Selectable<GroundStructure>;

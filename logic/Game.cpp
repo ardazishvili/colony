@@ -103,8 +103,7 @@ void Game::displayControl()
   _control->display();
 }
 
-BuildableAttackUnit* Game::getAttackUnit(const glm::vec3& mousePoint,
-                                         bool select)
+AttackUnit* Game::getAttackUnit(const glm::vec3& mousePoint, bool select)
 {
   if (select) {
     for (auto& tank : _tanks) {

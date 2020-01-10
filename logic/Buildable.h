@@ -20,7 +20,7 @@ using StructureBuilders =
 class Buildable
 {
 public:
-  Buildable(Shader& textureShader, Shader& linesShader);
+  Buildable(Shader& textureShader, Shader& linesShader, SelectableView* view);
   virtual UnitBuilders getUnitBuilders(Game* game) = 0;
   virtual StructureBuilders getStructureBuilders() = 0;
   bool isDestroyed() const;
@@ -38,7 +38,7 @@ protected:
   Status _status;
   Shader& _textureShader;
   Shader& _linesShader;
-  SelectableView* _viewPtr;
+  SelectableView* _view;
 };
 
 #endif

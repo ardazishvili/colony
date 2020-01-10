@@ -8,15 +8,15 @@
 
 #include "../engine/Terrain.h"
 #include "AbstractPlant.h"
+#include "AttackUnit.h"
 #include "Barrier.h"
-#include "BuildableAttackUnit.h"
 #include "Control.h"
 #include "VehicleGroup.h"
 
 class Tank;
 class AbstractStructureBuilder;
 
-using AttackUnits = std::vector<std::shared_ptr<BuildableAttackUnit>>;
+using AttackUnits = std::vector<std::shared_ptr<AttackUnit>>;
 using Structures = std::vector<std::shared_ptr<GroundStructure>>;
 using Shrouds = std::vector<std::shared_ptr<Shroud>>;
 
@@ -32,8 +32,7 @@ public:
   void addTerrain(Terrain* terrain);
   void setControl(std::unique_ptr<Control> control);
 
-  BuildableAttackUnit* getAttackUnit(const glm::vec3& mousePoint,
-                                     bool select = false);
+  AttackUnit* getAttackUnit(const glm::vec3& mousePoint, bool select = false);
   VehicleGroup getTanks(Points area);
   Buildable* getStructure(const glm::vec3& mousePoint);
   void showDebug();
@@ -59,7 +58,7 @@ private:
   Shrouds _shrouds;
   Plants _plants;
   std::unique_ptr<Control> _control;
-  BuildableAttackUnit* _selectedAttackUnit = nullptr;
+  AttackUnit* _selectedAttackUnit = nullptr;
   Buildable* _selectedStructure = nullptr;
   Buildable* _selectedBarrier = nullptr;
   Terrain* _terrain;

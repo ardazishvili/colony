@@ -1,7 +1,7 @@
-#include "BuildableUnit.h"
+#include "Unit.h"
 #include "../globals.h"
-#include "BuildableAttackUnit.h"
-#include "BuildableNonAttackUnit.h"
+#include "AttackUnit.h"
+#include "NonAttackUnit.h"
 
 template<typename T>
 Unit<T>::Unit(AStar* router, View* view) : _router(router), _view(view)
@@ -18,5 +18,5 @@ void Unit<T>::render()
 }
 
 // instantiating
-template class Unit<BuildableAttackUnit>;
-template class Unit<BuildableNonAttackUnit>;
+template class Unit<AttackUnit>;
+template class Unit<NonAttackUnit>;

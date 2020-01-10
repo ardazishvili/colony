@@ -1,6 +1,6 @@
 #include "VehicleGroup.h"
 
-void VehicleGroup::add(BuildableAttackUnit* unit)
+void VehicleGroup::add(AttackUnit* unit)
 {
   _selected.push_back(unit);
 }

@@ -31,7 +31,7 @@ Tank::Tank(Shader& textureShader,
            Type type,
            HealthLevel healthLevel,
            Shell::Size sh) :
-  BuildableAttackUnit(
+  AttackUnit(
     textureShader,
     linesShader,
     std::make_unique<TankView>(textureShader, position, tankSizeMap[type]),
@@ -42,23 +42,6 @@ Tank::Tank(Shader& textureShader,
   _health = healthLevelMap[healthLevel] * tankHitPointsMap[type];
   _maxHealth = _health;
 }
-
-/* bool Tank::isInsideArea(Points area) */
-/* { */
-/*   auto tmp = _view->position(); */
-/*   auto m = glm::vec2(tmp.x, tmp.y); */
-/*   auto a = glm::vec2(area.at(0).x, area.at(0).y); */
-/*   auto b = glm::vec2(area.at(1).x, area.at(1).y); */
-/*   auto d = glm::vec2(area.at(3).x, area.at(3).y); */
-/*   glm::vec2 am = m - a; */
-/*   glm::vec2 ab = b - a; */
-/*   glm::vec2 ad = d - a; */
-/*   const bool cond1 = */
-/*     (0.0f < glm::dot(am, ab)) && (glm::dot(am, ab) < glm::dot(ab, ab)); */
-/*   const bool cond2 = */
-/*     (0.0f < glm::dot(am, ad)) && (glm::dot(am, ad) < glm::dot(ad, ad)); */
-/*   return cond1 && cond2; */
-/* } */
 
 UnitBuilders Tank::getUnitBuilders(Game* game)
 {

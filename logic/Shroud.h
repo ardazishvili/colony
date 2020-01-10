@@ -1,10 +1,10 @@
 #ifndef SHROUD_H
 #define SHROUD_H
 
-#include "BuildableNonAttackUnit.h"
+#include "NonAttackUnit.h"
 
 class Barrier;
-class Shroud : public BuildableNonAttackUnit
+class Shroud : public NonAttackUnit
 {
 public:
   Shroud() = delete;

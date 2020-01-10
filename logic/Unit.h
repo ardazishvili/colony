@@ -9,8 +9,6 @@ template<typename T>
 class Unit
 {
 public:
-  /* Unit(Shader& textureShader, Shader& linesShader, AStar* router, View*
-   * view); */
   Unit(AStar* router, View* view);
   void render();
 

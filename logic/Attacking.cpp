@@ -1,5 +1,5 @@
 #include "Attacking.h"
-#include "BuildableAttackUnit.h"
+#include "AttackUnit.h"
 
 template<typename T>
 Attacking<T>::Attacking(Shader& textureShader,
@@ -115,4 +115,4 @@ void Attacking<T>::updateShells()
 }
 
 // instantiating
-template class Attacking<BuildableAttackUnit>;
+template class Attacking<AttackUnit>;

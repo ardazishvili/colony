@@ -14,10 +14,10 @@ add_executable(colony
     logic/Selectable.cpp
     view/AttackUnitView.h
     view/AttackUnitView.cpp
-    logic/BuildableAttackUnit.h
-    logic/BuildableAttackUnit.cpp
-    logic/BuildableNonAttackUnit.h
-    logic/BuildableNonAttackUnit.cpp
+    logic/AttackUnit.h
+    logic/AttackUnit.cpp
+    logic/NonAttackUnit.h
+    logic/NonAttackUnit.cpp
     engine/LinesObject.h
     engine/LinesObject.cpp
     engine/RectangleShape.h
@@ -145,10 +145,10 @@ add_executable(colony
     logic/Barrier.h
     logic/BarrierBuilder.cpp
     logic/BarrierBuilder.h
-    logic/BuildableStructure.cpp
-    logic/BuildableStructure.h
-    logic/BuildableUnit.cpp
-    logic/BuildableUnit.h
+    logic/Structure.cpp
+    logic/Structure.h
+    logic/Unit.cpp
+    logic/Unit.h
     logic/EnergyStructure.cpp
     logic/EnergyStructure.h
     logic/Plant.cpp

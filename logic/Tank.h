@@ -9,7 +9,7 @@
 #include "../engine/LinesObject.h"
 #include "../engine/Terrain.h"
 #include "../view/TankView.h"
-#include "BuildableAttackUnit.h"
+#include "AttackUnit.h"
 
 class Game;
 
@@ -17,7 +17,7 @@ using Shells = std::list<Shell>;
 
 enum class HealthLevel { Low, Medium, High };
 
-class Tank : public BuildableAttackUnit
+class Tank : public AttackUnit
 {
 public:
   enum class Type { Light, Medium, Heavy };

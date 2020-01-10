@@ -1,5 +1,5 @@
 #include "Moving.h"
-#include "BuildableAttackUnit.h"
+#include "AttackUnit.h"
 
 template<typename T>
 const float Moving<T>::MOVE_STOP_TOL = 0.02;
@@ -83,4 +83,4 @@ void Moving<T>::setTerrain(Terrain* terrain)
 }
 
 // instantiatiating
-template class Moving<BuildableAttackUnit>;
+template class Moving<AttackUnit>;

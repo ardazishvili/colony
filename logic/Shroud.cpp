@@ -6,7 +6,7 @@ Shroud::Shroud(Shader& textureShader,
                AStar* router,
                glm::vec3 position,
                Barrier& barrier) :
-  BuildableNonAttackUnit(
+  NonAttackUnit(
     textureShader,
     linesShader,
     std::make_unique<ShroudView>(textureShader, linesShader, position),
@@ -17,8 +17,7 @@ Shroud::Shroud(Shader& textureShader,
 
 void Shroud::render()
 {
-  /* BuildableUnit::render(); */
-  Unit<BuildableNonAttackUnit>::render();
+  Unit<NonAttackUnit>::render();
   // TODO downcast!
   ShroudView* v = dynamic_cast<ShroudView*>(_view.get());
   if (v->onOrbit()) {

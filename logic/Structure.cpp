@@ -1,4 +1,4 @@
-#include "BuildableStructure.h"
+#include "Structure.h"
 #include "GroundStructure.h"
 
 template<typename T>
