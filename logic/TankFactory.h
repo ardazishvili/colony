@@ -2,12 +2,12 @@
 #define TANK_FACTORY_H
 
 #include "../view/TankFactoryView.h"
-#include "BuildableStructure.h"
+#include "GroundStructure.h"
 #include "Tank.h"
 
 class Game;
 
-class TankFactory : public BuildableStructure
+class TankFactory : public GroundStructure
 {
 public:
   TankFactory() = delete;

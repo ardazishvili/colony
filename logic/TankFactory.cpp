@@ -7,10 +7,9 @@ TankFactory::TankFactory(Shader& textureShader,
                          Shader& linesShader,
                          AStar* router,
                          glm::vec3 position) :
-  BuildableStructure(
-    textureShader,
-    linesShader,
-    std::make_unique<TankFactoryView>(textureShader, position)),
+  GroundStructure(textureShader,
+                  linesShader,
+                  std::make_unique<TankFactoryView>(textureShader, position)),
   _router(router)
 {
   std::cout << "position.x= " << position.x << std::endl;

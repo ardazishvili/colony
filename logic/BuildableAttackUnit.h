@@ -8,7 +8,8 @@
 #include "Selectable.h"
 
 class BuildableAttackUnit
-  : public BuildableUnit
+  : public Buildable
+  , public Unit<BuildableAttackUnit>
   , public Attacking<BuildableAttackUnit>
   , public Moving<BuildableAttackUnit>
   , public Selectable<BuildableAttackUnit>
@@ -20,6 +21,7 @@ public:
                       AStar* router,
                       Shell::Size sh,
                       float speed);
+  void render() override;
 
 protected:
   friend Attacking;

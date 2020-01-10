@@ -41,7 +41,3 @@ glm::vec3 Buildable::position() const
   return _viewPtr->position();
 }
 
-void Buildable::render()
-{
-  _viewPtr->draw();
-}

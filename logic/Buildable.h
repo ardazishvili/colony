@@ -27,7 +27,7 @@ public:
   bool isUnderFire() const;
   void takeDamage(Shell::Size shellSize);
   glm::vec3 position() const;
-  virtual void render();
+  virtual void render() = 0;
 
   virtual ~Buildable() = default;
 

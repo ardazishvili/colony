@@ -4,7 +4,9 @@
 #include "../view/UnitView.h"
 #include "BuildableUnit.h"
 
-class BuildableNonAttackUnit : public BuildableUnit
+class BuildableNonAttackUnit
+  : public Buildable
+  , public Unit<BuildableNonAttackUnit>
 {
 public:
   BuildableNonAttackUnit(Shader& textureShader,

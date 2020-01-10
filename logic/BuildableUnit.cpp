@@ -1,23 +1,22 @@
 #include "BuildableUnit.h"
 #include "../globals.h"
+#include "BuildableAttackUnit.h"
+#include "BuildableNonAttackUnit.h"
 
-BuildableUnit::BuildableUnit(Shader& textureShader,
-                             Shader& linesShader,
-                             AStar* router) :
-  Buildable(textureShader, linesShader),
-  _router(router)
+template<typename T>
+Unit<T>::Unit(AStar* router, View* view) : _router(router), _view(view)
 {
 }
 
-/* bool BuildableUnit::isUnderCursor(const glm::vec3& mousePoint) */
-/* { */
-/*   return _viewPtr->contain(mousePoint); */
-/* } */
-
-void BuildableUnit::render()
+template<typename T>
+void Unit<T>::render()
 {
-  Buildable::render();
+  _view->draw();
   if (_path != nullptr) {
     _path->render();
   }
 }
+
+// instantiating
+template class Unit<BuildableAttackUnit>;
+template class Unit<BuildableNonAttackUnit>;

@@ -38,7 +38,7 @@ public:
   static glm::vec3 unProject(GLFWwindow* window,
                              glm::mat4& view,
                              glm::mat4& proj);
-  void setStructureToBuild(std::shared_ptr<BuildableStructure> structure);
+  void setStructureToBuild(std::shared_ptr<GroundStructure> structure);
   void setStructureToBuildStage(BuildStage stage);
   // TODO not a contract of EventManager! REFACTOR!
   Shader& getLinesShader();
@@ -63,7 +63,7 @@ private:
   BuildableAttackUnit* _tankUnderAttack{ nullptr };
   Buildable* _structureSelected{ nullptr };
   Buildable* _barrierSelected{ nullptr };
-  std::shared_ptr<BuildableStructure> _structureToBuild{ nullptr };
+  std::shared_ptr<GroundStructure> _structureToBuild{ nullptr };
   BuildStage _structureToBuildStage;
   Buildable* _structureUnderAttack{ nullptr };
 

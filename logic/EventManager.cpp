@@ -356,7 +356,7 @@ void EventManager::handleMousePressedRight()
 }
 
 void EventManager::setStructureToBuild(
-  std::shared_ptr<BuildableStructure> structure)
+  std::shared_ptr<GroundStructure> structure)
 {
   _structureToBuild = structure;
 }

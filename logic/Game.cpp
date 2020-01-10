@@ -45,7 +45,7 @@ void Game::addTank(std::shared_ptr<Tank> tank)
   _tanks.push_back(tank);
 }
 
-void Game::addStructure(std::shared_ptr<BuildableStructure> buildable)
+void Game::addStructure(std::shared_ptr<GroundStructure> buildable)
 {
   _structures.push_back(buildable);
 }

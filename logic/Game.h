@@ -17,7 +17,7 @@ class Tank;
 class AbstractStructureBuilder;
 
 using AttackUnits = std::vector<std::shared_ptr<BuildableAttackUnit>>;
-using Structures = std::vector<std::shared_ptr<BuildableStructure>>;
+using Structures = std::vector<std::shared_ptr<GroundStructure>>;
 using Shrouds = std::vector<std::shared_ptr<Shroud>>;
 
 class Game
@@ -26,8 +26,7 @@ public:
   Game(GLFWwindow* window, glm::mat4& view, glm::mat4& projection);
   void tick();
   void addTank(std::shared_ptr<Tank> tank);
-  void addStructure(std::shared_ptr<BuildableStructure> buildable);
-  /* void addBarrier(std::shared_ptr<Barrier> barrier); */
+  void addStructure(std::shared_ptr<GroundStructure> buildable);
   void addShroud(std::shared_ptr<Shroud> shroud);
   void addPlant(std::shared_ptr<AbstractPlant> plant);
   void addTerrain(Terrain* terrain);

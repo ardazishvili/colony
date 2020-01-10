@@ -7,24 +7,19 @@
 
 enum class BuildStage { SetPosition, SetAngle, Done };
 
-class BuildableStructure
-  : public Buildable
-  , public Selectable<BuildableStructure>
+template<typename T>
+class Structure
 {
 public:
-  BuildableStructure(Shader& textureShader,
-                     Shader& linesShader,
-                     std::unique_ptr<StructureView> view);
-  /* bool isUnderCursor(const glm::vec3& mousePoint); */
+  Structure(StructureView* view);
   virtual void commit();
   void setAngle(float angle);
   void setPosition(glm::vec3 position);
+  void render();
 
 protected:
-  friend Selectable;
-
   BuildStage _stage{ BuildStage::SetPosition };
-  std::unique_ptr<StructureView> _view;
+  StructureView* _view;
 };
 
 #endif

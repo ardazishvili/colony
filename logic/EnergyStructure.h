@@ -1,9 +1,9 @@
 #ifndef ENERGY_STRUCTURE_H
 #define ENERGY_STRUCTURE_H
 
-#include "BuildableStructure.h"
+#include "GroundStructure.h"
 
-class EnergyStructure : public BuildableStructure
+class EnergyStructure : public GroundStructure
 {
 
 public:

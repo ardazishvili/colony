@@ -1,26 +1,36 @@
 #include "BuildableStructure.h"
+#include "GroundStructure.h"
 
-BuildableStructure::BuildableStructure(Shader& textureShader,
-                                       Shader& linesShader,
-                                       std::unique_ptr<StructureView> view) :
-  Buildable(textureShader, linesShader),
-  Selectable<BuildableStructure>(view.get()), _view(std::move(view))
+template<typename T>
+Structure<T>::Structure(StructureView* view) : _view(view)
 {
-  _viewPtr = _view.get();
 }
 
-void BuildableStructure::commit()
+template<typename T>
+void Structure<T>::commit()
 {
   _stage = BuildStage::Done;
-  deselect();
+  T* derived = static_cast<T*>(this);
+  derived->deselect();
 }
 
-void BuildableStructure::setAngle(float angle)
+template<typename T>
+void Structure<T>::setAngle(float angle)
 {
   _view->rotate(angle);
 }
 
-void BuildableStructure::setPosition(glm::vec3 position)
+template<typename T>
+void Structure<T>::setPosition(glm::vec3 position)
 {
   _view->move(position);
 }
+
+template<typename T>
+void Structure<T>::render()
+{
+  _view->draw();
+}
+
+// instantiating
+template class Structure<GroundStructure>;

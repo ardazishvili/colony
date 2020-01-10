@@ -13,9 +13,9 @@ Hq::Hq(Game* game,
        AStar* router,
        glm::vec3 position,
        Terrain* terrain) :
-  BuildableStructure(textureShader,
-                     linesShader,
-                     std::make_unique<HqView>(textureShader, position)),
+  GroundStructure(textureShader,
+                  linesShader,
+                  std::make_unique<HqView>(textureShader, position)),
   _game(game), _eventManager(eventManager), _terrain(terrain), _router(router)
 {
   _health = HQ_HP;

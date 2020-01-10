@@ -17,7 +17,8 @@ Shroud::Shroud(Shader& textureShader,
 
 void Shroud::render()
 {
-  BuildableUnit::render();
+  /* BuildableUnit::render(); */
+  Unit<BuildableNonAttackUnit>::render();
   // TODO downcast!
   ShroudView* v = dynamic_cast<ShroudView*>(_view.get());
   if (v->onOrbit()) {

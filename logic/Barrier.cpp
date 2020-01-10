@@ -29,7 +29,7 @@ void Barrier::render()
   if (_stage == BuildStage::Done) {
     _shroud.render();
     if (_shroud.setUp()) {
-      Buildable::render();
+      Structure<GroundStructure>::render();
       if (_livingArea != nullptr) {
         if (_clock.elapsed() >= _bioUpdateTime) {
           logger.log("updating area...");
@@ -39,7 +39,7 @@ void Barrier::render()
       }
     }
   } else {
-    Buildable::render();
+    Structure<GroundStructure>::render();
   }
 }
 
@@ -78,7 +78,7 @@ void Barrier::commit()
   CircularRegion r = { p.x, p.y, v->radius() };
   auto c = _terrain->getRgbColor(p.x, p.y);
   _livingArea = _terrain->addLivingArea(r, glm::vec4(c.x, c.y, c.z, 0.5));
-  BuildableStructure::commit();
+  Structure<GroundStructure>::commit();
 }
 
 void Barrier::addEnergyStructure(EnergyStructure* es)

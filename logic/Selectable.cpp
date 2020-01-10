@@ -1,6 +1,6 @@
 #include "Selectable.h"
 #include "BuildableAttackUnit.h"
-#include "BuildableStructure.h"
+#include "GroundStructure.h"
 
 template<typename T>
 Selectable<T>::Selectable(SelectableView* view) : _view(view)
@@ -49,6 +49,6 @@ bool Selectable<T>::isInsideArea(Points area)
   return cond1 && cond2;
 }
 
-// instantiatiating
+// instantiating
 template class Selectable<BuildableAttackUnit>;
-template class Selectable<BuildableStructure>;
+template class Selectable<GroundStructure>;

@@ -3,10 +3,10 @@
 
 #include "../engine/Terrain.h"
 #include "../view/HqView.h"
-#include "BuildableStructure.h"
+#include "GroundStructure.h"
 
 struct AStar;
-class Hq : public BuildableStructure
+class Hq : public GroundStructure
 {
 public:
   Hq() = delete;
