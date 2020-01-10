@@ -22,6 +22,11 @@ public:
          glm::mat4& projection,
          const GLchar* vertexPath,
          const GLchar* fragmentPath);
+  virtual ~Shader() = default;
+  Shader(const Shader&) = delete;
+  Shader(Shader&&) = delete;
+  Shader& operator=(const Shader&) = delete;
+  Shader& operator=(Shader&&) = delete;
 
   void init();
   void use();
