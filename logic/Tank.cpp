@@ -33,7 +33,7 @@ Tank::Tank(Shader& textureShader,
            Type type,
            HealthLevel healthLevel,
            Shell::Size sh) :
-  BuildableUnit(
+  BuildableAttackUnit(
     textureShader,
     linesShader,
     std::make_unique<TankView>(textureShader, position, tankSizeMap[type]),

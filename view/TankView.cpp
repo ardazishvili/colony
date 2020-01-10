@@ -12,11 +12,11 @@ float TankView::TANK_HEALTH_BAR_HEIGHT = 0.04;
 std::map<Status, unsigned int> tankTexturesMap;
 
 TankView::TankView(Shader& shader, glm::vec3 position, float tankTypeScaling) :
-  UnitView(shader,
-           position,
-           0.38,
-           { 0, 0, TANK_HEALTH_BAR_WIDTH, TANK_HEALTH_BAR_HEIGHT },
-           TexturePackType::Initial),
+  AttackUnitView(shader,
+                 position,
+                 0.38,
+                 { 0, 0, TANK_HEALTH_BAR_WIDTH, TANK_HEALTH_BAR_HEIGHT },
+                 TexturePackType::Initial),
   _tankTypeScaleFactor(tankTypeScaling)
 {
   _objScale = tankTypeScaling;

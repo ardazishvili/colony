@@ -3,17 +3,15 @@
 
 BuildableUnit::BuildableUnit(Shader& textureShader,
                              Shader& linesShader,
-                             std::unique_ptr<UnitView> view,
                              AStar* router) :
   Buildable(textureShader, linesShader),
-  _view(std::move(view)), _router(router)
+  _router(router)
 {
-  _viewPtr = _view.get();
 }
 
 bool BuildableUnit::isUnderCursor(const glm::vec3& mousePoint)
 {
-  return _view->contain(mousePoint);
+  return _viewPtr->contain(mousePoint);
 }
 
 void BuildableUnit::render()

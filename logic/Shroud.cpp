@@ -6,7 +6,7 @@ Shroud::Shroud(Shader& textureShader,
                AStar* router,
                glm::vec3 position,
                Barrier& barrier) :
-  BuildableUnit(
+  BuildableNonAttackUnit(
     textureShader,
     linesShader,
     std::make_unique<ShroudView>(textureShader, linesShader, position),

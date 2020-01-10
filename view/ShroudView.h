@@ -13,7 +13,6 @@ public:
   void drawBeam();
   void move(glm::vec3 newPosition) override{};
   void rotateBody(float degreeAngle) override{};
-  void rotateGun(float degreeAngle) override{};
 
   glm::vec3 positionFlat() const;
   glm::vec3 positionGlobe() const;

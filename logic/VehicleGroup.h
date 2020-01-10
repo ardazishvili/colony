@@ -9,14 +9,14 @@ class VehicleGroup
 {
 public:
   VehicleGroup() = default;
-  void add(BuildableUnit* unit);
+  void add(BuildableAttackUnit* unit);
   bool empty() const;
   void startShooting(Buildable* target);
   void setRoute(glm::vec3 destination);
   void clear();
 
 private:
-  using Selected = std::vector<BuildableUnit*>;
+  using Selected = std::vector<BuildableAttackUnit*>;
   Selected _selected;
 };
 

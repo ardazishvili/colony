@@ -1,9 +1,9 @@
 #ifndef TANK_VIEW_H
 #define TANK_VIEW_H
 
-#include "UnitView.h"
+#include "AttackUnitView.h"
 
-class TankView : public UnitView
+class TankView : public AttackUnitView
 {
 public:
   TankView(Shader& shader, glm::vec3 position, float tankTypeScaling);

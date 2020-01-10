@@ -3,24 +3,16 @@
 
 #include "../engine/Path.h"
 #include "../math/AStar.h"
-#include "../view/UnitView.h"
 #include "Buildable.h"
 
 class BuildableUnit : public Buildable
 {
 public:
-  BuildableUnit(Shader& textureShader,
-                Shader& linesShader,
-                std::unique_ptr<UnitView> view,
-                AStar* router);
+  BuildableUnit(Shader& textureShader, Shader& linesShader, AStar* router);
   bool isUnderCursor(const glm::vec3& mousePoint) override;
-  virtual void startShooting(Buildable* other) = 0;
-  virtual void startMoving(glm::vec2 endPoint) = 0;
-  virtual void setRoute(glm::vec3 endPoint) = 0;
   virtual void render() override;
 
 protected:
-  std::unique_ptr<UnitView> _view;
   std::shared_ptr<Path> _path;
   AStar* _router;
 };

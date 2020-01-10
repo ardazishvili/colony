@@ -1,10 +1,10 @@
 #ifndef SHROUD_H
 #define SHROUD_H
 
-#include "BuildableUnit.h"
+#include "BuildableNonAttackUnit.h"
 
 class Barrier;
-class Shroud : public BuildableUnit
+class Shroud : public BuildableNonAttackUnit
 {
 public:
   Shroud() = delete;
@@ -18,10 +18,6 @@ public:
   glm::vec3 positionFlat() const;
   glm::vec3 positionGlobe() const;
 
-  // FIXME stubs for now
-  void startShooting(Buildable* other) override{};
-  void startMoving(glm::vec2 endPoint) override{};
-  void setRoute(glm::vec3 endPoint) override{};
   UnitBuilders getUnitBuilders(Game* game) override
   {
     return UnitBuilders();
