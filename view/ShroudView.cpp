@@ -12,23 +12,21 @@ const float ShroudView::UP_SPEED = 0.09;
 
 ShroudView::ShroudView(Shader& textureShader,
                        Shader& linesShader,
-                       glm::vec3 p) :
+                       glm::vec3 p,
+                       float barrierHeight) :
   UnitView(textureShader,
            p,
            0.38,
            { 0, 0, HEALTH_BAR_WIDTH, HEALTH_BAR_HEIGHT },
            TexturePackType::Initial),
-  _posFlat(p), _posGlobe(p),
-  _beamFlat(linesShader,
-            p + FLAT_OFFSET,
-            // FIXME add barrier height to beam end's z coordinate
-            glm::vec3(p.x, p.y, p.z),
-            0.05f,
-            5),
+  _posFlat(p), _posGlobe(p), _beamFlat(linesShader,
+                                       p + FLAT_OFFSET,
+                                       glm::vec3(p.x, p.y, p.z + barrierHeight),
+                                       0.05f,
+                                       5),
   _beamGlobe(linesShader,
              globeMapper(p + GLOBE_OFFSET),
-             // FIXME add barrier height to beam end's z coordinate
-             globeMapper(glm::vec3(p.x, p.y, p.z)),
+             globeMapper(glm::vec3(p.x, p.y, p.z + barrierHeight)),
              0.05f,
              5)
 {

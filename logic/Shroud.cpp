@@ -1,16 +1,19 @@
 #include "Shroud.h"
 #include "../view/ShroudView.h"
+#include "Barrier.h"
 
 Shroud::Shroud(Shader& textureShader,
                Shader& linesShader,
                AStar* router,
                glm::vec3 position,
                Barrier& barrier) :
-  NonAttackUnit(
-    textureShader,
-    linesShader,
-    std::make_unique<ShroudView>(textureShader, linesShader, position),
-    router),
+  NonAttackUnit(textureShader,
+                linesShader,
+                std::make_unique<ShroudView>(textureShader,
+                                             linesShader,
+                                             position,
+                                             barrier.radius()),
+                router),
   _barrier(barrier)
 {
 }

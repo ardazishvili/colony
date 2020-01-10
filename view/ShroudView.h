@@ -7,7 +7,10 @@
 class ShroudView : public UnitView
 {
 public:
-  ShroudView(Shader& textureShader, Shader& linesShader, glm::vec3 position);
+  ShroudView(Shader& textureShader,
+             Shader& linesShader,
+             glm::vec3 position,
+             float barrierHeight);
   // FIXME stubs for now
   void draw() override;
   void drawBeam();
