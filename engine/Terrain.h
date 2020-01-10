@@ -34,6 +34,7 @@ public:
                               SegmentDimensions* sd);
   float halfWidth() const;
   float halfHeight() const;
+  static const float SUBTERRAIN_OFFSET;
 
 private:
   Shader& _shader;

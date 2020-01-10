@@ -45,8 +45,8 @@ std::shared_ptr<LivingArea> SubTerrainMesh::addLivingArea(CircularRegion region,
           index = m;
           indexIsSet = true;
         }
-        /* _v.at(m).color = rgba; */
-        _v.at(m).color = glm::vec4(0, 1, 0, 1);
+        _v.at(m).color = rgba;
+        /* _v.at(m).color = glm::vec4(0, 1, 0, 1); */
 
         ++stride;
       }
@@ -95,8 +95,8 @@ void SubTerrainMesh::growLivingArea(std::shared_ptr<LivingArea> area,
           indexIsSet = true;
         }
         if (distance >= prevRadius - 0.1) {
-          /* _v.at(m).color = area->initRgba; */
-          _v.at(m).color = glm::vec4(0, 1, 0, 1);
+          _v.at(m).color = area->initRgba;
+          /* _v.at(m).color = glm::vec4(0, 1, 0, 1); */
         }
 
         ++stride;

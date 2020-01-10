@@ -168,12 +168,10 @@ void TerrainMesh::getSegmentVertices(glm::vec2 bottomLeft,
 
 float TerrainMesh::halfWidth() const
 {
-  // TODO check
   return _width / 2;
 }
 
 float TerrainMesh::halfHeight() const
 {
-  // TODO check
   return _height / 2;
 }

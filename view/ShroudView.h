@@ -11,7 +11,6 @@ public:
              Shader& linesShader,
              glm::vec3 position,
              float barrierHeight);
-  // FIXME stubs for now
   void draw() override;
   void drawBeam();
   void move(glm::vec3 newPosition) override{};

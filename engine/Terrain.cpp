@@ -2,6 +2,8 @@
 
 #include "Terrain.h"
 
+const float Terrain::SUBTERRAIN_OFFSET = 0.03f;
+
 Terrain::Terrain(Shader& shader,
                  Camera& camera,
                  float bottomLeftX,

@@ -16,8 +16,8 @@ void TreeBuilder::create()
   auto pos = _barrier.position();
   pos.x += randomPos.x;
   pos.y += randomPos.y;
-  // TODO subterrain offset
-  pos.z = _terrain->getXYZ(glm::vec2(pos.x, pos.y)).z + 0.3;
+  pos.z =
+    _terrain->getXYZ(glm::vec2(pos.x, pos.y)).z + Terrain::SUBTERRAIN_OFFSET;
   auto tree = std::make_shared<Tree>(_shader, pos);
 
   _barrier.addPlant(tree);
