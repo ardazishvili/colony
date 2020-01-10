@@ -9,13 +9,14 @@
 #include "../engine/Terrain.h"
 #include "AbstractPlant.h"
 #include "Barrier.h"
+#include "BuildableAttackUnit.h"
 #include "Control.h"
 #include "VehicleGroup.h"
 
 class Tank;
 class AbstractStructureBuilder;
 
-using Tanks = std::vector<std::shared_ptr<Tank>>;
+using AttackUnits = std::vector<std::shared_ptr<BuildableAttackUnit>>;
 using Structures = std::vector<std::shared_ptr<BuildableStructure>>;
 using Shrouds = std::vector<std::shared_ptr<Shroud>>;
 
@@ -32,7 +33,8 @@ public:
   void addTerrain(Terrain* terrain);
   void setControl(std::unique_ptr<Control> control);
 
-  Tank* getTank(const glm::vec3& mousePoint, bool select = false);
+  BuildableAttackUnit* getAttackUnit(const glm::vec3& mousePoint,
+                                     bool select = false);
   VehicleGroup getTanks(Points area);
   Buildable* getStructure(const glm::vec3& mousePoint);
   void showDebug();
@@ -53,13 +55,12 @@ private:
   GLFWwindow* _window;
   glm::mat4& _view;
   glm::mat4& _projection;
-  Tanks _tanks;
+  AttackUnits _tanks;
   Structures _structures;
-  /* std::shared_ptr<Barrier> _barrier; */
   Shrouds _shrouds;
   Plants _plants;
   std::unique_ptr<Control> _control;
-  Tank* _selectedTank = nullptr;
+  BuildableAttackUnit* _selectedAttackUnit = nullptr;
   Buildable* _selectedStructure = nullptr;
   Buildable* _selectedBarrier = nullptr;
   Terrain* _terrain;

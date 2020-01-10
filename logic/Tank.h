@@ -31,26 +31,12 @@ public:
        HealthLevel healthLevel = HealthLevel::High,
        Shell::Size shellSize = Shell::Size::Small);
 
-  bool isInsideArea(Points area);
+  /* bool isInsideArea(Points area); */
   UnitBuilders getUnitBuilders(Game* game) override;
   StructureBuilders getStructureBuilders() override;
-  /* void setRoute(glm::vec3 endPoint) override; */
-  /* void move(); */
-  /* bool isMoving(); */
-  /* void setTerrain(Terrain* terrain); */
 
 private:
-  /* void startMoving(glm::vec2 endPoint) override; */
-  /* void stopMoving() override; */
-  /* float getMouseAngle(int mouseX, int mouseY); */
-
-  /* float _speed; */
-  /* glm::vec2 _moveIncrement{ 0, 0 }; */
   Type _type;
-  /* glm::vec2 _destination; */
-  /* Terrain* _terrain; */
-  /* APath _movingRoute; */
-  /* static const float MOVE_STOP_TOL; */
 };
 
 std::shared_ptr<Tank> createTank(Game* game,

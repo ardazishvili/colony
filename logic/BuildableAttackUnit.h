@@ -5,11 +5,13 @@
 #include "Attacking.h"
 #include "BuildableUnit.h"
 #include "Moving.h"
+#include "Selectable.h"
 
 class BuildableAttackUnit
   : public BuildableUnit
   , public Attacking<BuildableAttackUnit>
   , public Moving<BuildableAttackUnit>
+  , public Selectable<BuildableAttackUnit>
 {
 public:
   BuildableAttackUnit(Shader& textureShader,
@@ -18,16 +20,11 @@ public:
                       AStar* router,
                       Shell::Size sh,
                       float speed);
-  /* virtual void startMoving(glm::vec2 endPoint) = 0; */
-  /* virtual void move() = 0; */
-  /* virtual bool isMoving() = 0; */
-  /* virtual void setRoute(glm::vec3 endPoint) = 0; */
 
 protected:
-  /* virtual void stopMoving() = 0; */
-
   friend Attacking;
   friend Moving;
+  friend Selectable;
   std::unique_ptr<AttackUnitView> _view;
 };
 

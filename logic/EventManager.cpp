@@ -308,7 +308,7 @@ void EventManager::handleMousePressedLeft()
   _obstaclesSegment.reset();
   _selection.setStart(tmp);
 
-  _tankSelected = _game->getTank(c, true);
+  _tankSelected = _game->getAttackUnit(c, true);
   _structureSelected = _game->getStructure(c);
   if (!_structureSelected) {
     _structureSelected = _game->getStructure(c);
@@ -323,7 +323,7 @@ void EventManager::handleMousePressedRight()
   auto c = unProject(_window, _view, _projection);
   // TODO remove copypaste for one tank and group of tanks
   if (_tankSelected) {
-    _tankUnderAttack = _game->getTank(c);
+    _tankUnderAttack = _game->getAttackUnit(c);
     _structureUnderAttack = _game->getStructure(c);
     if (_tankUnderAttack) {
       _tankSelected->startShooting(_tankUnderAttack);
@@ -343,7 +343,7 @@ void EventManager::handleMousePressedRight()
     _structureToBuild->commit();
     _structureToBuild = nullptr;
   } else if (!_tanksSelected.empty()) {
-    _tankUnderAttack = _game->getTank(c);
+    _tankUnderAttack = _game->getAttackUnit(c);
     _structureUnderAttack = _game->getStructure(c);
     if (_tankUnderAttack) {
       _tanksSelected.startShooting(_tankUnderAttack);

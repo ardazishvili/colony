@@ -103,7 +103,8 @@ void Game::displayControl()
   _control->display();
 }
 
-Tank* Game::getTank(const glm::vec3& mousePoint, bool select)
+BuildableAttackUnit* Game::getAttackUnit(const glm::vec3& mousePoint,
+                                         bool select)
 {
   if (select) {
     for (auto& tank : _tanks) {
@@ -117,12 +118,12 @@ Tank* Game::getTank(const glm::vec3& mousePoint, bool select)
       if (select) {
         tank->select();
       }
-      _selectedTank = tank.get();
+      _selectedAttackUnit = tank.get();
       return tank.get();
     }
   }
 
-  _selectedTank = nullptr;
+  _selectedAttackUnit = nullptr;
   return nullptr;
 }
 

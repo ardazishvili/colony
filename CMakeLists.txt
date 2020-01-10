@@ -8,6 +8,8 @@ add_executable(colony
     logic/Attacking.cpp
     logic/Moving.h
     logic/Moving.cpp
+    logic/Selectable.h
+    logic/Selectable.cpp
     view/AttackUnitView.h
     view/AttackUnitView.cpp
     logic/BuildableAttackUnit.h

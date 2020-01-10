@@ -9,7 +9,7 @@ class BuildableUnit : public Buildable
 {
 public:
   BuildableUnit(Shader& textureShader, Shader& linesShader, AStar* router);
-  bool isUnderCursor(const glm::vec3& mousePoint) override;
+  /* bool isUnderCursor(const glm::vec3& mousePoint) override; */
   virtual void render() override;
 
 protected:

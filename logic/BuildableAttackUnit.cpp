@@ -9,7 +9,7 @@ BuildableAttackUnit::BuildableAttackUnit(Shader& textureShader,
   BuildableUnit(textureShader, linesShader, router),
   Attacking<BuildableAttackUnit>(textureShader, sh, view.get()),
   Moving<BuildableAttackUnit>(linesShader, view.get(), speed),
-  _view(std::move(view))
+  Selectable<BuildableAttackUnit>(view.get()), _view(std::move(view))
 {
   _viewPtr = _view.get();
 }

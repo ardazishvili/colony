@@ -58,9 +58,9 @@ private:
   Shader& _colorShader;
   Shader& _colorNonFlatShader;
   Shader& _linesShader;
-  Tank* _tankSelected{ nullptr };
+  BuildableAttackUnit* _tankSelected{ nullptr };
   VehicleGroup _tanksSelected;
-  Tank* _tankUnderAttack{ nullptr };
+  BuildableAttackUnit* _tankUnderAttack{ nullptr };
   Buildable* _structureSelected{ nullptr };
   Buildable* _barrierSelected{ nullptr };
   std::shared_ptr<BuildableStructure> _structureToBuild{ nullptr };
