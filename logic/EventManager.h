@@ -40,8 +40,6 @@ public:
                              glm::mat4& proj);
   void setStructureToBuild(std::shared_ptr<GroundStructure> structure);
   void setStructureToBuildStage(BuildStage stage);
-  // TODO not a contract of EventManager! REFACTOR!
-  Shader& getLinesShader();
 
 private:
   void handleMousePressedLeft();

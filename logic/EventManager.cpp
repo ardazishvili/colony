@@ -366,7 +366,3 @@ void EventManager::setStructureToBuildStage(BuildStage stage)
   _structureToBuildStage = stage;
 }
 
-Shader& EventManager::getLinesShader()
-{
-  return _linesShader;
-}

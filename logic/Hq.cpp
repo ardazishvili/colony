@@ -36,17 +36,13 @@ StructureBuilders Hq::getStructureBuilders()
   builders.push_back(std::move(tfBuilder));
 
   std::unique_ptr<AbstractStructureBuilder> bBuilder =
-    std::make_unique<BarrierBuilder>(_game,
-                                     _eventManager,
-                                     _textureShader,
-                                     _eventManager->getLinesShader(),
-                                     _terrain,
-                                     _router);
+    std::make_unique<BarrierBuilder>(
+      _game, _eventManager, _textureShader, _linesShader, _terrain, _router);
   builders.push_back(std::move(bBuilder));
 
   std::unique_ptr<AbstractStructureBuilder> tBuilder =
     std::make_unique<TurbineBuilder>(
-      _game, _eventManager, _textureShader, _eventManager->getLinesShader());
+      _game, _eventManager, _textureShader, _linesShader);
   builders.push_back(std::move(tBuilder));
 
   return builders;
