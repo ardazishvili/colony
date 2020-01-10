@@ -175,7 +175,7 @@ int main(int argc, char** argv)
                          -10.0f * yScale,
                          10.0f * xScale,
                          10.0f * yScale,
-                         256 * 2,
+                         256 / 2,
                          zScale);
   std::unique_ptr<Game> game = std::make_unique<Game>(window, view, projection);
   game->addTerrain(&terrain);

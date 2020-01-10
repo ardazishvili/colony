@@ -39,32 +39,32 @@ public:
   void move();
   bool isMoving();
 
-  void shootTarget();
-  void startShooting(Buildable* other) override;
-  void stopShooting();
-  bool isShooting();
+  /* void shootTarget() override; */
+  /* void startShooting(Buildable* other) override; */
+  /* void stopShooting() override; */
+  /* bool isShooting() override; */
 
-  void updateShells();
+  /* void updateShells(); */
   void setTerrain(Terrain* terrain);
 
 private:
   void startMoving(glm::vec2 endPoint) override;
   void stopMoving();
-  float getTargetAngle();
-  float getTargetDistance();
+  /* float getTargetAngle(); */
+  /* float getTargetDistance(); */
   float getMouseAngle(int mouseX, int mouseY);
-  void reload();
-  bool isShellLoaded();
+  /* void reload(); */
+  /* bool isShellLoaded(); */
 
   float _speed;
   glm::vec2 _moveIncrement{ 0, 0 };
   Type _type;
-  Shell::Size _shellSize;
-  Shells _shells;
-  Buildable* _target;
+  /* Shell::Size _shellSize; */
+  /* Shells _shells; */
+  /* Buildable* _target; */
   glm::vec2 _destination;
-  Timer _clock;
-  std::chrono::milliseconds _shellLoadTime{ 200 };
+  /* Timer _clock; */
+  /* std::chrono::milliseconds _shellLoadTime{ 200 }; */
   Terrain* _terrain;
 
   APath _movingRoute;
