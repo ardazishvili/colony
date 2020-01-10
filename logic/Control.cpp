@@ -29,7 +29,7 @@ void Control::display()
   _unitPanel.display();
 }
 
-void Control::populateStructurePanel(Buildable* buildable)
+void Control::populateStructurePanel(GroundStructure* buildable)
 {
   clearStructurePanel();
   StructureBuilders builders = buildable->getStructureBuilders();
@@ -38,7 +38,7 @@ void Control::populateStructurePanel(Buildable* buildable)
   }
 }
 
-void Control::populateUnitPanel(Game* game, Buildable* buildable)
+void Control::populateUnitPanel(Game* game, GroundStructure* buildable)
 {
   clearUnitPanel();
   UnitBuilders builders = buildable->getUnitBuilders(game);

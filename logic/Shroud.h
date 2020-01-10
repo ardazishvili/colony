@@ -17,15 +17,6 @@ public:
   bool setUp() const;
   glm::vec3 positionFlat() const;
   glm::vec3 positionGlobe() const;
-
-  UnitBuilders getUnitBuilders(Game* game) override
-  {
-    return UnitBuilders();
-  };
-  StructureBuilders getStructureBuilders() override
-  {
-    return StructureBuilders();
-  };
   Barrier& barrier();
 
 private:

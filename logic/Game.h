@@ -59,8 +59,7 @@ private:
   Plants _plants;
   std::unique_ptr<Control> _control;
   AttackUnit* _selectedAttackUnit = nullptr;
-  Buildable* _selectedStructure = nullptr;
-  Buildable* _selectedBarrier = nullptr;
+  GroundStructure* _selectedStructure = nullptr;
   Terrain* _terrain;
 };
 

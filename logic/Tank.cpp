@@ -43,18 +43,6 @@ Tank::Tank(Shader& textureShader,
   _maxHealth = _health;
 }
 
-UnitBuilders Tank::getUnitBuilders(Game* game)
-{
-  // TODO
-  return UnitBuilders();
-}
-
-StructureBuilders Tank::getStructureBuilders()
-{
-  // TODO
-  return StructureBuilders();
-}
-
 std::shared_ptr<Tank> createTank(Game* game,
                                  Shader& textureShader,
                                  Shader& linesShader,

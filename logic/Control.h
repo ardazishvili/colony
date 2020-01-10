@@ -18,8 +18,8 @@ public:
           Terrain* terrain,
           AStar* router);
   void display();
-  void populateUnitPanel(Game* game, Buildable* buildable);
-  void populateStructurePanel(Buildable* buildable);
+  void populateUnitPanel(Game* game, GroundStructure* buildable);
+  void populateStructurePanel(GroundStructure* buildable);
   void clearUnitPanel();
   void clearStructurePanel();
   bool panelIsEmpty(Panel::Type type) const;

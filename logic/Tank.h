@@ -31,10 +31,6 @@ public:
        HealthLevel healthLevel = HealthLevel::High,
        Shell::Size shellSize = Shell::Size::Small);
 
-  /* bool isInsideArea(Points area); */
-  UnitBuilders getUnitBuilders(Game* game) override;
-  StructureBuilders getStructureBuilders() override;
-
 private:
   Type _type;
 };

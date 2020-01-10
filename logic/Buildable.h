@@ -21,8 +21,6 @@ class Buildable
 {
 public:
   Buildable(Shader& textureShader, Shader& linesShader, SelectableView* view);
-  virtual UnitBuilders getUnitBuilders(Game* game) = 0;
-  virtual StructureBuilders getStructureBuilders() = 0;
   bool isDestroyed() const;
   bool isUnderFire() const;
   void takeDamage(Shell::Size shellSize);

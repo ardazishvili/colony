@@ -14,6 +14,8 @@ public:
   GroundStructure(Shader& textureShader,
                   Shader& linesShader,
                   std::unique_ptr<StructureView> view);
+  virtual UnitBuilders getUnitBuilders(Game* game) = 0;
+  virtual StructureBuilders getStructureBuilders() = 0;
   void render() override;
 
 protected:
