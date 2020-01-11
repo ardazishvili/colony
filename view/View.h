@@ -13,8 +13,13 @@
 class View
 {
 public:
-  static float VIEW_SCALE;
   View(Shader& shader, glm::vec3 position);
+  virtual ~View() = default;
+  View(const View&) = delete;
+  View(View&&) = delete;
+  View& operator=(const View&) = delete;
+  View& operator=(View&&) = delete;
+
   virtual void draw() = 0;
   virtual glm::vec3 position() const;
   float longitude() const;
@@ -23,6 +28,8 @@ public:
   float k(float phi) const;
   glm::mat4 flatModel() const;
   glm::mat4 globeModel() const;
+
+  static float VIEW_SCALE;
 
 protected:
   glm::vec3 globeMapper(glm::vec3 p) const;
