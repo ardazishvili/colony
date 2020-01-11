@@ -27,12 +27,12 @@ void Attacking<T>::shootTarget()
   std::cout << "_view= " << _view << std::endl;
   _view->rotateGun(getTargetAngle());
   // TODO magic number = tank length
-  Shell shell(_textureShader,
-              glm::vec3(_view->position().x, _view->position().y, 0.5f),
-              glm::radians(angle),
-              getTargetDistance(),
-              _shellSize);
-  _shells.push_back(shell);
+  _shells.emplace_back(
+    _textureShader,
+    glm::vec3(_view->position().x, _view->position().y, 0.5f),
+    glm::radians(angle),
+    getTargetDistance(),
+    _shellSize);
   _target->takeDamage(_shellSize);
   reload();
 }
