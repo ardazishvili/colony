@@ -15,7 +15,8 @@ Application::Application() :
           glm::vec3(0.0f, 0.0f, 0.0f),
           glm::vec3(0.0f, 0.0f, 1.0f))
 {
-  _window = std::make_unique<Window>(_eventManager, _camera);
+  _window =
+    std::make_unique<Window>(_eventManager, _camera, _view, _projection);
   _view = glm::lookAt(_camera.eye(), _camera.reference(), _camera.up());
   _projection = glm::perspective(glm::radians(_camera.fov()),
                                  _window->width() / _window->height(),
@@ -85,7 +86,7 @@ Application::Application() :
                                        10.0f * yScale,
                                        256 / 2,
                                        zScale);
-  _game = std::make_unique<Game>(_window->_window, _view, _projection);
+  _game = std::make_unique<Game>(_view, _projection);
   _game->addTerrain(_terrain.get());
   auto mapObstacles =
     ::makeObstaclesSegment(*_colorNonFlatShader,

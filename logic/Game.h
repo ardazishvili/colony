@@ -23,7 +23,7 @@ using Shrouds = std::vector<std::shared_ptr<Shroud>>;
 class Game
 {
 public:
-  Game(GLFWwindow* window, glm::mat4& view, glm::mat4& projection);
+  Game(glm::mat4& view, glm::mat4& projection);
   void tick();
   void addTank(std::shared_ptr<Tank> tank);
   void addStructure(std::shared_ptr<GroundStructure> buildable);
@@ -35,7 +35,6 @@ public:
   AttackUnit* getAttackUnit(const glm::vec3& mousePoint, bool select = false);
   VehicleGroup getTanks(Points area);
   Buildable* getStructure(const glm::vec3& mousePoint);
-  void showDebug();
   void clearPanel(Panel::Type type);
   bool panelIsEmpty(Panel::Type type);
   glm::vec3 getNearestShroudPositionFlat(glm::vec3 p) const;
@@ -50,7 +49,6 @@ private:
   void displayPlants();
   void displayControl();
 
-  GLFWwindow* _window;
   glm::mat4& _view;
   glm::mat4& _projection;
   AttackUnits _tanks;

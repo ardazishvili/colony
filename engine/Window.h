@@ -10,7 +10,10 @@
 class Window
 {
 public:
-  Window(std::unique_ptr<EventManager>& em, Camera& c);
+  Window(std::unique_ptr<EventManager>& em,
+         Camera& c,
+         glm::mat4& view,
+         glm::mat4& projection);
   Window(const Window&) = delete;
   Window(Window&&) = delete;
   Window& operator=(const Window&) = delete;
@@ -25,6 +28,7 @@ public:
   GLFWwindow* _window;
 
 private:
+  void showDebug();
   void error_cb(int error, const char* description);
   void mouse_cb(GLFWwindow* window, double xpos, double ypos);
   void keyboard_cb(GLFWwindow* window,
@@ -47,6 +51,8 @@ private:
   float _screenHeight;
   std::unique_ptr<EventManager>& _eventManager;
   Camera& _camera;
+  glm::mat4& _view;
+  glm::mat4& _projection;
 };
 
 #endif

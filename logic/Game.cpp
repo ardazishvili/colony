@@ -9,8 +9,8 @@
 #include <iomanip>
 #include <iostream>
 
-Game::Game(GLFWwindow* window, glm::mat4& view, glm::mat4& projection) :
-  _window(window), _view(view), _projection(projection)
+Game::Game(glm::mat4& view, glm::mat4& projection) :
+  _view(view), _projection(projection)
 {
 }
 
@@ -35,8 +35,6 @@ void Game::tick()
   displayStructures();
   displayPlants();
   displayControl();
-
-  showDebug();
 }
 
 void Game::addTank(std::shared_ptr<Tank> tank)
@@ -163,25 +161,6 @@ Buildable* Game::getStructure(const glm::vec3& mousePoint)
 
   _selectedStructure = nullptr;
   return _selectedStructure;
-}
-
-void Game::showDebug()
-{
-  auto flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize |
-               ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar |
-               ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs;
-  ImGui::Begin("3dCoordinates", NULL, flags);
-  int screenWidth, screenHeight;
-  glfwGetWindowSize(_window, &screenWidth, &screenHeight);
-  ImGui::SetWindowPos(ImVec2(0, screenHeight - 22));
-  ImGui::SetWindowSize(ImVec2(500, 22));
-  auto pos = EventManager::unProject(_window, _view, _projection);
-  std::stringstream ss;
-  ss << "x:" << std::setw(5) << std::setprecision(2) << pos.x
-     << "; y:" << std::setw(5) << std::setprecision(2) << pos.y
-     << "; z: " << pos.z;
-  ImGui::Text(ss.str().c_str());
-  ImGui::End();
 }
 
 void Game::clearPanel(Panel::Type type)
