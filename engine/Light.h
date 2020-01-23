@@ -15,8 +15,8 @@ class Light
 public:
   Light(glm::vec3 position,
         Camera& camera,
-        float screenWidth,
-        float screenHeight);
+        glm::mat4& view,
+        glm::mat4& projection);
   ~Light();
   void setShader(Shader* shader);
   void render();

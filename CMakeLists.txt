@@ -6,6 +6,8 @@ project(Colony)
 add_executable(colony
     engine/Application.h
     engine/Application.cpp
+    engine/Window.h
+    engine/Window.cpp
 		Timer.cpp
 		Timer.h
 		engine/Animation.cpp

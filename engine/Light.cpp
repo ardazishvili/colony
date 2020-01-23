@@ -43,15 +43,14 @@ float vertices[] = {
 
 Light::Light(glm::vec3 position,
              Camera& camera,
-             float screenWidth,
-             float screenHeight) :
+             glm::mat4& view,
+             glm::mat4& projection) :
   _position(position),
   _camera(camera)
 {
   init();
-  _view = glm::lookAt(camera.eye(), camera.reference(), camera.up());
-  _projection = glm::perspective(
-    glm::radians(camera.fov()), screenWidth / screenHeight, 0.01f, 1000.0f);
+  _view = view;
+  _projection = _projection;
   _model = glm::mat4(1.0f);
 }
 

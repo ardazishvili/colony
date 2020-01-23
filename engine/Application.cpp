@@ -7,151 +7,23 @@
 
 #include "../globals.h"
 #include "Application.h"
-#include "LinesShader.h"
-#include "ModelLoader.h"
-#include "SkyboxShader.h"
 
 using namespace std::placeholders;
-
-void Application::processInput(GLFWwindow* window)
-{
-  _camera.updateSpeed();
-}
-
-Application* appPtr;
-void error_callback(int error, const char* description)
-{
-  if (appPtr) {
-    appPtr->error_cb(error, description);
-  }
-}
-
-void mouse_callback(GLFWwindow* window, double xpos, double ypos)
-{
-  if (appPtr) {
-    appPtr->mouse_cb(window, xpos, ypos);
-  }
-}
-
-void keyboard_callback(GLFWwindow* window,
-                       int key,
-                       int scancode,
-                       int action,
-                       int mods)
-{
-  if (appPtr) {
-    appPtr->keyboard_cb(window, key, scancode, action, mods);
-  }
-}
-
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
-{
-  if (appPtr) {
-    appPtr->scroll_cb(window, xoffset, yoffset);
-  }
-}
-
-void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
-{
-  if (appPtr) {
-    appPtr->mouse_button_cb(window, button, action, mods);
-  }
-}
-
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-  if (appPtr) {
-    appPtr->mouse_cb(window, width, height);
-  }
-}
-
-void Application::error_cb(int error, const char* description)
-{
-  fprintf(stderr, "Glfw Error %d: %s\n", error, description);
-}
-
-void Application::mouse_cb(GLFWwindow* window, double xpos, double ypos)
-{
-  _eventManager->handleMouseMove(window, xpos, ypos);
-}
-
-void Application::keyboard_cb(GLFWwindow* window,
-                              int key,
-                              int scancode,
-                              int action,
-                              int mods)
-{
-  _eventManager->handleKeyPress(window, key, scancode, action, mods);
-}
-
-void Application::scroll_cb(GLFWwindow* window, double xoffset, double yoffset)
-{
-  _camera.zoom(yoffset);
-}
-
-void Application::mouse_button_cb(GLFWwindow* window,
-                                  int button,
-                                  int action,
-                                  int mods)
-{
-  _eventManager->handleMousePressed(button, action);
-}
-
-void Application::framebuffer_size_cb(GLFWwindow* window, int width, int height)
-{
-  glViewport(0, 0, width, height);
-}
 
 Application::Application() :
   _camera(glm::vec3(0.0f, -45.0f, 60.0f),
           glm::vec3(0.0f, 0.0f, 0.0f),
           glm::vec3(0.0f, 0.0f, 1.0f))
 {
-  appPtr = this;
-  glfwSetErrorCallback(error_callback);
-  glfwInit();
-  const char* glsl_version = "#version 450";
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
-
-  int count;
-  GLFWmonitor** monitors = glfwGetMonitors(&count);
-  const GLFWvidmode* mode = glfwGetVideoMode(monitors[1]);
-  _screenWidth = mode->width;
-  _screenHeight = mode->height - 150;
-  _window =
-    glfwCreateWindow(_screenWidth, _screenHeight, "LearnOPenGl", NULL, NULL);
-  if (_window == NULL) {
-    glfwTerminate();
-    throw "Application ctor failed: failed to create window";
-  }
-
-  IMGUI_CHECKVERSION();
-  ImGui::CreateContext();
-  ImGuiIO& io = ImGui::GetIO();
-  (void)io;
-  ImGui::StyleColorsDark();
-  ImGui_ImplGlfw_InitForOpenGL(_window, true);
-  ImGui_ImplOpenGL3_Init(glsl_version);
-  ImGui::GetStyle().WindowRounding = 0.0f;
-  ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-  glfwMakeContextCurrent(_window);
-  glfwSwapInterval(1);
-
-  auto err = glewInit();
-  if (err) {
-    throw "Application ctor failed: Failed to initialize OpenGL loader!";
-  }
-
-  glViewport(0, 0, _screenWidth, _screenHeight);
-  glfwSetFramebufferSizeCallback(_window, framebuffer_size_callback);
-  glfwSetCursorPosCallback(_window, mouse_callback);
-  glfwSetScrollCallback(_window, scroll_callback);
-  glfwSetMouseButtonCallback(_window, mouse_button_callback);
-  glfwSetKeyCallback(_window, keyboard_callback);
+  _window = std::make_unique<Window>(_eventManager, _camera);
+  _view = glm::lookAt(_camera.eye(), _camera.reference(), _camera.up());
+  _projection = glm::perspective(glm::radians(_camera.fov()),
+                                 _window->width() / _window->height(),
+                                 0.01f,
+                                 1000.0f);
 
   _light = std::make_unique<Light>(
-    glm::vec3(1.2f, 0.0f, 5.0f), _camera, _screenWidth, _screenHeight);
+    glm::vec3(1.2f, 0.0f, 5.0f), _camera, _view, _projection);
   _colorShader = std::make_unique<PhongShader>(
     _light.get(),
     _camera,
@@ -198,8 +70,6 @@ Application::Application() :
   modelLoader = std::make_unique<ModelLoader>(*_textureShader);
   modelLoader->load();
 
-  glEnable(GL_DEPTH_TEST);
-  /* glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); */
   ImGui_ImplOpenGL3_NewFrame();
   ImGui_ImplGlfw_NewFrame();
   ImGui::NewFrame();
@@ -215,7 +85,7 @@ Application::Application() :
                                        10.0f * yScale,
                                        256 / 2,
                                        zScale);
-  _game = std::make_unique<Game>(_window, _view, _projection);
+  _game = std::make_unique<Game>(_window->_window, _view, _projection);
   _game->addTerrain(_terrain.get());
   auto mapObstacles =
     ::makeObstaclesSegment(*_colorNonFlatShader,
@@ -227,7 +97,7 @@ Application::Application() :
                                    mapObstacles->dimensions());
   _eventManager = std::make_unique<EventManager>(_view,
                                                  _projection,
-                                                 _window,
+                                                 _window->_window,
                                                  _game.get(),
                                                  _camera,
                                                  *_textureShader,
@@ -272,22 +142,8 @@ Application::Application() :
 
 void Application::run()
 {
-  while (!glfwWindowShouldClose(_window)) {
-    glfwPollEvents();
-    processInput(_window);
-
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplGlfw_NewFrame();
-    ImGui::NewFrame();
-    logger.render();
-
-    int display_w, display_h;
-    glfwGetFramebufferSize(_window, &display_w, &display_h);
-    glViewport(0, 0, display_w, display_h);
-    glm::vec4 clear_color = glm::vec4(1.0f, 1.0f, 1.0f, 1.00f);
-    glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glProvokingVertex(GL_FIRST_VERTEX_CONVENTION);
+  while (!glfwWindowShouldClose(_window->_window)) {
+    _window->preUpdate();
 
     ImGui::Begin("camera");
     static float camera_z = 60.0f;
@@ -319,33 +175,20 @@ void Application::run()
 
     _view = glm::lookAt(_camera.eye(), _camera.reference(), _camera.up());
     _projection = glm::perspective(glm::radians(_camera.fov()),
-                                   _screenWidth / _screenHeight,
+                                   _window->width() / _window->height(),
                                    0.01f,
                                    1000.0f);
 
     _terrain.get()->render();
-
     _eventManager->tick();
-
     _skybox.get()->render();
-
     /* auto s = Sphere(colorShader, glm::vec3(0.0f, 0.0f, 5.0f), 1.0f, 50); */
     /* s.render(); */
-
     _terrain.get()->renderSub();
-
-    ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    glBindVertexArray(0);
-    glfwSwapBuffers(_window);
+    _window->postUpdate();
   }
 }
 
 Application::~Application()
 {
-  ImGui_ImplOpenGL3_Shutdown();
-  ImGui_ImplGlfw_Shutdown();
-  ImGui::DestroyContext();
-  glfwDestroyWindow(_window);
-  glfwTerminate();
 }
