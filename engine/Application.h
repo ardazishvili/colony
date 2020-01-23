@@ -45,7 +45,7 @@ private:
   std::unique_ptr<Window> _window;
   Camera _camera;
   std::unique_ptr<Terrain> _terrain;
-  std::function<void(Event& event)> _onEvent;
+  std::function<void(std::unique_ptr<Event> event)> _onEvent;
 
   glm::mat4 _view;
   glm::mat4 _projection;

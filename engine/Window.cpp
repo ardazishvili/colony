@@ -3,14 +3,18 @@
 
 #include "../globals.h"
 #include "Window.h"
-#include "events/ColonyEvents.h"
+#include "events/ColonyErrorEvent.h"
+#include "events/ColonyKeyPressEvent.h"
+#include "events/ColonyKeyReleaseEvent.h"
+#include "events/ColonyKeyRepeatEvent.h"
 
 #include "../imgui/imgui.h"
 #include "../imgui/imgui_impl_glfw.h"
 #include "../imgui/imgui_impl_opengl3.h"
 
-std::function<void(Event& event)> Window::_onEvent = [](Event&) {
-};
+std::function<void(std::unique_ptr<Event> event)> Window::_onEvent =
+  [](std::unique_ptr<Event> event) {
+  };
 Window* winPtr;
 
 void Window::processInput(GLFWwindow* window)
@@ -18,28 +22,10 @@ void Window::processInput(GLFWwindow* window)
   _camera.updateSpeed();
 }
 
-void error_callback(int error, const char* description)
-{
-  if (winPtr) {
-    winPtr->error_cb(error, description);
-  }
-}
-
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
   if (winPtr) {
     winPtr->mouse_cb(window, xpos, ypos);
-  }
-}
-
-void keyboard_callback(GLFWwindow* window,
-                       int key,
-                       int scancode,
-                       int action,
-                       int mods)
-{
-  if (winPtr) {
-    winPtr->keyboard_cb(window, key, scancode, action, mods);
   }
 }
 
@@ -64,23 +50,9 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
   }
 }
 
-void Window::error_cb(int error, const char* description)
-{
-  fprintf(stderr, "Glfw Error %d: %s\n", error, description);
-}
-
 void Window::mouse_cb(GLFWwindow* window, double xpos, double ypos)
 {
   _eventManager->handleMouseMove(window, xpos, ypos);
-}
-
-void Window::keyboard_cb(GLFWwindow* window,
-                         int key,
-                         int scancode,
-                         int action,
-                         int mods)
-{
-  _eventManager->handleKeyPress(window, key, scancode, action, mods);
 }
 
 void Window::scroll_cb(GLFWwindow* window, double xoffset, double yoffset)
@@ -105,7 +77,7 @@ Window::Window(std::unique_ptr<EventManager>& em,
                Camera& c,
                glm::mat4& view,
                glm::mat4& projection,
-               std::function<void(Event& event)> onEvent) :
+               std::function<void(std::unique_ptr<Event> event)> onEvent) :
   _camera(c),
   _eventManager(em), _view(view), _projection(projection)
 {
@@ -147,15 +119,12 @@ Window::Window(std::unique_ptr<EventManager>& em,
 
   glViewport(0, 0, _screenWidth, _screenHeight);
 
-  /* glfwSetErrorCallback(error_callback); */
   /* glfwSetFramebufferSizeCallback(_window, framebuffer_size_callback); */
   /* glfwSetCursorPosCallback(_window, mouse_callback); */
   /* glfwSetScrollCallback(_window, scroll_callback); */
   /* glfwSetMouseButtonCallback(_window, mouse_button_callback); */
-  /* glfwSetKeyCallback(_window, keyboard_callback); */
   glfwSetErrorCallback([](int, const char*) {
-    auto e = ErrorEvent();
-    _onEvent(e);
+    _onEvent(std::make_unique<ErrorEvent>());
   });
   glfwSetFramebufferSizeCallback(_window, framebuffer_size_callback);
   glfwSetCursorPosCallback(_window, mouse_callback);
@@ -164,8 +133,20 @@ Window::Window(std::unique_ptr<EventManager>& em,
   glfwSetKeyCallback(
     _window,
     [](GLFWwindow* window, int key, int scancode, int action, int mods) {
-      auto e = ColonyKeyPressEvent(window, key, scancode, action, mods);
-      _onEvent(e);
+      switch (action) {
+        case GLFW_PRESS:
+          _onEvent(
+            std::make_unique<ColonyKeyPressEvent>(window, key, scancode, mods));
+          break;
+        case GLFW_RELEASE:
+          _onEvent(std::make_unique<ColonyKeyReleaseEvent>(
+            window, key, scancode, mods));
+          break;
+        case GLFW_REPEAT:
+          _onEvent(std::make_unique<ColonyKeyRepeatEvent>(
+            window, key, scancode, mods));
+          break;
+      }
     });
 
   glEnable(GL_DEPTH_TEST);

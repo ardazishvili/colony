@@ -29,18 +29,12 @@ public:
                std::shared_ptr<ObstaclesSegment> mo,
                AStar* astar);
   void tick();
-  void handleKeyPress(GLFWwindow* window,
-                      int key,
-                      int scancode,
-                      int action,
-                      int mods);
   void handleMouseMove(GLFWwindow* window, double xpos, double ypos);
   void handleMousePressed(int button, int action);
   void handleMouseReleased();
   static glm::vec3 unProject(Window* window, glm::mat4& view, glm::mat4& proj);
   void setStructureToBuild(std::shared_ptr<GroundStructure> structure);
   void setStructureToBuildStage(BuildStage stage);
-  /* void process(Event& event); */
 
 private:
   void handleMousePressedLeft();
@@ -80,6 +74,8 @@ private:
   AStar* _astar;
 
   friend class ColonyKeyPressEvent;
+  friend class ColonyKeyReleaseEvent;
+  friend class ColonyKeyRepeatEvent;
 };
 
 #endif

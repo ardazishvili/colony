@@ -15,8 +15,8 @@ Application::Application() :
           glm::vec3(0.0f, 0.0f, 0.0f),
           glm::vec3(0.0f, 0.0f, 1.0f))
 {
-  _onEvent = [this](Event& event) {
-    event.process(&_camera, _eventManager.get());
+  _onEvent = [this](std::unique_ptr<Event> event) {
+    event->process(&_camera, _eventManager.get());
   };
   _window = std::make_unique<Window>(
     _eventManager, _camera, _view, _projection, _onEvent);
