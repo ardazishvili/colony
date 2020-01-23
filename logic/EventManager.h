@@ -7,16 +7,18 @@
 #include "../engine/HeightsSegment.h"
 #include "../engine/ObstaclesSegment.h"
 #include "../engine/RectangleShape.h"
+#include "../engine/events/Event.h"
 #include "../math/AStar.h"
 #include "Game.h"
 #include "Tank.h"
 
+class Window;
 class EventManager
 {
 public:
   EventManager(glm::mat4& view,
                glm::mat4& projection,
-               GLFWwindow* window,
+               Window* window,
                Game* game,
                Camera& camera,
                Shader& textureShader,
@@ -35,11 +37,10 @@ public:
   void handleMouseMove(GLFWwindow* window, double xpos, double ypos);
   void handleMousePressed(int button, int action);
   void handleMouseReleased();
-  static glm::vec3 unProject(GLFWwindow* window,
-                             glm::mat4& view,
-                             glm::mat4& proj);
+  static glm::vec3 unProject(Window* window, glm::mat4& view, glm::mat4& proj);
   void setStructureToBuild(std::shared_ptr<GroundStructure> structure);
   void setStructureToBuildStage(BuildStage stage);
+  /* void process(Event& event); */
 
 private:
   void handleMousePressedLeft();
@@ -49,7 +50,7 @@ private:
 
   glm::mat4& _view;
   glm::mat4& _projection;
-  GLFWwindow* _window;
+  Window* _window;
   Camera& _camera;
   Game* _game;
   Shader& _textureShader;
@@ -77,6 +78,8 @@ private:
   std::shared_ptr<ObstaclesSegment> _obstaclesSegment;
   std::shared_ptr<ObstaclesSegment> _mapObstacles;
   AStar* _astar;
+
+  friend class ColonyKeyPressEvent;
 };
 
 #endif

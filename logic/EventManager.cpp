@@ -2,33 +2,37 @@
 
 #include <GL/glew.h>
 
+#include "../engine/Window.h"
 #include "../globals.h"
 #include "EventManager.h"
 #include "Hq.h"
 #include "Turbine.h"
 
-glm::vec3 EventManager::unProject(GLFWwindow* window,
+glm::vec3 EventManager::unProject(Window* window,
                                   glm::mat4& view,
                                   glm::mat4& proj)
 {
   GLfloat depth;
 
   double xpos, ypos;
-  glfwGetCursorPos(window, &xpos, &ypos);
-  int screenWidth, screenHeight;
-  glfwGetWindowSize(window, &screenWidth, &screenHeight);
-  glReadPixels(
-    xpos, screenHeight - ypos - 1, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
+  window->getCursorPos(&xpos, &ypos);
+  glReadPixels(xpos,
+               window->height() - ypos - 1,
+               1,
+               1,
+               GL_DEPTH_COMPONENT,
+               GL_FLOAT,
+               &depth);
 
-  glm::vec4 viewport = glm::vec4(0, 0, screenWidth, screenHeight);
-  glm::vec3 wincoord = glm::vec3(xpos, screenHeight - ypos - 1, depth);
+  glm::vec4 viewport = glm::vec4(0, 0, window->width(), window->height());
+  glm::vec3 wincoord = glm::vec3(xpos, window->height() - ypos - 1, depth);
   glm::vec3 objcoord = glm::unProject(wincoord, view, proj, viewport);
   return objcoord;
 }
 
 EventManager::EventManager(glm::mat4& view,
                            glm::mat4& projection,
-                           GLFWwindow* window,
+                           Window* window,
                            Game* game,
                            Camera& camera,
                            Shader& textureShader,
@@ -45,8 +49,13 @@ EventManager::EventManager(glm::mat4& view,
   _terrain(terrain), _selection(linesShader, camera), _mapObstacles(mo),
   _astar(astar)
 {
-  _game->setControl(std::make_unique<Control>(
-    _game, this, _window, textureShader, linesShader, _terrain, _astar));
+  _game->setControl(std::make_unique<Control>(_game,
+                                              this,
+                                              _window->_window,
+                                              textureShader,
+                                              linesShader,
+                                              _terrain,
+                                              _astar));
 }
 
 void EventManager::tick()
@@ -71,114 +80,119 @@ void EventManager::handleKeyPress(GLFWwindow* window,
                                   int action,
                                   int mods)
 {
-  if (action == GLFW_PRESS) {
-    if (key == GLFW_KEY_LEFT_SHIFT) {
-      _shiftPressed = true;
-    }
-  }
-  if (action == GLFW_RELEASE) {
-    if (key == GLFW_KEY_LEFT_SHIFT) {
-      _shiftPressed = false;
-    }
-    if (key == GLFW_KEY_Z) {
-      if (_structureSelected) {
-        auto factory = dynamic_cast<TankFactory*>(_structureSelected);
-        factory->createTank(
-          _game, Tank::Type::Medium, HealthLevel::High, Shell::Size::Medium);
-      }
-    }
-    if (key == GLFW_KEY_X) {
-      std::cout << "X pressed" << std::endl;
-      if (_structureToBuild == nullptr) {
-        _structureToBuildStage = BuildStage::SetAngle;
-        auto tankFactory =
-          std::make_shared<TankFactory>(_textureShader,
-                                        _linesShader,
-                                        _astar,
-                                        unProject(_window, _view, _projection));
-        _game->addStructure(tankFactory);
-        _structureToBuild = tankFactory;
-      } else {
-        _structureToBuild->commit();
-        _structureToBuild = nullptr;
-      }
-    }
-    if (key == GLFW_KEY_C) {
-      std::cout << "C pressed" << std::endl;
-      if (_structureToBuild == nullptr) {
-        _structureToBuildStage = BuildStage::SetAngle;
-        auto hq = std::make_shared<Hq>(_game,
-                                       this,
-                                       _textureShader,
-                                       _linesShader,
-                                       _astar,
-                                       unProject(_window, _view, _projection),
-                                       _terrain);
-        _game->addStructure(hq);
-        _structureToBuild = hq;
-      } else {
-        _structureToBuild->commit();
-        _structureToBuild = nullptr;
-      }
-    }
-    if (key == GLFW_KEY_B) {
-      std::cout << "B pressed" << std::endl;
-      if (_structureToBuild == nullptr) {
-        _structureToBuildStage = BuildStage::SetAngle;
-        auto b =
-          std::make_shared<Barrier>(_textureShader,
-                                    _linesShader,
-                                    unProject(_window, _view, _projection),
-                                    _terrain,
-                                    _astar);
-        _game->addStructure(b);
-        _game->addShroud(b->shroud());
-        _structureToBuild = b;
-      } else {
-        _structureToBuild->commit();
-        _structureToBuild = nullptr;
-      }
-    }
-    if (key == GLFW_KEY_T) {
-      std::cout << "T pressed" << std::endl;
-      if (_structureToBuild == nullptr) {
-        _structureToBuildStage = BuildStage::SetAngle;
-        auto b =
-          std::make_shared<Turbine>(_textureShader,
-                                    _linesShader,
-                                    _game,
-                                    unProject(_window, _view, _projection));
-        _game->addStructure(b);
-        _structureToBuild = b;
-      } else {
-        _structureToBuild->commit();
-        _structureToBuild = nullptr;
-      }
-    }
-    if (key == GLFW_KEY_ESCAPE) {
-      glfwSetWindowShouldClose(_window, true);
-    }
-  } else if (action == GLFW_REPEAT) {
-    if (key == GLFW_KEY_LEFT) {
-      _camera.rotateLeft();
-    }
-    if (key == GLFW_KEY_RIGHT) {
-      _camera.rotateRight();
-    }
-    if (key == GLFW_KEY_W) {
-      _camera.moveForward();
-    }
-    if (key == GLFW_KEY_S) {
-      _camera.moveBackward();
-    }
-    if (key == GLFW_KEY_A) {
-      _camera.moveLeft();
-    }
-    if (key == GLFW_KEY_D) {
-      _camera.moveRight();
-    }
-  } else if (action == GLFW_PRESS) {
-  }
+  /* if (action == GLFW_PRESS) { */
+  /*   if (key == GLFW_KEY_LEFT_SHIFT) { */
+  /*     _shiftPressed = true; */
+  /*   } */
+  /* } */
+  /* if (action == GLFW_RELEASE) { */
+  /*   if (key == GLFW_KEY_LEFT_SHIFT) { */
+  /*     _shiftPressed = false; */
+  /*   } */
+  /*   if (key == GLFW_KEY_Z) { */
+  /*     if (_structureSelected) { */
+  /*       auto factory = dynamic_cast<TankFactory*>(_structureSelected); */
+  /*       factory->createTank( */
+  /*         _game, Tank::Type::Medium, HealthLevel::High, Shell::Size::Medium);
+   */
+  /*     } */
+  /*   } */
+  /*   if (key == GLFW_KEY_X) { */
+  /*     std::cout << "X pressed" << std::endl; */
+  /*     if (_structureToBuild == nullptr) { */
+  /*       _structureToBuildStage = BuildStage::SetAngle; */
+  /*       auto tankFactory = */
+  /*         std::make_shared<TankFactory>(_textureShader, */
+  /*                                       _linesShader, */
+  /*                                       _astar, */
+  /*                                       unProject(_window, _view,
+   * _projection)); */
+  /*       _game->addStructure(tankFactory); */
+  /*       _structureToBuild = tankFactory; */
+  /*     } else { */
+  /*       _structureToBuild->commit(); */
+  /*       _structureToBuild = nullptr; */
+  /*     } */
+  /*   } */
+  /*   if (key == GLFW_KEY_C) { */
+  /*     std::cout << "C pressed" << std::endl; */
+  /*     if (_structureToBuild == nullptr) { */
+  /*       _structureToBuildStage = BuildStage::SetAngle; */
+  /*       auto hq = std::make_shared<Hq>(_game, */
+  /*                                      this, */
+  /*                                      _textureShader, */
+  /*                                      _linesShader, */
+  /*                                      _astar, */
+  /*                                      unProject(_window, _view,
+   * _projection), */
+  /*                                      _terrain); */
+  /*       _game->addStructure(hq); */
+  /*       _structureToBuild = hq; */
+  /*     } else { */
+  /*       _structureToBuild->commit(); */
+  /*       _structureToBuild = nullptr; */
+  /*     } */
+  /*   } */
+  /*   if (key == GLFW_KEY_B) { */
+  /*     std::cout << "B pressed" << std::endl; */
+  /*     if (_structureToBuild == nullptr) { */
+  /*       _structureToBuildStage = BuildStage::SetAngle; */
+  /*       auto b = */
+  /*         std::make_shared<Barrier>(_textureShader, */
+  /*                                   _linesShader, */
+  /*                                   unProject(_window, _view, _projection),
+   */
+  /*                                   _terrain, */
+  /*                                   _astar); */
+  /*       _game->addStructure(b); */
+  /*       _game->addShroud(b->shroud()); */
+  /*       _structureToBuild = b; */
+  /*     } else { */
+  /*       _structureToBuild->commit(); */
+  /*       _structureToBuild = nullptr; */
+  /*     } */
+  /*   } */
+  /*   if (key == GLFW_KEY_T) { */
+  /*     std::cout << "T pressed" << std::endl; */
+  /*     if (_structureToBuild == nullptr) { */
+  /*       _structureToBuildStage = BuildStage::SetAngle; */
+  /*       auto b = */
+  /*         std::make_shared<Turbine>(_textureShader, */
+  /*                                   _linesShader, */
+  /*                                   _game, */
+  /*                                   unProject(_window, _view, _projection));
+   */
+  /*       _game->addStructure(b); */
+  /*       _structureToBuild = b; */
+  /*     } else { */
+  /*       _structureToBuild->commit(); */
+  /*       _structureToBuild = nullptr; */
+  /*     } */
+  /*   } */
+  /*   if (key == GLFW_KEY_ESCAPE) { */
+  /*     glfwSetWindowShouldClose(_window->_window, true); */
+  /*   } */
+  /* } else if (action == GLFW_REPEAT) { */
+  /*   if (key == GLFW_KEY_LEFT) { */
+  /*     _camera.rotateLeft(); */
+  /*   } */
+  /*   if (key == GLFW_KEY_RIGHT) { */
+  /*     _camera.rotateRight(); */
+  /*   } */
+  /*   if (key == GLFW_KEY_W) { */
+  /*     _camera.moveForward(); */
+  /*   } */
+  /*   if (key == GLFW_KEY_S) { */
+  /*     _camera.moveBackward(); */
+  /*   } */
+  /*   if (key == GLFW_KEY_A) { */
+  /*     _camera.moveLeft(); */
+  /*   } */
+  /*   if (key == GLFW_KEY_D) { */
+  /*     _camera.moveRight(); */
+  /*   } */
+  /* } else if (action == GLFW_PRESS) { */
+  /* } */
 }
 
 void EventManager::handleMouseMove(GLFWwindow* window, double xpos, double ypos)
@@ -263,7 +277,7 @@ void EventManager::handleMousePressedMiddle()
 {
   _middleButtonPressed = true;
   double xpos, ypos;
-  glfwGetCursorPos(_window, &xpos, &ypos);
+  _window->getCursorPos(&xpos, &ypos);
   _middleLastPressed = glm::vec2(xpos, ypos);
 }
 
@@ -366,3 +380,7 @@ void EventManager::setStructureToBuildStage(BuildStage stage)
   _structureToBuildStage = stage;
 }
 
+/* void EventManager::process(Event& event) */
+/* { */
+/*   event.process(); */
+/* } */

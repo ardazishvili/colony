@@ -15,6 +15,7 @@
 #include "Skybox.h"
 #include "SkyboxShader.h"
 #include "Window.h"
+#include "events/Event.h"
 
 class Application
 {
@@ -44,6 +45,7 @@ private:
   std::unique_ptr<Window> _window;
   Camera _camera;
   std::unique_ptr<Terrain> _terrain;
+  std::function<void(Event& event)> _onEvent;
 
   glm::mat4 _view;
   glm::mat4 _projection;

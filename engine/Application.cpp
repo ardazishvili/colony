@@ -15,8 +15,11 @@ Application::Application() :
           glm::vec3(0.0f, 0.0f, 0.0f),
           glm::vec3(0.0f, 0.0f, 1.0f))
 {
-  _window =
-    std::make_unique<Window>(_eventManager, _camera, _view, _projection);
+  _onEvent = [this](Event& event) {
+    event.process(&_camera, _eventManager.get());
+  };
+  _window = std::make_unique<Window>(
+    _eventManager, _camera, _view, _projection, _onEvent);
   _view = glm::lookAt(_camera.eye(), _camera.reference(), _camera.up());
   _projection = glm::perspective(glm::radians(_camera.fov()),
                                  _window->width() / _window->height(),
@@ -98,7 +101,7 @@ Application::Application() :
                                    mapObstacles->dimensions());
   _eventManager = std::make_unique<EventManager>(_view,
                                                  _projection,
-                                                 _window->_window,
+                                                 _window.get(),
                                                  _game.get(),
                                                  _camera,
                                                  *_textureShader,

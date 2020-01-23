@@ -8,6 +8,7 @@ add_executable(colony
     engine/Application.cpp
     engine/Window.h
     engine/Window.cpp
+    engine/events/Event.h
 		Timer.cpp
 		Timer.h
 		engine/Animation.cpp

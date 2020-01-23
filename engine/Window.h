@@ -6,6 +6,7 @@
 
 #include "../logic/EventManager.h"
 #include "Camera.h"
+#include "events/Event.h"
 
 class Window
 {
@@ -13,7 +14,8 @@ public:
   Window(std::unique_ptr<EventManager>& em,
          Camera& c,
          glm::mat4& view,
-         glm::mat4& projection);
+         glm::mat4& projection,
+         std::function<void(Event& event)> onEvent);
   Window(const Window&) = delete;
   Window(Window&&) = delete;
   Window& operator=(const Window&) = delete;
@@ -24,6 +26,7 @@ public:
   void postUpdate();
   float width() const;
   float height() const;
+  void getCursorPos(double* xpos, double* ypos) const;
 
   GLFWwindow* _window;
 
@@ -53,6 +56,8 @@ private:
   Camera& _camera;
   glm::mat4& _view;
   glm::mat4& _projection;
+
+  static std::function<void(Event& event)> _onEvent;
 };
 
 #endif

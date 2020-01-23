@@ -3,11 +3,14 @@
 
 #include "../globals.h"
 #include "Window.h"
+#include "events/ColonyEvents.h"
 
 #include "../imgui/imgui.h"
 #include "../imgui/imgui_impl_glfw.h"
 #include "../imgui/imgui_impl_opengl3.h"
 
+std::function<void(Event& event)> Window::_onEvent = [](Event&) {
+};
 Window* winPtr;
 
 void Window::processInput(GLFWwindow* window)
@@ -101,10 +104,12 @@ void Window::framebuffer_size_cb(GLFWwindow* window, int width, int height)
 Window::Window(std::unique_ptr<EventManager>& em,
                Camera& c,
                glm::mat4& view,
-               glm::mat4& projection) :
+               glm::mat4& projection,
+               std::function<void(Event& event)> onEvent) :
   _camera(c),
   _eventManager(em), _view(view), _projection(projection)
 {
+  _onEvent = onEvent;
   winPtr = this;
   glfwInit();
   const char* glsl_version = "#version 450";
@@ -141,12 +146,27 @@ Window::Window(std::unique_ptr<EventManager>& em,
   }
 
   glViewport(0, 0, _screenWidth, _screenHeight);
-  glfwSetErrorCallback(error_callback);
+
+  /* glfwSetErrorCallback(error_callback); */
+  /* glfwSetFramebufferSizeCallback(_window, framebuffer_size_callback); */
+  /* glfwSetCursorPosCallback(_window, mouse_callback); */
+  /* glfwSetScrollCallback(_window, scroll_callback); */
+  /* glfwSetMouseButtonCallback(_window, mouse_button_callback); */
+  /* glfwSetKeyCallback(_window, keyboard_callback); */
+  glfwSetErrorCallback([](int, const char*) {
+    auto e = ErrorEvent();
+    _onEvent(e);
+  });
   glfwSetFramebufferSizeCallback(_window, framebuffer_size_callback);
   glfwSetCursorPosCallback(_window, mouse_callback);
   glfwSetScrollCallback(_window, scroll_callback);
   glfwSetMouseButtonCallback(_window, mouse_button_callback);
-  glfwSetKeyCallback(_window, keyboard_callback);
+  glfwSetKeyCallback(
+    _window,
+    [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+      auto e = ColonyKeyPressEvent(window, key, scancode, action, mods);
+      _onEvent(e);
+    });
 
   glEnable(GL_DEPTH_TEST);
   /* glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); */
@@ -208,11 +228,16 @@ void Window::showDebug()
   ImGui::Begin("3dCoordinates", NULL, flags);
   ImGui::SetWindowPos(ImVec2(0, _screenHeight - 22));
   ImGui::SetWindowSize(ImVec2(500, 22));
-  auto pos = EventManager::unProject(_window, _view, _projection);
+  auto pos = EventManager::unProject(this, _view, _projection);
   std::stringstream ss;
   ss << "x:" << std::setw(5) << std::setprecision(2) << pos.x
      << "; y:" << std::setw(5) << std::setprecision(2) << pos.y
      << "; z: " << pos.z;
   ImGui::Text(ss.str().c_str());
   ImGui::End();
+}
+
+void Window::getCursorPos(double* xpos, double* ypos) const
+{
+  glfwGetCursorPos(_window, xpos, ypos);
 }
