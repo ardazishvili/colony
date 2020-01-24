@@ -3,94 +3,10 @@ set (CMAKE_CXX_STANDARD 17)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
 project(Colony)
 
+add_subdirectory(fig)
+
+link_directories(fig/cbuild)
 add_executable(colony
-    fig/Application.h
-    fig/Window.h
-    fig/events/Event.h
-    fig/events/EventFabric.h
-    fig/math/AStar.cpp
-    fig/math/AStar.h
-    fig/math/Noise.cpp
-    fig/math/Noise.h
-    fig/misc/Log.cpp
-    fig/misc/Log.h
-    fig/misc/Logger.cpp
-    fig/misc/Logger.h
-		fig/Timer.cpp
-		fig/Timer.h
-		fig/Animation.cpp
-		fig/Animation.h
-		fig/Camera.cpp
-		fig/Camera.h
-		fig/Light.cpp
-		fig/Light.h
-		fig/Model.cpp
-		fig/Model.h
-		fig/ModelLoader.cpp
-		fig/ModelLoader.h
-		fig/ModelMesh.cpp
-		fig/ModelMesh.h
-		fig/PhongShader.cpp
-		fig/PhongShader.h
-		fig/Shader.cpp
-		fig/Shader.h
-		fig/Terrain.cpp
-		fig/Terrain.h
-		fig/Texture.cpp
-		fig/Texture.h
-		fig/globals.cpp
-		fig/globals.h
-    # fig/Circle.cpp
-    # fig/Circle.h
-    # fig/CircleMesh.cpp
-    # fig/CircleMesh.h
-    fig/Beam.cpp
-    fig/Beam.h
-    fig/HeightsSegment.cpp
-    fig/HeightsSegment.h
-    fig/LinesObject.cpp
-    fig/LinesObject.h
-    fig/LinesShader.cpp
-    fig/LinesShader.h
-    fig/MainTerrainMesh.cpp
-    fig/MainTerrainMesh.h
-    fig/Mesh.cpp
-    fig/Mesh.h
-    fig/ObstaclesSegment.cpp
-    fig/ObstaclesSegment.h
-    fig/Path.cpp
-    fig/Path.h
-    fig/PlainMesh.cpp
-    fig/PlainMesh.h
-    fig/RectangleShape.cpp
-    fig/RectangleShape.h
-    fig/Skybox.cpp
-    fig/Skybox.h
-    fig/SkyboxShader.cpp
-    fig/SkyboxShader.h
-    fig/Sphere.cpp
-    fig/Sphere.h
-    fig/SphereMesh.cpp
-    fig/SphereMesh.h
-    fig/SubTerrainMesh.cpp
-    fig/SubTerrainMesh.h
-    fig/Surface.cpp
-    fig/Surface.h
-    fig/TerrainMesh.cpp
-    fig/TerrainMesh.h
-    fig/TerrainMeshSegment.cpp
-    fig/TerrainMeshSegment.h
-    fig/Vertex.cpp
-    fig/Vertex.h
-		fig/imgui/imgui.cpp
-		fig/imgui/imgui_demo.cpp
-		fig/imgui/imgui_draw.cpp
-		fig/imgui/imgui_impl_glfw.cpp
-		fig/imgui/imgui_impl_opengl3.cpp
-		fig/imgui/imgui_internal.h
-		fig/imgui/imgui_widgets.cpp
-		fig/imgui/imstb_rectpack.h
-		fig/imgui/imstb_truetype.h
 		logic/Buildable.cpp
 		logic/Buildable.h
 		logic/Control.cpp
@@ -212,4 +128,4 @@ add_executable(colony
     view/UnitView.h
 		)
 
-target_link_libraries(colony glfw dl GL GLEW assimp pthread)
+target_link_libraries(colony fig glfw dl GL GLEW assimp pthread)
