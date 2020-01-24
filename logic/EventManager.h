@@ -76,6 +76,9 @@ private:
   friend class ColonyKeyPressEvent;
   friend class ColonyKeyReleaseEvent;
   friend class ColonyKeyRepeatEvent;
+  friend class ColonyMousePressedEvent;
+  friend class ColonyMouseReleaseEvent;
+  friend class ColonyMouseMoveEvent;
 };
 
 #endif

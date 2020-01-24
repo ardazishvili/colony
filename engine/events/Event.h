@@ -65,16 +65,45 @@ class MouseEvent : public Event
 {
 };
 
-class MousePressEvent : public MouseEvent
+class MouseButtonEvent : public MouseEvent
 {
+public:
+  MouseButtonEvent(int button) : _button(button)
+  {
+  }
+
+protected:
+  int _button;
 };
 
-class MouseReleaseEvent : public MouseEvent
+class MousePressEvent : public MouseButtonEvent
 {
+public:
+  MousePressEvent(int button) : MouseButtonEvent(button)
+  {
+  }
+};
+
+class MouseReleaseEvent : public MouseButtonEvent
+{
+public:
+  MouseReleaseEvent(int button) : MouseButtonEvent(button)
+  {
+  }
 };
 
 class MouseMoveEvent : public MouseEvent
 {
+public:
+  MouseMoveEvent(GLFWwindow* window, double xpos, double ypos) :
+    _window(window), _xpos(xpos), _ypos(ypos)
+  {
+  }
+
+protected:
+  GLFWwindow* _window;
+  double _xpos;
+  double _ypos;
 };
 
 #endif

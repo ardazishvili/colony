@@ -15,6 +15,12 @@ add_executable(colony
     engine/events/ColonyKeyReleaseEvent.cpp
     engine/events/ColonyKeyRepeatEvent.h
     engine/events/ColonyKeyRepeatEvent.cpp
+    engine/events/ColonyMousePressEvent.h
+    engine/events/ColonyMousePressEvent.cpp
+    engine/events/ColonyMouseReleaseEvent.h
+    engine/events/ColonyMouseReleaseEvent.cpp
+    engine/events/ColonyMouseMoveEvent.h
+    engine/events/ColonyMouseMoveEvent.cpp
 		Timer.cpp
 		Timer.h
 		engine/Animation.cpp

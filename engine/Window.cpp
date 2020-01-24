@@ -7,6 +7,9 @@
 #include "events/ColonyKeyPressEvent.h"
 #include "events/ColonyKeyReleaseEvent.h"
 #include "events/ColonyKeyRepeatEvent.h"
+#include "events/ColonyMouseMoveEvent.h"
+#include "events/ColonyMousePressEvent.h"
+#include "events/ColonyMouseReleaseEvent.h"
 
 #include "../imgui/imgui.h"
 #include "../imgui/imgui_impl_glfw.h"
@@ -119,17 +122,31 @@ Window::Window(std::unique_ptr<EventManager>& em,
 
   glViewport(0, 0, _screenWidth, _screenHeight);
 
-  /* glfwSetFramebufferSizeCallback(_window, framebuffer_size_callback); */
-  /* glfwSetCursorPosCallback(_window, mouse_callback); */
-  /* glfwSetScrollCallback(_window, scroll_callback); */
-  /* glfwSetMouseButtonCallback(_window, mouse_button_callback); */
   glfwSetErrorCallback([](int, const char*) {
     _onEvent(std::make_unique<ErrorEvent>());
   });
+
   glfwSetFramebufferSizeCallback(_window, framebuffer_size_callback);
-  glfwSetCursorPosCallback(_window, mouse_callback);
+
+  glfwSetCursorPosCallback(
+    _window, [](GLFWwindow* window, double xpos, double ypos) {
+      _onEvent(std::make_unique<ColonyMouseMoveEvent>(window, xpos, ypos));
+    });
+
   glfwSetScrollCallback(_window, scroll_callback);
-  glfwSetMouseButtonCallback(_window, mouse_button_callback);
+
+  glfwSetMouseButtonCallback(
+    _window, [](GLFWwindow* window, int button, int action, int mods) {
+      switch (action) {
+        case GLFW_PRESS:
+          _onEvent(std::make_unique<ColonyMousePressedEvent>(button));
+          break;
+        case GLFW_RELEASE:
+          _onEvent(std::make_unique<ColonyMouseReleaseEvent>(button));
+          break;
+      }
+    });
+
   glfwSetKeyCallback(
     _window,
     [](GLFWwindow* window, int key, int scancode, int action, int mods) {
