@@ -1,9 +1,9 @@
-#include "figImpl/Application.h"
+#include "figImpl/ColonyApplication.h"
 
 int main(int argc, char** argv)
 {
   try {
-    Application app;
+    ColonyApplication app;
     app.run();
   } catch (const std::exception& e) {
     std::cout << e.what() << std::endl;

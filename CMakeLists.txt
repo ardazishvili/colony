@@ -4,6 +4,17 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
 project(Colony)
 
 add_executable(colony
+    fig/Application.h
+    fig/events/Event.h
+    fig/events/EventFabric.h
+    fig/math/AStar.cpp
+    fig/math/AStar.h
+    fig/math/Noise.cpp
+    fig/math/Noise.h
+    fig/misc/Log.cpp
+    fig/misc/Log.h
+    fig/misc/Logger.cpp
+    fig/misc/Logger.h
 		fig/Timer.cpp
 		fig/Timer.h
 		fig/Animation.cpp
@@ -28,6 +39,48 @@ add_executable(colony
 		fig/Texture.h
 		fig/globals.cpp
 		fig/globals.h
+    # fig/Circle.cpp
+    # fig/Circle.h
+    # fig/CircleMesh.cpp
+    # fig/CircleMesh.h
+    fig/Beam.cpp
+    fig/Beam.h
+    fig/HeightsSegment.cpp
+    fig/HeightsSegment.h
+    fig/LinesObject.cpp
+    fig/LinesObject.h
+    fig/LinesShader.cpp
+    fig/LinesShader.h
+    fig/MainTerrainMesh.cpp
+    fig/MainTerrainMesh.h
+    fig/Mesh.cpp
+    fig/Mesh.h
+    fig/ObstaclesSegment.cpp
+    fig/ObstaclesSegment.h
+    fig/Path.cpp
+    fig/Path.h
+    fig/PlainMesh.cpp
+    fig/PlainMesh.h
+    fig/RectangleShape.cpp
+    fig/RectangleShape.h
+    fig/Skybox.cpp
+    fig/Skybox.h
+    fig/SkyboxShader.cpp
+    fig/SkyboxShader.h
+    fig/Sphere.cpp
+    fig/Sphere.h
+    fig/SphereMesh.cpp
+    fig/SphereMesh.h
+    fig/SubTerrainMesh.cpp
+    fig/SubTerrainMesh.h
+    fig/Surface.cpp
+    fig/Surface.h
+    fig/TerrainMesh.cpp
+    fig/TerrainMesh.h
+    fig/TerrainMeshSegment.cpp
+    fig/TerrainMeshSegment.h
+    fig/Vertex.cpp
+    fig/Vertex.h
 		fig/imgui/imgui.cpp
 		fig/imgui/imgui_demo.cpp
 		fig/imgui/imgui_draw.cpp
@@ -75,50 +128,8 @@ add_executable(colony
 		view/TankView.h
 		view/View.cpp
 		view/View.h
-    # fig/Circle.cpp
-    # fig/Circle.h
-    # fig/CircleMesh.cpp
-    # fig/CircleMesh.h
-    fig/Beam.cpp
-    fig/Beam.h
-    fig/HeightsSegment.cpp
-    fig/HeightsSegment.h
-    fig/LinesObject.cpp
-    fig/LinesObject.h
-    fig/LinesShader.cpp
-    fig/LinesShader.h
-    fig/MainTerrainMesh.cpp
-    fig/MainTerrainMesh.h
-    fig/Mesh.cpp
-    fig/Mesh.h
-    fig/ObstaclesSegment.cpp
-    fig/ObstaclesSegment.h
-    fig/Path.cpp
-    fig/Path.h
-    fig/PlainMesh.cpp
-    fig/PlainMesh.h
-    fig/RectangleShape.cpp
-    fig/RectangleShape.h
-    fig/Skybox.cpp
-    fig/Skybox.h
-    fig/SkyboxShader.cpp
-    fig/SkyboxShader.h
-    fig/Sphere.cpp
-    fig/Sphere.h
-    fig/SphereMesh.cpp
-    fig/SphereMesh.h
-    fig/SubTerrainMesh.cpp
-    fig/SubTerrainMesh.h
-    fig/Surface.cpp
-    fig/Surface.h
-    fig/TerrainMesh.cpp
-    fig/TerrainMesh.h
-    fig/TerrainMeshSegment.cpp
-    fig/TerrainMeshSegment.h
-    fig/Vertex.cpp
-    fig/Vertex.h
-    figImpl/Application.cpp
-    figImpl/Application.h
+    figImpl/ColonyApplication.h
+    figImpl/ColonyApplication.cpp
     figImpl/Window.cpp
     figImpl/Window.h
     figImpl/events/ColonyEventFabric.cpp
@@ -137,8 +148,6 @@ add_executable(colony
     figImpl/events/ColonyMouseReleaseEvent.h
     figImpl/events/ColonyMouseScrollEvent.cpp
     figImpl/events/ColonyMouseScrollEvent.h
-    fig/events/Event.h
-    fig/events/EventFabric.h
     logic/AbstractPlant.cpp
     logic/AbstractPlant.h
     logic/AbstractPlantBuilder.cpp
@@ -180,14 +189,6 @@ add_executable(colony
     logic/Unit.cpp
     logic/Unit.h
     main.cpp 
-    fig/math/AStar.cpp
-    fig/math/AStar.h
-    fig/math/Noise.cpp
-    fig/math/Noise.h
-    fig/misc/Log.cpp
-    fig/misc/Log.h
-    fig/misc/Logger.cpp
-    fig/misc/Logger.h
     view/AbstractPlantView.cpp
     view/AbstractPlantView.h
     view/AttackUnitView.cpp

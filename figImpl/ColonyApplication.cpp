@@ -6,12 +6,12 @@
 #include "../fig/imgui/imgui_impl_opengl3.h"
 
 #include "../fig/globals.h"
-#include "Application.h"
+#include "ColonyApplication.h"
 #include "events/ColonyEventFabric.h"
 
 using namespace std::placeholders;
 
-Application::Application() :
+ColonyApplication::ColonyApplication() :
   _camera(glm::vec3(0.0f, -45.0f, 60.0f),
           glm::vec3(0.0f, 0.0f, 0.0f),
           glm::vec3(0.0f, 0.0f, 1.0f))
@@ -146,7 +146,7 @@ Application::Application() :
   _skybox = std::make_unique<Skybox>(*_skyboxShader);
 }
 
-void Application::run()
+void ColonyApplication::run()
 {
   while (!glfwWindowShouldClose(_window->_window)) {
     _camera.updateSpeed();
@@ -196,6 +196,3 @@ void Application::run()
   }
 }
 
-Application::~Application()
-{
-}

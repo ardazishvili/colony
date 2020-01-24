@@ -1,11 +1,12 @@
-#ifndef APPLICATION_H
-#define APPLICATION_H
+#ifndef COLONY_APPLICATION_H
+#define COLONY_APPLICATION_H
 
 #include <memory>
 
 #include <GL/glew.h> // Initialize with glewInit()
 #include <GLFW/glfw3.h>
 
+#include "../fig/Application.h"
 #include "../fig/Camera.h"
 #include "../fig/Light.h"
 #include "../fig/LinesShader.h"
@@ -13,22 +14,18 @@
 #include "../fig/Skybox.h"
 #include "../fig/SkyboxShader.h"
 #include "../fig/events/Event.h"
+#include "../fig/events/EventFabric.h"
 #include "../logic/EventManager.h"
 #include "../logic/Game.h"
 
 #include "Window.h"
 
-class Application
+class ColonyApplication : public Application
 {
 public:
-  Application();
-  Application(const Application&) = delete;
-  Application(Application&&) = delete;
-  Application& operator=(const Application&) = delete;
-  Application& operator=(Application&&) = delete;
-  ~Application();
+  ColonyApplication();
 
-  void run();
+  void run() override;
 
 private:
   std::unique_ptr<Light> _light;
