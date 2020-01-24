@@ -1,26 +1,23 @@
-#ifndef WINDOW_H
-#define WINDOW_H
+#ifndef COLONY_WINDOW_H
+#define COLONY_WINDOW_H
 
 #include <GL/glew.h> // Initialize with glewInit()
 #include <GLFW/glfw3.h>
 
 #include "../fig/Camera.h"
+#include "../fig/Window.h"
 #include "../fig/events/Event.h"
 #include "../logic/EventManager.h"
 
 class EventFabric;
-class Window
+class ColonyWindow : public Window
 {
 public:
-  Window(glm::mat4& view,
-         glm::mat4& projection,
-         std::function<void(std::unique_ptr<Event> event)> onEvent,
-         EventFabric* eventFabric);
-  Window(const Window&) = delete;
-  Window(Window&&) = delete;
-  Window& operator=(const Window&) = delete;
-  Window& operator=(Window&&) = delete;
-  ~Window();
+  ColonyWindow(glm::mat4& view,
+               glm::mat4& projection,
+               std::function<void(std::unique_ptr<Event> event)> onEvent,
+               EventFabric* eventFabric);
+  ~ColonyWindow() override;
 
   void preUpdate();
   void postUpdate();

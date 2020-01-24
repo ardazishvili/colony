@@ -18,7 +18,7 @@
 #include "../logic/EventManager.h"
 #include "../logic/Game.h"
 
-#include "Window.h"
+#include "ColonyWindow.h"
 
 class ColonyApplication : public Application
 {
@@ -40,7 +40,7 @@ private:
   std::unique_ptr<SkyboxShader> _skyboxShader;
   std::unique_ptr<AStar> _astar;
 
-  std::unique_ptr<Window> _window;
+  std::unique_ptr<ColonyWindow> _window;
   Camera _camera;
   std::unique_ptr<Terrain> _terrain;
   std::function<void(std::unique_ptr<Event> event)> _onEvent;

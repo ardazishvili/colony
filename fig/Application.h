@@ -9,7 +9,7 @@ public:
   Application(Application&&) = delete;
   Application& operator=(const Application&) = delete;
   Application& operator=(Application&&) = delete;
-  ~Application() = default;
+  virtual ~Application() = default;
 
   virtual void run() = 0;
 };

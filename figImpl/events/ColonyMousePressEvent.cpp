@@ -1,6 +1,6 @@
 #include "ColonyMousePressEvent.h"
 #include "../../logic/EventManager.h"
-#include "../Window.h"
+#include "../ColonyWindow.h"
 
 ColonyMousePressedEvent::ColonyMousePressedEvent(int button) :
   MousePressEvent(button)

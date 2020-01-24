@@ -3,12 +3,12 @@
 #include <GL/glew.h>
 
 #include "../fig/globals.h"
-#include "../figImpl/Window.h"
+#include "../figImpl/ColonyWindow.h"
 #include "EventManager.h"
 #include "Hq.h"
 #include "Turbine.h"
 
-glm::vec3 EventManager::unProject(Window* window,
+glm::vec3 EventManager::unProject(ColonyWindow* window,
                                   glm::mat4& view,
                                   glm::mat4& proj)
 {
@@ -32,7 +32,7 @@ glm::vec3 EventManager::unProject(Window* window,
 
 EventManager::EventManager(glm::mat4& view,
                            glm::mat4& projection,
-                           Window* window,
+                           ColonyWindow* window,
                            Game* game,
                            Camera& camera,
                            Shader& textureShader,

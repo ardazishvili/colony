@@ -12,13 +12,13 @@
 #include "Game.h"
 #include "Tank.h"
 
-class Window;
+class ColonyWindow;
 class EventManager
 {
 public:
   EventManager(glm::mat4& view,
                glm::mat4& projection,
-               Window* window,
+               ColonyWindow* window,
                Game* game,
                Camera& camera,
                Shader& textureShader,
@@ -29,14 +29,16 @@ public:
                std::shared_ptr<ObstaclesSegment> mo,
                AStar* astar);
   void tick();
-  static glm::vec3 unProject(Window* window, glm::mat4& view, glm::mat4& proj);
+  static glm::vec3 unProject(ColonyWindow* window,
+                             glm::mat4& view,
+                             glm::mat4& proj);
   void setStructureToBuild(std::shared_ptr<GroundStructure> structure);
   void setStructureToBuildStage(BuildStage stage);
 
 private:
   glm::mat4& _view;
   glm::mat4& _projection;
-  Window* _window;
+  ColonyWindow* _window;
   Camera& _camera;
   Game* _game;
   Shader& _textureShader;

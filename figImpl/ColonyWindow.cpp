@@ -3,22 +3,23 @@
 
 #include "../fig/events/EventFabric.h"
 #include "../fig/globals.h"
-#include "Window.h"
+#include "ColonyWindow.h"
 #include "events/ColonyErrorEvent.h"
 
 #include "../fig/imgui/imgui.h"
 #include "../fig/imgui/imgui_impl_glfw.h"
 #include "../fig/imgui/imgui_impl_opengl3.h"
 
-std::function<void(std::unique_ptr<Event> event)> Window::_onEvent =
+std::function<void(std::unique_ptr<Event> event)> ColonyWindow::_onEvent =
   [](std::unique_ptr<Event> event) {
   };
-EventFabric* Window::_eventFabric = nullptr;
+EventFabric* ColonyWindow::_eventFabric = nullptr;
 
-Window::Window(glm::mat4& view,
-               glm::mat4& projection,
-               std::function<void(std::unique_ptr<Event> event)> onEvent,
-               EventFabric* eventFabric) :
+ColonyWindow::ColonyWindow(
+  glm::mat4& view,
+  glm::mat4& projection,
+  std::function<void(std::unique_ptr<Event> event)> onEvent,
+  EventFabric* eventFabric) :
   _view(view),
   _projection(projection)
 {
@@ -115,7 +116,7 @@ Window::Window(glm::mat4& view,
   /* glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); */
 }
 
-Window::~Window()
+ColonyWindow::~ColonyWindow()
 {
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplGlfw_Shutdown();
@@ -124,17 +125,17 @@ Window::~Window()
   glfwTerminate();
 }
 
-float Window::width() const
+float ColonyWindow::width() const
 {
   return _screenWidth;
 }
 
-float Window::height() const
+float ColonyWindow::height() const
 {
   return _screenHeight;
 }
 
-void Window::preUpdate()
+void ColonyWindow::preUpdate()
 {
   glfwPollEvents();
   ImGui_ImplOpenGL3_NewFrame();
@@ -151,7 +152,7 @@ void Window::preUpdate()
   glProvokingVertex(GL_FIRST_VERTEX_CONVENTION);
 }
 
-void Window::postUpdate()
+void ColonyWindow::postUpdate()
 {
 
   showDebug();
@@ -162,7 +163,7 @@ void Window::postUpdate()
   glfwSwapBuffers(_window);
 }
 
-void Window::showDebug()
+void ColonyWindow::showDebug()
 {
   auto flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize |
                ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar |
@@ -179,7 +180,7 @@ void Window::showDebug()
   ImGui::End();
 }
 
-void Window::getCursorPos(double* xpos, double* ypos) const
+void ColonyWindow::getCursorPos(double* xpos, double* ypos) const
 {
   glfwGetCursorPos(_window, xpos, ypos);
 }

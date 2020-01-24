@@ -20,8 +20,8 @@ ColonyApplication::ColonyApplication() :
     event->process(&_camera, _eventManager.get());
   };
   _eventFabric = std::make_unique<ColonyEventFabric>();
-  _window =
-    std::make_unique<Window>(_view, _projection, _onEvent, _eventFabric.get());
+  _window = std::make_unique<ColonyWindow>(
+    _view, _projection, _onEvent, _eventFabric.get());
   _view = glm::lookAt(_camera.eye(), _camera.reference(), _camera.up());
   _projection = glm::perspective(glm::radians(_camera.fov()),
                                  _window->width() / _window->height(),

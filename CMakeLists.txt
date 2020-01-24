@@ -5,6 +5,7 @@ project(Colony)
 
 add_executable(colony
     fig/Application.h
+    fig/Window.h
     fig/events/Event.h
     fig/events/EventFabric.h
     fig/math/AStar.cpp
@@ -130,8 +131,8 @@ add_executable(colony
 		view/View.h
     figImpl/ColonyApplication.h
     figImpl/ColonyApplication.cpp
-    figImpl/Window.cpp
-    figImpl/Window.h
+    figImpl/ColonyWindow.cpp
+    figImpl/ColonyWindow.h
     figImpl/events/ColonyEventFabric.cpp
     figImpl/events/ColonyEventFabric.h
     figImpl/events/ColonyKeyPressEvent.cpp
