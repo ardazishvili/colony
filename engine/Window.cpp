@@ -4,13 +4,14 @@
 #include "../globals.h"
 #include "Window.h"
 #include "events/ColonyErrorEvent.h"
-#include "events/ColonyKeyPressEvent.h"
-#include "events/ColonyKeyReleaseEvent.h"
-#include "events/ColonyKeyRepeatEvent.h"
-#include "events/ColonyMouseMoveEvent.h"
-#include "events/ColonyMousePressEvent.h"
-#include "events/ColonyMouseReleaseEvent.h"
-#include "events/ColonyMouseScrollEvent.h"
+/* #include "events/ColonyKeyPressEvent.h" */
+/* #include "events/ColonyKeyReleaseEvent.h" */
+/* #include "events/ColonyKeyRepeatEvent.h" */
+/* #include "events/ColonyMouseMoveEvent.h" */
+/* #include "events/ColonyMousePressEvent.h" */
+/* #include "events/ColonyMouseReleaseEvent.h" */
+/* #include "events/ColonyMouseScrollEvent.h" */
+#include "events/EventFabric.h"
 
 #include "../imgui/imgui.h"
 #include "../imgui/imgui_impl_glfw.h"
@@ -19,23 +20,17 @@
 std::function<void(std::unique_ptr<Event> event)> Window::_onEvent =
   [](std::unique_ptr<Event> event) {
   };
-Window* winPtr;
+EventFabric* Window::_eventFabric = nullptr;
 
-void Window::processInput(GLFWwindow* window)
-{
-  _camera.updateSpeed();
-}
-
-Window::Window(std::unique_ptr<EventManager>& em,
-               Camera& c,
-               glm::mat4& view,
+Window::Window(glm::mat4& view,
                glm::mat4& projection,
-               std::function<void(std::unique_ptr<Event> event)> onEvent) :
-  _camera(c),
-  _eventManager(em), _view(view), _projection(projection)
+               std::function<void(std::unique_ptr<Event> event)> onEvent,
+               EventFabric* eventFabric) :
+  _view(view),
+  _projection(projection)
 {
+  _eventFabric = eventFabric;
   _onEvent = onEvent;
-  winPtr = this;
   glfwInit();
   const char* glsl_version = "#version 450";
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -83,23 +78,24 @@ Window::Window(std::unique_ptr<EventManager>& em,
 
   glfwSetCursorPosCallback(
     _window, [](GLFWwindow* window, double xpos, double ypos) {
-      _onEvent(std::make_unique<ColonyMouseMoveEvent>(window, xpos, ypos));
+      _onEvent(_eventFabric->getMouseMoveEvent(window, xpos, ypos));
     });
 
   glfwSetScrollCallback(
     _window, [](GLFWwindow* window, double xoffset, double yoffset) {
-      _onEvent(
-        std::make_unique<ColonyMouseScrollEvent>(window, xoffset, yoffset));
+      _onEvent(_eventFabric->getMouseScrollEvent(window, xoffset, yoffset));
     });
 
   glfwSetMouseButtonCallback(
     _window, [](GLFWwindow* window, int button, int action, int mods) {
       switch (action) {
         case GLFW_PRESS:
-          _onEvent(std::make_unique<ColonyMousePressedEvent>(button));
+          _onEvent(
+            _eventFabric->getMousePressedEvent(window, button, action, mods));
           break;
         case GLFW_RELEASE:
-          _onEvent(std::make_unique<ColonyMouseReleaseEvent>(button));
+          _onEvent(
+            _eventFabric->getMouseReleasedEvent(window, button, action, mods));
           break;
       }
     });
@@ -109,16 +105,15 @@ Window::Window(std::unique_ptr<EventManager>& em,
     [](GLFWwindow* window, int key, int scancode, int action, int mods) {
       switch (action) {
         case GLFW_PRESS:
-          _onEvent(
-            std::make_unique<ColonyKeyPressEvent>(window, key, scancode, mods));
+          _onEvent(_eventFabric->getKeyPressEvent(window, key, scancode, mods));
           break;
         case GLFW_RELEASE:
-          _onEvent(std::make_unique<ColonyKeyReleaseEvent>(
-            window, key, scancode, mods));
+          _onEvent(
+            _eventFabric->getKeyReleaseEvent(window, key, scancode, mods));
           break;
         case GLFW_REPEAT:
-          _onEvent(std::make_unique<ColonyKeyRepeatEvent>(
-            window, key, scancode, mods));
+          _onEvent(
+            _eventFabric->getKeyRepeatEvent(window, key, scancode, mods));
           break;
       }
     });
@@ -149,7 +144,6 @@ float Window::height() const
 void Window::preUpdate()
 {
   glfwPollEvents();
-  processInput(_window);
   ImGui_ImplOpenGL3_NewFrame();
   ImGui_ImplGlfw_NewFrame();
   ImGui::NewFrame();

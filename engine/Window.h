@@ -8,14 +8,14 @@
 #include "Camera.h"
 #include "events/Event.h"
 
+class EventFabric;
 class Window
 {
 public:
-  Window(std::unique_ptr<EventManager>& em,
-         Camera& c,
-         glm::mat4& view,
+  Window(glm::mat4& view,
          glm::mat4& projection,
-         std::function<void(std::unique_ptr<Event> event)> onEvent);
+         std::function<void(std::unique_ptr<Event> event)> onEvent,
+         EventFabric* eventFabric);
   Window(const Window&) = delete;
   Window(Window&&) = delete;
   Window& operator=(const Window&) = delete;
@@ -32,15 +32,13 @@ public:
 
 private:
   void showDebug();
-  void processInput(GLFWwindow* window);
 
   float _screenWidth;
   float _screenHeight;
-  std::unique_ptr<EventManager>& _eventManager;
-  Camera& _camera;
   glm::mat4& _view;
   glm::mat4& _projection;
 
+  static EventFabric* _eventFabric;
   static std::function<void(std::unique_ptr<Event> event)> _onEvent;
 };
 

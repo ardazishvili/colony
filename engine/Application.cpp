@@ -7,6 +7,7 @@
 
 #include "../globals.h"
 #include "Application.h"
+#include "events/ColonyEventFabric.h"
 
 using namespace std::placeholders;
 
@@ -18,8 +19,9 @@ Application::Application() :
   _onEvent = [this](std::unique_ptr<Event> event) {
     event->process(&_camera, _eventManager.get());
   };
-  _window = std::make_unique<Window>(
-    _eventManager, _camera, _view, _projection, _onEvent);
+  _eventFabric = std::make_unique<ColonyEventFabric>();
+  _window =
+    std::make_unique<Window>(_view, _projection, _onEvent, _eventFabric.get());
   _view = glm::lookAt(_camera.eye(), _camera.reference(), _camera.up());
   _projection = glm::perspective(glm::radians(_camera.fov()),
                                  _window->width() / _window->height(),
@@ -147,6 +149,7 @@ Application::Application() :
 void Application::run()
 {
   while (!glfwWindowShouldClose(_window->_window)) {
+    _camera.updateSpeed();
     _window->preUpdate();
 
     ImGui::Begin("camera");

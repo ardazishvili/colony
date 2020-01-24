@@ -46,6 +46,7 @@ private:
   Camera _camera;
   std::unique_ptr<Terrain> _terrain;
   std::function<void(std::unique_ptr<Event> event)> _onEvent;
+  std::unique_ptr<EventFabric> _eventFabric;
 
   glm::mat4 _view;
   glm::mat4 _projection;
