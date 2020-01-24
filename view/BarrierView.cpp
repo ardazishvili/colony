@@ -1,7 +1,7 @@
-#include "../imgui/imgui.h"
+#include "../fig/imgui/imgui.h"
 
-#include "../engine/Circle.h"
-#include "../globals.h"
+#include "../fig/Circle.h"
+#include "../fig/globals.h"
 #include "BarrierView.h"
 
 float BarrierView::BARRIER_HEALTH_BAR_WIDTH = 1.2f;

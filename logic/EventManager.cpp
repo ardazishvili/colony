@@ -2,8 +2,8 @@
 
 #include <GL/glew.h>
 
-#include "../engine/Window.h"
-#include "../globals.h"
+#include "../fig/globals.h"
+#include "../figImpl/Window.h"
 #include "EventManager.h"
 #include "Hq.h"
 #include "Turbine.h"

@@ -1,7 +1,7 @@
 #ifndef TURBINE_VIEW_H
 #define TURBINE_VIEW_H
 
-#include "../engine/Beam.h"
+#include "../fig/Beam.h"
 #include "StructureView.h"
 
 class TurbineView : public StructureView

@@ -1,8 +1,6 @@
 #include <iostream>
 
-#include <GL/glew.h> // Initialize with glewInit()
-
-#include "../globals.h"
+#include "../fig/globals.h"
 #include "Game.h"
 #include "Tank.h"
 

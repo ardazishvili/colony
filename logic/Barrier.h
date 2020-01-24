@@ -3,7 +3,7 @@
 
 #include <glm/glm.hpp>
 
-#include "../engine/Terrain.h"
+#include "../fig/Terrain.h"
 #include "../view/BarrierView.h"
 #include "AbstractPlant.h"
 #include "EnergyStructure.h"

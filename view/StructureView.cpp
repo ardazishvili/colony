@@ -1,5 +1,5 @@
 #include "StructureView.h"
-#include "../globals.h"
+#include "../fig/globals.h"
 
 StructureView::StructureView(Shader& shader,
                              glm::vec3 position,

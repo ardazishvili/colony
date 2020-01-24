@@ -1,6 +1,6 @@
 #include "PlantView.h"
-#include "../engine/Model.h"
-#include "../globals.h"
+#include "../fig/Model.h"
+#include "../fig/globals.h"
 
 PlantView::PlantView(Shader& shader, glm::vec3 position) :
   AbstractPlantView(shader, position)

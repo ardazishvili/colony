@@ -1,7 +1,7 @@
 #ifndef SELECTABLE_H
 #define SELECTABLE_H
 
-#include "../engine/LinesObject.h"
+#include "../fig/LinesObject.h"
 #include "../view/SelectableView.h"
 
 template<typename T>

@@ -1,8 +1,8 @@
 #ifndef SHELL_VIEW_H
 #define SHELL_VIEW_H
 
-#include "../engine/Model.h"
-#include "../engine/Shader.h"
+#include "../fig/Model.h"
+#include "../fig/Shader.h"
 #include "View.h"
 #include <GL/glew.h>
 

@@ -1,7 +1,7 @@
 #ifndef PANEL_ITEM_H
 #define PANEL_ITEM_H
 
-#include "../engine/ModelLoader.h"
+#include "../fig/ModelLoader.h"
 #include "AbstractBuilder.h"
 
 class PanelItem

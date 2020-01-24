@@ -6,7 +6,7 @@
 
 #include <GLFW/glfw3.h>
 
-#include "../engine/Terrain.h"
+#include "../fig/Terrain.h"
 #include "AbstractPlant.h"
 #include "AttackUnit.h"
 #include "Barrier.h"

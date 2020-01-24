@@ -1,5 +1,5 @@
 #include "TreeView.h"
-#include "../globals.h"
+#include "../fig/globals.h"
 
 TreeView::TreeView(Shader& shader, glm::vec3 position) :
   AbstractPlantView(shader, position)

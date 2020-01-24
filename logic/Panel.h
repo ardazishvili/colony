@@ -3,7 +3,7 @@
 
 #include <GLFW/glfw3.h>
 
-#include "../engine/Texture.h"
+#include "../fig/Texture.h"
 #include "PanelItem.h"
 
 using PanelItems = std::vector<std::unique_ptr<PanelItem>>;

@@ -1,5 +1,5 @@
 #include "ShellView.h"
-#include "../globals.h"
+#include "../fig/globals.h"
 
 ShellView::ShellView(Shader& shader, glm::vec3 position) :
   View(shader, position)

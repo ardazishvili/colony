@@ -1,5 +1,5 @@
 #include "Barrier.h"
-#include "../globals.h"
+#include "../fig/globals.h"
 #include "PlantBuilder.h"
 #include "TreeBuilder.h"
 

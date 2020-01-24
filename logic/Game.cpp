@@ -1,8 +1,7 @@
-#include "../imgui/imgui.h"
+#include "../fig/Circle.h"
+#include "../fig/globals.h"
+#include "../fig/misc/Logger.h"
 
-#include "../engine/Circle.h"
-#include "../globals.h"
-#include "../misc/Logger.h"
 #include "EventManager.h"
 #include "Game.h"
 

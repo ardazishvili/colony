@@ -1,5 +1,5 @@
 #include "Unit.h"
-#include "../globals.h"
+#include "../fig/globals.h"
 #include "AttackUnit.h"
 #include "NonAttackUnit.h"
 

@@ -4,61 +4,39 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
 project(Colony)
 
 add_executable(colony
-    engine/Application.h
-    engine/Application.cpp
-    engine/Window.h
-    engine/Window.cpp
-    engine/events/Event.h
-    engine/events/EventFabric.h
-    engine/events/ColonyEventFabric.h
-    engine/events/ColonyEventFabric.cpp
-    engine/events/ColonyKeyPressEvent.h
-    engine/events/ColonyKeyPressEvent.cpp
-    engine/events/ColonyKeyReleaseEvent.h
-    engine/events/ColonyKeyReleaseEvent.cpp
-    engine/events/ColonyKeyRepeatEvent.h
-    engine/events/ColonyKeyRepeatEvent.cpp
-    engine/events/ColonyMousePressEvent.h
-    engine/events/ColonyMousePressEvent.cpp
-    engine/events/ColonyMouseReleaseEvent.h
-    engine/events/ColonyMouseReleaseEvent.cpp
-    engine/events/ColonyMouseMoveEvent.h
-    engine/events/ColonyMouseMoveEvent.cpp
-    engine/events/ColonyMouseScrollEvent.h
-    engine/events/ColonyMouseScrollEvent.cpp
-		Timer.cpp
-		Timer.h
-		engine/Animation.cpp
-		engine/Animation.h
-		engine/Camera.cpp
-		engine/Camera.h
-		engine/Light.cpp
-		engine/Light.h
-		engine/Model.cpp
-		engine/Model.h
-		engine/ModelLoader.cpp
-		engine/ModelLoader.h
-		engine/ModelMesh.cpp
-		engine/ModelMesh.h
-		engine/PhongShader.cpp
-		engine/PhongShader.h
-		engine/Shader.cpp
-		engine/Shader.h
-		engine/Terrain.cpp
-		engine/Terrain.h
-		engine/Texture.cpp
-		engine/Texture.h
-		globals.cpp
-		globals.h
-		imgui/imgui.cpp
-		imgui/imgui_demo.cpp
-		imgui/imgui_draw.cpp
-		imgui/imgui_impl_glfw.cpp
-		imgui/imgui_impl_opengl3.cpp
-		imgui/imgui_internal.h
-		imgui/imgui_widgets.cpp
-		imgui/imstb_rectpack.h
-		imgui/imstb_truetype.h
+		fig/Timer.cpp
+		fig/Timer.h
+		fig/Animation.cpp
+		fig/Animation.h
+		fig/Camera.cpp
+		fig/Camera.h
+		fig/Light.cpp
+		fig/Light.h
+		fig/Model.cpp
+		fig/Model.h
+		fig/ModelLoader.cpp
+		fig/ModelLoader.h
+		fig/ModelMesh.cpp
+		fig/ModelMesh.h
+		fig/PhongShader.cpp
+		fig/PhongShader.h
+		fig/Shader.cpp
+		fig/Shader.h
+		fig/Terrain.cpp
+		fig/Terrain.h
+		fig/Texture.cpp
+		fig/Texture.h
+		fig/globals.cpp
+		fig/globals.h
+		fig/imgui/imgui.cpp
+		fig/imgui/imgui_demo.cpp
+		fig/imgui/imgui_draw.cpp
+		fig/imgui/imgui_impl_glfw.cpp
+		fig/imgui/imgui_impl_opengl3.cpp
+		fig/imgui/imgui_internal.h
+		fig/imgui/imgui_widgets.cpp
+		fig/imgui/imstb_rectpack.h
+		fig/imgui/imstb_truetype.h
 		logic/Buildable.cpp
 		logic/Buildable.h
 		logic/Control.cpp
@@ -97,48 +75,70 @@ add_executable(colony
 		view/TankView.h
 		view/View.cpp
 		view/View.h
-    # engine/Circle.cpp
-    # engine/Circle.h
-    # engine/CircleMesh.cpp
-    # engine/CircleMesh.h
-    engine/Beam.cpp
-    engine/Beam.h
-    engine/HeightsSegment.cpp
-    engine/HeightsSegment.h
-    engine/LinesObject.cpp
-    engine/LinesObject.h
-    engine/LinesShader.cpp
-    engine/LinesShader.h
-    engine/MainTerrainMesh.cpp
-    engine/MainTerrainMesh.h
-    engine/Mesh.cpp
-    engine/Mesh.h
-    engine/ObstaclesSegment.cpp
-    engine/ObstaclesSegment.h
-    engine/Path.cpp
-    engine/Path.h
-    engine/PlainMesh.cpp
-    engine/PlainMesh.h
-    engine/RectangleShape.cpp
-    engine/RectangleShape.h
-    engine/Skybox.cpp
-    engine/Skybox.h
-    engine/SkyboxShader.cpp
-    engine/SkyboxShader.h
-    engine/Sphere.cpp
-    engine/Sphere.h
-    engine/SphereMesh.cpp
-    engine/SphereMesh.h
-    engine/SubTerrainMesh.cpp
-    engine/SubTerrainMesh.h
-    engine/Surface.cpp
-    engine/Surface.h
-    engine/TerrainMesh.cpp
-    engine/TerrainMesh.h
-    engine/TerrainMeshSegment.cpp
-    engine/TerrainMeshSegment.h
-    engine/Vertex.cpp
-    engine/Vertex.h
+    # fig/Circle.cpp
+    # fig/Circle.h
+    # fig/CircleMesh.cpp
+    # fig/CircleMesh.h
+    fig/Beam.cpp
+    fig/Beam.h
+    fig/HeightsSegment.cpp
+    fig/HeightsSegment.h
+    fig/LinesObject.cpp
+    fig/LinesObject.h
+    fig/LinesShader.cpp
+    fig/LinesShader.h
+    fig/MainTerrainMesh.cpp
+    fig/MainTerrainMesh.h
+    fig/Mesh.cpp
+    fig/Mesh.h
+    fig/ObstaclesSegment.cpp
+    fig/ObstaclesSegment.h
+    fig/Path.cpp
+    fig/Path.h
+    fig/PlainMesh.cpp
+    fig/PlainMesh.h
+    fig/RectangleShape.cpp
+    fig/RectangleShape.h
+    fig/Skybox.cpp
+    fig/Skybox.h
+    fig/SkyboxShader.cpp
+    fig/SkyboxShader.h
+    fig/Sphere.cpp
+    fig/Sphere.h
+    fig/SphereMesh.cpp
+    fig/SphereMesh.h
+    fig/SubTerrainMesh.cpp
+    fig/SubTerrainMesh.h
+    fig/Surface.cpp
+    fig/Surface.h
+    fig/TerrainMesh.cpp
+    fig/TerrainMesh.h
+    fig/TerrainMeshSegment.cpp
+    fig/TerrainMeshSegment.h
+    fig/Vertex.cpp
+    fig/Vertex.h
+    figImpl/Application.cpp
+    figImpl/Application.h
+    figImpl/Window.cpp
+    figImpl/Window.h
+    figImpl/events/ColonyEventFabric.cpp
+    figImpl/events/ColonyEventFabric.h
+    figImpl/events/ColonyKeyPressEvent.cpp
+    figImpl/events/ColonyKeyPressEvent.h
+    figImpl/events/ColonyKeyReleaseEvent.cpp
+    figImpl/events/ColonyKeyReleaseEvent.h
+    figImpl/events/ColonyKeyRepeatEvent.cpp
+    figImpl/events/ColonyKeyRepeatEvent.h
+    figImpl/events/ColonyMouseMoveEvent.cpp
+    figImpl/events/ColonyMouseMoveEvent.h
+    figImpl/events/ColonyMousePressEvent.cpp
+    figImpl/events/ColonyMousePressEvent.h
+    figImpl/events/ColonyMouseReleaseEvent.cpp
+    figImpl/events/ColonyMouseReleaseEvent.h
+    figImpl/events/ColonyMouseScrollEvent.cpp
+    figImpl/events/ColonyMouseScrollEvent.h
+    fig/events/Event.h
+    fig/events/EventFabric.h
     logic/AbstractPlant.cpp
     logic/AbstractPlant.h
     logic/AbstractPlantBuilder.cpp
@@ -180,14 +180,14 @@ add_executable(colony
     logic/Unit.cpp
     logic/Unit.h
     main.cpp 
-    math/AStar.cpp
-    math/AStar.h
-    math/Noise.cpp
-    math/Noise.h
-    misc/Log.cpp
-    misc/Log.h
-    misc/Logger.cpp
-    misc/Logger.h
+    fig/math/AStar.cpp
+    fig/math/AStar.h
+    fig/math/Noise.cpp
+    fig/math/Noise.h
+    fig/misc/Log.cpp
+    fig/misc/Log.h
+    fig/misc/Logger.cpp
+    fig/misc/Logger.h
     view/AbstractPlantView.cpp
     view/AbstractPlantView.h
     view/AttackUnitView.cpp

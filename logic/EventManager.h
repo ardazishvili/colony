@@ -3,12 +3,12 @@
 
 #include <GLFW/glfw3.h>
 
-#include "../engine/Camera.h"
-#include "../engine/HeightsSegment.h"
-#include "../engine/ObstaclesSegment.h"
-#include "../engine/RectangleShape.h"
-#include "../engine/events/Event.h"
-#include "../math/AStar.h"
+#include "../fig/Camera.h"
+#include "../fig/HeightsSegment.h"
+#include "../fig/ObstaclesSegment.h"
+#include "../fig/RectangleShape.h"
+#include "../fig/events/Event.h"
+#include "../fig/math/AStar.h"
 #include "Game.h"
 #include "Tank.h"
 

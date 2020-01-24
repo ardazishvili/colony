@@ -1,7 +1,7 @@
 #ifndef SELECTABLE_VIEW_H
 #define SELECTABLE_VIEW_H
 
-#include "../engine/Surface.h"
+#include "../fig/Surface.h"
 #include "View.h"
 
 enum class Status { None, Selected, UnderFire, Destroyed };

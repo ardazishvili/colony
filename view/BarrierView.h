@@ -3,8 +3,7 @@
 
 #include <future>
 
-/* #include "../engine/Beam.h" */
-#include "../engine/Terrain.h"
+#include "../fig/Terrain.h"
 #include "StructureView.h"
 
 class BarrierView : public StructureView

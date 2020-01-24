@@ -1,7 +1,7 @@
 #ifndef HQ_H
 #define HQ_H
 
-#include "../engine/Terrain.h"
+#include "../fig/Terrain.h"
 #include "../view/HqView.h"
 #include "GroundStructure.h"
 

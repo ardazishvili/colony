@@ -1,5 +1,5 @@
 #include "TankFactoryView.h"
-#include "../globals.h"
+#include "../fig/globals.h"
 
 float TankFactoryView::TANK_FACTORY_HEALTH_BAR_WIDTH = 1.2f;
 float TankFactoryView::TANK_FACTORY_HEALTH_BAR_HEIGHT = 0.15f;

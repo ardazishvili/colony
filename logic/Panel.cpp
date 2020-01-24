@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "../imgui/imgui.h"
+#include "../fig/imgui/imgui.h"
 
-#include "../engine/ModelLoader.h"
+#include "../fig/ModelLoader.h"
 #include "Panel.h"
 
 using namespace std::string_literals;

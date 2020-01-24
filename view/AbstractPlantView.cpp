@@ -1,5 +1,5 @@
 #include "AbstractPlantView.h"
-#include "../globals.h"
+#include "../fig/globals.h"
 
 AbstractPlantView::AbstractPlantView(Shader& shader, glm::vec3 position) :
   View(shader, position)

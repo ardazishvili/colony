@@ -1,5 +1,5 @@
 #include "ShroudView.h"
-#include "../globals.h"
+#include "../fig/globals.h"
 
 const std::chrono::milliseconds ShroudView::CYCLE =
   std::chrono::milliseconds(1000);

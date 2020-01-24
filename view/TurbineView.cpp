@@ -1,9 +1,5 @@
-#include <GL/glew.h>
-
-#include <GLFW/glfw3.h>
-
-#include "../globals.h"
 #include "TurbineView.h"
+#include "../fig/globals.h"
 
 float TurbineView::TURBINE_HEALTH_BAR_WIDTH = 1.2f;
 float TurbineView::TURBINE_HEALTH_BAR_HEIGHT = 0.15f;

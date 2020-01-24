@@ -1,7 +1,7 @@
 #ifndef CONTROL_H
 #define CONTROL_H
 
-#include "../engine/Shader.h"
+#include "../fig/Shader.h"
 #include "AbstractStructureBuilder.h"
 #include "AbstractUnitBuilder.h"
 #include "Panel.h"

@@ -1,8 +1,8 @@
 #ifndef BARRIER_BUILDER_H
 #define BARRIER_BUILDER_H
 
-#include "../engine/Terrain.h"
-#include "../math/AStar.h"
+#include "../fig/Terrain.h"
+#include "../fig/math/AStar.h"
 #include "AbstractStructureBuilder.h"
 
 class BarrierBuilder : public AbstractStructureBuilder

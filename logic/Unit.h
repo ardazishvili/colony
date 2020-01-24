@@ -1,8 +1,7 @@
 #ifndef UNIT_H
 #define UNIT_H
 
-#include "../engine/Path.h"
-#include "../math/AStar.h"
+#include "../fig/Path.h"
 #include "Buildable.h"
 
 template<typename T>

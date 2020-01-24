@@ -1,5 +1,5 @@
 #include "UnitView.h"
-#include "../globals.h"
+#include "../fig/globals.h"
 
 UnitView::UnitView(Shader& shader,
                    glm::vec3 position,

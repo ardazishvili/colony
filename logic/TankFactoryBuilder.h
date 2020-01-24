@@ -1,7 +1,7 @@
 #ifndef TANK_FACTORY_BUILDER_H
 #define TANK_FACTORY_BUILDER_H
 
-#include "../engine/Shader.h"
+#include "../fig/Shader.h"
 #include "AbstractStructureBuilder.h"
 
 struct AStar;

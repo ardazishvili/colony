@@ -5,9 +5,7 @@
 
 #include <list>
 
-#include "../Timer.h"
-#include "../engine/LinesObject.h"
-#include "../engine/Terrain.h"
+#include "../fig/Timer.h"
 #include "../view/TankView.h"
 #include "AttackUnit.h"
 

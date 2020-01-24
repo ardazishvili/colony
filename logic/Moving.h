@@ -1,8 +1,8 @@
 #ifndef MOVING_H
 #define MOVING_H
 
-#include "../engine/Path.h"
-#include "../engine/Terrain.h"
+#include "../fig/Path.h"
+#include "../fig/Terrain.h"
 #include "../view/UnitView.h"
 
 template<typename T>

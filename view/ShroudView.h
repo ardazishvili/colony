@@ -1,7 +1,7 @@
 #ifndef SHROUD_VIEW_H
 #define SHROUD_VIEW_H
 
-#include "../engine/Beam.h"
+#include "../fig/Beam.h"
 #include "UnitView.h"
 
 class ShroudView : public UnitView
