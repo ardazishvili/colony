@@ -29,19 +29,11 @@ public:
                std::shared_ptr<ObstaclesSegment> mo,
                AStar* astar);
   void tick();
-  void handleMouseMove(GLFWwindow* window, double xpos, double ypos);
-  void handleMousePressed(int button, int action);
-  void handleMouseReleased();
   static glm::vec3 unProject(Window* window, glm::mat4& view, glm::mat4& proj);
   void setStructureToBuild(std::shared_ptr<GroundStructure> structure);
   void setStructureToBuildStage(BuildStage stage);
 
 private:
-  void handleMousePressedLeft();
-  void handleMousePressedRight();
-  void handleMousePressedMiddle();
-  void handleMouseReleasedMiddle();
-
   glm::mat4& _view;
   glm::mat4& _projection;
   Window* _window;

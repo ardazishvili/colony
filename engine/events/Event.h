@@ -106,4 +106,18 @@ protected:
   double _ypos;
 };
 
+class MouseScrollEvent : public MouseEvent
+{
+public:
+  MouseScrollEvent(GLFWwindow* window, double xoffset, double yoffset) :
+    _window(window), _xoffset(xoffset), _yoffset(yoffset)
+  {
+  }
+
+protected:
+  GLFWwindow* _window;
+  double _xoffset;
+  double _yoffset;
+};
+
 #endif

@@ -32,15 +32,7 @@ public:
 
 private:
   void showDebug();
-  void mouse_cb(GLFWwindow* window, double xpos, double ypos);
-  void scroll_cb(GLFWwindow* window, double xoffset, double yoffset);
-  void mouse_button_cb(GLFWwindow* window, int button, int action, int mods);
-  void framebuffer_size_cb(GLFWwindow* window, int width, int height);
   void processInput(GLFWwindow* window);
-  friend void mouse_callback(GLFWwindow*, double, double);
-  friend void scroll_callback(GLFWwindow*, double, double);
-  friend void mouse_button_callback(GLFWwindow*, int, int, int);
-  friend void framebuffer_size_callback(GLFWwindow*, int, int);
 
   float _screenWidth;
   float _screenHeight;

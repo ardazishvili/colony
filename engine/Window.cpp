@@ -10,6 +10,7 @@
 #include "events/ColonyMouseMoveEvent.h"
 #include "events/ColonyMousePressEvent.h"
 #include "events/ColonyMouseReleaseEvent.h"
+#include "events/ColonyMouseScrollEvent.h"
 
 #include "../imgui/imgui.h"
 #include "../imgui/imgui_impl_glfw.h"
@@ -23,57 +24,6 @@ Window* winPtr;
 void Window::processInput(GLFWwindow* window)
 {
   _camera.updateSpeed();
-}
-
-void mouse_callback(GLFWwindow* window, double xpos, double ypos)
-{
-  if (winPtr) {
-    winPtr->mouse_cb(window, xpos, ypos);
-  }
-}
-
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
-{
-  if (winPtr) {
-    winPtr->scroll_cb(window, xoffset, yoffset);
-  }
-}
-
-void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
-{
-  if (winPtr) {
-    winPtr->mouse_button_cb(window, button, action, mods);
-  }
-}
-
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-  if (winPtr) {
-    winPtr->mouse_cb(window, width, height);
-  }
-}
-
-void Window::mouse_cb(GLFWwindow* window, double xpos, double ypos)
-{
-  _eventManager->handleMouseMove(window, xpos, ypos);
-}
-
-void Window::scroll_cb(GLFWwindow* window, double xoffset, double yoffset)
-{
-  _camera.zoom(yoffset);
-}
-
-void Window::mouse_button_cb(GLFWwindow* window,
-                             int button,
-                             int action,
-                             int mods)
-{
-  _eventManager->handleMousePressed(button, action);
-}
-
-void Window::framebuffer_size_cb(GLFWwindow* window, int width, int height)
-{
-  glViewport(0, 0, width, height);
 }
 
 Window::Window(std::unique_ptr<EventManager>& em,
@@ -126,14 +76,21 @@ Window::Window(std::unique_ptr<EventManager>& em,
     _onEvent(std::make_unique<ErrorEvent>());
   });
 
-  glfwSetFramebufferSizeCallback(_window, framebuffer_size_callback);
+  glfwSetFramebufferSizeCallback(_window,
+                                 [](GLFWwindow* window, int width, int height) {
+                                   glViewport(0, 0, width, height);
+                                 });
 
   glfwSetCursorPosCallback(
     _window, [](GLFWwindow* window, double xpos, double ypos) {
       _onEvent(std::make_unique<ColonyMouseMoveEvent>(window, xpos, ypos));
     });
 
-  glfwSetScrollCallback(_window, scroll_callback);
+  glfwSetScrollCallback(
+    _window, [](GLFWwindow* window, double xoffset, double yoffset) {
+      _onEvent(
+        std::make_unique<ColonyMouseScrollEvent>(window, xoffset, yoffset));
+    });
 
   glfwSetMouseButtonCallback(
     _window, [](GLFWwindow* window, int button, int action, int mods) {
