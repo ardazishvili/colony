@@ -13,6 +13,7 @@ public:
            Window* window,
            glm::mat4& view,
            glm::mat4& projection);
+  ~GuiLayer();
   void init() override;
   void update() override;
   void render() override;

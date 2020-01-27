@@ -20,6 +20,16 @@ GuiLayer::GuiLayer(const Window::Param& param,
 
 void GuiLayer::init()
 {
+  const char* glsl_version = "#version 450";
+  IMGUI_CHECKVERSION();
+  ImGui::CreateContext();
+  ImGui::StyleColorsDark();
+  // TODO downcast
+  ImGui_ImplGlfw_InitForOpenGL(dynamic_cast<ColonyWindow*>(_window)->_window,
+                               true);
+  ImGui_ImplOpenGL3_Init(glsl_version);
+  ImGui::GetStyle().WindowRounding = 0.0f;
+  ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 }
 
 void GuiLayer::update()
@@ -84,4 +94,11 @@ void GuiLayer::showDebug()
      << "; z: " << pos.z;
   ImGui::Text(ss.str().c_str());
   ImGui::End();
+}
+
+GuiLayer::~GuiLayer()
+{
+  ImGui_ImplOpenGL3_Shutdown();
+  ImGui_ImplGlfw_Shutdown();
+  ImGui::DestroyContext();
 }

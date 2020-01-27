@@ -20,8 +20,8 @@ public:
   ~ColonyWindow() override;
   void setOnEvent(std::function<void(std::unique_ptr<Event> event)> onEvent);
 
-  void preUpdate();
-  void postUpdate();
+  void update();
+  void show();
   float width() const override;
   float height() const override;
   void getCursorPos(double* xpos, double* ypos) const;
@@ -29,8 +29,6 @@ public:
   GLFWwindow* _window;
 
 private:
-  /* float _screenWidth; */
-  /* float _screenHeight; */
   glm::mat4& _view;
   glm::mat4& _projection;
 

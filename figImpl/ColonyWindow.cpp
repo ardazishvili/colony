@@ -1,13 +1,9 @@
 #include <cstdio>
 
 #include "../fig/events/EventFabric.h"
-#include "../fig/globals.h"
+/* #include "../fig/globals.h" */
 #include "ColonyWindow.h"
 #include "events/ColonyErrorEvent.h"
-
-#include "../fig/imgui/imgui.h"
-#include "../fig/imgui/imgui_impl_glfw.h"
-#include "../fig/imgui/imgui_impl_opengl3.h"
 
 std::function<void(std::unique_ptr<Event> event)> ColonyWindow::_onEvent =
   [](std::unique_ptr<Event> event) {
@@ -23,17 +19,9 @@ ColonyWindow::ColonyWindow(glm::mat4& view,
 {
   _eventFabric = eventFabric;
   glfwInit();
-  const char* glsl_version = "#version 450";
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
 
-  /* int count; */
-  /* GLFWmonitor** monitors = glfwGetMonitors(&count); */
-  /* const GLFWvidmode* mode = glfwGetVideoMode(monitors[1]); */
-  /* _param.width = mode->width; */
-  /* _param.height = mode->height - 150; */
-  /* std::cout << "_param.width= " << _param.width << std::endl; */
-  /* std::cout << "_param.height= " << _param.height << std::endl; */
   _window =
     glfwCreateWindow(_param.width, _param.height, "LearnOPenGl", NULL, NULL);
 
@@ -42,13 +30,6 @@ ColonyWindow::ColonyWindow(glm::mat4& view,
     throw "Application ctor failed: failed to create window";
   }
 
-  IMGUI_CHECKVERSION();
-  ImGui::CreateContext();
-  ImGui::StyleColorsDark();
-  ImGui_ImplGlfw_InitForOpenGL(_window, true);
-  ImGui_ImplOpenGL3_Init(glsl_version);
-  ImGui::GetStyle().WindowRounding = 0.0f;
-  ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
   glfwMakeContextCurrent(_window);
   glfwSwapInterval(1);
 
@@ -116,9 +97,6 @@ ColonyWindow::ColonyWindow(glm::mat4& view,
 
 ColonyWindow::~ColonyWindow()
 {
-  ImGui_ImplOpenGL3_Shutdown();
-  ImGui_ImplGlfw_Shutdown();
-  ImGui::DestroyContext();
   glfwDestroyWindow(_window);
   glfwTerminate();
 }
@@ -133,12 +111,9 @@ float ColonyWindow::height() const
   return _param.height;
 }
 
-void ColonyWindow::preUpdate()
+void ColonyWindow::update()
 {
   glfwPollEvents();
-  /* ImGui_ImplOpenGL3_NewFrame(); */
-  /* ImGui_ImplGlfw_NewFrame(); */
-  /* ImGui::NewFrame(); */
 
   int display_w, display_h;
   glfwGetFramebufferSize(_window, &display_w, &display_h);
@@ -149,12 +124,8 @@ void ColonyWindow::preUpdate()
   glProvokingVertex(GL_FIRST_VERTEX_CONVENTION);
 }
 
-void ColonyWindow::postUpdate()
+void ColonyWindow::show()
 {
-
-  /* ImGui::Render(); */
-  /* ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData()); */
-  glBindVertexArray(0);
   glfwSwapBuffers(_window);
 }
 
