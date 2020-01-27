@@ -32,7 +32,8 @@ ColonyWindow::ColonyWindow(
 
   int count;
   GLFWmonitor** monitors = glfwGetMonitors(&count);
-  const GLFWvidmode* mode = glfwGetVideoMode(monitors[1]);
+  const GLFWvidmode* mode =
+    (count > 1) ? glfwGetVideoMode(monitors[1]) : glfwGetVideoMode(monitors[0]);
   _screenWidth = mode->width;
   _screenHeight = mode->height - 150;
   _window =
