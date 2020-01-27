@@ -15,16 +15,13 @@ std::function<void(std::unique_ptr<Event> event)> ColonyWindow::_onEvent =
   };
 EventFabric* ColonyWindow::_eventFabric = nullptr;
 
-ColonyWindow::ColonyWindow(
-  glm::mat4& view,
-  glm::mat4& projection,
-  std::function<void(std::unique_ptr<Event> event)> onEvent,
-  EventFabric* eventFabric) :
+ColonyWindow::ColonyWindow(glm::mat4& view,
+                           glm::mat4& projection,
+                           EventFabric* eventFabric) :
   _view(view),
   _projection(projection)
 {
   _eventFabric = eventFabric;
-  _onEvent = onEvent;
   glfwInit();
   const char* glsl_version = "#version 450";
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -143,6 +140,34 @@ void ColonyWindow::preUpdate()
   ImGui::NewFrame();
   logger.render();
 
+  /* ImGui::Begin("camera"); */
+  /* static float camera_z = 60.0f; */
+  /* ImGui::SetWindowPos(ImVec2(0, 210)); */
+  /* ImGui::SetWindowSize(ImVec2(500, 50)); */
+  /* ImGui::SliderFloat("camera z", &camera_z, -100.0f, 100.0f); */
+  /* ImGui::End(); */
+  /* auto eye = _camera.eye(); */
+  /* eye.z = camera_z; */
+  /* _camera.setEye(eye); */
+
+  ImGui::Begin("models scale");
+  ImGui::SetWindowPos(ImVec2(0, 450));
+  ImGui::SetWindowSize(ImVec2(200, 50));
+  ImGui::SliderFloat("scale", &View::VIEW_SCALE, 0.0f, 1.0f);
+  ImGui::End();
+
+  /* ImGui::Begin("light"); */
+  /* static float x = 1.2; */
+  /* static float y = 0.0; */
+  /* static float z = 90.0; */
+  /* ImGui::SetWindowPos(ImVec2(0, 110)); */
+  /* ImGui::SetWindowSize(ImVec2(500, 100)); */
+  /* ImGui::SliderFloat("light x", &x, -10.0f, 10.0f); */
+  /* ImGui::SliderFloat("light y", &y, -10.0f, 10.0f); */
+  /* ImGui::SliderFloat("light z", &z, -100.0f, 100.0f); */
+  /* ImGui::End(); */
+  /* _light->setPosition(glm::vec3(x, y, z)); */
+
   int display_w, display_h;
   glfwGetFramebufferSize(_window, &display_w, &display_h);
   glViewport(0, 0, display_w, display_h);
@@ -183,4 +208,10 @@ void ColonyWindow::showDebug()
 void ColonyWindow::getCursorPos(double* xpos, double* ypos) const
 {
   glfwGetCursorPos(_window, xpos, ypos);
+}
+
+void ColonyWindow::setOnEvent(
+  std::function<void(std::unique_ptr<Event> event)> onEvent)
+{
+  _onEvent = onEvent;
 }

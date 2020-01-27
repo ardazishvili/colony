@@ -65,6 +65,10 @@ add_executable(colony
     figImpl/events/ColonyMouseReleaseEvent.h
     figImpl/events/ColonyMouseScrollEvent.cpp
     figImpl/events/ColonyMouseScrollEvent.h
+    figImpl/GameLayer.h
+    figImpl/GameLayer.cpp
+    figImpl/GuiLayer.h
+    figImpl/GuiLayer.cpp
     logic/AbstractPlant.cpp
     logic/AbstractPlant.h
     logic/AbstractPlantBuilder.cpp

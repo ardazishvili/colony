@@ -15,14 +15,14 @@ class ColonyWindow : public Window
 public:
   ColonyWindow(glm::mat4& view,
                glm::mat4& projection,
-               std::function<void(std::unique_ptr<Event> event)> onEvent,
                EventFabric* eventFabric);
   ~ColonyWindow() override;
+  void setOnEvent(std::function<void(std::unique_ptr<Event> event)> onEvent);
 
   void preUpdate();
   void postUpdate();
-  float width() const;
-  float height() const;
+  float width() const override;
+  float height() const override;
   void getCursorPos(double* xpos, double* ypos) const;
 
   GLFWwindow* _window;
