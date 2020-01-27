@@ -12,8 +12,8 @@ ColonyApplication::ColonyApplication() :
   int screenWidth = 1920;
   int screenHeight = 1200 - 150;
   Window::Param param = { screenWidth, screenHeight };
-  _window = std::make_unique<ColonyWindow>(
-    _view, _projection, _eventFabric.get(), param);
+  _window =
+    std::make_unique<GlfwWindow>(_view, _projection, _eventFabric.get(), param);
 
   auto gameLayer =
     std::make_unique<GameLayer>(_window.get(), &_camera, _view, _projection);

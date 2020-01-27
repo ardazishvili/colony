@@ -11,8 +11,8 @@
 #include "../fig/SkyboxShader.h"
 #include "../fig/Terrain.h"
 
+#include "../fig/GlfwWindow.h"
 #include "../logic/Game.h"
-#include "ColonyWindow.h"
 
 class Window;
 class GameLayer : public Layer

@@ -20,7 +20,7 @@ class ColonyEventManager : public EventManager
 public:
   ColonyEventManager(glm::mat4& view,
                      glm::mat4& projection,
-                     ColonyWindow* window,
+                     Window* window,
                      Game* game,
                      Camera& camera,
                      Shader& textureShader,
@@ -31,16 +31,12 @@ public:
                      std::shared_ptr<ObstaclesSegment> mo,
                      AStar* astar);
   void tick();
-  /* static glm::vec3 unProject(ColonyWindow* window, */
-  /*                            glm::mat4& view, */
-  /*                            glm::mat4& proj); */
   void setStructureToBuild(std::shared_ptr<GroundStructure> structure);
   void setStructureToBuildStage(BuildStage stage);
 
 private:
   glm::mat4& _view;
   glm::mat4& _projection;
-  /* ColonyWindow* _window; */
   Window* _window;
   Camera& _camera;
   Game* _game;

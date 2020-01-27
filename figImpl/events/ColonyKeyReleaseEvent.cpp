@@ -2,7 +2,6 @@
 #include "../../logic/Hq.h"
 #include "../../logic/Turbine.h"
 #include "../ColonyEventManager.h"
-#include "../ColonyWindow.h"
 
 ColonyKeyReleaseEvent::ColonyKeyReleaseEvent(GLFWwindow* window,
                                              int key,

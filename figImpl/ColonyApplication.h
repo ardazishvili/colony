@@ -8,6 +8,7 @@
 
 #include "../fig/Application.h"
 #include "../fig/Camera.h"
+#include "../fig/GlfwWindow.h"
 #include "../fig/Light.h"
 #include "../fig/LinesShader.h"
 #include "../fig/PhongShader.h"
@@ -15,9 +16,8 @@
 #include "../fig/SkyboxShader.h"
 #include "../fig/events/Event.h"
 #include "../fig/events/EventFabric.h"
-#include "../logic/Game.h"
 
-#include "ColonyWindow.h"
+#include "../logic/Game.h"
 
 class ColonyApplication : public Application
 {
@@ -27,7 +27,7 @@ public:
   void run() override;
 
 private:
-  std::unique_ptr<ColonyWindow> _window;
+  std::unique_ptr<GlfwWindow> _window;
   Camera _camera;
   std::function<void(std::unique_ptr<Event> event)> _onEvent;
   std::unique_ptr<EventFabric> _eventFabric;

@@ -47,8 +47,6 @@ add_executable(colony
 		view/View.h
     figImpl/ColonyApplication.h
     figImpl/ColonyApplication.cpp
-    figImpl/ColonyWindow.cpp
-    figImpl/ColonyWindow.h
     figImpl/events/ColonyEventFabric.cpp
     figImpl/events/ColonyEventFabric.h
     figImpl/events/ColonyKeyPressEvent.cpp

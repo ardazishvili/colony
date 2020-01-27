@@ -1,6 +1,6 @@
-#include "ColonyEventFabric.h"
+#include "../../fig/events/ErrorEvent.h"
 
-#include "ColonyErrorEvent.h"
+#include "ColonyEventFabric.h"
 #include "ColonyKeyPressEvent.h"
 #include "ColonyKeyReleaseEvent.h"
 #include "ColonyKeyRepeatEvent.h"

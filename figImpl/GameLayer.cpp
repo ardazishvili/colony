@@ -91,19 +91,18 @@ void GameLayer::init()
                                    mapObstacles->obstacles(),
                                    mapObstacles->dimensions());
   // TODO downcast
-  _eventManager =
-    std::make_shared<ColonyEventManager>(_view,
-                                         _projection,
-                                         dynamic_cast<ColonyWindow*>(_window),
-                                         _game.get(),
-                                         *_camera,
-                                         *_textureShader,
-                                         *_colorShader,
-                                         *_colorNonFlatShader,
-                                         *_linesShader,
-                                         _terrain.get(),
-                                         mapObstacles,
-                                         _astar.get());
+  _eventManager = std::make_shared<ColonyEventManager>(_view,
+                                                       _projection,
+                                                       _window,
+                                                       _game.get(),
+                                                       *_camera,
+                                                       *_textureShader,
+                                                       *_colorShader,
+                                                       *_colorNonFlatShader,
+                                                       *_linesShader,
+                                                       _terrain.get(),
+                                                       mapObstacles,
+                                                       _astar.get());
 
   createTank(_game.get(),
              *_textureShader,
