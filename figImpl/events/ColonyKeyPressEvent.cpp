@@ -1,5 +1,5 @@
 #include "ColonyKeyPressEvent.h"
-#include "../../logic/EventManager.h"
+#include "../ColonyEventManager.h"
 
 ColonyKeyPressEvent::ColonyKeyPressEvent(GLFWwindow* window,
                                          int key,

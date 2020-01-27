@@ -1,7 +1,7 @@
 #include <iomanip>
 
 #include "../fig/globals.h"
-#include "../logic/EventManager.h"
+#include "../figImpl/ColonyEventManager.h"
 #include "ColonyWindow.h"
 #include "GuiLayer.h"
 
@@ -85,9 +85,7 @@ void GuiLayer::showDebug()
   ImGui::Begin("3dCoordinates", NULL, flags);
   ImGui::SetWindowPos(ImVec2(0, _wParam.height - 22));
   ImGui::SetWindowSize(ImVec2(500, 22));
-  // TODO downcast
-  auto pos = EventManager::unProject(
-    dynamic_cast<ColonyWindow*>(_window), _view, _projection);
+  auto pos = EventManager::unProject(_window, _view, _projection);
   std::stringstream ss;
   ss << "x:" << std::setw(5) << std::setprecision(2) << pos.x
      << "; y:" << std::setw(5) << std::setprecision(2) << pos.y

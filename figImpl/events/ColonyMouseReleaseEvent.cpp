@@ -1,5 +1,5 @@
 #include "ColonyMouseReleaseEvent.h"
-#include "../../logic/EventManager.h"
+#include "../ColonyEventManager.h"
 
 ColonyMouseReleaseEvent::ColonyMouseReleaseEvent(int button) :
   MouseReleaseEvent(button)
@@ -16,13 +16,20 @@ void ColonyMouseReleaseEvent::process(Camera* camera,
   }
 }
 
-void ColonyMouseReleaseEvent::handleMouseReleasedMiddle(EventManager* m)
+void ColonyMouseReleaseEvent::handleMouseReleasedMiddle(
+  EventManager* eventManager)
 {
+  // TODO downcast
+  auto m = dynamic_cast<ColonyEventManager*>(eventManager);
+
   m->_middleButtonPressed = false;
 }
 
-void ColonyMouseReleaseEvent::handleMouseReleased(EventManager* m)
+void ColonyMouseReleaseEvent::handleMouseReleased(EventManager* eventManager)
 {
+  // TODO downcast
+  auto m = dynamic_cast<ColonyEventManager*>(eventManager);
+
   std::cout << "mouse released" << std::endl;
   if (m->_shiftPressed) {
 

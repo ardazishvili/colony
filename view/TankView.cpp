@@ -1,7 +1,6 @@
 #include "TankView.h"
 #include "../fig/globals.h"
 #include "../logic/Buildable.h"
-#include "../logic/EventManager.h"
 
 float TankView::TANK_GUN_ANGLE_INCREMENT = 1.5;
 float TankView::TANK_GUN_ANGLE_TOLERANCE = 1.5;

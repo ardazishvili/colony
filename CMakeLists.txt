@@ -11,8 +11,8 @@ add_executable(colony
 		logic/Buildable.h
 		logic/Control.cpp
 		logic/Control.h
-		logic/EventManager.cpp
-		logic/EventManager.h
+    figImpl/ColonyEventManager.cpp
+		figImpl/ColonyEventManager.h
 		logic/Game.cpp
 		logic/Game.h
 		logic/Hq.cpp

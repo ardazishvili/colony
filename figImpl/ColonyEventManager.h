@@ -1,44 +1,47 @@
-#ifndef EVENT_MANAGER_H
-#define EVENT_MANAGER_H
+#ifndef COLONY_EVENT_MANAGER_H
+#define COLONY_EVENT_MANAGER_H
 
 #include <GLFW/glfw3.h>
 
 #include "../fig/Camera.h"
+#include "../fig/EventManager.h"
 #include "../fig/HeightsSegment.h"
 #include "../fig/ObstaclesSegment.h"
 #include "../fig/RectangleShape.h"
 #include "../fig/events/Event.h"
 #include "../fig/math/AStar.h"
-#include "Game.h"
-#include "Tank.h"
+
+#include "../logic/Game.h"
+#include "../logic/Tank.h"
 
 class ColonyWindow;
-class EventManager
+class ColonyEventManager : public EventManager
 {
 public:
-  EventManager(glm::mat4& view,
-               glm::mat4& projection,
-               ColonyWindow* window,
-               Game* game,
-               Camera& camera,
-               Shader& textureShader,
-               Shader& colorShader,
-               Shader& colorNonFlatShader,
-               Shader& linesShader,
-               Terrain* terrain,
-               std::shared_ptr<ObstaclesSegment> mo,
-               AStar* astar);
+  ColonyEventManager(glm::mat4& view,
+                     glm::mat4& projection,
+                     ColonyWindow* window,
+                     Game* game,
+                     Camera& camera,
+                     Shader& textureShader,
+                     Shader& colorShader,
+                     Shader& colorNonFlatShader,
+                     Shader& linesShader,
+                     Terrain* terrain,
+                     std::shared_ptr<ObstaclesSegment> mo,
+                     AStar* astar);
   void tick();
-  static glm::vec3 unProject(ColonyWindow* window,
-                             glm::mat4& view,
-                             glm::mat4& proj);
+  /* static glm::vec3 unProject(ColonyWindow* window, */
+  /*                            glm::mat4& view, */
+  /*                            glm::mat4& proj); */
   void setStructureToBuild(std::shared_ptr<GroundStructure> structure);
   void setStructureToBuildStage(BuildStage stage);
 
 private:
   glm::mat4& _view;
   glm::mat4& _projection;
-  ColonyWindow* _window;
+  /* ColonyWindow* _window; */
+  Window* _window;
   Camera& _camera;
   Game* _game;
   Shader& _textureShader;
@@ -57,10 +60,6 @@ private:
   Terrain* _terrain;
   RectangleShape _selection;
   bool _selectionActive{ false };
-
-  bool _middleButtonPressed{ false };
-  glm::vec2 _middleLastPressed{ 0.0f, 0.0f };
-  bool _shiftPressed{ false };
 
   std::shared_ptr<HeightsSegment> _heightsSegment;
   std::shared_ptr<ObstaclesSegment> _obstaclesSegment;

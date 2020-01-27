@@ -2,6 +2,7 @@
 
 #include "../fig/Light.h"
 #include "../fig/globals.h"
+#include "../figImpl/ColonyEventManager.h"
 
 GameLayer::GameLayer(Window* w,
                      Camera* c,
@@ -91,18 +92,18 @@ void GameLayer::init()
                                    mapObstacles->dimensions());
   // TODO downcast
   _eventManager =
-    std::make_shared<EventManager>(_view,
-                                   _projection,
-                                   dynamic_cast<ColonyWindow*>(_window),
-                                   _game.get(),
-                                   *_camera,
-                                   *_textureShader,
-                                   *_colorShader,
-                                   *_colorNonFlatShader,
-                                   *_linesShader,
-                                   _terrain.get(),
-                                   mapObstacles,
-                                   _astar.get());
+    std::make_shared<ColonyEventManager>(_view,
+                                         _projection,
+                                         dynamic_cast<ColonyWindow*>(_window),
+                                         _game.get(),
+                                         *_camera,
+                                         *_textureShader,
+                                         *_colorShader,
+                                         *_colorNonFlatShader,
+                                         *_linesShader,
+                                         _terrain.get(),
+                                         mapObstacles,
+                                         _astar.get());
 
   createTank(_game.get(),
              *_textureShader,

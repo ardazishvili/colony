@@ -7,7 +7,7 @@ class TurbineBuilder : public AbstractStructureBuilder
 {
 public:
   TurbineBuilder(Game* game,
-                 EventManager* eventManager,
+                 ColonyEventManager* eventManager,
                  Shader& textureShader,
                  Shader& linesShader);
 

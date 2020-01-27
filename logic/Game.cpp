@@ -2,7 +2,7 @@
 #include "../fig/globals.h"
 #include "../fig/misc/Logger.h"
 
-#include "EventManager.h"
+#include "../figImpl/ColonyEventManager.h"
 #include "Game.h"
 
 #include <iomanip>

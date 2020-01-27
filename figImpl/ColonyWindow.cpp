@@ -1,7 +1,7 @@
 #include <cstdio>
 
+#include "../fig/events//Event.h"
 #include "../fig/events/EventFabric.h"
-/* #include "../fig/globals.h" */
 #include "ColonyWindow.h"
 #include "events/ColonyErrorEvent.h"
 

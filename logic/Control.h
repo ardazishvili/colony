@@ -11,7 +11,7 @@ class Control
 {
 public:
   Control(Game* game,
-          EventManager* eventManager,
+          ColonyEventManager* eventManager,
           GLFWwindow* window,
           Shader& textureShader,
           Shader& linesShader,
@@ -29,7 +29,7 @@ private:
   void addToStructurePanel(std::unique_ptr<AbstractStructureBuilder> builder);
 
   Game* _game;
-  EventManager* _eventManager;
+  ColonyEventManager* _eventManager;
   Panel _structurePanel;
   Panel _unitPanel;
   Shader& _textureShader;

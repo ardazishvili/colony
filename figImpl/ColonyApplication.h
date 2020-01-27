@@ -15,7 +15,6 @@
 #include "../fig/SkyboxShader.h"
 #include "../fig/events/Event.h"
 #include "../fig/events/EventFabric.h"
-#include "../logic/EventManager.h"
 #include "../logic/Game.h"
 
 #include "ColonyWindow.h"
@@ -28,7 +27,6 @@ public:
   void run() override;
 
 private:
-  EventManager* _eventManager;
   std::unique_ptr<ColonyWindow> _window;
   Camera _camera;
   std::function<void(std::unique_ptr<Event> event)> _onEvent;

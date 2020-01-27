@@ -1,5 +1,5 @@
 #include "ColonyKeyRepeatEvent.h"
-#include "../../logic/EventManager.h"
+#include "../../fig/Camera.h"
 
 ColonyKeyRepeatEvent::ColonyKeyRepeatEvent(GLFWwindow* window,
                                            int key,

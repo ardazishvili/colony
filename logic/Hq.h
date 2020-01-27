@@ -11,7 +11,7 @@ class Hq : public GroundStructure
 public:
   Hq() = delete;
   Hq(Game* game,
-     EventManager* eventManager,
+     ColonyEventManager* eventManager,
      Shader& textureShader,
      Shader& linesShader,
      AStar* router,
@@ -23,7 +23,7 @@ public:
 
 private:
   Game* _game;
-  EventManager* _eventManager;
+  ColonyEventManager* _eventManager;
   Terrain* _terrain;
   AStar* _router;
   static const int HQ_HP;

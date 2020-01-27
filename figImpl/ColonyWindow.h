@@ -1,13 +1,14 @@
 #ifndef COLONY_WINDOW_H
 #define COLONY_WINDOW_H
 
+#include <functional>
+
 #include <GL/glew.h> // Initialize with glewInit()
 #include <GLFW/glfw3.h>
 
 #include "../fig/Camera.h"
 #include "../fig/Window.h"
 #include "../fig/events/Event.h"
-#include "../logic/EventManager.h"
 
 class EventFabric;
 class ColonyWindow : public Window
@@ -25,8 +26,6 @@ public:
   float width() const override;
   float height() const override;
   void getCursorPos(double* xpos, double* ypos) const;
-
-  GLFWwindow* _window;
 
 private:
   glm::mat4& _view;

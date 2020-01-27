@@ -1,5 +1,5 @@
 #include "ColonyMouseMoveEvent.h"
-#include "../../logic/EventManager.h"
+#include "../ColonyEventManager.h"
 
 ColonyMouseMoveEvent::ColonyMouseMoveEvent(GLFWwindow* window,
                                            double xpos,
@@ -8,9 +8,11 @@ ColonyMouseMoveEvent::ColonyMouseMoveEvent(GLFWwindow* window,
 {
 }
 
-void ColonyMouseMoveEvent::process(Camera* camera, EventManager* m)
+void ColonyMouseMoveEvent::process(Camera* camera, EventManager* eventManager)
 {
-  if (m->_shiftPressed && m->_middleButtonPressed) {
+  // TODO downcast
+  auto m = dynamic_cast<ColonyEventManager*>(eventManager);
+  if (m->_shiftPressed && m->mousePressed(MouseButton::MIDDLE)) {
     auto deltaX = _xpos - m->_middleLastPressed.x;
     auto deltaY = _ypos - m->_middleLastPressed.y;
 
@@ -25,7 +27,7 @@ void ColonyMouseMoveEvent::process(Camera* camera, EventManager* m)
       camera->moveRight();
     }
     m->_middleLastPressed = glm::vec2(_xpos, _ypos);
-  } else if (m->_middleButtonPressed) {
+  } else if (m->mousePressed(MouseButton::MIDDLE)) {
     auto deltaX = _xpos - m->_middleLastPressed.x;
     auto deltaY = _ypos - m->_middleLastPressed.y;
 
@@ -41,6 +43,7 @@ void ColonyMouseMoveEvent::process(Camera* camera, EventManager* m)
     }
     m->_middleLastPressed = glm::vec2(_xpos, _ypos);
   }
+
   auto c = EventManager::unProject(m->_window, m->_view, m->_projection);
   if (m->_structureToBuild &&
       (m->_structureToBuildStage == BuildStage::SetAngle)) {
