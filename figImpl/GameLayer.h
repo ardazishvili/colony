@@ -20,6 +20,7 @@ class GameLayer : public Layer
 public:
   GameLayer(Window* w, Camera* c, glm::mat4& view, glm::mat4& projection);
   void init() override;
+  void update() override;
   void render() override;
 
   std::function<void(std::unique_ptr<Event> event)> onEvent();

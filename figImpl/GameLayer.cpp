@@ -133,6 +133,10 @@ void GameLayer::init()
   _skybox = std::make_unique<Skybox>(*_skyboxShader);
 }
 
+void GameLayer::update()
+{
+}
+
 void GameLayer::render()
 {
   _camera->updateSpeed();

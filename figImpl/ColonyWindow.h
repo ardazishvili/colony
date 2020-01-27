@@ -15,7 +15,8 @@ class ColonyWindow : public Window
 public:
   ColonyWindow(glm::mat4& view,
                glm::mat4& projection,
-               EventFabric* eventFabric);
+               EventFabric* eventFabric,
+               const Window::Param& param);
   ~ColonyWindow() override;
   void setOnEvent(std::function<void(std::unique_ptr<Event> event)> onEvent);
 
@@ -28,10 +29,8 @@ public:
   GLFWwindow* _window;
 
 private:
-  void showDebug();
-
-  float _screenWidth;
-  float _screenHeight;
+  /* float _screenWidth; */
+  /* float _screenHeight; */
   glm::mat4& _view;
   glm::mat4& _projection;
 
