@@ -8,7 +8,6 @@
 
 #include "../fig/Application.h"
 #include "../fig/Camera.h"
-#include "../fig/GlfwWindow.h"
 #include "../fig/Light.h"
 #include "../fig/LinesShader.h"
 #include "../fig/PhongShader.h"
@@ -27,7 +26,6 @@ public:
   void run() override;
 
 private:
-  std::unique_ptr<GlfwWindow> _window;
   Camera _camera;
   std::function<void(std::unique_ptr<Event> event)> _onEvent;
   std::unique_ptr<EventFabric> _eventFabric;
