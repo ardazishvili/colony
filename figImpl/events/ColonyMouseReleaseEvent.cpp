@@ -22,7 +22,7 @@ void ColonyMouseReleaseEvent::handleMouseReleasedMiddle(
   // TODO downcast
   auto m = dynamic_cast<ColonyEventManager*>(eventManager);
 
-  m->_middleButtonPressed = false;
+  m->releaseMouse(MouseButton::MIDDLE);
 }
 
 void ColonyMouseReleaseEvent::handleMouseReleased(EventManager* eventManager)
@@ -31,7 +31,7 @@ void ColonyMouseReleaseEvent::handleMouseReleased(EventManager* eventManager)
   auto m = dynamic_cast<ColonyEventManager*>(eventManager);
 
   std::cout << "mouse released" << std::endl;
-  if (m->_shiftPressed) {
+  if (m->isKeyPressed(KeyButton::LEFT_SHIFT)) {
 
     auto bl = m->_selection.bottomLeft();
     auto tr = m->_selection.topRight();

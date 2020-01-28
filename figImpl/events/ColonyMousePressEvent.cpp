@@ -90,7 +90,7 @@ void ColonyMousePressedEvent::handleMousePressedMiddle(
   // TODO downcast
   auto m = dynamic_cast<ColonyEventManager*>(eventManager);
 
-  m->_middleButtonPressed = true;
+  m->pressMouse(MouseButton::MIDDLE);
   double xpos, ypos;
   m->_window->getCursorPos(&xpos, &ypos);
   m->_middleLastPressed = glm::vec2(xpos, ypos);

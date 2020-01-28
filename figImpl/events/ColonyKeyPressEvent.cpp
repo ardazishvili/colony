@@ -12,6 +12,6 @@ ColonyKeyPressEvent::ColonyKeyPressEvent(GLFWwindow* window,
 void ColonyKeyPressEvent::process(Camera* camera, EventManager* eventManager)
 {
   if (_key == GLFW_KEY_LEFT_SHIFT) {
-    eventManager->_shiftPressed = true;
+    eventManager->pressKey(KeyButton::LEFT_SHIFT);
   }
 }

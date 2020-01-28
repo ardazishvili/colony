@@ -17,7 +17,7 @@ void ColonyKeyReleaseEvent::process(Camera* camera, EventManager* eventManager)
   auto em = dynamic_cast<ColonyEventManager*>(eventManager);
 
   if (_key == GLFW_KEY_LEFT_SHIFT) {
-    em->_shiftPressed = false;
+    em->releaseKey(KeyButton::LEFT_SHIFT);
   }
   if (_key == GLFW_KEY_Z) {
     if (em->_structureSelected) {

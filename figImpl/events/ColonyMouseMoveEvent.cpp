@@ -12,7 +12,8 @@ void ColonyMouseMoveEvent::process(Camera* camera, EventManager* eventManager)
 {
   // TODO downcast
   auto m = dynamic_cast<ColonyEventManager*>(eventManager);
-  if (m->_shiftPressed && m->mousePressed(MouseButton::MIDDLE)) {
+  if (m->isKeyPressed(KeyButton::LEFT_SHIFT) &&
+      m->isMousePressed(MouseButton::MIDDLE)) {
     auto deltaX = _xpos - m->_middleLastPressed.x;
     auto deltaY = _ypos - m->_middleLastPressed.y;
 
@@ -27,7 +28,7 @@ void ColonyMouseMoveEvent::process(Camera* camera, EventManager* eventManager)
       camera->moveRight();
     }
     m->_middleLastPressed = glm::vec2(_xpos, _ypos);
-  } else if (m->mousePressed(MouseButton::MIDDLE)) {
+  } else if (m->isMousePressed(MouseButton::MIDDLE)) {
     auto deltaX = _xpos - m->_middleLastPressed.x;
     auto deltaY = _ypos - m->_middleLastPressed.y;
 
