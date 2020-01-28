@@ -1,8 +1,6 @@
 #ifndef COLONY_EVENT_MANAGER_H
 #define COLONY_EVENT_MANAGER_H
 
-#include <GLFW/glfw3.h>
-
 #include "../fig/Camera.h"
 #include "../fig/EventManager.h"
 #include "../fig/HeightsSegment.h"

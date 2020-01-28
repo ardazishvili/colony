@@ -2,6 +2,8 @@
 #define CONTROL_H
 
 #include "../fig/Shader.h"
+#include "../fig/Window.h"
+
 #include "AbstractStructureBuilder.h"
 #include "AbstractUnitBuilder.h"
 #include "Panel.h"
@@ -12,7 +14,7 @@ class Control
 public:
   Control(Game* game,
           ColonyEventManager* eventManager,
-          GLFWwindow* window,
+          Window* window,
           Shader& textureShader,
           Shader& linesShader,
           Terrain* terrain,

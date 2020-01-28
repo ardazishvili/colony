@@ -1,6 +1,6 @@
 #include "ColonyApplication.h"
-#include "GameLayer.h"
-#include "GuiLayer.h"
+#include "ColonyGameLayer.h"
+#include "ColonyGuiLayer.h"
 #include "events/ColonyEventFabric.h"
 
 ColonyApplication::ColonyApplication() :
@@ -15,22 +15,21 @@ ColonyApplication::ColonyApplication() :
   _window =
     std::make_unique<GlfwWindow>(_view, _projection, _eventFabric.get(), param);
 
-  auto gameLayer =
-    std::make_unique<GameLayer>(_window.get(), &_camera, _view, _projection);
+  auto gameLayer = std::make_unique<ColonyGameLayer>(
+    _window.get(), &_camera, _view, _projection);
   gameLayer->init();
   _window->setOnEvent(gameLayer->onEvent());
   addLayer(std::move(gameLayer));
 
   auto guiLayer =
-    std::make_unique<GuiLayer>(param, _window.get(), _view, _projection);
+    std::make_unique<ColonyGuiLayer>(param, _window.get(), _view, _projection);
   guiLayer->init();
   addLayer(std::move(guiLayer));
 }
 
 void ColonyApplication::run()
 {
-  while (!glfwWindowShouldClose(_window->_window)) {
-
+  while (!_window->shouldClose()) {
     _window->update();
 
     update();

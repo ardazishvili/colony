@@ -6,7 +6,7 @@
 class ColonyKeyRepeatEvent : public KeyboardRepeatEvent
 {
 public:
-  ColonyKeyRepeatEvent(GLFWwindow* window, int key, int scancode, int mods);
+  ColonyKeyRepeatEvent(int key, int scancode, int mods);
   void process(Camera* camera, EventManager* eventManager);
 };
 

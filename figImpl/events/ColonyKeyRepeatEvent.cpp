@@ -1,11 +1,11 @@
-#include "ColonyKeyRepeatEvent.h"
-#include "../../fig/Camera.h"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
-ColonyKeyRepeatEvent::ColonyKeyRepeatEvent(GLFWwindow* window,
-                                           int key,
-                                           int scancode,
-                                           int mods) :
-  KeyboardRepeatEvent(window, key, scancode, mods)
+#include "../../fig/Camera.h"
+#include "ColonyKeyRepeatEvent.h"
+
+ColonyKeyRepeatEvent::ColonyKeyRepeatEvent(int key, int scancode, int mods) :
+  KeyboardRepeatEvent(key, scancode, mods)
 {
 }
 

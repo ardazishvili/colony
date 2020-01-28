@@ -1,19 +1,19 @@
-#include "GameLayer.h"
+#include "ColonyGameLayer.h"
 
 #include "../fig/Light.h"
 #include "../fig/globals.h"
 #include "../figImpl/ColonyEventManager.h"
 
-GameLayer::GameLayer(Window* w,
-                     Camera* c,
-                     glm::mat4& view,
-                     glm::mat4& projection) :
+ColonyGameLayer::ColonyGameLayer(Window* w,
+                                 Camera* c,
+                                 glm::mat4& view,
+                                 glm::mat4& projection) :
   _window(w),
   _camera(c), _view(view), _projection(projection)
 {
 }
 
-void GameLayer::init()
+void ColonyGameLayer::init()
 {
   _view = glm::lookAt(_camera->eye(), _camera->reference(), _camera->up());
   _projection = glm::perspective(glm::radians(_camera->fov()),
@@ -133,11 +133,11 @@ void GameLayer::init()
   _skybox = std::make_unique<Skybox>(*_skyboxShader);
 }
 
-void GameLayer::update()
+void ColonyGameLayer::update()
 {
 }
 
-void GameLayer::render()
+void ColonyGameLayer::render()
 {
   _camera->updateSpeed();
   _view = glm::lookAt(_camera->eye(), _camera->reference(), _camera->up());
@@ -154,7 +154,7 @@ void GameLayer::render()
   _terrain.get()->renderSub();
 }
 
-std::function<void(std::unique_ptr<Event> event)> GameLayer::onEvent()
+std::function<void(std::unique_ptr<Event> event)> ColonyGameLayer::onEvent()
 {
   return [this](std::unique_ptr<Event> event) {
     event->process(_camera, _eventManager.get());

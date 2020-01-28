@@ -1,10 +1,8 @@
 #include "ColonyMouseMoveEvent.h"
 #include "../ColonyEventManager.h"
 
-ColonyMouseMoveEvent::ColonyMouseMoveEvent(GLFWwindow* window,
-                                           double xpos,
-                                           double ypos) :
-  MouseMoveEvent(window, xpos, ypos)
+ColonyMouseMoveEvent::ColonyMouseMoveEvent(double xpos, double ypos) :
+  MouseMoveEvent(xpos, ypos)
 {
 }
 

@@ -8,7 +8,7 @@
 using namespace std::string_literals;
 const float Panel::PANEL_WIDTH = 300;
 
-Panel::Panel(GLFWwindow* window, Type type, Shader& shader) :
+Panel::Panel(Window* window, Type type, Shader& shader) :
   _window(window), _type(type), _shader(shader)
 {
 }
@@ -27,12 +27,10 @@ void Panel::display()
 {
   auto panelNo = static_cast<int>(_type);
   auto panelName = "Panel #"s + std::to_string(panelNo);
-  int screenWidth, screenHeight;
-  glfwGetWindowSize(_window, &screenWidth, &screenHeight);
   ImGui::Begin(panelName.c_str());
   ImGui::SetWindowPos(
-    ImVec2(screenWidth - PANEL_WIDTH, panelNo * screenHeight / 2));
-  ImGui::SetWindowSize(ImVec2(PANEL_WIDTH, screenHeight / 2));
+    ImVec2(_window->width() - PANEL_WIDTH, panelNo * _window->height() / 2));
+  ImGui::SetWindowSize(ImVec2(PANEL_WIDTH, _window->height() / 2));
   for (unsigned long i = 0; i < _items.size(); ++i) {
     ImGui::PushID(i);
     if (ImGui::ImageButton((void*)(intptr_t)_items[i]->texture(),

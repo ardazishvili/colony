@@ -1,13 +1,14 @@
+
+
 #include "ColonyKeyReleaseEvent.h"
 #include "../../logic/Hq.h"
 #include "../../logic/Turbine.h"
 #include "../ColonyEventManager.h"
 
-ColonyKeyReleaseEvent::ColonyKeyReleaseEvent(GLFWwindow* window,
-                                             int key,
-                                             int scancode,
-                                             int mods) :
-  KeyboardReleaseEvent(window, key, scancode, mods)
+/* #include "../../fig/GlfwWindow.h" */
+
+ColonyKeyReleaseEvent::ColonyKeyReleaseEvent(int key, int scancode, int mods) :
+  KeyboardReleaseEvent(key, scancode, mods)
 {
 }
 
@@ -96,6 +97,6 @@ void ColonyKeyReleaseEvent::process(Camera* camera, EventManager* eventManager)
     }
   }
   if (_key == GLFW_KEY_ESCAPE) {
-    glfwSetWindowShouldClose(em->_window->_window, true);
+    em->_window->close();
   }
 }

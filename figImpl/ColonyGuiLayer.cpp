@@ -1,40 +1,30 @@
 #include <iomanip>
 
+#include "../fig/GlfwWindow.h"
+#include "../fig/ImGuiBackend.h"
 #include "../fig/globals.h"
+
 #include "../figImpl/ColonyEventManager.h"
-#include "GuiLayer.h"
 
-#include "../fig/imgui/imgui.h"
-#include "../fig/imgui/imgui_impl_glfw.h"
-#include "../fig/imgui/imgui_impl_opengl3.h"
+#include "ColonyGuiLayer.h"
 
-GuiLayer::GuiLayer(const Window::Param& param,
-                   Window* window,
-                   glm::mat4& view,
-                   glm::mat4& projection) :
-  _wParam(param),
-  _window(window), _view(view), _projection(projection)
+ColonyGuiLayer::ColonyGuiLayer(const Window::Param& param,
+                               Window* window,
+                               glm::mat4& view,
+                               glm::mat4& projection) :
+  GuiLayer(window, std::make_unique<ImGuiBackend>()),
+  _wParam(param), _view(view), _projection(projection)
 {
 }
 
-void GuiLayer::init()
+void ColonyGuiLayer::init()
 {
-  const char* glsl_version = "#version 450";
-  IMGUI_CHECKVERSION();
-  ImGui::CreateContext();
-  ImGui::StyleColorsDark();
-  // TODO downcast
-  ImGui_ImplGlfw_InitForOpenGL(_window->_window, true);
-  ImGui_ImplOpenGL3_Init(glsl_version);
-  ImGui::GetStyle().WindowRounding = 0.0f;
-  ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+  _guiBack->init(_window);
 }
 
-void GuiLayer::update()
+void ColonyGuiLayer::update()
 {
-  ImGui_ImplOpenGL3_NewFrame();
-  ImGui_ImplGlfw_NewFrame();
-  ImGui::NewFrame();
+  _guiBack->newFrame();
 
   logger.render();
 
@@ -67,15 +57,14 @@ void GuiLayer::update()
   /* _light->setPosition(glm::vec3(x, y, z)); */
 }
 
-void GuiLayer::render()
+void ColonyGuiLayer::render()
 {
   showDebug();
 
-  ImGui::Render();
-  ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+  _guiBack->render();
 }
 
-void GuiLayer::showDebug()
+void ColonyGuiLayer::showDebug()
 {
   auto flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize |
                ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar |
@@ -92,9 +81,7 @@ void GuiLayer::showDebug()
   ImGui::End();
 }
 
-GuiLayer::~GuiLayer()
+ColonyGuiLayer::~ColonyGuiLayer()
 {
-  ImGui_ImplOpenGL3_Shutdown();
-  ImGui_ImplGlfw_Shutdown();
-  ImGui::DestroyContext();
+  _guiBack->shutdown();
 }

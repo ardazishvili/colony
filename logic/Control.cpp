@@ -6,7 +6,7 @@
 
 Control::Control(Game* game,
                  ColonyEventManager* eventManager,
-                 GLFWwindow* window,
+                 Window* window,
                  Shader& textureShader,
                  Shader& linesShader,
                  Terrain* terrain,

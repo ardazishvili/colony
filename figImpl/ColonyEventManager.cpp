@@ -28,13 +28,9 @@ ColonyEventManager::ColonyEventManager(glm::mat4& view,
   _terrain(terrain), _selection(linesShader, camera), _mapObstacles(mo),
   _astar(astar)
 {
-  _game->setControl(std::make_unique<Control>(_game,
-                                              this,
-                                              _window->_window,
-                                              textureShader,
-                                              linesShader,
-                                              _terrain,
-                                              _astar));
+  // TODO downcast
+  _game->setControl(std::make_unique<Control>(
+    _game, this, _window, textureShader, linesShader, _terrain, _astar));
 }
 
 void ColonyEventManager::tick()

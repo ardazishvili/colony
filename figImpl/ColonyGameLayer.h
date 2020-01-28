@@ -1,10 +1,10 @@
-#ifndef GAME_LAYER_H
-#define GAME_LAYER_H
+#ifndef COLONY_GAME_LAYER_H
+#define COLONY_GAME_LAYER_H
 
 #include <memory>
 
 #include "../fig/Camera.h"
-#include "../fig/Layer.h"
+#include "../fig/GameLayer.h"
 #include "../fig/LinesShader.h"
 #include "../fig/PhongShader.h"
 #include "../fig/Skybox.h"
@@ -15,10 +15,11 @@
 #include "../logic/Game.h"
 
 class Window;
-class GameLayer : public Layer
+class EventManager;
+class ColonyGameLayer : public GameLayer
 {
 public:
-  GameLayer(Window* w, Camera* c, glm::mat4& view, glm::mat4& projection);
+  ColonyGameLayer(Window* w, Camera* c, glm::mat4& view, glm::mat4& projection);
   void init() override;
   void update() override;
   void render() override;
