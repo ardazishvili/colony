@@ -1,10 +1,10 @@
 #include "TurbineBuilder.h"
-#include "EventManager.h"
+#include "../figImpl/ColonyEventManager.h"
 #include "Game.h"
 #include "Turbine.h"
 
 TurbineBuilder::TurbineBuilder(Game* game,
-                               EventManager* eventManager,
+                               ColonyEventManager* eventManager,
                                Shader& textureShader,
                                Shader& linesShader) :
   AbstractStructureBuilder(game, eventManager, textureShader, linesShader)

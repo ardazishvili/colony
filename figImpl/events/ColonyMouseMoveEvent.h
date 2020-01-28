@@ -6,7 +6,7 @@
 class ColonyMouseMoveEvent : public MouseMoveEvent
 {
 public:
-  ColonyMouseMoveEvent(GLFWwindow* window, double xpos, double ypos);
+  ColonyMouseMoveEvent(double xpos, double ypos);
 
   void process(Camera* camera, EventManager* eventManager) override;
 };

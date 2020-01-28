@@ -1,17 +1,14 @@
 #include "ColonyKeyPressEvent.h"
-#include "../../logic/EventManager.h"
+#include "../ColonyEventManager.h"
 
-ColonyKeyPressEvent::ColonyKeyPressEvent(GLFWwindow* window,
-                                         int key,
-                                         int scancode,
-                                         int mods) :
-  KeyboardPressEvent(window, key, scancode, mods)
+ColonyKeyPressEvent::ColonyKeyPressEvent(int key, int scancode, int mods) :
+  KeyboardPressEvent(key, scancode, mods)
 {
 }
 
 void ColonyKeyPressEvent::process(Camera* camera, EventManager* eventManager)
 {
   if (_key == GLFW_KEY_LEFT_SHIFT) {
-    eventManager->_shiftPressed = true;
+    eventManager->pressKey(KeyButton::LEFT_SHIFT);
   }
 }

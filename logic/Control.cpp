@@ -5,8 +5,8 @@
 #include "TankFactoryBuilder.h"
 
 Control::Control(Game* game,
-                 EventManager* eventManager,
-                 GLFWwindow* window,
+                 ColonyEventManager* eventManager,
+                 Window* window,
                  Shader& textureShader,
                  Shader& linesShader,
                  Terrain* terrain,

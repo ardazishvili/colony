@@ -2,13 +2,13 @@
 
 #include <GL/glew.h>
 
-#include "EventManager.h"
+#include "../figImpl/ColonyEventManager.h"
 #include "Game.h"
 #include "TankFactory.h"
 #include "TankFactoryBuilder.h"
 
 TankFactoryBuilder::TankFactoryBuilder(Game* game,
-                                       EventManager* eventManager,
+                                       ColonyEventManager* eventManager,
                                        Shader& textureShader,
                                        Shader& linesShader,
                                        AStar* router) :

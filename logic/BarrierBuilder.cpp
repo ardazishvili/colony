@@ -1,10 +1,10 @@
 #include "BarrierBuilder.h"
+#include "../figImpl/ColonyEventManager.h"
 #include "Barrier.h"
-#include "EventManager.h"
 #include "Game.h"
 
 BarrierBuilder::BarrierBuilder(Game* game,
-                               EventManager* eventManager,
+                               ColonyEventManager* eventManager,
                                Shader& textureShader,
                                Shader& linesShader,
                                Terrain* terrain,

@@ -1,6 +1,5 @@
 #include "ColonyMousePressEvent.h"
-#include "../../logic/EventManager.h"
-#include "../ColonyWindow.h"
+#include "../ColonyEventManager.h"
 
 ColonyMousePressedEvent::ColonyMousePressedEvent(int button) :
   MousePressEvent(button)
@@ -21,8 +20,11 @@ void ColonyMousePressedEvent::process(Camera* camera,
   }
 }
 
-void ColonyMousePressedEvent::handleMousePressedLeft(EventManager* m)
+void ColonyMousePressedEvent::handleMousePressedLeft(EventManager* eventManager)
 {
+  // TODO downcast
+  auto m = dynamic_cast<ColonyEventManager*>(eventManager);
+
   auto c = EventManager::unProject(m->_window, m->_view, m->_projection);
   m->_selectionActive = true;
   auto tmp = c;
@@ -41,8 +43,12 @@ void ColonyMousePressedEvent::handleMousePressedLeft(EventManager* m)
   }
 }
 
-void ColonyMousePressedEvent::handleMousePressedRight(EventManager* m)
+void ColonyMousePressedEvent::handleMousePressedRight(
+  EventManager* eventManager)
 {
+  // TODO downcast
+  auto m = dynamic_cast<ColonyEventManager*>(eventManager);
+
   auto c = EventManager::unProject(m->_window, m->_view, m->_projection);
   // TODO remove copypaste for one tank and group of tanks
   if (m->_tankSelected) {
@@ -78,9 +84,13 @@ void ColonyMousePressedEvent::handleMousePressedRight(EventManager* m)
   }
 }
 
-void ColonyMousePressedEvent::handleMousePressedMiddle(EventManager* m)
+void ColonyMousePressedEvent::handleMousePressedMiddle(
+  EventManager* eventManager)
 {
-  m->_middleButtonPressed = true;
+  // TODO downcast
+  auto m = dynamic_cast<ColonyEventManager*>(eventManager);
+
+  m->pressMouse(MouseButton::MIDDLE);
   double xpos, ypos;
   m->_window->getCursorPos(&xpos, &ypos);
   m->_middleLastPressed = glm::vec2(xpos, ypos);

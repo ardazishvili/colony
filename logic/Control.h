@@ -2,6 +2,8 @@
 #define CONTROL_H
 
 #include "../fig/Shader.h"
+#include "../fig/Window.h"
+
 #include "AbstractStructureBuilder.h"
 #include "AbstractUnitBuilder.h"
 #include "Panel.h"
@@ -11,8 +13,8 @@ class Control
 {
 public:
   Control(Game* game,
-          EventManager* eventManager,
-          GLFWwindow* window,
+          ColonyEventManager* eventManager,
+          Window* window,
           Shader& textureShader,
           Shader& linesShader,
           Terrain* terrain,
@@ -29,7 +31,7 @@ private:
   void addToStructurePanel(std::unique_ptr<AbstractStructureBuilder> builder);
 
   Game* _game;
-  EventManager* _eventManager;
+  ColonyEventManager* _eventManager;
   Panel _structurePanel;
   Panel _unitPanel;
   Shader& _textureShader;

@@ -9,7 +9,7 @@ class BarrierBuilder : public AbstractStructureBuilder
 {
 public:
   BarrierBuilder(Game* game,
-                 EventManager* eventManager,
+                 ColonyEventManager* eventManager,
                  Shader& textureShader,
                  Shader& linesShader,
                  Terrain* terrain,

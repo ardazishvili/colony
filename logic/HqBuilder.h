@@ -10,7 +10,7 @@ class HqBuilder : public AbstractStructureBuilder
 {
 public:
   HqBuilder(Game* game,
-            EventManager* eventManager,
+            ColonyEventManager* eventManager,
             Shader& textureShader,
             Shader& linesShader,
             Terrain* terrain,

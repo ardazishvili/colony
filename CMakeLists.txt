@@ -11,8 +11,8 @@ add_executable(colony
 		logic/Buildable.h
 		logic/Control.cpp
 		logic/Control.h
-		logic/EventManager.cpp
-		logic/EventManager.h
+    figImpl/ColonyEventManager.cpp
+		figImpl/ColonyEventManager.h
 		logic/Game.cpp
 		logic/Game.h
 		logic/Hq.cpp
@@ -47,8 +47,6 @@ add_executable(colony
 		view/View.h
     figImpl/ColonyApplication.h
     figImpl/ColonyApplication.cpp
-    figImpl/ColonyWindow.cpp
-    figImpl/ColonyWindow.h
     figImpl/events/ColonyEventFabric.cpp
     figImpl/events/ColonyEventFabric.h
     figImpl/events/ColonyKeyPressEvent.cpp
@@ -65,6 +63,10 @@ add_executable(colony
     figImpl/events/ColonyMouseReleaseEvent.h
     figImpl/events/ColonyMouseScrollEvent.cpp
     figImpl/events/ColonyMouseScrollEvent.h
+    figImpl/ColonyGameLayer.h
+    figImpl/ColonyGameLayer.cpp
+    figImpl/ColonyGuiLayer.h
+    figImpl/ColonyGuiLayer.cpp
     logic/AbstractPlant.cpp
     logic/AbstractPlant.h
     logic/AbstractPlantBuilder.cpp

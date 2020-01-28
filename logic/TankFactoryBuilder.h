@@ -9,7 +9,7 @@ class TankFactoryBuilder : public AbstractStructureBuilder
 {
 public:
   TankFactoryBuilder(Game* game,
-                     EventManager* eventManager,
+                     ColonyEventManager* eventManager,
                      Shader& textureShader,
                      Shader& linesShader,
                      AStar* router);

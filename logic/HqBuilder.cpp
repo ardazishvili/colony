@@ -2,13 +2,13 @@
 
 #include <GL/glew.h>
 
-#include "EventManager.h"
+#include "../figImpl/ColonyEventManager.h"
 #include "Game.h"
 #include "Hq.h"
 #include "HqBuilder.h"
 
 HqBuilder::HqBuilder(Game* game,
-                     EventManager* eventManager,
+                     ColonyEventManager* eventManager,
                      Shader& textureShader,
                      Shader& linesShader,
                      Terrain* terrain,

@@ -3,12 +3,12 @@
 
 #include "AbstractBuilder.h"
 
-class EventManager;
+class ColonyEventManager;
 class AbstractStructureBuilder : public AbstractBuilder
 {
 public:
   AbstractStructureBuilder(Game* game,
-                           EventManager* eventManager,
+                           ColonyEventManager* eventManager,
                            Shader& textureShader,
                            Shader& linesShader) :
     AbstractBuilder(game),
@@ -19,7 +19,7 @@ public:
   virtual ~AbstractStructureBuilder() = default;
 
 protected:
-  EventManager* _eventManager;
+  ColonyEventManager* _eventManager;
   Shader& _textureShader;
   Shader& _linesShader;
 };

@@ -6,7 +6,7 @@
 class ColonyMouseScrollEvent : public MouseScrollEvent
 {
 public:
-  ColonyMouseScrollEvent(GLFWwindow* window, double xoffset, double yoffset);
+  ColonyMouseScrollEvent(double xoffset, double yoffset);
 
   void process(Camera* camera, EventManager* eventManager) override;
 };

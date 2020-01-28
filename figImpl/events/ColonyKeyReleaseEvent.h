@@ -6,7 +6,7 @@
 class ColonyKeyReleaseEvent : public KeyboardReleaseEvent
 {
 public:
-  ColonyKeyReleaseEvent(GLFWwindow* window, int key, int scancode, int mods);
+  ColonyKeyReleaseEvent(int key, int scancode, int mods);
   void process(Camera* camera, EventManager* eventManager);
 };
 

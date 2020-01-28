@@ -1,13 +1,13 @@
 #include "Hq.h"
+#include "../figImpl/ColonyEventManager.h"
 #include "BarrierBuilder.h"
-#include "EventManager.h"
 #include "TankFactoryBuilder.h"
 #include "TurbineBuilder.h"
 
 const int Hq::HQ_HP = 500;
 
 Hq::Hq(Game* game,
-       EventManager* eventManager,
+       ColonyEventManager* eventManager,
        Shader& textureShader,
        Shader& linesShader,
        AStar* router,
