@@ -15,6 +15,7 @@
 #include "../fig/SkyboxShader.h"
 #include "../fig/events/Event.h"
 #include "../fig/events/EventFabric.h"
+
 #include "../logic/EventManager.h"
 #include "../logic/Game.h"
 
@@ -26,6 +27,9 @@ public:
   ColonyApplication();
 
   void run() override;
+
+protected:
+  void initLog() override;
 
 private:
   std::unique_ptr<Light> _light;

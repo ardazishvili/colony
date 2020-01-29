@@ -196,3 +196,7 @@ void ColonyApplication::run()
   }
 }
 
+void ColonyApplication::initLog()
+{
+  _log = std::move(createSpdlog());
+}
