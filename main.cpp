@@ -8,11 +8,11 @@ int main(int argc, char** argv)
     ColonyApplication app;
     app.init();
     app.run();
-    Log::logCore(Level::Trace, "tracing message");
-    Log::logCore(Level::Error, "error message");
+    FG_CORE_TRACE("tracing message");
+    FG_CORE_ERROR("error message");
 
-    Log::logApp(Level::Warn, "warning message");
-    Log::logApp(Level::Critical, "critical message");
+    FG_APP_WARN("warning message");
+    FG_APP_CRITICAL("critical message");
   } catch (const std::exception& e) {
     std::cout << e.what() << std::endl;
   }
