@@ -3,7 +3,10 @@
 #include "ColonyGuiLayer.h"
 #include "events/ColonyEventFabric.h"
 
-ColonyApplication::ColonyApplication() :
+using namespace std::placeholders;
+
+template<typename T>
+ColonyApplication<T>::ColonyApplication() :
   _camera(glm::vec3(0.0f, -45.0f, 60.0f),
           glm::vec3(0.0f, 0.0f, 0.0f),
           glm::vec3(0.0f, 0.0f, 1.0f))
@@ -12,29 +15,31 @@ ColonyApplication::ColonyApplication() :
   int screenWidth = 1920;
   int screenHeight = 1200 - 150;
   Window::Param param = { screenWidth, screenHeight };
-  _window =
+  this->_window =
     std::make_unique<GlfwWindow>(_view, _projection, _eventFabric.get(), param);
 
   auto gameLayer = std::make_unique<ColonyGameLayer>(
-    _window.get(), &_camera, _view, _projection);
+    this->_window.get(), &_camera, _view, _projection);
   gameLayer->init();
-  _window->setOnEvent(gameLayer->onEvent());
-  addLayer(std::move(gameLayer));
+  this->_window->setOnEvent(gameLayer->onEvent());
+  this->addLayer(std::move(gameLayer));
 
-  auto guiLayer =
-    std::make_unique<ColonyGuiLayer>(param, _window.get(), _view, _projection);
+  auto guiLayer = std::make_unique<ColonyGuiLayer>(
+    param, this->_window.get(), _view, _projection);
   guiLayer->init();
-  addLayer(std::move(guiLayer));
+  this->addLayer(std::move(guiLayer));
 }
 
-void ColonyApplication::run()
+template<typename T>
+void ColonyApplication<T>::run()
 {
-  while (!_window->shouldClose()) {
-    _window->update();
+  while (!this->_window->shouldClose()) {
+    this->_window->update();
 
-    update();
-    render();
-    _window->show();
+    this->update();
+    this->render();
+    this->_window->show();
   }
 }
 
+template class ColonyApplication<SpdBackend>;

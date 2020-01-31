@@ -1,6 +1,5 @@
 #include "../fig/Circle.h"
 #include "../fig/globals.h"
-#include "../fig/misc/Logger.h"
 
 #include "../figImpl/ColonyEventManager.h"
 #include "Game.h"

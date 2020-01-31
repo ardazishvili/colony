@@ -17,8 +17,10 @@
 #include "../fig/events/EventFabric.h"
 
 #include "../logic/Game.h"
+#include "ColonyEventManager.h"
 
-class ColonyApplication : public Application
+template<typename T>
+class ColonyApplication : public Application<T>
 {
 public:
   ColonyApplication();
