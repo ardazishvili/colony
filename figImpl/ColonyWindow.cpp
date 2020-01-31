@@ -1,8 +1,10 @@
 #include <cstdio>
 #include <iomanip>
 
+#include "../fig/Application.h"
 #include "../fig/events/EventFabric.h"
 #include "../fig/globals.h"
+
 #include "ColonyWindow.h"
 #include "events/ColonyErrorEvent.h"
 

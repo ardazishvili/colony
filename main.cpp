@@ -1,18 +1,17 @@
-#include "fig/Log.h"
-
 #include "figImpl/ColonyApplication.h"
+#include "figImpl/globals.h"
 
 int main(int argc, char** argv)
 {
   try {
-    ColonyApplication app;
-    app.init();
-    app.run();
-    FG_CORE_TRACE("tracing message");
-    FG_CORE_ERROR("error message");
-
+    auto app = gApp();
     FG_APP_WARN("warning message");
     FG_APP_CRITICAL("critical message");
+
+    auto a = 5;
+    FG_APP_ERROR("printing example {0}", a)
+
+    app->run();
   } catch (const std::exception& e) {
     std::cout << e.what() << std::endl;
   }

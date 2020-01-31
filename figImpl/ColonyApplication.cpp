@@ -11,7 +11,8 @@
 
 using namespace std::placeholders;
 
-ColonyApplication::ColonyApplication() :
+template<typename T>
+ColonyApplication<T>::ColonyApplication() :
   _camera(glm::vec3(0.0f, -45.0f, 60.0f),
           glm::vec3(0.0f, 0.0f, 0.0f),
           glm::vec3(0.0f, 0.0f, 1.0f))
@@ -146,7 +147,8 @@ ColonyApplication::ColonyApplication() :
   _skybox = std::make_unique<Skybox>(*_skyboxShader);
 }
 
-void ColonyApplication::run()
+template<typename T>
+void ColonyApplication<T>::run()
 {
   while (!glfwWindowShouldClose(_window->_window)) {
     _camera.updateSpeed();
@@ -196,7 +198,4 @@ void ColonyApplication::run()
   }
 }
 
-void ColonyApplication::initLog()
-{
-  _log = std::move(createSpdlog());
-}
+template class ColonyApplication<SpdBackend>;

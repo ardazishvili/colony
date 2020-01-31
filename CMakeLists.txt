@@ -5,6 +5,7 @@ project(Colony)
 
 add_subdirectory(fig)
 
+include_directories(fig/third/logging/spdlog/include)
 link_directories(fig/cbuild)
 add_executable(colony
 		logic/Buildable.cpp
@@ -45,6 +46,8 @@ add_executable(colony
 		view/TankView.h
 		view/View.cpp
 		view/View.h
+    figImpl/globals.h
+    figImpl/globals.cpp
     figImpl/ColonyApplication.h
     figImpl/ColonyApplication.cpp
     figImpl/ColonyWindow.cpp

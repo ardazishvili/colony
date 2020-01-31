@@ -21,15 +21,13 @@
 
 #include "ColonyWindow.h"
 
-class ColonyApplication : public Application
+template<typename T>
+class ColonyApplication : public Application<T>
 {
 public:
   ColonyApplication();
 
   void run() override;
-
-protected:
-  void initLog() override;
 
 private:
   std::unique_ptr<Light> _light;
