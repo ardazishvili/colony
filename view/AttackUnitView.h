@@ -6,11 +6,11 @@
 class AttackUnitView : public UnitView
 {
 public:
-  AttackUnitView(Shader& shader,
+  AttackUnitView(fig::Shader& shader,
                  glm::vec3 position,
                  float selectionRadius,
                  HealthBarParams healthBarParams,
-                 TexturePackType texturesType);
+                 fig::TexturePackType texturesType);
   virtual void rotateGun(float degreeAngle) = 0;
 };
 

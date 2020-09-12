@@ -11,9 +11,9 @@ class TankFactory : public GroundStructure
 {
 public:
   TankFactory() = delete;
-  TankFactory(Shader& textureShader,
-              Shader& linesShader,
-              AStar* router,
+  TankFactory(fig::Shader& textureShader,
+              fig::Shader& linesShader,
+              fig::AStar* router,
               glm::vec3 position);
 
   void createTank(Game* game,
@@ -31,7 +31,7 @@ private:
                       Shell::Size shellSize);
 
   static const int TANK_FACTORY_HP;
-  AStar* _router{ nullptr };
+  fig::AStar* _router{ nullptr };
 };
 
 #endif

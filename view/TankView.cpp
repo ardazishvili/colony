@@ -8,16 +8,18 @@ float TankView::TANK_HEALTH_BAR_WIDTH = 0.5;
 float TankView::TANK_HEALTH_BAR_HEIGHT = 0.04;
 std::map<Status, unsigned int> tankTexturesMap;
 
-TankView::TankView(Shader& shader, glm::vec3 position, float tankTypeScaling) :
+TankView::TankView(fig::Shader& shader,
+                   glm::vec3 position,
+                   float tankTypeScaling) :
   AttackUnitView(shader,
                  position,
                  0.38,
                  { 0, 0, TANK_HEALTH_BAR_WIDTH, TANK_HEALTH_BAR_HEIGHT },
-                 TexturePackType::Initial),
+                 fig::TexturePackType::Initial),
   _tankTypeScaleFactor(tankTypeScaling)
 {
   _objScale = tankTypeScaling;
-  _model = modelLoader->models()[Models::Tank];
+  _model = fig::modelLoader->models()[fig::Models::Tank];
   _hasAnimation = true;
   _healthBar.setOffsetZ(position.z + 0.3);
   _healthBar.setTexture("/home/roman/repos/colony/assets/red.png");
@@ -34,10 +36,10 @@ void TankView::draw()
   if (_currentGunAngle == 360) {
     _currentGunAngle -= 0.001f;
   }
-  _model->animate(_shader, Animation::Type::OneShot, percent);
+  _model->animate(_shader, fig::Animation::Type::OneShot, percent);
 
   auto model = glm::mat4(1.0f);
-  if (!flatView) {
+  if (!fig::flatView) {
     model = globeModel();
   } else {
     model = flatModel();

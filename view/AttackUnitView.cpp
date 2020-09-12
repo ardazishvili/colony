@@ -1,10 +1,10 @@
 #include "AttackUnitView.h"
 
-AttackUnitView::AttackUnitView(Shader& shader,
+AttackUnitView::AttackUnitView(fig::Shader& shader,
                                glm::vec3 position,
                                float selectionRadius,
                                HealthBarParams healthBarParams,
-                               TexturePackType texturesType) :
+                               fig::TexturePackType texturesType) :
   UnitView(shader, position, selectionRadius, healthBarParams, texturesType)
 {
 }

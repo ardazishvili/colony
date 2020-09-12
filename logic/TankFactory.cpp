@@ -3,9 +3,9 @@
 
 const int TankFactory::TANK_FACTORY_HP = 200;
 
-TankFactory::TankFactory(Shader& textureShader,
-                         Shader& linesShader,
-                         AStar* router,
+TankFactory::TankFactory(fig::Shader& textureShader,
+                         fig::Shader& linesShader,
+                         fig::AStar* router,
                          glm::vec3 position) :
   GroundStructure(textureShader,
                   linesShader,

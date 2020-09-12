@@ -6,11 +6,11 @@
 class StructureView : public SelectableView
 {
 public:
-  StructureView(Shader& shader,
+  StructureView(fig::Shader& shader,
                 glm::vec3 position,
                 float selectionRadius,
                 HealthBarParams healthBarParams,
-                TexturePackType texturesType);
+                fig::TexturePackType texturesType);
 
   void rotate(float degreeAngle);
   void move(glm::vec3 position);

@@ -3,12 +3,12 @@
 
 #include "../../fig/events/Event.h"
 
-class ColonyMouseMoveEvent : public MouseMoveEvent
+class ColonyMouseMoveEvent : public fig::MouseMoveEvent
 {
 public:
   ColonyMouseMoveEvent(double xpos, double ypos);
 
-  void process(Camera* camera, EventManager* eventManager) override;
+  void process(fig::Camera* camera, fig::EventManager* eventManager) override;
 };
 
 #endif

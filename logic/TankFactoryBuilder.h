@@ -10,16 +10,16 @@ class TankFactoryBuilder : public AbstractStructureBuilder
 public:
   TankFactoryBuilder(Game* game,
                      ColonyEventManager* eventManager,
-                     Shader& textureShader,
-                     Shader& linesShader,
-                     AStar* router);
+                     fig::Shader& textureShader,
+                     fig::Shader& linesShader,
+                     fig::AStar* router);
   ~TankFactoryBuilder();
 
   void create() override;
-  MenuTextures getPreviewType() override;
+  fig::MenuTextures getPreviewType() override;
 
 private:
-  AStar* _router;
+  fig::AStar* _router;
 };
 
 #endif

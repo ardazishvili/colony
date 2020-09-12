@@ -29,11 +29,11 @@ public:
   void addStructure(std::shared_ptr<GroundStructure> buildable);
   void addShroud(std::shared_ptr<Shroud> shroud);
   void addPlant(std::shared_ptr<AbstractPlant> plant);
-  void addTerrain(Terrain* terrain);
+  void addTerrain(fig::Terrain* terrain);
   void setControl(std::unique_ptr<Control> control);
 
   AttackUnit* getAttackUnit(const glm::vec3& mousePoint, bool select = false);
-  VehicleGroup getTanks(Points area);
+  VehicleGroup getTanks(fig::Points area);
   Buildable* getStructure(const glm::vec3& mousePoint);
   void clearPanel(Panel::Type type);
   bool panelIsEmpty(Panel::Type type);
@@ -58,7 +58,7 @@ private:
   std::unique_ptr<Control> _control;
   AttackUnit* _selectedAttackUnit = nullptr;
   GroundStructure* _selectedStructure = nullptr;
-  Terrain* _terrain;
+  fig::Terrain* _terrain;
 };
 
 #endif

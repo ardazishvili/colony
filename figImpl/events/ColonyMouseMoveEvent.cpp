@@ -6,12 +6,13 @@ ColonyMouseMoveEvent::ColonyMouseMoveEvent(double xpos, double ypos) :
 {
 }
 
-void ColonyMouseMoveEvent::process(Camera* camera, EventManager* eventManager)
+void ColonyMouseMoveEvent::process(fig::Camera* camera,
+                                   fig::EventManager* eventManager)
 {
   // TODO downcast
   auto m = dynamic_cast<ColonyEventManager*>(eventManager);
-  if (m->isKeyPressed(KeyButton::LEFT_SHIFT) &&
-      m->isMousePressed(MouseButton::MIDDLE)) {
+  if (m->isKeyPressed(fig::KeyButton::LEFT_SHIFT) &&
+      m->isMousePressed(fig::MouseButton::MIDDLE)) {
     auto deltaX = _xpos - m->_middleLastPressed.x;
     auto deltaY = _ypos - m->_middleLastPressed.y;
 
@@ -26,7 +27,7 @@ void ColonyMouseMoveEvent::process(Camera* camera, EventManager* eventManager)
       camera->moveRight();
     }
     m->_middleLastPressed = glm::vec2(_xpos, _ypos);
-  } else if (m->isMousePressed(MouseButton::MIDDLE)) {
+  } else if (m->isMousePressed(fig::MouseButton::MIDDLE)) {
     auto deltaX = _xpos - m->_middleLastPressed.x;
     auto deltaY = _ypos - m->_middleLastPressed.y;
 
@@ -43,7 +44,7 @@ void ColonyMouseMoveEvent::process(Camera* camera, EventManager* eventManager)
     m->_middleLastPressed = glm::vec2(_xpos, _ypos);
   }
 
-  auto c = EventManager::unProject(m->_window, m->_view, m->_projection);
+  auto c = fig::EventManager::unProject(m->_window, m->_view, m->_projection);
   if (m->_structureToBuild &&
       (m->_structureToBuildStage == BuildStage::SetAngle)) {
     float structureX = m->_structureToBuild->position().x;
@@ -58,7 +59,7 @@ void ColonyMouseMoveEvent::process(Camera* camera, EventManager* eventManager)
   } else if (m->_structureToBuild &&
              (m->_structureToBuildStage == BuildStage::SetPosition)) {
     auto position =
-      EventManager::unProject(m->_window, m->_view, m->_projection);
+      fig::EventManager::unProject(m->_window, m->_view, m->_projection);
     auto maxXy = m->_terrain->getMaxXy();
     if (::abs(position.x) > maxXy || ::abs(position.y) > maxXy) {
       position = glm::vec3(maxXy, maxXy, 0.0f);

@@ -2,13 +2,13 @@
 
 #include "TankBuilder.h"
 
-std::map<Tank::Type, MenuTextures> tankTypeToPreviewMapping = {
-  { Tank::Type::Light, MenuTextures::TankLight },
-  { Tank::Type::Medium, MenuTextures::TankMedium },
-  { Tank::Type::Heavy, MenuTextures::TankHeavy },
+std::map<Tank::Type, fig::MenuTextures> tankTypeToPreviewMapping = {
+  { Tank::Type::Light, fig::MenuTextures::TankLight },
+  { Tank::Type::Medium, fig::MenuTextures::TankMedium },
+  { Tank::Type::Heavy, fig::MenuTextures::TankHeavy },
 };
 
-TankBuilder::TankBuilder(Shader& shader,
+TankBuilder::TankBuilder(fig::Shader& shader,
                          Game* game,
                          TankFactory& tankFactory,
                          Tank::Type tankType,
@@ -29,7 +29,7 @@ void TankBuilder::create()
   _tankFactory.createTank(_game, _type, _healthLevel, _shellSize);
 }
 
-MenuTextures TankBuilder::getPreviewType()
+fig::MenuTextures TankBuilder::getPreviewType()
 {
   return tankTypeToPreviewMapping[_type];
 }

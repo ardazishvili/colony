@@ -8,9 +8,9 @@ class Shroud : public NonAttackUnit
 {
 public:
   Shroud() = delete;
-  Shroud(Shader& textureShader,
-         Shader& linesShader,
-         AStar* router,
+  Shroud(fig::Shader& textureShader,
+         fig::Shader& linesShader,
+         fig::AStar* router,
          glm::vec3 position,
          Barrier& barrier);
   void render() override;

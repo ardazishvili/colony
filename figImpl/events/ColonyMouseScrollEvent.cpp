@@ -6,7 +6,7 @@ ColonyMouseScrollEvent::ColonyMouseScrollEvent(double xoffset, double yoffset) :
 {
 }
 
-void ColonyMouseScrollEvent::process(Camera* camera, EventManager* m)
+void ColonyMouseScrollEvent::process(fig::Camera* camera, fig::EventManager* m)
 {
   camera->zoom(_yoffset);
 }

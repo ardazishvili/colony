@@ -20,7 +20,9 @@ using StructureBuilders =
 class Buildable
 {
 public:
-  Buildable(Shader& textureShader, Shader& linesShader, SelectableView* view);
+  Buildable(fig::Shader& textureShader,
+            fig::Shader& linesShader,
+            SelectableView* view);
   bool isDestroyed() const;
   bool isUnderFire() const;
   void takeDamage(Shell::Size shellSize);
@@ -38,8 +40,8 @@ protected:
   float _health;
   float _maxHealth;
   Status _status;
-  Shader& _textureShader;
-  Shader& _linesShader;
+  fig::Shader& _textureShader;
+  fig::Shader& _linesShader;
   SelectableView* _view;
 };
 

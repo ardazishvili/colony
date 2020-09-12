@@ -1,6 +1,7 @@
 #ifndef HQ_H
 #define HQ_H
 
+#include "../fig//math/AStar.h"
 #include "../fig/Terrain.h"
 #include "../view/HqView.h"
 #include "GroundStructure.h"
@@ -12,11 +13,11 @@ public:
   Hq() = delete;
   Hq(Game* game,
      ColonyEventManager* eventManager,
-     Shader& textureShader,
-     Shader& linesShader,
-     AStar* router,
+     fig::Shader& textureShader,
+     fig::Shader& linesShader,
+     fig::AStar* router,
      glm::vec3 position,
-     Terrain* terrain);
+     fig::Terrain* terrain);
 
   UnitBuilders getUnitBuilders(Game* game) override;
   StructureBuilders getStructureBuilders() override;
@@ -24,8 +25,8 @@ public:
 private:
   Game* _game;
   ColonyEventManager* _eventManager;
-  Terrain* _terrain;
-  AStar* _router;
+  fig::Terrain* _terrain;
+  fig::AStar* _router;
   static const int HQ_HP;
 };
 

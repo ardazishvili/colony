@@ -7,8 +7,8 @@
 class ShroudView : public UnitView
 {
 public:
-  ShroudView(Shader& textureShader,
-             Shader& linesShader,
+  ShroudView(fig::Shader& textureShader,
+             fig::Shader& linesShader,
              glm::vec3 position,
              float barrierHeight);
   void draw() override;
@@ -23,12 +23,12 @@ public:
   bool onOrbit() const;
 
 private:
-  std::shared_ptr<Model> _model;
+  std::shared_ptr<fig::Model> _model;
   Timer _timer;
   bool _animate{ false };
   bool _setUp{ false };
-  Beam _beamFlat;
-  Beam _beamGlobe;
+  fig::Beam _beamFlat;
+  fig::Beam _beamGlobe;
   glm::vec3 _posGlobe{ 0.0f };
   glm::vec3 _posFlat{ 0.0f };
 

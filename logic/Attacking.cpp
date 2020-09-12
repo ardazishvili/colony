@@ -2,7 +2,7 @@
 #include "AttackUnit.h"
 
 template<typename T>
-Attacking<T>::Attacking(Shader& textureShader,
+Attacking<T>::Attacking(fig::Shader& textureShader,
                         Shell::Size sh,
                         AttackUnitView* view) :
   _textureShader(textureShader),

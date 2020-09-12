@@ -4,7 +4,7 @@
 #include "NonAttackUnit.h"
 
 template<typename T>
-Unit<T>::Unit(AStar* router, View* view) : _router(router), _view(view)
+Unit<T>::Unit(fig::AStar* router, View* view) : _router(router), _view(view)
 {
 }
 

@@ -14,7 +14,7 @@ class Panel
 public:
   enum class Type { Structures, Units };
 
-  Panel(Window* window, Type type, Shader& shader);
+  Panel(fig::Window* window, Type type, fig::Shader& shader);
 
   void addItem(std::unique_ptr<PanelItem> item);
   void clear();
@@ -24,9 +24,9 @@ public:
   static const float PANEL_WIDTH;
 
 private:
-  Window* _window;
+  fig::Window* _window;
   Type _type;
-  Shader& _shader;
+  fig::Shader& _shader;
   PanelItems _items;
 };
 

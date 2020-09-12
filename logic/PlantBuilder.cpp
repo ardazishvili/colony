@@ -2,10 +2,10 @@
 #include "Game.h"
 #include "Plant.h"
 
-PlantBuilder::PlantBuilder(Shader& shader,
+PlantBuilder::PlantBuilder(fig::Shader& shader,
                            Game* game,
                            Barrier& barrier,
-                           Terrain* terrain) :
+                           fig::Terrain* terrain) :
   AbstractPlantBuilder(shader, game, barrier, terrain)
 {
 }
@@ -16,15 +16,15 @@ void PlantBuilder::create()
   auto pos = _barrier.position();
   pos.x += randomPos.x;
   pos.y += randomPos.y;
-  pos.z =
-    _terrain->getXYZ(glm::vec2(pos.x, pos.y)).z + Terrain::SUBTERRAIN_OFFSET;
+  pos.z = _terrain->getXYZ(glm::vec2(pos.x, pos.y)).z +
+          fig::Terrain::SUBTERRAIN_OFFSET;
   auto plant = std::make_shared<Plant>(_shader, pos);
 
   _barrier.addPlant(plant);
   _game->addPlant(plant);
 }
 
-MenuTextures PlantBuilder::getPreviewType()
+fig::MenuTextures PlantBuilder::getPreviewType()
 {
-  return MenuTextures::Plant;
+  return fig::MenuTextures::Plant;
 }

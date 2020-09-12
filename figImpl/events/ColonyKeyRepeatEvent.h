@@ -3,11 +3,11 @@
 
 #include "../../fig/events/Event.h"
 
-class ColonyKeyRepeatEvent : public KeyboardRepeatEvent
+class ColonyKeyRepeatEvent : public fig::KeyboardRepeatEvent
 {
 public:
   ColonyKeyRepeatEvent(int key, int scancode, int mods);
-  void process(Camera* camera, EventManager* eventManager);
+  void process(fig::Camera* camera, fig::EventManager* eventManager);
 };
 
 #endif

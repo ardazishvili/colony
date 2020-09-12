@@ -9,8 +9,8 @@ class AbstractStructureBuilder : public AbstractBuilder
 public:
   AbstractStructureBuilder(Game* game,
                            ColonyEventManager* eventManager,
-                           Shader& textureShader,
-                           Shader& linesShader) :
+                           fig::Shader& textureShader,
+                           fig::Shader& linesShader) :
     AbstractBuilder(game),
     _eventManager(eventManager), _textureShader(textureShader),
     _linesShader(linesShader)
@@ -20,8 +20,8 @@ public:
 
 protected:
   ColonyEventManager* _eventManager;
-  Shader& _textureShader;
-  Shader& _linesShader;
+  fig::Shader& _textureShader;
+  fig::Shader& _linesShader;
 };
 
 #endif

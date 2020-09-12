@@ -9,7 +9,7 @@
 class Plant : public AbstractPlant
 {
 public:
-  Plant(Shader& shader, glm::vec3 position);
+  Plant(fig::Shader& shader, glm::vec3 position);
 };
 
 #endif

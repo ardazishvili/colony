@@ -13,21 +13,21 @@
 #include "../logic/Tank.h"
 
 class ColonyWindow;
-class ColonyEventManager : public EventManager
+class ColonyEventManager : public fig::EventManager
 {
 public:
   ColonyEventManager(glm::mat4& view,
                      glm::mat4& projection,
-                     Window* window,
+                     fig::Window* window,
                      Game* game,
-                     Camera& camera,
-                     Shader& textureShader,
-                     Shader& colorShader,
-                     Shader& colorNonFlatShader,
-                     Shader& linesShader,
-                     Terrain* terrain,
-                     std::shared_ptr<ObstaclesSegment> mo,
-                     AStar* astar);
+                     fig::Camera& camera,
+                     fig::Shader& textureShader,
+                     fig::Shader& colorShader,
+                     fig::Shader& colorNonFlatShader,
+                     fig::Shader& linesShader,
+                     fig::Terrain* terrain,
+                     std::shared_ptr<fig::ObstaclesSegment> mo,
+                     fig::AStar* astar);
   void tick();
   void setStructureToBuild(std::shared_ptr<GroundStructure> structure);
   void setStructureToBuildStage(BuildStage stage);
@@ -35,13 +35,13 @@ public:
 private:
   glm::mat4& _view;
   glm::mat4& _projection;
-  Window* _window;
-  Camera& _camera;
+  fig::Window* _window;
+  fig::Camera& _camera;
   Game* _game;
-  Shader& _textureShader;
-  Shader& _colorShader;
-  Shader& _colorNonFlatShader;
-  Shader& _linesShader;
+  fig::Shader& _textureShader;
+  fig::Shader& _colorShader;
+  fig::Shader& _colorNonFlatShader;
+  fig::Shader& _linesShader;
   AttackUnit* _tankSelected{ nullptr };
   VehicleGroup _tanksSelected;
   AttackUnit* _tankUnderAttack{ nullptr };
@@ -51,14 +51,14 @@ private:
   BuildStage _structureToBuildStage;
   Buildable* _structureUnderAttack{ nullptr };
 
-  Terrain* _terrain;
-  RectangleShape _selection;
+  fig::Terrain* _terrain;
+  fig::RectangleShape _selection;
   bool _selectionActive{ false };
 
-  std::shared_ptr<HeightsSegment> _heightsSegment;
-  std::shared_ptr<ObstaclesSegment> _obstaclesSegment;
-  std::shared_ptr<ObstaclesSegment> _mapObstacles;
-  AStar* _astar;
+  std::shared_ptr<fig::HeightsSegment> _heightsSegment;
+  std::shared_ptr<fig::ObstaclesSegment> _obstaclesSegment;
+  std::shared_ptr<fig::ObstaclesSegment> _mapObstacles;
+  fig::AStar* _astar;
 
   friend class ColonyKeyPressEvent;
   friend class ColonyKeyReleaseEvent;

@@ -14,11 +14,11 @@ class Control
 public:
   Control(Game* game,
           ColonyEventManager* eventManager,
-          Window* window,
-          Shader& textureShader,
-          Shader& linesShader,
-          Terrain* terrain,
-          AStar* router);
+          fig::Window* window,
+          fig::Shader& textureShader,
+          fig::Shader& linesShader,
+          fig::Terrain* terrain,
+          fig::AStar* router);
   void display();
   void populateUnitPanel(Game* game, GroundStructure* buildable);
   void populateStructurePanel(GroundStructure* buildable);
@@ -34,9 +34,9 @@ private:
   ColonyEventManager* _eventManager;
   Panel _structurePanel;
   Panel _unitPanel;
-  Shader& _textureShader;
-  Shader& _linesShader;
-  AStar* _router;
+  fig::Shader& _textureShader;
+  fig::Shader& _linesShader;
+  fig::AStar* _router;
 };
 
 #endif

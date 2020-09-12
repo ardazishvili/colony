@@ -1,10 +1,10 @@
 #include "SelectableView.h"
 
-SelectableView::SelectableView(Shader& shader,
+SelectableView::SelectableView(fig::Shader& shader,
                                glm::vec3 position,
                                float selectionRadius,
                                HealthBarParams hbp,
-                               TexturePackType texturesType) :
+                               fig::TexturePackType texturesType) :
   View(shader, position),
   _selectionRadius(selectionRadius), _healthBar(shader.camera(),
                                                 shader,
@@ -33,16 +33,16 @@ void SelectableView::setHealthBarScaleFactor(float factor)
 void SelectableView::setTexture(Status status)
 {
   if (status == Status::Selected) {
-    _texturesType = TexturePackType::OnSelection;
+    _texturesType = fig::TexturePackType::OnSelection;
     _model->setActiveTexturesPack(_texturesType);
   } else if (status == Status::None) {
-    _texturesType = TexturePackType::Initial;
+    _texturesType = fig::TexturePackType::Initial;
     _model->setActiveTexturesPack(_texturesType);
   } else if (status == Status::UnderFire) {
-    _texturesType = TexturePackType::UnderFire;
+    _texturesType = fig::TexturePackType::UnderFire;
     _model->setActiveTexturesPack(_texturesType);
   } else if (status == Status::Destroyed) {
-    _texturesType = TexturePackType::Destroyed;
+    _texturesType = fig::TexturePackType::Destroyed;
     _model->setActiveTexturesPack(_texturesType);
   }
 }

@@ -6,9 +6,10 @@ ColonyKeyPressEvent::ColonyKeyPressEvent(int key, int scancode, int mods) :
 {
 }
 
-void ColonyKeyPressEvent::process(Camera* camera, EventManager* eventManager)
+void ColonyKeyPressEvent::process(fig::Camera* camera,
+                                  fig::EventManager* eventManager)
 {
   if (_key == GLFW_KEY_LEFT_SHIFT) {
-    eventManager->pressKey(KeyButton::LEFT_SHIFT);
+    eventManager->pressKey(fig::KeyButton::LEFT_SHIFT);
   }
 }

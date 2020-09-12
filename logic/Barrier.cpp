@@ -5,11 +5,11 @@
 
 const int Barrier::BARRIER_HP = 200;
 
-Barrier::Barrier(Shader& textureShader,
-                 Shader& linesShader,
+Barrier::Barrier(fig::Shader& textureShader,
+                 fig::Shader& linesShader,
                  glm::vec3 position,
-                 Terrain* terrain,
-                 AStar* router) :
+                 fig::Terrain* terrain,
+                 fig::AStar* router) :
   EnergyStructure(textureShader,
                   linesShader,
                   std::make_unique<BarrierView>(textureShader,
@@ -32,7 +32,7 @@ void Barrier::render()
       Structure<GroundStructure>::render();
       if (_livingArea != nullptr) {
         if (_clock.elapsed() >= _bioUpdateTime) {
-          logger.log("updating area...");
+          fig::logger.log("updating area...");
           _terrain->updateLivingArea(_livingArea);
           _clock.reload();
         }
@@ -73,7 +73,7 @@ void Barrier::commit()
   auto p = _view->position();
   // TODO downcast
   BarrierView* v = dynamic_cast<BarrierView*>(_view.get());
-  CircularRegion r = { p.x, p.y, v->radius() };
+  fig::CircularRegion r = { p.x, p.y, v->radius() };
   auto c = _terrain->getRgbColor(p.x, p.y);
   _livingArea = _terrain->addLivingArea(r, glm::vec4(c.x, c.y, c.z, 0.5));
   Structure<GroundStructure>::commit();

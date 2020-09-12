@@ -6,7 +6,7 @@
 class HqView : public StructureView
 {
 public:
-  HqView(Shader& shader, glm::vec3 position);
+  HqView(fig::Shader& shader, glm::vec3 position);
   void draw() override;
 
 private:

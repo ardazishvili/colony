@@ -6,11 +6,11 @@
 
 Control::Control(Game* game,
                  ColonyEventManager* eventManager,
-                 Window* window,
-                 Shader& textureShader,
-                 Shader& linesShader,
-                 Terrain* terrain,
-                 AStar* router) :
+                 fig::Window* window,
+                 fig::Shader& textureShader,
+                 fig::Shader& linesShader,
+                 fig::Terrain* terrain,
+                 fig::AStar* router) :
   _game(game),
   _eventManager(eventManager),
   _structurePanel(window, Panel::Type::Structures, textureShader),

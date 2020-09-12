@@ -1,4 +1,4 @@
-#include "../fig/imgui/imgui.h"
+#include "../fig/third/gui/imgui/imgui.h"
 
 #include "../fig/Circle.h"
 #include "../fig/globals.h"
@@ -9,20 +9,20 @@ float BarrierView::BARRIER_HEALTH_BAR_HEIGHT = 0.15f;
 float BarrierView::BARRIER_SCALE_INCREMENT = 1.0f;
 float BarrierView::BARRIER_INIT_SCALE = 1.0f;
 
-BarrierView::BarrierView(Shader& textureShader,
-                         Shader& linesShader,
+BarrierView::BarrierView(fig::Shader& textureShader,
+                         fig::Shader& linesShader,
                          glm::vec3 p,
-                         Terrain* terrain) :
+                         fig::Terrain* terrain) :
   StructureView(
     textureShader,
     p,
     BARRIER_INIT_SCALE,
     { -0.3, 0, BARRIER_HEALTH_BAR_WIDTH, BARRIER_HEALTH_BAR_HEIGHT },
-    TexturePackType::Initial),
+    fig::TexturePackType::Initial),
   _terrain(terrain), _linesShader(linesShader)
 {
-  _model = modelLoader->models()[Models::Barrier];
-  _model->setActiveTexturesPack(TexturePackType::PreBuild);
+  _model = fig::modelLoader->models()[fig::Models::Barrier];
+  _model->setActiveTexturesPack(fig::TexturePackType::PreBuild);
   _healthBar.setOffsetZ(1.3f);
   _healthBar.setTexture("/home/roman/repos/colony/assets/red.png");
 }
@@ -46,7 +46,7 @@ void BarrierView::draw()
     auto model = glm::mat4(1.0f);
     model = glm::translate(model, position());
     auto lat = latitude();
-    if (!flatView) {
+    if (!fig::flatView) {
       model = glm::rotate(model, longitude(), glm::vec3(0, 0, 1));
       model = glm::rotate(
         model, -lat + static_cast<float>(M_PI / 2.0), glm::vec3(0, 1, 0));
@@ -71,7 +71,7 @@ float BarrierView::radius() const
   return _scaleFactor;
 }
 
-void BarrierView::grow(std::shared_ptr<LivingArea> area)
+void BarrierView::grow(std::shared_ptr<fig::LivingArea> area)
 {
   _growFuture = std::async(std::launch::async, [this, area]() {
     auto finalScale = _scaleFactor + BARRIER_SCALE_INCREMENT;

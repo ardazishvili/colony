@@ -1,9 +1,9 @@
 #include "NonAttackUnit.h"
 
-NonAttackUnit::NonAttackUnit(Shader& textureShader,
-                             Shader& linesShader,
+NonAttackUnit::NonAttackUnit(fig::Shader& textureShader,
+                             fig::Shader& linesShader,
                              std::unique_ptr<UnitView> view,
-                             AStar* router) :
+                             fig::AStar* router) :
   Buildable(textureShader, linesShader, view.get()),
   Unit<NonAttackUnit>(router, view.get()), _view(std::move(view))
 {

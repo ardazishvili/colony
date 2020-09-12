@@ -17,11 +17,11 @@ struct HealthBarParams
 class SelectableView : public View
 {
 public:
-  SelectableView(Shader& shader,
+  SelectableView(fig::Shader& shader,
                  glm::vec3 posidion,
                  float selectionRadius,
                  HealthBarParams healthBarParams,
-                 TexturePackType texturesType);
+                 fig::TexturePackType texturesType);
   bool contain(glm::vec3 point) const;
   void setHealthBarScaleFactor(float factor);
   void setTexture(Status status);
@@ -32,8 +32,8 @@ protected:
 
   float _selectionRadius{ 0.0f };
   float _healthBarScaleFactor{ 1.0 };
-  Surface _healthBar;
-  TexturePackType _texturesType;
+  fig::Surface _healthBar;
+  fig::TexturePackType _texturesType;
 };
 
 #endif

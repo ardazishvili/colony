@@ -13,11 +13,11 @@ using EnergyStructures = std::vector<EnergyStructure*>;
 class Barrier : public EnergyStructure
 {
 public:
-  Barrier(Shader& textureShader,
-          Shader& linesShader,
+  Barrier(fig::Shader& textureShader,
+          fig::Shader& linesShader,
           glm::vec3 position,
-          Terrain* terrain,
-          AStar* router);
+          fig::Terrain* terrain,
+          fig::AStar* router);
   void render() override;
   UnitBuilders getUnitBuilders(Game* game) override;
   StructureBuilders getStructureBuilders() override;
@@ -31,8 +31,8 @@ private:
   Shroud _shroud;
 
   float _radius{ 1.0f };
-  Terrain* _terrain;
-  std::shared_ptr<LivingArea> _livingArea{ nullptr };
+  fig::Terrain* _terrain;
+  std::shared_ptr<fig::LivingArea> _livingArea{ nullptr };
   EnergyStructures _energyStructures;
   Plants _plants;
   Timer _clock;

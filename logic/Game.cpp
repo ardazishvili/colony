@@ -56,7 +56,7 @@ void Game::addShroud(std::shared_ptr<Shroud> shroud)
   _shrouds.push_back(shroud);
 }
 
-void Game::addTerrain(Terrain* terrain)
+void Game::addTerrain(fig::Terrain* terrain)
 {
   _terrain = terrain;
 }
@@ -122,7 +122,7 @@ AttackUnit* Game::getAttackUnit(const glm::vec3& mousePoint, bool select)
   return nullptr;
 }
 
-VehicleGroup Game::getTanks(Points area)
+VehicleGroup Game::getTanks(fig::Points area)
 {
   for (auto& tank : _tanks) {
     tank->deselect();

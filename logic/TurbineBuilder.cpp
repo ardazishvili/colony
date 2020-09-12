@@ -5,8 +5,8 @@
 
 TurbineBuilder::TurbineBuilder(Game* game,
                                ColonyEventManager* eventManager,
-                               Shader& textureShader,
-                               Shader& linesShader) :
+                               fig::Shader& textureShader,
+                               fig::Shader& linesShader) :
   AbstractStructureBuilder(game, eventManager, textureShader, linesShader)
 {
 }
@@ -20,7 +20,7 @@ void TurbineBuilder::create()
   _eventManager->setStructureToBuildStage(BuildStage::SetPosition);
 }
 
-MenuTextures TurbineBuilder::getPreviewType()
+fig::MenuTextures TurbineBuilder::getPreviewType()
 {
-  return MenuTextures::Turbine;
+  return fig::MenuTextures::Turbine;
 }

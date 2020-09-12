@@ -5,10 +5,10 @@
 
 BarrierBuilder::BarrierBuilder(Game* game,
                                ColonyEventManager* eventManager,
-                               Shader& textureShader,
-                               Shader& linesShader,
-                               Terrain* terrain,
-                               AStar* astar) :
+                               fig::Shader& textureShader,
+                               fig::Shader& linesShader,
+                               fig::Terrain* terrain,
+                               fig::AStar* astar) :
   AbstractStructureBuilder(game, eventManager, textureShader, linesShader),
   _terrain(terrain), _astar(astar)
 {
@@ -24,7 +24,7 @@ void BarrierBuilder::create()
   _eventManager->setStructureToBuildStage(BuildStage::SetPosition);
 }
 
-MenuTextures BarrierBuilder::getPreviewType()
+fig::MenuTextures BarrierBuilder::getPreviewType()
 {
-  return MenuTextures::Barrier;
+  return fig::MenuTextures::Barrier;
 }

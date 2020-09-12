@@ -8,11 +8,11 @@ const int Hq::HQ_HP = 500;
 
 Hq::Hq(Game* game,
        ColonyEventManager* eventManager,
-       Shader& textureShader,
-       Shader& linesShader,
-       AStar* router,
+       fig::Shader& textureShader,
+       fig::Shader& linesShader,
+       fig::AStar* router,
        glm::vec3 position,
-       Terrain* terrain) :
+       fig::Terrain* terrain) :
   GroundStructure(textureShader,
                   linesShader,
                   std::make_unique<HqView>(textureShader, position)),

@@ -11,18 +11,18 @@ class HqBuilder : public AbstractStructureBuilder
 public:
   HqBuilder(Game* game,
             ColonyEventManager* eventManager,
-            Shader& textureShader,
-            Shader& linesShader,
-            Terrain* terrain,
-            AStar* router);
+            fig::Shader& textureShader,
+            fig::Shader& linesShader,
+            fig::Terrain* terrain,
+            fig::AStar* router);
   ~HqBuilder();
 
   void create() override;
-  MenuTextures getPreviewType() override;
+  fig::MenuTextures getPreviewType() override;
 
 private:
-  Terrain* _terrain;
-  AStar* _router;
+  fig::Terrain* _terrain;
+  fig::AStar* _router;
 };
 
 #endif

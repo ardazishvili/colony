@@ -7,17 +7,17 @@
 class AbstractPlantBuilder : public AbstractUnitBuilder
 {
 public:
-  AbstractPlantBuilder(Shader& shader,
+  AbstractPlantBuilder(fig::Shader& shader,
                        Game* game,
                        Barrier& barrier,
-                       Terrain* terrain);
+                       fig::Terrain* terrain);
   glm::vec2 generateUniformPosition() const;
 
 protected:
-  Shader& _shader;
+  fig::Shader& _shader;
   Game* _game;
   Barrier& _barrier;
-  Terrain* _terrain;
+  fig::Terrain* _terrain;
 };
 
 #endif

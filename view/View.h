@@ -13,7 +13,7 @@
 class View
 {
 public:
-  View(Shader& shader, glm::vec3 position);
+  View(fig::Shader& shader, glm::vec3 position);
   virtual ~View() = default;
   View(const View&) = delete;
   View(View&&) = delete;
@@ -34,8 +34,8 @@ public:
 protected:
   glm::vec3 globeMapper(glm::vec3 p) const;
   bool _hasAnimation{ false };
-  std::shared_ptr<Model> _model;
-  Shader& _shader;
+  std::shared_ptr<fig::Model> _model;
+  fig::Shader& _shader;
   glm::vec3 _position;
   float _angle{ 0.0f };
   float _objScale{ 1.0f };

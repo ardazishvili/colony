@@ -6,8 +6,8 @@ ColonyMousePressedEvent::ColonyMousePressedEvent(int button) :
 {
 }
 
-void ColonyMousePressedEvent::process(Camera* camera,
-                                      EventManager* eventManager)
+void ColonyMousePressedEvent::process(fig::Camera* camera,
+                                      fig::EventManager* eventManager)
 {
   if (_button == GLFW_MOUSE_BUTTON_MIDDLE) {
     handleMousePressedMiddle(eventManager);
@@ -20,12 +20,13 @@ void ColonyMousePressedEvent::process(Camera* camera,
   }
 }
 
-void ColonyMousePressedEvent::handleMousePressedLeft(EventManager* eventManager)
+void ColonyMousePressedEvent::handleMousePressedLeft(
+  fig::EventManager* eventManager)
 {
   // TODO downcast
   auto m = dynamic_cast<ColonyEventManager*>(eventManager);
 
-  auto c = EventManager::unProject(m->_window, m->_view, m->_projection);
+  auto c = fig::EventManager::unProject(m->_window, m->_view, m->_projection);
   m->_selectionActive = true;
   auto tmp = c;
   tmp.z += 0.3;
@@ -44,12 +45,12 @@ void ColonyMousePressedEvent::handleMousePressedLeft(EventManager* eventManager)
 }
 
 void ColonyMousePressedEvent::handleMousePressedRight(
-  EventManager* eventManager)
+  fig::EventManager* eventManager)
 {
   // TODO downcast
   auto m = dynamic_cast<ColonyEventManager*>(eventManager);
 
-  auto c = EventManager::unProject(m->_window, m->_view, m->_projection);
+  auto c = fig::EventManager::unProject(m->_window, m->_view, m->_projection);
   // TODO remove copypaste for one tank and group of tanks
   if (m->_tankSelected) {
     m->_tankUnderAttack = m->_game->getAttackUnit(c);
@@ -85,12 +86,12 @@ void ColonyMousePressedEvent::handleMousePressedRight(
 }
 
 void ColonyMousePressedEvent::handleMousePressedMiddle(
-  EventManager* eventManager)
+  fig::EventManager* eventManager)
 {
   // TODO downcast
   auto m = dynamic_cast<ColonyEventManager*>(eventManager);
 
-  m->pressMouse(MouseButton::MIDDLE);
+  m->pressMouse(fig::MouseButton::MIDDLE);
   double xpos, ypos;
   m->_window->getCursorPos(&xpos, &ypos);
   m->_middleLastPressed = glm::vec2(xpos, ypos);

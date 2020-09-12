@@ -1,9 +1,9 @@
 #include "AttackUnit.h"
 
-AttackUnit::AttackUnit(Shader& textureShader,
-                       Shader& linesShader,
+AttackUnit::AttackUnit(fig::Shader& textureShader,
+                       fig::Shader& linesShader,
                        std::unique_ptr<AttackUnitView> view,
-                       AStar* router,
+                       fig::AStar* router,
                        Shell::Size sh,
                        float speed) :
   Buildable(textureShader, linesShader, view.get()),

@@ -18,7 +18,7 @@ public:
   }
 
   virtual void create() = 0;
-  virtual MenuTextures getPreviewType() = 0;
+  virtual fig::MenuTextures getPreviewType() = 0;
 
   ~AbstractBuilder() = default;
   AbstractBuilder(const AbstractBuilder&) = delete;

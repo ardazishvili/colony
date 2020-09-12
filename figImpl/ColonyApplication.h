@@ -20,17 +20,18 @@
 #include "ColonyEventManager.h"
 
 template<typename T>
-class ColonyApplication : public Application<T>
+class ColonyApplication : public fig::Application<T>
 {
 public:
   ColonyApplication();
 
   void run() override;
+  void tick() override{};
 
 private:
-  Camera _camera;
-  std::function<void(std::unique_ptr<Event> event)> _onEvent;
-  std::unique_ptr<EventFabric> _eventFabric;
+  fig::Camera _camera;
+  std::function<void(std::unique_ptr<fig::Event> event)> _onEvent;
+  std::unique_ptr<fig::EventFabric> _eventFabric;
 
   glm::mat4 _view;
   glm::mat4 _projection;

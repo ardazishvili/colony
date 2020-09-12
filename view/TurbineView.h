@@ -7,8 +7,8 @@
 class TurbineView : public StructureView
 {
 public:
-  TurbineView(Shader& textureShader,
-              Shader& linesShader,
+  TurbineView(fig::Shader& textureShader,
+              fig::Shader& linesShader,
               glm::vec3 position,
               glm::vec3 shroudPositionFlat,
               glm::vec3 shroudPositionGlobe);
@@ -16,10 +16,10 @@ public:
   void initBeam();
 
 private:
-  Shader& _linesShader;
+  fig::Shader& _linesShader;
   Timer _timer;
-  std::unique_ptr<Beam> _beamFlat;
-  std::unique_ptr<Beam> _beamGlobe;
+  std::unique_ptr<fig::Beam> _beamFlat;
+  std::unique_ptr<fig::Beam> _beamGlobe;
   glm::vec3 _shroudPosFlat;
   glm::vec3 _shroudPosGlobe;
   static std::chrono::milliseconds TURBINE_CYCLE;

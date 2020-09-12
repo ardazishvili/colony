@@ -2,10 +2,10 @@
 #include "Game.h"
 #include "Tree.h"
 
-TreeBuilder::TreeBuilder(Shader& shader,
+TreeBuilder::TreeBuilder(fig::Shader& shader,
                          Game* game,
                          Barrier& barrier,
-                         Terrain* terrain) :
+                         fig::Terrain* terrain) :
   AbstractPlantBuilder(shader, game, barrier, terrain)
 {
 }
@@ -16,15 +16,15 @@ void TreeBuilder::create()
   auto pos = _barrier.position();
   pos.x += randomPos.x;
   pos.y += randomPos.y;
-  pos.z =
-    _terrain->getXYZ(glm::vec2(pos.x, pos.y)).z + Terrain::SUBTERRAIN_OFFSET;
+  pos.z = _terrain->getXYZ(glm::vec2(pos.x, pos.y)).z +
+          fig::Terrain::SUBTERRAIN_OFFSET;
   auto tree = std::make_shared<Tree>(_shader, pos);
 
   _barrier.addPlant(tree);
   _game->addPlant(tree);
 }
 
-MenuTextures TreeBuilder::getPreviewType()
+fig::MenuTextures TreeBuilder::getPreviewType()
 {
-  return MenuTextures::Tree;
+  return fig::MenuTextures::Tree;
 }

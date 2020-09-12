@@ -3,16 +3,16 @@
 
 #include "../../fig/events/Event.h"
 
-class ColonyMouseReleaseEvent : public MouseReleaseEvent
+class ColonyMouseReleaseEvent : public fig::MouseReleaseEvent
 {
 public:
   ColonyMouseReleaseEvent(int button);
 
-  void process(Camera* camera, EventManager* eventManager) override;
+  void process(fig::Camera* camera, fig::EventManager* eventManager) override;
 
 private:
-  void handleMouseReleasedMiddle(EventManager* m);
-  void handleMouseReleased(EventManager* m);
+  void handleMouseReleasedMiddle(fig::EventManager* m);
+  void handleMouseReleased(fig::EventManager* m);
 };
 
 #endif

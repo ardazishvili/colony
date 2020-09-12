@@ -9,9 +9,9 @@
 
 TankFactoryBuilder::TankFactoryBuilder(Game* game,
                                        ColonyEventManager* eventManager,
-                                       Shader& textureShader,
-                                       Shader& linesShader,
-                                       AStar* router) :
+                                       fig::Shader& textureShader,
+                                       fig::Shader& linesShader,
+                                       fig::AStar* router) :
   AbstractStructureBuilder(game, eventManager, textureShader, linesShader),
   _router(router)
 {
@@ -27,9 +27,9 @@ void TankFactoryBuilder::create()
   _eventManager->setStructureToBuildStage(BuildStage::SetPosition);
 }
 
-MenuTextures TankFactoryBuilder::getPreviewType()
+fig::MenuTextures TankFactoryBuilder::getPreviewType()
 {
-  return MenuTextures::TankFactory;
+  return fig::MenuTextures::TankFactory;
 }
 
 TankFactoryBuilder::~TankFactoryBuilder()

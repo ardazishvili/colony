@@ -12,13 +12,14 @@ ColonyKeyReleaseEvent::ColonyKeyReleaseEvent(int key, int scancode, int mods) :
 {
 }
 
-void ColonyKeyReleaseEvent::process(Camera* camera, EventManager* eventManager)
+void ColonyKeyReleaseEvent::process(fig::Camera* camera,
+                                    fig::EventManager* eventManager)
 {
   // TODO downcast
   auto em = dynamic_cast<ColonyEventManager*>(eventManager);
 
   if (_key == GLFW_KEY_LEFT_SHIFT) {
-    em->releaseKey(KeyButton::LEFT_SHIFT);
+    em->releaseKey(fig::KeyButton::LEFT_SHIFT);
   }
   if (_key == GLFW_KEY_Z) {
     if (em->_structureSelected) {
@@ -35,7 +36,7 @@ void ColonyKeyReleaseEvent::process(Camera* camera, EventManager* eventManager)
         em->_textureShader,
         em->_linesShader,
         em->_astar,
-        EventManager::unProject(em->_window, em->_view, em->_projection));
+        fig::EventManager::unProject(em->_window, em->_view, em->_projection));
       em->_game->addStructure(tankFactory);
       em->_structureToBuild = tankFactory;
     } else {
@@ -53,7 +54,7 @@ void ColonyKeyReleaseEvent::process(Camera* camera, EventManager* eventManager)
         em->_textureShader,
         em->_linesShader,
         em->_astar,
-        EventManager::unProject(em->_window, em->_view, em->_projection),
+        fig::EventManager::unProject(em->_window, em->_view, em->_projection),
         em->_terrain);
       em->_game->addStructure(hq);
       em->_structureToBuild = hq;
@@ -69,7 +70,7 @@ void ColonyKeyReleaseEvent::process(Camera* camera, EventManager* eventManager)
       auto b = std::make_shared<Barrier>(
         em->_textureShader,
         em->_linesShader,
-        EventManager::unProject(em->_window, em->_view, em->_projection),
+        fig::EventManager::unProject(em->_window, em->_view, em->_projection),
         em->_terrain,
         em->_astar);
       em->_game->addStructure(b);
@@ -88,7 +89,7 @@ void ColonyKeyReleaseEvent::process(Camera* camera, EventManager* eventManager)
         em->_textureShader,
         em->_linesShader,
         em->_game,
-        EventManager::unProject(em->_window, em->_view, em->_projection));
+        fig::EventManager::unProject(em->_window, em->_view, em->_projection));
       em->_game->addStructure(b);
       em->_structureToBuild = b;
     } else {

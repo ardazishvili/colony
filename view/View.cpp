@@ -7,14 +7,14 @@ float View::VIEW_SCALE = 0.5f;
 const float View::R = 4 * M_PI;
 const float View::S = 6 * M_PI;
 
-View::View(Shader& shader, glm::vec3 position) :
+View::View(fig::Shader& shader, glm::vec3 position) :
   _shader(shader), _position(position)
 {
 }
 
 glm::vec3 View::position() const
 {
-  if (!flatView) {
+  if (!fig::flatView) {
     return globeMapper(_position);
   }
   return _position;

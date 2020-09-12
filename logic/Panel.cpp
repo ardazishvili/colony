@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../fig/imgui/imgui.h"
+#include "../fig/third/gui/imgui/imgui.h"
 
 #include "../fig/ModelLoader.h"
 #include "Panel.h"
@@ -8,7 +8,7 @@
 using namespace std::string_literals;
 const float Panel::PANEL_WIDTH = 300;
 
-Panel::Panel(Window* window, Type type, Shader& shader) :
+Panel::Panel(fig::Window* window, Type type, fig::Shader& shader) :
   _window(window), _type(type), _shader(shader)
 {
 }

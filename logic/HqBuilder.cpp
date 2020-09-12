@@ -9,10 +9,10 @@
 
 HqBuilder::HqBuilder(Game* game,
                      ColonyEventManager* eventManager,
-                     Shader& textureShader,
-                     Shader& linesShader,
-                     Terrain* terrain,
-                     AStar* router) :
+                     fig::Shader& textureShader,
+                     fig::Shader& linesShader,
+                     fig::Terrain* terrain,
+                     fig::AStar* router) :
   AbstractStructureBuilder(game, eventManager, textureShader, linesShader),
   _terrain(terrain), _router(router)
 {
@@ -32,9 +32,9 @@ void HqBuilder::create()
   _eventManager->setStructureToBuildStage(BuildStage::SetPosition);
 }
 
-MenuTextures HqBuilder::getPreviewType()
+fig::MenuTextures HqBuilder::getPreviewType()
 {
-  return MenuTextures::Hq;
+  return fig::MenuTextures::Hq;
 }
 
 HqBuilder::~HqBuilder()

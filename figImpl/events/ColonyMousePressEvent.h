@@ -3,17 +3,17 @@
 
 #include "../../fig/events/Event.h"
 
-class ColonyMousePressedEvent : public MousePressEvent
+class ColonyMousePressedEvent : public fig::MousePressEvent
 {
 public:
   ColonyMousePressedEvent(int button);
 
-  void process(Camera* camera, EventManager* eventManager) override;
+  void process(fig::Camera* camera, fig::EventManager* eventManager) override;
 
 private:
-  void handleMousePressedLeft(EventManager* m);
-  void handleMousePressedRight(EventManager* m);
-  void handleMousePressedMiddle(EventManager* m);
+  void handleMousePressedLeft(fig::EventManager* m);
+  void handleMousePressedRight(fig::EventManager* m);
+  void handleMousePressedMiddle(fig::EventManager* m);
 };
 
 #endif

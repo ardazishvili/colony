@@ -32,7 +32,7 @@ bool Selectable<T>::isUnderCursor(const glm::vec3& mousePoint)
 }
 
 template<typename T>
-bool Selectable<T>::isInsideArea(Points area)
+bool Selectable<T>::isInsideArea(fig::Points area)
 {
   auto tmp = _view->position();
   auto m = glm::vec2(tmp.x, tmp.y);

@@ -4,15 +4,15 @@
 float HqView::HQ_HEALTH_BAR_WIDTH = 1.2f;
 float HqView::HQ_HEALTH_BAR_HEIGHT = 0.15f;
 
-HqView::HqView(Shader& shader, glm::vec3 position) :
+HqView::HqView(fig::Shader& shader, glm::vec3 position) :
   StructureView(shader,
                 position,
                 0.75,
                 { -0.3, 0, HQ_HEALTH_BAR_WIDTH, HQ_HEALTH_BAR_HEIGHT },
-                TexturePackType::PreBuild)
+                fig::TexturePackType::PreBuild)
 {
-  _model = modelLoader->models()[Models::Hq];
-  _model->setActiveTexturesPack(TexturePackType::PreBuild);
+  _model = fig::modelLoader->models()[fig::Models::Hq];
+  _model->setActiveTexturesPack(fig::TexturePackType::PreBuild);
   _healthBar.setOffsetZ(1.3f);
   _healthBar.setTexture("/home/roman/repos/colony/assets/red.png");
 }
@@ -25,7 +25,7 @@ void HqView::draw()
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   _shader.setBool("animated", false);
   auto model = glm::mat4(1.0f);
-  if (!flatView) {
+  if (!fig::flatView) {
     model = globeModel();
   } else {
     model = flatModel();

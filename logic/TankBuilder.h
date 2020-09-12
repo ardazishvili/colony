@@ -9,7 +9,7 @@
 class TankBuilder : public AbstractUnitBuilder
 {
 public:
-  TankBuilder(Shader& shader,
+  TankBuilder(fig::Shader& shader,
               Game* game,
               TankFactory& _tankFactory,
               Tank::Type tankType,
@@ -18,10 +18,10 @@ public:
   ~TankBuilder();
 
   void create() override;
-  MenuTextures getPreviewType() override;
+  fig::MenuTextures getPreviewType() override;
 
 private:
-  Shader& _shader;
+  fig::Shader& _shader;
   Tank::Type _type;
   HealthLevel _healthLevel;
   Shell::Size _shellSize;

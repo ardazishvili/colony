@@ -8,7 +8,7 @@ template<typename T>
 class Unit
 {
 public:
-  Unit(AStar* router, View* view);
+  Unit(fig::AStar* router, View* view);
   virtual ~Unit() = default;
   Unit(const Unit&) = delete;
   Unit(Unit&&) = delete;
@@ -18,8 +18,8 @@ public:
   void render();
 
 protected:
-  std::shared_ptr<Path> _path;
-  AStar* _router;
+  std::shared_ptr<fig::Path> _path;
+  fig::AStar* _router;
   View* _view;
 };
 

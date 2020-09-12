@@ -8,11 +8,11 @@ class TurbineBuilder : public AbstractStructureBuilder
 public:
   TurbineBuilder(Game* game,
                  ColonyEventManager* eventManager,
-                 Shader& textureShader,
-                 Shader& linesShader);
+                 fig::Shader& textureShader,
+                 fig::Shader& linesShader);
 
   void create() override;
-  MenuTextures getPreviewType() override;
+  fig::MenuTextures getPreviewType() override;
 };
 
 #endif

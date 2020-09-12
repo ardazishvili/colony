@@ -6,11 +6,11 @@
 #include "../fig/GuiLayer.h"
 #include "../fig/Window.h"
 
-class ColonyGuiLayer : public GuiLayer
+class ColonyGuiLayer : public fig::GuiLayer
 {
 public:
-  ColonyGuiLayer(const Window::Param& param,
-                 Window* window,
+  ColonyGuiLayer(const fig::Window::Param& param,
+                 fig::Window* window,
                  glm::mat4& view,
                  glm::mat4& projection);
   ~ColonyGuiLayer();
@@ -21,7 +21,7 @@ public:
 private:
   void showDebug();
 
-  Window::Param _wParam;
+  fig::Window::Param _wParam;
   glm::mat4& _view;
   glm::mat4& _projection;
 };

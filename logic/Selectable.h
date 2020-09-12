@@ -16,7 +16,7 @@ public:
   Selectable& operator=(Selectable&&) = delete;
 
   bool isUnderCursor(const glm::vec3& mousePoint);
-  bool isInsideArea(Points area);
+  bool isInsideArea(fig::Points area);
   void select();
   void deselect();
 

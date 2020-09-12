@@ -8,11 +8,11 @@
 
 #include "ColonyGuiLayer.h"
 
-ColonyGuiLayer::ColonyGuiLayer(const Window::Param& param,
-                               Window* window,
+ColonyGuiLayer::ColonyGuiLayer(const fig::Window::Param& param,
+                               fig::Window* window,
                                glm::mat4& view,
                                glm::mat4& projection) :
-  GuiLayer(window, std::make_unique<ImGuiBackend>()),
+  GuiLayer(window, std::make_unique<fig::ImGuiBackend>()),
   _wParam(param), _view(view), _projection(projection)
 {
 }
@@ -26,7 +26,7 @@ void ColonyGuiLayer::update()
 {
   _guiBack->newFrame();
 
-  logger.render();
+  fig::logger.render();
 
   /* ImGui::Begin("camera"); */
   /* static float camera_z = 60.0f; */
@@ -72,7 +72,7 @@ void ColonyGuiLayer::showDebug()
   ImGui::Begin("3dCoordinates", NULL, flags);
   ImGui::SetWindowPos(ImVec2(0, _wParam.height - 22));
   ImGui::SetWindowSize(ImVec2(500, 22));
-  auto pos = EventManager::unProject(_window, _view, _projection);
+  auto pos = fig::EventManager::unProject(_window, _view, _projection);
   std::stringstream ss;
   ss << "x:" << std::setw(5) << std::setprecision(2) << pos.x
      << "; y:" << std::setw(5) << std::setprecision(2) << pos.y

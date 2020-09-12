@@ -9,18 +9,18 @@
 class BarrierView : public StructureView
 {
 public:
-  BarrierView(Shader& textureShader,
-              Shader& linesShader,
+  BarrierView(fig::Shader& textureShader,
+              fig::Shader& linesShader,
               glm::vec3 position,
-              Terrain* terrain);
+              fig::Terrain* terrain);
   void draw() override;
   float radius() const;
-  void grow(std::shared_ptr<LivingArea> area);
+  void grow(std::shared_ptr<fig::LivingArea> area);
 
 private:
   float _scaleFactor{ BARRIER_INIT_SCALE };
-  Terrain* _terrain;
-  Shader& _linesShader;
+  fig::Terrain* _terrain;
+  fig::Shader& _linesShader;
   std::future<void> _growFuture;
   static float BARRIER_HEALTH_BAR_WIDTH;
   static float BARRIER_HEALTH_BAR_HEIGHT;

@@ -9,7 +9,8 @@ ColonyKeyRepeatEvent::ColonyKeyRepeatEvent(int key, int scancode, int mods) :
 {
 }
 
-void ColonyKeyRepeatEvent::process(Camera* camera, EventManager* eventManager)
+void ColonyKeyRepeatEvent::process(fig::Camera* camera,
+                                   fig::EventManager* eventManager)
 {
   if (_key == GLFW_KEY_LEFT) {
     camera->rotateLeft();

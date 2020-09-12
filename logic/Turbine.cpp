@@ -6,8 +6,8 @@
 
 const int Turbine::TURBINE_HP = 200;
 
-Turbine::Turbine(Shader& textureShader,
-                 Shader& linesShader,
+Turbine::Turbine(fig::Shader& textureShader,
+                 fig::Shader& linesShader,
                  Game* game,
                  glm::vec3 position) :
   EnergyStructure(textureShader,

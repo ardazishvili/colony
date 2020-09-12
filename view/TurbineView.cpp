@@ -8,8 +8,8 @@ float TurbineView::TURBINE_MODEL_HEIGHT = 5.7;
 std::chrono::milliseconds TurbineView::TURBINE_CYCLE =
   std::chrono::milliseconds(30000);
 
-TurbineView::TurbineView(Shader& textureShader,
-                         Shader& linesShader,
+TurbineView::TurbineView(fig::Shader& textureShader,
+                         fig::Shader& linesShader,
                          glm::vec3 p,
                          glm::vec3 spFlat,
                          glm::vec3 spGlobe) :
@@ -18,12 +18,12 @@ TurbineView::TurbineView(Shader& textureShader,
     p,
     0.75,
     { -0.3, 0, TURBINE_HEALTH_BAR_WIDTH, TURBINE_HEALTH_BAR_HEIGHT },
-    TexturePackType::PreBuild),
+    fig::TexturePackType::PreBuild),
   _linesShader(linesShader), _shroudPosFlat(spFlat), _shroudPosGlobe(spGlobe)
 {
   _objScale = TURBINE_SCALE_FACTOR;
-  _model = modelLoader->models()[Models::Turbine];
-  _model->setActiveTexturesPack(TexturePackType::PreBuild);
+  _model = fig::modelLoader->models()[fig::Models::Turbine];
+  _model->setActiveTexturesPack(fig::TexturePackType::PreBuild);
   _healthBar.setOffsetZ(1.3f);
   _healthBar.setTexture("/home/roman/repos/colony/assets/red.png");
   _timer.reload();
@@ -42,11 +42,11 @@ void TurbineView::draw()
   p = (p == 1) ? p - 0.001 : p;
 
   _shader.use();
-  _model->animate(_shader, Animation::Type::OneShot, p);
+  _model->animate(_shader, fig::Animation::Type::OneShot, p);
   _shader.configure();
   _shader.setBool("animated", true);
   auto model = glm::mat4(1.0f);
-  if (!flatView) {
+  if (!fig::flatView) {
     model = globeModel();
   } else {
     model = flatModel();
@@ -56,7 +56,7 @@ void TurbineView::draw()
   _model->render();
   showHealthBar();
   if (_beamFlat && _beamGlobe)
-    if (!flatView) {
+    if (!fig::flatView) {
       _beamGlobe->render();
     } else {
       _beamFlat->render();
@@ -65,7 +65,7 @@ void TurbineView::draw()
 
 void TurbineView::initBeam()
 {
-  _beamFlat = std::make_unique<Beam>(
+  _beamFlat = std::make_unique<fig::Beam>(
     _linesShader,
     glm::vec3(_position.x,
               _position.y,
@@ -74,7 +74,7 @@ void TurbineView::initBeam()
     _shroudPosFlat,
     0.06f,
     10);
-  _beamGlobe = std::make_unique<Beam>(
+  _beamGlobe = std::make_unique<fig::Beam>(
     _linesShader,
     globeMapper(glm::vec3(
       _position.x,

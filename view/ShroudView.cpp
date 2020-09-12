@@ -10,15 +10,15 @@ const glm::vec3 ShroudView::FLAT_OFFSET = glm::vec3(-12.0, 12.0, 12.0);
 const glm::vec3 ShroudView::GLOBE_OFFSET = glm::vec3(0, 0, 12.0);
 const float ShroudView::UP_SPEED = 0.09;
 
-ShroudView::ShroudView(Shader& textureShader,
-                       Shader& linesShader,
+ShroudView::ShroudView(fig::Shader& textureShader,
+                       fig::Shader& linesShader,
                        glm::vec3 p,
                        float barrierHeight) :
   UnitView(textureShader,
            p,
            0.38,
            { 0, 0, HEALTH_BAR_WIDTH, HEALTH_BAR_HEIGHT },
-           TexturePackType::Initial),
+           fig::TexturePackType::Initial),
   _posFlat(p), _posGlobe(p), _beamFlat(linesShader,
                                        p + FLAT_OFFSET,
                                        glm::vec3(p.x, p.y, p.z + barrierHeight),
@@ -30,8 +30,8 @@ ShroudView::ShroudView(Shader& textureShader,
              0.05f,
              5)
 {
-  _model = modelLoader->models()[Models::Shroud];
-  _model->setActiveTexturesPack(TexturePackType::Initial);
+  _model = fig::modelLoader->models()[fig::Models::Shroud];
+  _model->setActiveTexturesPack(fig::TexturePackType::Initial);
   _hasAnimation = true;
   _healthBar.setOffsetZ(p.z + 0.3);
   _healthBar.setTexture("/home/roman/repos/colony/assets/red.png");
@@ -56,20 +56,20 @@ void ShroudView::draw()
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   _shader.use();
-  _model->animate(_shader, Animation::Type::OneShot, p);
+  _model->animate(_shader, fig::Animation::Type::OneShot, p);
   _shader.configure();
   _shader.setBool("animated", true);
-  _posFlat.z = ::min(_position.z + FLAT_OFFSET.z, _posFlat.z + UP_SPEED);
+  _posFlat.z = std::min(_position.z + FLAT_OFFSET.z, _posFlat.z + UP_SPEED);
   _posGlobe.z = _posFlat.z;
 
   auto model = glm::mat4(1.0f);
-  if (!flatView) {
+  if (!fig::flatView) {
     auto sp = globeMapper(_posGlobe);
     model = glm::translate(model, sp);
     model = glm::rotate(
       model, glm::radians(_angle + 90), glm::vec3(glm::normalize(position())));
     model =
-      glm::rotate(model, _posGlobe.x * sqrt(2.0f) / R, glm::vec3(0, 0, 1));
+      glm::rotate(model, _posGlobe.x * std::sqrt(2.0f) / R, glm::vec3(0, 0, 1));
     model = glm::rotate(
       model,
       -static_cast<float>(2 * atan(_posGlobe.y / (R * (1 + sqrt(2) / 2.0f)))) +
@@ -79,9 +79,9 @@ void ShroudView::draw()
     auto xFactor = ::abs(FLAT_OFFSET.z / FLAT_OFFSET.x);
     auto yFactor = ::abs(FLAT_OFFSET.z / FLAT_OFFSET.y);
     _posFlat.x =
-      ::max(_position.x + FLAT_OFFSET.x, _posFlat.x - UP_SPEED / xFactor);
+      std::max(_position.x + FLAT_OFFSET.x, _posFlat.x - UP_SPEED / xFactor);
     _posFlat.y =
-      ::min(_position.y + FLAT_OFFSET.y, _posFlat.y + UP_SPEED / yFactor);
+      std::min(_position.y + FLAT_OFFSET.y, _posFlat.y + UP_SPEED / yFactor);
     glm::vec3 co = _posFlat - _position;
     float oyAngle =
       -M_PI / 2 + ::abs(::atan(co.z / ::sqrt(::pow(co.x, 2) + ::pow(co.y, 2))));
@@ -116,7 +116,7 @@ void ShroudView::startAnimation()
 
 void ShroudView::drawBeam()
 {
-  if (!flatView) {
+  if (!fig::flatView) {
     _beamGlobe.render();
   } else {
     _beamFlat.render();

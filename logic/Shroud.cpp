@@ -2,9 +2,9 @@
 #include "../view/ShroudView.h"
 #include "Barrier.h"
 
-Shroud::Shroud(Shader& textureShader,
-               Shader& linesShader,
-               AStar* router,
+Shroud::Shroud(fig::Shader& textureShader,
+               fig::Shader& linesShader,
+               fig::AStar* router,
                glm::vec3 position,
                Barrier& barrier) :
   NonAttackUnit(textureShader,
