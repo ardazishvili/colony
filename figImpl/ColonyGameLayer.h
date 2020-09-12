@@ -22,6 +22,7 @@ class ColonyGameLayer : public fig::GameLayer
 public:
   ColonyGameLayer(fig::Window* w,
                   fig::Camera* c,
+                  fig::Light* l,
                   glm::mat4& view,
                   glm::mat4& projection);
   void init() override;
@@ -31,7 +32,6 @@ public:
   std::function<void(std::unique_ptr<fig::Event> event)> onEvent();
 
 private:
-  std::unique_ptr<fig::Light> _light;
   std::unique_ptr<fig::PhongShader> _lampShader;
   std::unique_ptr<fig::PhongShader> _colorShader;
   std::unique_ptr<fig::PhongShader> _colorNonFlatShader;
@@ -42,6 +42,7 @@ private:
 
   fig::Window* _window;
   fig::Camera* _camera;
+  fig::Light* _light;
   std::shared_ptr<fig::EventManager> _eventManager;
   std::unique_ptr<fig::Terrain> _terrain;
   std::unique_ptr<fig::Skybox> _skybox;

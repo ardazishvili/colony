@@ -11,6 +11,8 @@ class ColonyGuiLayer : public fig::GuiLayer
 public:
   ColonyGuiLayer(const fig::Window::Param& param,
                  fig::Window* window,
+                 fig::Camera* camera,
+                 fig::Light* light,
                  glm::mat4& view,
                  glm::mat4& projection);
   ~ColonyGuiLayer();
@@ -22,6 +24,8 @@ private:
   void showDebug();
 
   fig::Window::Param _wParam;
+  fig::Camera* _camera;
+  fig::Light* _light;
   glm::mat4& _view;
   glm::mat4& _projection;
 };

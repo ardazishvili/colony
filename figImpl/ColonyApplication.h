@@ -30,6 +30,7 @@ public:
 
 private:
   fig::Camera _camera;
+  std::unique_ptr<fig::Light> _light;
   std::function<void(std::unique_ptr<fig::Event> event)> _onEvent;
   std::unique_ptr<fig::EventFabric> _eventFabric;
 

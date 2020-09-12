@@ -6,46 +6,39 @@
 
 ColonyGameLayer::ColonyGameLayer(fig::Window* w,
                                  fig::Camera* c,
+                                 fig::Light* l,
                                  glm::mat4& view,
                                  glm::mat4& projection) :
   _window(w),
-  _camera(c), _view(view), _projection(projection)
+  _camera(c), _light(l), _view(view), _projection(projection)
 {
 }
 
 void ColonyGameLayer::init()
 {
-  _view = glm::lookAt(_camera->eye(), _camera->reference(), _camera->up());
-  _projection = glm::perspective(glm::radians(_camera->fov()),
-                                 _window->width() / _window->height(),
-                                 0.01f,
-                                 1000.0f);
-
-  _light = std::make_unique<fig::Light>(
-    glm::vec3(1.2f, 0.0f, 5.0f), *_camera, _view, _projection);
   _colorShader = std::make_unique<fig::PhongShader>(
-    _light.get(),
+    _light,
     *_camera,
     _view,
     _projection,
     "/home/roman/repos/colony/shaders/vertex_color.vs",
     "/home/roman/repos/colony/shaders/fragment_color.fs");
   _colorNonFlatShader = std::make_unique<fig::PhongShader>(
-    _light.get(),
+    _light,
     *_camera,
     _view,
     _projection,
     "/home/roman/repos/colony/shaders/vertex_color_nonflat.vs",
     "/home/roman/repos/colony/shaders/fragment_color_nonflat.fs");
   _textureShader = std::make_unique<fig::PhongShader>(
-    _light.get(),
+    _light,
     *_camera,
     _view,
     _projection,
     "/home/roman/repos/colony/shaders/vertex_objects.vs",
     "/home/roman/repos/colony/shaders/fragment_objects.fs");
   _lampShader = std::make_unique<fig::PhongShader>(
-    _light.get(),
+    _light,
     *_camera,
     _view,
     _projection,
@@ -53,14 +46,14 @@ void ColonyGameLayer::init()
     "/home/roman/repos/colony/shaders/fragment_light.fs");
   _light->setShader(_lampShader.get());
   _skyboxShader = std::make_unique<fig::SkyboxShader>(
-    _light.get(),
+    _light,
     *_camera,
     _view,
     _projection,
     "/home/roman/repos/colony/shaders/vertex_skybox.vs",
     "/home/roman/repos/colony/shaders/fragment_skybox.fs");
   _linesShader = std::make_unique<fig::LinesShader>(
-    _light.get(),
+    _light,
     *_camera,
     _view,
     _projection,

@@ -14,18 +14,28 @@ ColonyApplication<T>::ColonyApplication() :
   _eventFabric = std::make_unique<ColonyEventFabric>();
   int screenWidth = 1920;
   int screenHeight = 1200 - 150;
+
   fig::Window::Param param = { screenWidth, screenHeight };
   this->_window = std::make_unique<fig::GlfwWindow>(
     _view, _projection, _eventFabric.get(), param);
 
+  _view = glm::lookAt(_camera.eye(), _camera.reference(), _camera.up());
+  _projection =
+    glm::perspective(glm::radians(_camera.fov()),
+                     this->_window->width() / this->_window->height(),
+                     0.01f,
+                     1000.0f);
+  _light = std::make_unique<fig::Light>(
+    glm::vec3(1.2f, 0.0f, 5.0f), _camera, _view, _projection);
+
   auto gameLayer = std::make_unique<ColonyGameLayer>(
-    this->_window.get(), &_camera, _view, _projection);
+    this->_window.get(), &_camera, _light.get(), _view, _projection);
   gameLayer->init();
   this->_window->setOnEvent(gameLayer->onEvent());
   this->addLayer(std::move(gameLayer));
 
   auto guiLayer = std::make_unique<ColonyGuiLayer>(
-    param, this->_window.get(), _view, _projection);
+    param, this->_window.get(), &_camera, _light.get(), _view, _projection);
   guiLayer->init();
   this->addLayer(std::move(guiLayer));
 }
