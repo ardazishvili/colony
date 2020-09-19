@@ -1,9 +1,11 @@
+#include "../fig/Camera.h"
+#include "../fig/GlfwWindow.h"
+#include "../fig/Light.h"
+
 #include "ColonyApplication.h"
 #include "ColonyGameLayer.h"
 #include "ColonyGuiLayer.h"
 #include "events/ColonyEventFabric.h"
-#include <glm/fwd.hpp>
-#include <memory>
 
 using namespace std::placeholders;
 

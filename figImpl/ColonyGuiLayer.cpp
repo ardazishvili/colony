@@ -1,6 +1,5 @@
 #include <iomanip>
 
-#include "../fig/GlfwWindow.h"
 #include "../fig/globals.h"
 
 #include "../figImpl/ColonyEventManager.h"

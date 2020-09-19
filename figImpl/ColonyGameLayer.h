@@ -4,10 +4,8 @@
 #include <memory>
 
 #include "../fig/Application.h"
-#include "../fig/Camera.h"
 #include "../fig/EventManager.h"
 #include "../fig/GameLayer.h"
-#include "../fig/GlfwWindow.h"
 #include "../fig/LinesShader.h"
 #include "../fig/PhongShader.h"
 #include "../fig/Skybox.h"
@@ -17,7 +15,7 @@
 #include "../logic/Game.h"
 
 class Window;
-class EventManager;
+class Camera;
 class ColonyGameLayer : public fig::GameLayer
 {
 public:

@@ -1,7 +1,6 @@
 #include "ColonyGameLayer.h"
 
-#include "../fig/Light.h"
-#include "../fig/globals.h"
+#include "../fig/globals.h" // modelLoader
 #include "../figImpl/ColonyEventManager.h"
 
 void ColonyGameLayer::init()

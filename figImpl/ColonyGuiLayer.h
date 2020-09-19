@@ -1,12 +1,9 @@
 #ifndef COLONY_GUI_LAYER_H
 #define COLONY_GUI_LAYER_H
 
-#include <glm/glm.hpp>
-
 #include "../fig/Application.h"
 #include "../fig/GuiLayer.h"
 #include "../fig/ImGuiBackend.h"
-#include "../fig/Window.h"
 
 class ColonyGuiLayer : public fig::GuiLayer
 {
