@@ -1,24 +1,11 @@
 #include <iomanip>
 
 #include "../fig/GlfwWindow.h"
-#include "../fig/ImGuiBackend.h"
 #include "../fig/globals.h"
 
 #include "../figImpl/ColonyEventManager.h"
 
 #include "ColonyGuiLayer.h"
-
-ColonyGuiLayer::ColonyGuiLayer(const fig::Window::Param& param,
-                               fig::Window* window,
-                               fig::Camera* camera,
-                               fig::Light* light,
-                               glm::mat4& view,
-                               glm::mat4& projection) :
-  GuiLayer(window, std::make_unique<fig::ImGuiBackend>()),
-  _wParam(param), _camera(camera), _light(light), _view(view),
-  _projection(projection)
-{
-}
 
 void ColonyGuiLayer::init()
 {
@@ -73,7 +60,7 @@ void ColonyGuiLayer::showDebug()
                ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar |
                ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs;
   ImGui::Begin("3dCoordinates", NULL, flags);
-  ImGui::SetWindowPos(ImVec2(0, _wParam.height - 22));
+  ImGui::SetWindowPos(ImVec2(0, _window->height() - 22));
   ImGui::SetWindowSize(ImVec2(500, 22));
   auto pos = fig::EventManager::unProject(_window, _view, _projection);
   std::stringstream ss;

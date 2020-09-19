@@ -1,6 +1,8 @@
 #ifndef COLONY_APPLICATION_H
 #define COLONY_APPLICATION_H
 
+#include <bits/stdint-uintn.h>
+#include <glm/fwd.hpp>
 #include <memory>
 
 #include <GL/glew.h> // Initialize with glewInit()
@@ -29,13 +31,8 @@ public:
   void tick() override{};
 
 private:
-  fig::Camera _camera;
-  std::unique_ptr<fig::Light> _light;
   std::function<void(std::unique_ptr<fig::Event> event)> _onEvent;
   std::unique_ptr<fig::EventFabric> _eventFabric;
-
-  glm::mat4 _view;
-  glm::mat4 _projection;
 };
 
 #endif

@@ -3,18 +3,21 @@
 
 #include <glm/glm.hpp>
 
+#include "../fig/Application.h"
 #include "../fig/GuiLayer.h"
+#include "../fig/ImGuiBackend.h"
 #include "../fig/Window.h"
 
 class ColonyGuiLayer : public fig::GuiLayer
 {
 public:
-  ColonyGuiLayer(const fig::Window::Param& param,
-                 fig::Window* window,
-                 fig::Camera* camera,
-                 fig::Light* light,
-                 glm::mat4& view,
-                 glm::mat4& projection);
+  ColonyGuiLayer(const fig::AppEnv& env) :
+    GuiLayer(env.window, std::make_unique<fig::ImGuiBackend>()),
+    _camera(env.camera), _light(env.light), _view(env.view),
+    _projection(env.projection)
+  {
+    init();
+  }
   ~ColonyGuiLayer();
   void init() override;
   void update() override;
@@ -23,7 +26,6 @@ public:
 private:
   void showDebug();
 
-  fig::Window::Param _wParam;
   fig::Camera* _camera;
   fig::Light* _light;
   glm::mat4& _view;

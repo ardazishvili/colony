@@ -4,16 +4,6 @@
 #include "../fig/globals.h"
 #include "../figImpl/ColonyEventManager.h"
 
-ColonyGameLayer::ColonyGameLayer(fig::Window* w,
-                                 fig::Camera* c,
-                                 fig::Light* l,
-                                 glm::mat4& view,
-                                 glm::mat4& projection) :
-  _window(w),
-  _camera(c), _light(l), _view(view), _projection(projection)
-{
-}
-
 void ColonyGameLayer::init()
 {
   _colorShader = std::make_unique<fig::PhongShader>(

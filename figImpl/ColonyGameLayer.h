@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#include "../fig/Application.h"
 #include "../fig/Camera.h"
 #include "../fig/EventManager.h"
 #include "../fig/GameLayer.h"
@@ -20,11 +21,12 @@ class EventManager;
 class ColonyGameLayer : public fig::GameLayer
 {
 public:
-  ColonyGameLayer(fig::Window* w,
-                  fig::Camera* c,
-                  fig::Light* l,
-                  glm::mat4& view,
-                  glm::mat4& projection);
+  ColonyGameLayer(const fig::AppEnv& env) :
+    _window(env.window), _camera(env.camera), _light(env.light),
+    _view(env.view), _projection(env.projection)
+  {
+    init();
+  }
   void init() override;
   void update() override;
   void render() override;
