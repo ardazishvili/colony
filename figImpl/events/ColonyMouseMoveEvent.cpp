@@ -60,9 +60,9 @@ void ColonyMouseMoveEvent::process(fig::Camera* camera,
              (m->_structureToBuildStage == BuildStage::SetPosition)) {
     auto position =
       fig::EventManager::unProject(m->_window, m->_view, m->_projection);
-    auto maxXy = m->_terrain->getMaxXy();
-    if (::abs(position.x) > maxXy || ::abs(position.y) > maxXy) {
-      position = glm::vec3(maxXy, maxXy, 0.0f);
+    auto [maxX, maxY] = m->_terrain->getMaxXy();
+    if (::abs(position.x) > maxX || ::abs(position.y) > maxY) {
+      position = glm::vec3(maxX, maxY, 0.0f);
     }
     m->_structureToBuild->setPosition(
       m->_terrain->getXYZ(glm::vec2(position.x, position.y)));

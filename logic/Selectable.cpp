@@ -35,6 +35,7 @@ template<typename T>
 bool Selectable<T>::isInsideArea(fig::Points area)
 {
   auto tmp = _view->position();
+  assert(area.size() == 4);
   auto m = glm::vec2(tmp.x, tmp.y);
   auto a = glm::vec2(area.at(0).x, area.at(0).y);
   auto b = glm::vec2(area.at(1).x, area.at(1).y);
