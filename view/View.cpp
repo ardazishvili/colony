@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "../fig/globals.h"
+#include "../figImpl/globals.h"
 #include "View.h"
 
 float View::VIEW_SCALE = 0.5f;
@@ -14,7 +15,7 @@ View::View(fig::Shader& shader, glm::vec3 position) :
 
 glm::vec3 View::position() const
 {
-  if (!fig::flatView) {
+  if (!flatView) {
     return globeMapper(_position);
   }
   return _position;

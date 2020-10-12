@@ -4,6 +4,7 @@
 
 #include "../fig/globals.h" // modelLoader
 #include "../figImpl/ColonyEventManager.h"
+#include "../figImpl/globals.h" // flatView
 
 void ColonyGameLayer::init()
 {
@@ -14,28 +15,32 @@ void ColonyGameLayer::init()
                                        _view,
                                        _projection,
                                        shaders_dir + "/vertex_color.vs",
-                                       shaders_dir + "/fragment_color.fs");
+                                       shaders_dir + "/fragment_color.fs",
+                                       flatView);
   _colorNonFlatShader = std::make_unique<fig::PhongShader>(
     _light,
     *_camera,
     _view,
     _projection,
     shaders_dir + "/vertex_color_nonflat.vs",
-    shaders_dir + "/fragment_color_nonflat.fs");
+    shaders_dir + "/fragment_color_nonflat.fs",
+    flatView);
   _textureShader =
     std::make_unique<fig::PhongShader>(_light,
                                        *_camera,
                                        _view,
                                        _projection,
                                        shaders_dir + "/vertex_objects.vs",
-                                       shaders_dir + "/fragment_objects.fs");
+                                       shaders_dir + "/fragment_objects.fs",
+                                       flatView);
   _lampShader =
     std::make_unique<fig::PhongShader>(_light,
                                        *_camera,
                                        _view,
                                        _projection,
                                        shaders_dir + "/vertex_light.vs",
-                                       shaders_dir + "/fragment_light.fs");
+                                       shaders_dir + "/fragment_light.fs",
+                                       flatView);
   _light->setShader(_lampShader.get());
   _skyboxShader =
     std::make_unique<fig::SkyboxShader>(_light,

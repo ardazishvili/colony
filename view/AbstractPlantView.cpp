@@ -1,5 +1,6 @@
 #include "AbstractPlantView.h"
 #include "../fig/globals.h"
+#include "../figImpl/globals.h"
 
 AbstractPlantView::AbstractPlantView(fig::Shader& shader, glm::vec3 position) :
   View(shader, position)
@@ -12,7 +13,7 @@ void AbstractPlantView::draw()
   _shader.configure();
   _shader.setBool("animated", false);
   auto model = glm::mat4(1.0f);
-  if (!fig::flatView) {
+  if (!flatView) {
     model = globeModel();
   } else {
     model = flatModel();

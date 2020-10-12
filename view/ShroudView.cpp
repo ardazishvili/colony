@@ -1,5 +1,6 @@
 #include "ShroudView.h"
 #include "../fig/globals.h"
+#include "../figImpl/globals.h"
 
 const std::chrono::milliseconds ShroudView::CYCLE =
   std::chrono::milliseconds(1000);
@@ -63,7 +64,7 @@ void ShroudView::draw()
   _posGlobe.z = _posFlat.z;
 
   auto model = glm::mat4(1.0f);
-  if (!fig::flatView) {
+  if (!flatView) {
     auto sp = globeMapper(_posGlobe);
     model = glm::translate(model, sp);
     model = glm::rotate(
@@ -116,7 +117,7 @@ void ShroudView::startAnimation()
 
 void ShroudView::drawBeam()
 {
-  if (!fig::flatView) {
+  if (!flatView) {
     _beamGlobe.render();
   } else {
     _beamFlat.render();

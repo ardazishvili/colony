@@ -1,5 +1,6 @@
 #include "TurbineView.h"
 #include "../fig/globals.h"
+#include "../figImpl/globals.h"
 
 float TurbineView::TURBINE_HEALTH_BAR_WIDTH = 1.2f;
 float TurbineView::TURBINE_HEALTH_BAR_HEIGHT = 0.15f;
@@ -46,7 +47,7 @@ void TurbineView::draw()
   _shader.configure();
   _shader.setBool("animated", true);
   auto model = glm::mat4(1.0f);
-  if (!fig::flatView) {
+  if (!flatView) {
     model = globeModel();
   } else {
     model = flatModel();
@@ -56,7 +57,7 @@ void TurbineView::draw()
   _model->render();
   showHealthBar();
   if (_beamFlat && _beamGlobe)
-    if (!fig::flatView) {
+    if (!flatView) {
       _beamGlobe->render();
     } else {
       _beamFlat->render();

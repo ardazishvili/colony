@@ -1,7 +1,8 @@
-#include "../fig/third/gui/imgui/imgui.h"
-
 #include "../fig/Circle.h"
 #include "../fig/globals.h"
+#include "../fig/third/gui/imgui/imgui.h"
+
+#include "../figImpl/globals.h"
 #include "BarrierView.h"
 
 float BarrierView::BARRIER_HEALTH_BAR_WIDTH = 1.2f;
@@ -46,7 +47,7 @@ void BarrierView::draw()
     auto model = glm::mat4(1.0f);
     model = glm::translate(model, position());
     auto lat = latitude();
-    if (!fig::flatView) {
+    if (!flatView) {
       model = glm::rotate(model, longitude(), glm::vec3(0, 0, 1));
       model = glm::rotate(
         model, -lat + static_cast<float>(M_PI / 2.0), glm::vec3(0, 1, 0));

@@ -1,5 +1,6 @@
 #include "TankView.h"
 #include "../fig/globals.h"
+#include "../figImpl/globals.h"
 #include "../logic/Buildable.h"
 
 float TankView::TANK_GUN_ANGLE_INCREMENT = 1.5;
@@ -39,7 +40,7 @@ void TankView::draw()
   _model->animate(_shader, fig::Animation::Type::OneShot, percent);
 
   auto model = glm::mat4(1.0f);
-  if (!fig::flatView) {
+  if (!flatView) {
     model = globeModel();
   } else {
     model = flatModel();

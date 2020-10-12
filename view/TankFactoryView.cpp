@@ -1,5 +1,6 @@
 #include "TankFactoryView.h"
 #include "../fig/globals.h"
+#include "../figImpl/globals.h"
 
 float TankFactoryView::TANK_FACTORY_HEALTH_BAR_WIDTH = 1.2f;
 float TankFactoryView::TANK_FACTORY_HEALTH_BAR_HEIGHT = 0.15f;
@@ -24,7 +25,7 @@ void TankFactoryView::draw()
   _shader.configure();
   _shader.setBool("animated", false);
   auto model = glm::mat4(1.0f);
-  if (!fig::flatView) {
+  if (!flatView) {
     model = globeModel();
   } else {
     model = flatModel();

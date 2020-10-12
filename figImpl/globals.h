@@ -2,3 +2,4 @@
 #include "../fig/SpdBackend.h"
 
 fig::Application<SpdBackend>* gApp();
+extern bool flatView;

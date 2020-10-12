@@ -1,6 +1,7 @@
 #include <iomanip>
 
 #include "../fig/globals.h"
+#include "globals.h"
 
 #include "../figImpl/ColonyEventManager.h"
 
@@ -44,6 +45,12 @@ void ColonyGuiLayer::update()
   ImGui::SliderFloat("light z", &z, -100.0f, 100.0f);
   ImGui::End();
   _light->setPosition(glm::vec3(x, y, z));
+
+  ImGui::Begin("Flat/Globe view");
+  ImGui::SetWindowPos(ImVec2(0, 740));
+  ImGui::SetWindowSize(ImVec2(200, 40));
+  ImGui::Checkbox("state", &flatView);
+  ImGui::End();
 }
 
 void ColonyGuiLayer::render()

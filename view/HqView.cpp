@@ -1,5 +1,6 @@
 #include "HqView.h"
 #include "../fig/globals.h"
+#include "../figImpl/globals.h"
 
 float HqView::HQ_HEALTH_BAR_WIDTH = 1.2f;
 float HqView::HQ_HEALTH_BAR_HEIGHT = 0.15f;
@@ -25,7 +26,7 @@ void HqView::draw()
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   _shader.setBool("animated", false);
   auto model = glm::mat4(1.0f);
-  if (!fig::flatView) {
+  if (!flatView) {
     model = globeModel();
   } else {
     model = flatModel();
