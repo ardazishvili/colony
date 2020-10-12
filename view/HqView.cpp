@@ -14,7 +14,7 @@ HqView::HqView(fig::Shader& shader, glm::vec3 position) :
   _model = fig::modelLoader->models()[fig::Models::Hq];
   _model->setActiveTexturesPack(fig::TexturePackType::PreBuild);
   _healthBar.setOffsetZ(1.3f);
-  _healthBar.setTexture("/home/roman/repos/colony/assets/red.png");
+  _healthBar.setTexture(fig::assets_dir + "/red.png");
 }
 
 void HqView::draw()

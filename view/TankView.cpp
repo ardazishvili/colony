@@ -22,7 +22,7 @@ TankView::TankView(fig::Shader& shader,
   _model = fig::modelLoader->models()[fig::Models::Tank];
   _hasAnimation = true;
   _healthBar.setOffsetZ(position.z + 0.3);
-  _healthBar.setTexture("/home/roman/repos/colony/assets/red.png");
+  _healthBar.setTexture(fig::assets_dir + "/red.png");
 }
 
 void TankView::draw()

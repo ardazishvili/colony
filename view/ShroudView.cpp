@@ -34,7 +34,7 @@ ShroudView::ShroudView(fig::Shader& textureShader,
   _model->setActiveTexturesPack(fig::TexturePackType::Initial);
   _hasAnimation = true;
   _healthBar.setOffsetZ(p.z + 0.3);
-  _healthBar.setTexture("/home/roman/repos/colony/assets/red.png");
+  _healthBar.setTexture(fig::assets_dir + "/red.png");
 }
 
 void ShroudView::draw()

@@ -25,7 +25,7 @@ TurbineView::TurbineView(fig::Shader& textureShader,
   _model = fig::modelLoader->models()[fig::Models::Turbine];
   _model->setActiveTexturesPack(fig::TexturePackType::PreBuild);
   _healthBar.setOffsetZ(1.3f);
-  _healthBar.setTexture("/home/roman/repos/colony/assets/red.png");
+  _healthBar.setTexture(fig::assets_dir + "/red.png");
   _timer.reload();
 }
 

@@ -1,3 +1,5 @@
+#include <filesystem>
+
 #include "ColonyGameLayer.h"
 
 #include "../fig/globals.h" // modelLoader
@@ -5,49 +7,50 @@
 
 void ColonyGameLayer::init()
 {
-  _colorShader = std::make_unique<fig::PhongShader>(
-    _light,
-    *_camera,
-    _view,
-    _projection,
-    "/home/roman/repos/colony/shaders/vertex_color.vs",
-    "/home/roman/repos/colony/shaders/fragment_color.fs");
+  auto shaders_dir = std::filesystem::current_path().string() + "/shaders";
+  _colorShader =
+    std::make_unique<fig::PhongShader>(_light,
+                                       *_camera,
+                                       _view,
+                                       _projection,
+                                       shaders_dir + "/vertex_color.vs",
+                                       shaders_dir + "/fragment_color.fs");
   _colorNonFlatShader = std::make_unique<fig::PhongShader>(
     _light,
     *_camera,
     _view,
     _projection,
-    "/home/roman/repos/colony/shaders/vertex_color_nonflat.vs",
-    "/home/roman/repos/colony/shaders/fragment_color_nonflat.fs");
-  _textureShader = std::make_unique<fig::PhongShader>(
-    _light,
-    *_camera,
-    _view,
-    _projection,
-    "/home/roman/repos/colony/shaders/vertex_objects.vs",
-    "/home/roman/repos/colony/shaders/fragment_objects.fs");
-  _lampShader = std::make_unique<fig::PhongShader>(
-    _light,
-    *_camera,
-    _view,
-    _projection,
-    "/home/roman/repos/colony/shaders/vertex_light.vs",
-    "/home/roman/repos/colony/shaders/fragment_light.fs");
+    shaders_dir + "/vertex_color_nonflat.vs",
+    shaders_dir + "/fragment_color_nonflat.fs");
+  _textureShader =
+    std::make_unique<fig::PhongShader>(_light,
+                                       *_camera,
+                                       _view,
+                                       _projection,
+                                       shaders_dir + "/vertex_objects.vs",
+                                       shaders_dir + "/fragment_objects.fs");
+  _lampShader =
+    std::make_unique<fig::PhongShader>(_light,
+                                       *_camera,
+                                       _view,
+                                       _projection,
+                                       shaders_dir + "/vertex_light.vs",
+                                       shaders_dir + "/fragment_light.fs");
   _light->setShader(_lampShader.get());
-  _skyboxShader = std::make_unique<fig::SkyboxShader>(
-    _light,
-    *_camera,
-    _view,
-    _projection,
-    "/home/roman/repos/colony/shaders/vertex_skybox.vs",
-    "/home/roman/repos/colony/shaders/fragment_skybox.fs");
-  _linesShader = std::make_unique<fig::LinesShader>(
-    _light,
-    *_camera,
-    _view,
-    _projection,
-    "/home/roman/repos/colony/shaders/vertex_lines.vs",
-    "/home/roman/repos/colony/shaders/fragment_lines.fs");
+  _skyboxShader =
+    std::make_unique<fig::SkyboxShader>(_light,
+                                        *_camera,
+                                        _view,
+                                        _projection,
+                                        shaders_dir + "/vertex_skybox.vs",
+                                        shaders_dir + "/fragment_skybox.fs");
+  _linesShader =
+    std::make_unique<fig::LinesShader>(_light,
+                                       *_camera,
+                                       _view,
+                                       _projection,
+                                       shaders_dir + "/vertex_lines.vs",
+                                       shaders_dir + "/fragment_lines.fs");
   fig::modelLoader = std::make_unique<fig::ModelLoader>(*_textureShader);
   fig::modelLoader->load();
 
