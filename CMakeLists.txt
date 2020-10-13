@@ -6,6 +6,7 @@ project(Colony)
 add_subdirectory(fig)
 
 include_directories(fig/third/logging/spdlog/include)
+include_directories(fig/third/json/json/single_include)
 link_directories(fig/cbuild)
 add_executable(colony
 		logic/Buildable.cpp
