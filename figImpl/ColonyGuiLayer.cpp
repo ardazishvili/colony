@@ -16,7 +16,10 @@ void ColonyGuiLayer::update()
 {
   _guiBack->newFrame();
 
-  fig::logger.render();
+  auto config = CONFIG.get();
+  if (config.show_log) {
+    fig::logger.render();
+  }
 
   ImGui::Begin("camera");
   static float camera_z = 60.0f;

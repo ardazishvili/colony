@@ -1,5 +1,7 @@
 #include "globals.h"
+#include "../fig/globals.h"
 #include "ColonyApplication.h"
+#include <filesystem>
 
 fig::Application<SpdBackend>* gApp()
 {
@@ -7,3 +9,5 @@ fig::Application<SpdBackend>* gApp()
   return app.get();
 }
 bool flatView = true;
+Config CONFIG =
+  Config(std::filesystem::current_path().string() + "/config.json");

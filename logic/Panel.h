@@ -21,8 +21,6 @@ public:
   bool isEmpty() const;
   void display();
 
-  static const float PANEL_WIDTH;
-
 private:
   fig::Window* _window;
   Type _type;

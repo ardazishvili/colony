@@ -1,4 +1,9 @@
 {
-    "window_height": 1923,
-    "window_width": 1080
+    "window_height": 1080,
+    "window_width": 1920,
+    "panel_width": 300,
+    "icon_size": 80,
+    "show_log": false,
+    "move_speed": 0.5,
+    "rotation_speed": 0.5
 }

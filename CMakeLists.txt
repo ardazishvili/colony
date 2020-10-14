@@ -137,3 +137,4 @@ add_executable(colony
 target_link_libraries(colony fig glfw dl GL GLEW assimp pthread)
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY shaders DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY config.json DESTINATION ${CMAKE_BINARY_DIR})

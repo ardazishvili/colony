@@ -6,6 +6,7 @@
 #include "ColonyGameLayer.h"
 #include "ColonyGuiLayer.h"
 #include "events/ColonyEventFabric.h"
+#include "globals.h"
 
 using namespace std::placeholders;
 
@@ -13,8 +14,9 @@ template<typename T>
 ColonyApplication<T>::ColonyApplication()
 {
   _eventFabric = std::make_unique<ColonyEventFabric>();
-  int screenWidth = 1920;
-  int screenHeight = 1200 - 150;
+  auto config = CONFIG.get();
+  int screenWidth = config.window_width;
+  int screenHeight = config.window_height;
   auto camera = std::make_unique<fig::Camera>(glm::vec3(0.0f, -45.0f, 60.0f),
                                               glm::vec3(0.0f, 0.0f, 0.0f),
                                               glm::vec3(0.0f, 0.0f, 1.0f));
