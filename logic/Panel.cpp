@@ -34,8 +34,9 @@ void Panel::display()
   ImGui::SetWindowSize(ImVec2(config.panel_width, _window->height() / 2));
   for (unsigned long i = 0; i < _items.size(); ++i) {
     ImGui::PushID(i);
-    if (ImGui::ImageButton((void*)(intptr_t)_items[i]->texture(),
-                           ImVec2(config.icon_size, config.icon_size))) {
+    if (ImGui::ImageButton(
+          (void*)(intptr_t)_items[i]->texture(),
+          ImVec2(config.panel_icon_size, config.panel_icon_size))) {
       _items[i]->getBuilder()->create();
     }
     ImGui::PopID();

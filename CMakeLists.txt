@@ -71,6 +71,8 @@ add_executable(colony
     figImpl/ColonyGameLayer.cpp
     figImpl/ColonyGuiLayer.h
     figImpl/ColonyGuiLayer.cpp
+    figImpl/SettingsGui.h
+    figImpl/SettingsGui.cpp
     logic/AbstractPlant.cpp
     logic/AbstractPlant.h
     logic/AbstractPlantBuilder.cpp

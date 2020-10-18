@@ -1,4 +1,5 @@
 #include <iomanip>
+#include <optional>
 
 #include "../fig/globals.h"
 #include "globals.h"
@@ -54,6 +55,25 @@ void ColonyGuiLayer::update()
   ImGui::SetWindowSize(ImVec2(200, 40));
   ImGui::Checkbox("state", &flatView);
   ImGui::End();
+
+  ImGui::Begin("Configuration",
+               NULL,
+               ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize |
+                 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar);
+  ImGui::SetWindowPos(ImVec2(
+    _window->width() - config.panel_width - config.settings_icon_size - 6, 0));
+  ImGui::SetWindowSize(
+    ImVec2(config.settings_icon_size + 6, config.settings_icon_size + 6));
+  if (ImGui::ImageButton(
+        (void*)(intptr_t)fig::modelLoader
+          ->menuTextures()[fig::MenuTextures::Wheel]
+          ->getTextureId(),
+        ImVec2(config.settings_icon_size, config.settings_icon_size))) {
+    _settingsGui.toggle();
+  }
+  ImGui::End();
+
+  _settingsGui.show();
 }
 
 void ColonyGuiLayer::render()
