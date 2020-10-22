@@ -31,7 +31,6 @@ void ColonyMouseReleaseEvent::handleMouseReleased(
   // TODO downcast
   auto m = dynamic_cast<ColonyEventManager*>(eventManager);
 
-  std::cout << "mouse released" << std::endl;
   if (m->isKeyPressed(fig::KeyButton::LEFT_SHIFT)) {
 
     auto bl = m->_selection.bottomLeft();
