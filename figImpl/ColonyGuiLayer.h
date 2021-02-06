@@ -1,11 +1,14 @@
 #ifndef COLONY_GUI_LAYER_H
 #define COLONY_GUI_LAYER_H
 
+#include <chrono>
+
 #include "../fig/Application.h"
 #include "../fig/GuiLayer.h"
 #include "../fig/ImGuiBackend.h"
 
 #include "SettingsGui.h"
+#include <chrono>
 
 class ColonyGuiLayer : public fig::GuiLayer
 {
@@ -31,6 +34,9 @@ private:
   fig::Light* _light;
   glm::mat4& _view;
   glm::mat4& _projection;
+  int _frameCount = 0;
+  double _prev_time = 0.0;
+  int _fps = 0;
 };
 
 #endif

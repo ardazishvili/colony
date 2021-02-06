@@ -1,5 +1,7 @@
+#include <chrono>
 #include <iomanip>
 #include <optional>
+#include <string>
 
 #include "../fig/globals.h"
 #include "globals.h"
@@ -78,6 +80,14 @@ void ColonyGuiLayer::update()
 
 void ColonyGuiLayer::render()
 {
+  ++_frameCount;
+  auto now = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+  if (now - _prev_time >
+      1.0) {
+    _fps = _frameCount;
+    _frameCount = 0;
+    _prev_time = now;
+  }
   showDebug();
 
   _guiBack->render();
@@ -90,13 +100,19 @@ void ColonyGuiLayer::showDebug()
                ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs;
   ImGui::Begin("3dCoordinates", NULL, flags);
   ImGui::SetWindowPos(ImVec2(0, _window->height() - 22));
-  ImGui::SetWindowSize(ImVec2(500, 22));
+  ImGui::SetWindowSize(ImVec2(250, 22));
   auto pos = fig::EventManager::unProject(_window, _view, _projection);
   std::stringstream ss;
   ss << "x:" << std::setw(5) << std::setprecision(2) << pos.x
      << "; y:" << std::setw(5) << std::setprecision(2) << pos.y
      << "; z: " << pos.z;
-  ImGui::Text(ss.str().c_str());
+  ImGui::Text("%s", ss.str().c_str());
+  ImGui::End();
+
+  ImGui::Begin("fps", NULL, flags);
+  ImGui::SetWindowPos(ImVec2(250, _window->height() - 22));
+  ImGui::SetWindowSize(ImVec2(50, 22));
+  ImGui::Text("FPS: %s", std::to_string(_fps).c_str());
   ImGui::End();
 }
 
