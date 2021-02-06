@@ -1,6 +1,5 @@
-#include <iostream>
-
 #include "../fig/globals.h"
+
 #include "Game.h"
 #include "Tank.h"
 
@@ -29,13 +28,12 @@ Tank::Tank(fig::Shader& textureShader,
            Type type,
            HealthLevel healthLevel,
            Shell::Size sh) :
-  AttackUnit(
-    textureShader,
-    linesShader,
-    std::make_unique<TankView>(textureShader, position, tankSizeMap[type]),
-    router,
-    sh,
-    speedMap[type])
+  AttackUnit(textureShader,
+             linesShader,
+             std::make_unique<TankView>(textureShader, position, tankSizeMap[type]),
+             router,
+             sh,
+             speedMap[type])
 {
   _health = healthLevelMap[healthLevel] * tankHitPointsMap[type];
   _maxHealth = _health;
@@ -50,8 +48,7 @@ std::shared_ptr<Tank> createTank(Game* game,
                                  HealthLevel health,
                                  Shell::Size shellSize)
 {
-  auto newTank = std::make_shared<Tank>(
-    textureShader, linesShader, router, position, type, health, shellSize);
+  auto newTank = std::make_shared<Tank>(textureShader, linesShader, router, position, type, health, shellSize);
   game->addTank(newTank);
   return newTank;
 }

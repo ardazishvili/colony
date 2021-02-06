@@ -2,9 +2,9 @@
 #define TANK_FACTORY_BUILDER_H
 
 #include "../fig/Shader.h"
+
 #include "AbstractStructureBuilder.h"
 
-struct AStar;
 class TankFactoryBuilder : public AbstractStructureBuilder
 {
 public:

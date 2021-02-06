@@ -4,11 +4,7 @@
 #include "../figImpl/ColonyEventManager.h"
 #include "Game.h"
 
-#include <iomanip>
-#include <iostream>
-
-Game::Game(glm::mat4& view, glm::mat4& projection) :
-  _view(view), _projection(projection)
+Game::Game(glm::mat4& view, glm::mat4& projection) : _view(view), _projection(projection)
 {
 }
 
@@ -194,11 +190,8 @@ void Game::addBarrierPotential(EnergyStructure* es)
 
 Shroud* Game::getNearestShroud(glm::vec3 p) const
 {
-  auto it = std::min_element(_shrouds.begin(),
-                             _shrouds.end(),
-                             [&p](const auto& left, const auto& right) {
-                               return glm::distance(left->position(), p) <
-                                      glm::distance(right->position(), p);
-                             });
+  auto it = std::min_element(_shrouds.begin(), _shrouds.end(), [&p](const auto& left, const auto& right) {
+    return glm::distance(left->position(), p) < glm::distance(right->position(), p);
+  });
   return (*it).get();
 }

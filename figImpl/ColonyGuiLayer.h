@@ -15,8 +15,7 @@ class ColonyGuiLayer : public fig::GuiLayer
 public:
   ColonyGuiLayer(const fig::AppEnv& env) :
     GuiLayer(env.window, std::make_unique<fig::ImGuiBackend>()),
-    _settingsGui(env.window->width(), env.window->height()),
-    _camera(env.camera), _light(env.light), _view(env.view),
+    _settingsGui(env.window->width(), env.window->height()), _camera(env.camera), _light(env.light), _view(env.view),
     _projection(env.projection)
   {
     init();

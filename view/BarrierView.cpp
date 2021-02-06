@@ -10,16 +10,12 @@ float BarrierView::BARRIER_HEALTH_BAR_HEIGHT = 0.15f;
 float BarrierView::BARRIER_SCALE_INCREMENT = 1.0f;
 float BarrierView::BARRIER_INIT_SCALE = 1.0f;
 
-BarrierView::BarrierView(fig::Shader& textureShader,
-                         fig::Shader& linesShader,
-                         glm::vec3 p,
-                         fig::Terrain* terrain) :
-  StructureView(
-    textureShader,
-    p,
-    BARRIER_INIT_SCALE,
-    { -0.3, 0, BARRIER_HEALTH_BAR_WIDTH, BARRIER_HEALTH_BAR_HEIGHT },
-    fig::TexturePackType::Initial),
+BarrierView::BarrierView(fig::Shader& textureShader, fig::Shader& linesShader, glm::vec3 p, fig::Terrain* terrain) :
+  StructureView(textureShader,
+                p,
+                BARRIER_INIT_SCALE,
+                { -0.3, 0, BARRIER_HEALTH_BAR_WIDTH, BARRIER_HEALTH_BAR_HEIGHT },
+                fig::TexturePackType::Initial),
   _terrain(terrain), _linesShader(linesShader)
 {
   _model = fig::modelLoader->models()[fig::Models::Barrier];
@@ -49,8 +45,7 @@ void BarrierView::draw()
     auto lat = latitude();
     if (!flatView) {
       model = glm::rotate(model, longitude(), glm::vec3(0, 0, 1));
-      model = glm::rotate(
-        model, -lat + static_cast<float>(M_PI / 2.0), glm::vec3(0, 1, 0));
+      model = glm::rotate(model, -lat + static_cast<float>(M_PI / 2.0), glm::vec3(0, 1, 0));
       model = glm::scale(model, glm::vec3(_scaleFactor));
       model = glm::scale(model, glm::vec3(1.5 / h(lat), 1.5 / k(lat), 1));
     } else {

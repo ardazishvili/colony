@@ -1,13 +1,11 @@
 #include "ColonyMousePressEvent.h"
 #include "../ColonyEventManager.h"
 
-ColonyMousePressedEvent::ColonyMousePressedEvent(int button) :
-  MousePressEvent(button)
+ColonyMousePressedEvent::ColonyMousePressedEvent(int button) : MousePressEvent(button)
 {
 }
 
-void ColonyMousePressedEvent::process(fig::Camera* camera,
-                                      fig::EventManager* eventManager)
+void ColonyMousePressedEvent::process(fig::Camera* camera, fig::EventManager* eventManager)
 {
   if (_button == GLFW_MOUSE_BUTTON_MIDDLE) {
     handleMousePressedMiddle(eventManager);
@@ -20,8 +18,7 @@ void ColonyMousePressedEvent::process(fig::Camera* camera,
   }
 }
 
-void ColonyMousePressedEvent::handleMousePressedLeft(
-  fig::EventManager* eventManager)
+void ColonyMousePressedEvent::handleMousePressedLeft(fig::EventManager* eventManager)
 {
   // TODO downcast
   auto m = dynamic_cast<ColonyEventManager*>(eventManager);
@@ -44,8 +41,7 @@ void ColonyMousePressedEvent::handleMousePressedLeft(
   }
 }
 
-void ColonyMousePressedEvent::handleMousePressedRight(
-  fig::EventManager* eventManager)
+void ColonyMousePressedEvent::handleMousePressedRight(fig::EventManager* eventManager)
 {
   // TODO downcast
   auto m = dynamic_cast<ColonyEventManager*>(eventManager);
@@ -63,12 +59,10 @@ void ColonyMousePressedEvent::handleMousePressedRight(
       m->_tankSelected->setRoute(c);
     }
   }
-  if (m->_structureToBuild &&
-      (m->_structureToBuildStage == BuildStage::SetPosition)) {
+  if (m->_structureToBuild && (m->_structureToBuildStage == BuildStage::SetPosition)) {
     std::cout << "setting position" << std::endl;
     m->_structureToBuildStage = BuildStage::SetAngle;
-  } else if (m->_structureToBuild &&
-             (m->_structureToBuildStage == BuildStage::SetAngle)) {
+  } else if (m->_structureToBuild && (m->_structureToBuildStage == BuildStage::SetAngle)) {
     std::cout << "setting angle" << std::endl;
     m->_structureToBuild->commit();
     m->_structureToBuild = nullptr;
@@ -85,8 +79,7 @@ void ColonyMousePressedEvent::handleMousePressedRight(
   }
 }
 
-void ColonyMousePressedEvent::handleMousePressedMiddle(
-  fig::EventManager* eventManager)
+void ColonyMousePressedEvent::handleMousePressedMiddle(fig::EventManager* eventManager)
 {
   // TODO downcast
   auto m = dynamic_cast<ColonyEventManager*>(eventManager);

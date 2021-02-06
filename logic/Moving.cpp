@@ -17,8 +17,7 @@ void Moving<T>::move()
   auto c = _terrain->getXYZ(glm::vec2(prev.x, prev.y) + _moveIncrement);
   _view->move(c);
   bool destinationIsReached =
-    ::sqrt(::pow(_view->position().x - _destination.x, 2) +
-           ::pow(_view->position().y - _destination.y, 2)) < _speed;
+    ::sqrt(::pow(_view->position().x - _destination.x, 2) + ::pow(_view->position().y - _destination.y, 2)) < _speed;
   T* derived = static_cast<T*>(this);
   if (destinationIsReached || derived->isDestroyed()) {
     _movingRoute.pop_back();
@@ -35,8 +34,7 @@ template<typename T>
 void Moving<T>::setRoute(glm::vec3 endPoint)
 {
   T* derived = static_cast<T*>(this);
-  derived->_path =
-    fig::makePath(_linesShader, derived->_router, _view->position(), endPoint);
+  derived->_path = fig::makePath(_linesShader, derived->_router, _view->position(), endPoint);
   if (derived->_path != nullptr) {
     _movingRoute = derived->_path->route();
     startMoving(_movingRoute.at(_movingRoute.size() - 1));

@@ -6,10 +6,7 @@
 class PlantBuilder : public AbstractPlantBuilder
 {
 public:
-  PlantBuilder(fig::Shader& shader,
-               Game* game,
-               Barrier& barrier,
-               fig::Terrain* terrain);
+  PlantBuilder(fig::Shader& shader, Game* game, Barrier& barrier, fig::Terrain* terrain);
   void create() override;
   fig::MenuTextures getPreviewType() override;
 };

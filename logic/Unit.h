@@ -2,6 +2,7 @@
 #define UNIT_H
 
 #include "../fig/Path.h"
+
 #include "Buildable.h"
 
 template<typename T>

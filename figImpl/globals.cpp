@@ -9,5 +9,4 @@ fig::Application<SpdBackend>* gApp()
   return app.get();
 }
 bool flatView = true;
-Config CONFIG =
-  Config(std::filesystem::current_path().string() + "/config.json");
+Config CONFIG = Config(std::filesystem::current_path().string() + "/config.json");

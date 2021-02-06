@@ -12,12 +12,8 @@ Barrier::Barrier(fig::Shader& textureShader,
                  fig::AStar* router) :
   EnergyStructure(textureShader,
                   linesShader,
-                  std::make_unique<BarrierView>(textureShader,
-                                                linesShader,
-                                                position,
-                                                terrain)),
-  _shroud(textureShader, linesShader, router, position, *this),
-  _terrain(terrain)
+                  std::make_unique<BarrierView>(textureShader, linesShader, position, terrain)),
+  _shroud(textureShader, linesShader, router, position, *this), _terrain(terrain)
 {
 
   _health = BARRIER_HP;
@@ -46,12 +42,10 @@ void Barrier::render()
 UnitBuilders Barrier::getUnitBuilders(Game* game)
 {
   auto builders = UnitBuilders();
-  std::unique_ptr<AbstractUnitBuilder> pb =
-    std::make_unique<PlantBuilder>(_textureShader, game, *this, _terrain);
+  std::unique_ptr<AbstractUnitBuilder> pb = std::make_unique<PlantBuilder>(_textureShader, game, *this, _terrain);
   builders.push_back(std::move(pb));
 
-  std::unique_ptr<AbstractUnitBuilder> tb =
-    std::make_unique<TreeBuilder>(_textureShader, game, *this, _terrain);
+  std::unique_ptr<AbstractUnitBuilder> tb = std::make_unique<TreeBuilder>(_textureShader, game, *this, _terrain);
   builders.push_back(std::move(tb));
 
   return builders;

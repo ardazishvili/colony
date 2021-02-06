@@ -4,13 +4,11 @@
 #include "../../fig/Camera.h"
 #include "ColonyKeyRepeatEvent.h"
 
-ColonyKeyRepeatEvent::ColonyKeyRepeatEvent(int key, int scancode, int mods) :
-  KeyboardRepeatEvent(key, scancode, mods)
+ColonyKeyRepeatEvent::ColonyKeyRepeatEvent(int key, int scancode, int mods) : KeyboardRepeatEvent(key, scancode, mods)
 {
 }
 
-void ColonyKeyRepeatEvent::process(fig::Camera* camera,
-                                   fig::EventManager* eventManager)
+void ColonyKeyRepeatEvent::process(fig::Camera* camera, fig::EventManager* eventManager)
 {
   if (_key == GLFW_KEY_LEFT) {
     camera->rotateLeft();

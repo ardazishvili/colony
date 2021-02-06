@@ -60,17 +60,12 @@ void ColonyGuiLayer::update()
 
   ImGui::Begin("Configuration",
                NULL,
-               ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize |
-                 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar);
-  ImGui::SetWindowPos(ImVec2(
-    _window->width() - config.panel_width - config.settings_icon_size - 6, 0));
-  ImGui::SetWindowSize(
-    ImVec2(config.settings_icon_size + 6, config.settings_icon_size + 6));
-  if (ImGui::ImageButton(
-        (void*)(intptr_t)fig::modelLoader
-          ->menuTextures()[fig::MenuTextures::Wheel]
-          ->getTextureId(),
-        ImVec2(config.settings_icon_size, config.settings_icon_size))) {
+               ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+                 ImGuiWindowFlags_NoScrollbar);
+  ImGui::SetWindowPos(ImVec2(_window->width() - config.panel_width - config.settings_icon_size - 6, 0));
+  ImGui::SetWindowSize(ImVec2(config.settings_icon_size + 6, config.settings_icon_size + 6));
+  if (ImGui::ImageButton((void*)(intptr_t)fig::modelLoader->menuTextures()[fig::MenuTextures::Wheel]->getTextureId(),
+                         ImVec2(config.settings_icon_size, config.settings_icon_size))) {
     _settingsGui.toggle();
   }
   ImGui::End();
@@ -81,9 +76,9 @@ void ColonyGuiLayer::update()
 void ColonyGuiLayer::render()
 {
   ++_frameCount;
-  auto now = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-  if (now - _prev_time >
-      1.0) {
+  auto now =
+    std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+  if (now - _prev_time > 1.0) {
     _fps = _frameCount;
     _frameCount = 0;
     _prev_time = now;
@@ -95,16 +90,14 @@ void ColonyGuiLayer::render()
 
 void ColonyGuiLayer::showDebug()
 {
-  auto flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize |
-               ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar |
-               ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs;
+  auto flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+               ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs;
   ImGui::Begin("3dCoordinates", NULL, flags);
   ImGui::SetWindowPos(ImVec2(0, _window->height() - 22));
   ImGui::SetWindowSize(ImVec2(250, 22));
   auto pos = fig::EventManager::unProject(_window, _view, _projection);
   std::stringstream ss;
-  ss << "x:" << std::setw(5) << std::setprecision(2) << pos.x
-     << "; y:" << std::setw(5) << std::setprecision(2) << pos.y
+  ss << "x:" << std::setw(5) << std::setprecision(2) << pos.x << "; y:" << std::setw(5) << std::setprecision(2) << pos.y
      << "; z: " << pos.z;
   ImGui::Text("%s", ss.str().c_str());
   ImGui::End();

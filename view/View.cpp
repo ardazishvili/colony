@@ -1,6 +1,5 @@
-#include <iostream>
-
 #include "../fig/globals.h"
+
 #include "../figImpl/globals.h"
 #include "View.h"
 
@@ -8,8 +7,7 @@ float View::VIEW_SCALE = 0.5f;
 const float View::R = 4 * M_PI;
 const float View::S = 6 * M_PI;
 
-View::View(fig::Shader& shader, glm::vec3 position) :
-  _shader(shader), _position(position)
+View::View(fig::Shader& shader, glm::vec3 position) : _shader(shader), _position(position)
 {
 }
 
@@ -54,11 +52,9 @@ glm::mat4 View::globeModel() const
 {
   auto model = glm::mat4(1.0f);
   model = glm::translate(model, position());
-  model = glm::rotate(
-    model, glm::radians(_angle + 90), glm::vec3(glm::normalize(position())));
+  model = glm::rotate(model, glm::radians(_angle + 90), glm::vec3(glm::normalize(position())));
   model = glm::rotate(model, longitude(), glm::vec3(0, 0, 1));
-  model = glm::rotate(
-    model, -latitude() + static_cast<float>(M_PI / 2), glm::vec3(0, 1, 0));
+  model = glm::rotate(model, -latitude() + static_cast<float>(M_PI / 2), glm::vec3(0, 1, 0));
   model = glm::scale(model, glm::vec3(VIEW_SCALE * _objScale));
   return model;
 }
@@ -68,7 +64,6 @@ glm::vec3 View::globeMapper(glm::vec3 p) const
   float longitude = p.x * sqrt(2.0f) / R;
   float latitude = 2 * atan(p.y / (R * (1 + sqrt(2) / 2.0f)));
 
-  return glm::vec3((S + p.z) * cos(latitude) * cos(longitude),
-                   (S + p.z) * cos(latitude) * sin(longitude),
-                   (S + p.z) * sin(latitude));
+  return glm::vec3(
+    (S + p.z) * cos(latitude) * cos(longitude), (S + p.z) * cos(latitude) * sin(longitude), (S + p.z) * sin(latitude));
 }

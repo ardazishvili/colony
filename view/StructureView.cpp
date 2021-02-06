@@ -1,16 +1,13 @@
-#include "StructureView.h"
 #include "../fig/globals.h"
+
+#include "StructureView.h"
 
 StructureView::StructureView(fig::Shader& shader,
                              glm::vec3 position,
                              float selectionRadius,
                              HealthBarParams healthBarParams,
                              fig::TexturePackType texturesType) :
-  SelectableView(shader,
-                 position,
-                 selectionRadius,
-                 healthBarParams,
-                 texturesType)
+  SelectableView(shader, position, selectionRadius, healthBarParams, texturesType)
 {
 }
 

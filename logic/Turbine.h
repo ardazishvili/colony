@@ -1,18 +1,14 @@
 #ifndef TURBINE_H
 #define TURBINE_H
 
-#include <glm/glm.hpp>
+#include "EnergyStructure.h"
 
 #include "../view/TurbineView.h"
-#include "EnergyStructure.h"
 
 class Turbine : public EnergyStructure
 {
 public:
-  Turbine(fig::Shader& textureShader,
-          fig::Shader& linesShader,
-          Game* game,
-          glm::vec3 position);
+  Turbine(fig::Shader& textureShader, fig::Shader& linesShader, Game* game, glm::vec3 position);
   UnitBuilders getUnitBuilders(Game* game) override;
   StructureBuilders getStructureBuilders() override;
   void commit() override;

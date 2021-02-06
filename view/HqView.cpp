@@ -1,6 +1,7 @@
-#include "HqView.h"
 #include "../fig/globals.h"
+
 #include "../figImpl/globals.h"
+#include "HqView.h"
 
 float HqView::HQ_HEALTH_BAR_WIDTH = 1.2f;
 float HqView::HQ_HEALTH_BAR_HEIGHT = 0.15f;

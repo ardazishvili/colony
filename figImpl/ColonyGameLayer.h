@@ -20,8 +20,7 @@ class ColonyGameLayer : public fig::GameLayer
 {
 public:
   ColonyGameLayer(const fig::AppEnv& env) :
-    _window(env.window), _camera(env.camera), _light(env.light),
-    _view(env.view), _projection(env.projection)
+    _window(env.window), _camera(env.camera), _light(env.light), _view(env.view), _projection(env.projection)
   {
     init();
   }

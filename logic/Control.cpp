@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "Control.h"
 #include "HqBuilder.h"
 #include "TankFactoryBuilder.h"
@@ -12,13 +10,12 @@ Control::Control(Game* game,
                  fig::Terrain* terrain,
                  fig::AStar* router) :
   _game(game),
-  _eventManager(eventManager),
-  _structurePanel(window, Panel::Type::Structures, textureShader),
-  _unitPanel(window, Panel::Type::Units, textureShader),
-  _textureShader(textureShader), _linesShader(linesShader), _router(router)
+  _eventManager(eventManager), _structurePanel(window, Panel::Type::Structures, textureShader),
+  _unitPanel(window, Panel::Type::Units, textureShader), _textureShader(textureShader), _linesShader(linesShader),
+  _router(router)
 {
-  std::unique_ptr<AbstractBuilder> hqBuilder = std::make_unique<HqBuilder>(
-    _game, _eventManager, textureShader, linesShader, terrain, _router);
+  std::unique_ptr<AbstractBuilder> hqBuilder =
+    std::make_unique<HqBuilder>(_game, _eventManager, textureShader, linesShader, terrain, _router);
   auto hqPanelItem = std::make_unique<PanelItem>(std::move(hqBuilder));
   _structurePanel.addItem(std::move(hqPanelItem));
 }
@@ -63,8 +60,7 @@ void Control::addToUnitPanel(std::unique_ptr<AbstractUnitBuilder> builder)
   _unitPanel.addItem(std::move(panelItem));
 }
 
-void Control::addToStructurePanel(
-  std::unique_ptr<AbstractStructureBuilder> builder)
+void Control::addToStructurePanel(std::unique_ptr<AbstractStructureBuilder> builder)
 {
   auto panelItem = std::make_unique<PanelItem>(std::move(builder));
   _structurePanel.addItem(std::move(panelItem));

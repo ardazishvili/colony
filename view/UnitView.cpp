@@ -1,16 +1,13 @@
-#include "UnitView.h"
 #include "../fig/globals.h"
+
+#include "UnitView.h"
 
 UnitView::UnitView(fig::Shader& shader,
                    glm::vec3 position,
                    float selectionRadius,
                    HealthBarParams healthBarParams,
                    fig::TexturePackType texturesType) :
-  SelectableView(shader,
-                 position,
-                 selectionRadius,
-                 healthBarParams,
-                 texturesType)
+  SelectableView(shader, position, selectionRadius, healthBarParams, texturesType)
 {
 }
 

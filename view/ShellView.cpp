@@ -1,8 +1,8 @@
-#include "ShellView.h"
 #include "../fig/globals.h"
 
-ShellView::ShellView(fig::Shader& shader, glm::vec3 position) :
-  View(shader, position)
+#include "ShellView.h"
+
+ShellView::ShellView(fig::Shader& shader, glm::vec3 position) : View(shader, position)
 {
   _model = fig::modelLoader->models()[fig::Models::Shell];
 }

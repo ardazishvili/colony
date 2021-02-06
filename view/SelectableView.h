@@ -2,6 +2,7 @@
 #define SELECTABLE_VIEW_H
 
 #include "../fig/Surface.h"
+
 #include "View.h"
 
 enum class Status { None, Selected, UnderFire, Destroyed };

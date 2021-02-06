@@ -8,8 +8,7 @@
 
 using namespace std::string_literals;
 
-Panel::Panel(fig::Window* window, Type type, fig::Shader& shader) :
-  _window(window), _type(type), _shader(shader)
+Panel::Panel(fig::Window* window, Type type, fig::Shader& shader) : _window(window), _type(type), _shader(shader)
 {
 }
 
@@ -29,14 +28,12 @@ void Panel::display()
   auto panelName = "Panel #"s + std::to_string(panelNo);
   auto config = CONFIG.get();
   ImGui::Begin(panelName.c_str());
-  ImGui::SetWindowPos(ImVec2(_window->width() - config.panel_width,
-                             panelNo * _window->height() / 2));
+  ImGui::SetWindowPos(ImVec2(_window->width() - config.panel_width, panelNo * _window->height() / 2));
   ImGui::SetWindowSize(ImVec2(config.panel_width, _window->height() / 2));
   for (unsigned long i = 0; i < _items.size(); ++i) {
     ImGui::PushID(i);
-    if (ImGui::ImageButton(
-          (void*)(intptr_t)_items[i]->texture(),
-          ImVec2(config.panel_icon_size, config.panel_icon_size))) {
+    if (ImGui::ImageButton((void*)(intptr_t)_items[i]->texture(),
+                           ImVec2(config.panel_icon_size, config.panel_icon_size))) {
       _items[i]->getBuilder()->create();
     }
     ImGui::PopID();

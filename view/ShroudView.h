@@ -2,15 +2,13 @@
 #define SHROUD_VIEW_H
 
 #include "../fig/Beam.h"
+
 #include "UnitView.h"
 
 class ShroudView : public UnitView
 {
 public:
-  ShroudView(fig::Shader& textureShader,
-             fig::Shader& linesShader,
-             glm::vec3 position,
-             float barrierHeight);
+  ShroudView(fig::Shader& textureShader, fig::Shader& linesShader, glm::vec3 position, float barrierHeight);
   void draw() override;
   void drawBeam();
   void move(glm::vec3 newPosition) override{};

@@ -12,8 +12,7 @@ public:
                            fig::Shader& textureShader,
                            fig::Shader& linesShader) :
     AbstractBuilder(game),
-    _eventManager(eventManager), _textureShader(textureShader),
-    _linesShader(linesShader)
+    _eventManager(eventManager), _textureShader(textureShader), _linesShader(linesShader)
   {
   }
   virtual ~AbstractStructureBuilder() = default;

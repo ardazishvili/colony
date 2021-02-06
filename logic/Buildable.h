@@ -14,15 +14,12 @@
 class Game;
 
 using UnitBuilders = std::vector<std::unique_ptr<AbstractUnitBuilder>>;
-using StructureBuilders =
-  std::vector<std::unique_ptr<AbstractStructureBuilder>>;
+using StructureBuilders = std::vector<std::unique_ptr<AbstractStructureBuilder>>;
 
 class Buildable
 {
 public:
-  Buildable(fig::Shader& textureShader,
-            fig::Shader& linesShader,
-            SelectableView* view);
+  Buildable(fig::Shader& textureShader, fig::Shader& linesShader, SelectableView* view);
   bool isDestroyed() const;
   bool isUnderFire() const;
   void takeDamage(Shell::Size shellSize);

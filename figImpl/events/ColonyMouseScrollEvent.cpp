@@ -1,8 +1,7 @@
 #include "ColonyMouseScrollEvent.h"
 #include "../../fig/Camera.h"
 
-ColonyMouseScrollEvent::ColonyMouseScrollEvent(double xoffset, double yoffset) :
-  MouseScrollEvent(xoffset, yoffset)
+ColonyMouseScrollEvent::ColonyMouseScrollEvent(double xoffset, double yoffset) : MouseScrollEvent(xoffset, yoffset)
 {
 }
 

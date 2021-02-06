@@ -2,7 +2,6 @@
 #define SHELL_H
 
 #include <map>
-#include <math.h>
 
 #include <glm/glm.hpp>
 
@@ -14,11 +13,7 @@ public:
   enum class Size { Small, Medium, Big };
 
   Shell() = delete;
-  Shell(fig::Shader& shader,
-        glm::vec3 position,
-        float angle,
-        float distance,
-        Size size = Size::Small);
+  Shell(fig::Shader& shader, glm::vec3 position, float angle, float distance, Size size = Size::Small);
   ~Shell();
   void update();
   bool isDone();

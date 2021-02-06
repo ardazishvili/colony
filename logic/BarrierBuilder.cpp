@@ -16,8 +16,7 @@ BarrierBuilder::BarrierBuilder(Game* game,
 
 void BarrierBuilder::create()
 {
-  auto structure = std::make_shared<Barrier>(
-    _textureShader, _linesShader, glm::vec3(), _terrain, _astar);
+  auto structure = std::make_shared<Barrier>(_textureShader, _linesShader, glm::vec3(), _terrain, _astar);
   _game->addStructure(structure);
   _game->addShroud(structure->shroud());
   _eventManager->setStructureToBuild(structure);

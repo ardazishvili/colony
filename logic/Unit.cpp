@@ -1,7 +1,8 @@
-#include "Unit.h"
 #include "../fig/globals.h"
+
 #include "AttackUnit.h"
 #include "NonAttackUnit.h"
+#include "Unit.h"
 
 template<typename T>
 Unit<T>::Unit(fig::AStar* router, View* view) : _router(router), _view(view)

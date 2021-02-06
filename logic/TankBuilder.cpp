@@ -15,8 +15,8 @@ TankBuilder::TankBuilder(fig::Shader& shader,
                          HealthLevel healthLevel,
                          Shell::Size shellSize) :
   AbstractUnitBuilder(game),
-  _shader(shader), _type(tankType), _healthLevel(healthLevel),
-  _shellSize(shellSize), _game(game), _tankFactory(tankFactory)
+  _shader(shader), _type(tankType), _healthLevel(healthLevel), _shellSize(shellSize), _game(game),
+  _tankFactory(tankFactory)
 {
 }
 

@@ -1,8 +1,5 @@
-#include <iostream>
-
-#include <GL/glew.h>
-
 #include "../figImpl/ColonyEventManager.h"
+
 #include "Game.h"
 #include "TankFactory.h"
 #include "TankFactoryBuilder.h"
@@ -19,9 +16,7 @@ TankFactoryBuilder::TankFactoryBuilder(Game* game,
 
 void TankFactoryBuilder::create()
 {
-  std::cout << "factory builder create" << std::endl;
-  auto structure = std::make_shared<TankFactory>(
-    _textureShader, _linesShader, _router, glm::vec3());
+  auto structure = std::make_shared<TankFactory>(_textureShader, _linesShader, _router, glm::vec3());
   _game->addStructure(structure);
   _eventManager->setStructureToBuild(structure);
   _eventManager->setStructureToBuildStage(BuildStage::SetPosition);

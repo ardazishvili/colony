@@ -1,6 +1,3 @@
-#include <iostream>
-#include <map>
-
 #include "Shell.h"
 
 std::map<Shell::Size, float> shellSizeMap = { { Shell::Size::Small, 2.0f },
@@ -13,13 +10,8 @@ const std::map<Shell::Size, int> Shell::SHELL_DAMAGE_MAP = {
   { Shell::Size::Big, 6 },
 };
 
-Shell::Shell(fig::Shader& shader,
-             glm::vec3 position,
-             float angle,
-             float distance,
-             Size size) :
-  _view(shader, position),
-  _angle(angle), _distance(distance), _size(size)
+Shell::Shell(fig::Shader& shader, glm::vec3 position, float angle, float distance, Size size) :
+  _view(shader, position), _angle(angle), _distance(distance), _size(size)
 {
   _speed = 0.35f;
 }

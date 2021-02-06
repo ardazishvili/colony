@@ -1,7 +1,6 @@
 #include "AbstractPlant.h"
 
-AbstractPlant::AbstractPlant(std::unique_ptr<AbstractPlantView> view) :
-  _view(std::move(view))
+AbstractPlant::AbstractPlant(std::unique_ptr<AbstractPlantView> view) : _view(std::move(view))
 {
 }
 

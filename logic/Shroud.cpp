@@ -1,6 +1,7 @@
 #include "Shroud.h"
-#include "../view/ShroudView.h"
 #include "Barrier.h"
+
+#include "../view/ShroudView.h"
 
 Shroud::Shroud(fig::Shader& textureShader,
                fig::Shader& linesShader,
@@ -9,10 +10,7 @@ Shroud::Shroud(fig::Shader& textureShader,
                Barrier& barrier) :
   NonAttackUnit(textureShader,
                 linesShader,
-                std::make_unique<ShroudView>(textureShader,
-                                             linesShader,
-                                             position,
-                                             barrier.radius()),
+                std::make_unique<ShroudView>(textureShader, linesShader, position, barrier.radius()),
                 router),
   _barrier(barrier)
 {

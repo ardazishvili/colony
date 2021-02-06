@@ -43,10 +43,8 @@ bool Selectable<T>::isInsideArea(fig::Points area)
   glm::vec2 am = m - a;
   glm::vec2 ab = b - a;
   glm::vec2 ad = d - a;
-  const bool cond1 =
-    (0.0f < glm::dot(am, ab)) && (glm::dot(am, ab) < glm::dot(ab, ab));
-  const bool cond2 =
-    (0.0f < glm::dot(am, ad)) && (glm::dot(am, ad) < glm::dot(ad, ad));
+  const bool cond1 = (0.0f < glm::dot(am, ab)) && (glm::dot(am, ab) < glm::dot(ab, ab));
+  const bool cond2 = (0.0f < glm::dot(am, ad)) && (glm::dot(am, ad) < glm::dot(ad, ad));
   return cond1 && cond2;
 }
 

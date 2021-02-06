@@ -1,10 +1,7 @@
 #include "Buildable.h"
 
-Buildable::Buildable(fig::Shader& textureShader,
-                     fig::Shader& linesShader,
-                     SelectableView* view) :
-  _textureShader(textureShader),
-  _linesShader(linesShader), _view(view)
+Buildable::Buildable(fig::Shader& textureShader, fig::Shader& linesShader, SelectableView* view) :
+  _textureShader(textureShader), _linesShader(linesShader), _view(view)
 {
 }
 
@@ -29,8 +26,7 @@ void Buildable::takeDamage(Shell::Size shellSize)
   if (_status != Status::Destroyed) {
     _status = Status::UnderFire;
     _view->setTexture(Status::UnderFire);
-    _health =
-      std::max(0.0f, _health - Shell::SHELL_DAMAGE_MAP.find(shellSize)->second);
+    _health = std::max(0.0f, _health - Shell::SHELL_DAMAGE_MAP.find(shellSize)->second);
     if (_health == 0) {
       _status = Status::Destroyed;
       _view->setTexture(Status::Destroyed);
@@ -43,4 +39,3 @@ glm::vec3 Buildable::position() const
 {
   return _view->position();
 }
-

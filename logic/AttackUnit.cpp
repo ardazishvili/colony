@@ -7,12 +7,8 @@ AttackUnit::AttackUnit(fig::Shader& textureShader,
                        Shell::Size sh,
                        float speed) :
   Buildable(textureShader, linesShader, view.get()),
-  Unit<AttackUnit>(router, view.get()), Attacking<AttackUnit>(textureShader,
-                                                              sh,
-                                                              view.get()),
-  Moving<AttackUnit>(linesShader, view.get(), speed), Selectable<AttackUnit>(
-                                                        view.get()),
-  _view(std::move(view))
+  Unit<AttackUnit>(router, view.get()), Attacking<AttackUnit>(textureShader, sh, view.get()),
+  Moving<AttackUnit>(linesShader, view.get(), speed), Selectable<AttackUnit>(view.get()), _view(std::move(view))
 {
 }
 

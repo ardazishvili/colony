@@ -2,6 +2,7 @@
 #define TURBINE_VIEW_H
 
 #include "../fig/Beam.h"
+
 #include "StructureView.h"
 
 class TurbineView : public StructureView

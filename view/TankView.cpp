@@ -1,7 +1,8 @@
-#include "TankView.h"
 #include "../fig/globals.h"
+
 #include "../figImpl/globals.h"
 #include "../logic/Buildable.h"
+#include "TankView.h"
 
 float TankView::TANK_GUN_ANGLE_INCREMENT = 1.5;
 float TankView::TANK_GUN_ANGLE_TOLERANCE = 1.5;
@@ -9,9 +10,7 @@ float TankView::TANK_HEALTH_BAR_WIDTH = 0.5;
 float TankView::TANK_HEALTH_BAR_HEIGHT = 0.04;
 std::map<Status, unsigned int> tankTexturesMap;
 
-TankView::TankView(fig::Shader& shader,
-                   glm::vec3 position,
-                   float tankTypeScaling) :
+TankView::TankView(fig::Shader& shader, glm::vec3 position, float tankTypeScaling) :
   AttackUnitView(shader,
                  position,
                  0.38,
@@ -97,4 +96,3 @@ void TankView::updateGun()
     }
   }
 }
-

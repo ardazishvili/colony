@@ -7,9 +7,7 @@ class EnergyStructure : public GroundStructure
 {
 
 public:
-  EnergyStructure(fig::Shader& textureShader,
-                  fig::Shader& linesShader,
-                  std::unique_ptr<StructureView> view);
+  EnergyStructure(fig::Shader& textureShader, fig::Shader& linesShader, std::unique_ptr<StructureView> view);
 };
 
 #endif

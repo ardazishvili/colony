@@ -1,17 +1,11 @@
 #ifndef TANK_H
 #define TANK_H
 
-#include <GL/glew.h> // Initialize with glewInit()
-
-#include <list>
-
 #include "../fig/Timer.h"
 #include "../view/TankView.h"
 #include "AttackUnit.h"
 
 class Game;
-
-using Shells = std::list<Shell>;
 
 enum class HealthLevel { Low, Medium, High };
 
