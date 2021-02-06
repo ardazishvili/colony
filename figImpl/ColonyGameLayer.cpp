@@ -52,6 +52,7 @@ void ColonyGameLayer::init()
     *_colorShader, *_camera, -10.0f * xScale, -10.0f * yScale, 10.0f * xScale, 10.0f * yScale, 128, zScale);
   _game = std::make_unique<Game>(_view, _projection);
   _game->addTerrain(_terrain.get());
+
   auto mapObstacles = fig::makeObstaclesSegment(*_colorNonFlatShader,
                                                 _terrain.get(),
                                                 glm::vec2(-10 * xScale + 0.01, -10 * yScale + 0.01),
