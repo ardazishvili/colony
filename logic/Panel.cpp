@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "../fig/ModelLoader.h"
 #include "../fig/third/gui/imgui/imgui.h"
 

@@ -1,9 +1,11 @@
-#include "SettingsGui.h"
-#include "../fig/ImGuiBackend.h"
-#include "globals.h"
 #include <algorithm>
 #include <iterator>
 #include <string>
+
+#include "../fig/ImGuiBackend.h"
+
+#include "SettingsGui.h"
+#include "globals.h"
 
 static auto vector_getter = [](void* vec, int idx, const char** out_text) {
   auto& vector = *static_cast<std::vector<std::string>*>(vec);

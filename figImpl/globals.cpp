@@ -1,7 +1,9 @@
-#include "globals.h"
-#include "../fig/globals.h"
-#include "ColonyApplication.h"
 #include <filesystem>
+
+#include "../fig/globals.h"
+
+#include "ColonyApplication.h"
+#include "globals.h"
 
 fig::Application<SpdBackend>* gApp()
 {

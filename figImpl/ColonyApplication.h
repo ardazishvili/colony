@@ -1,5 +1,6 @@
 #ifndef COLONY_APPLICATION_H
 #define COLONY_APPLICATION_H
+
 #include "../fig/Application.h"
 #include "../fig/events/Event.h"
 #include "../fig/events/EventFabric.h"

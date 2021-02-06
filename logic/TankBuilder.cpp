@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "TankBuilder.h"
 
 std::map<Tank::Type, fig::MenuTextures> tankTypeToPreviewMapping = {

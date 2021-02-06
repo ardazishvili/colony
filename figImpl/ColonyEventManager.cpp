@@ -1,7 +1,3 @@
-#include <iostream>
-
-#include <GL/glew.h>
-
 #include "../fig/GlfwWindow.h"
 #include "../fig/globals.h"
 

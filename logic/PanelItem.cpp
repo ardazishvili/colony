@@ -1,6 +1,5 @@
-#include <iostream>
-
 #include "../fig/globals.h"
+
 #include "PanelItem.h"
 
 PanelItem::PanelItem(std::unique_ptr<AbstractBuilder> builder)

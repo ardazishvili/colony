@@ -1,12 +1,11 @@
 #include <chrono>
 #include <iomanip>
 #include <optional>
-#include <string>
 
 #include "../fig/globals.h"
-#include "globals.h"
 
 #include "../figImpl/ColonyEventManager.h"
+#include "globals.h"
 
 #include "ColonyGuiLayer.h"
 
