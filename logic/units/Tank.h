@@ -1,8 +1,8 @@
 #ifndef TANK_H
 #define TANK_H
 
-#include "../fig/Timer.h"
-#include "../view/TankView.h"
+#include "../../fig/Timer.h"
+#include "../../view/TankView.h"
 #include "AttackUnit.h"
 
 class Game;

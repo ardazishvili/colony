@@ -1,7 +1,7 @@
 #ifndef SHROUD_H
 #define SHROUD_H
 
-#include "NonAttackUnit.h"
+#include "../units/NonAttackUnit.h"
 
 class Barrier;
 class Shroud : public NonAttackUnit

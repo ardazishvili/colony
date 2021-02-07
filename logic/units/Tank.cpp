@@ -1,6 +1,6 @@
-#include "../fig/globals.h"
+#include "../../fig/globals.h"
 
-#include "Game.h"
+#include "../Game.h"
 #include "Tank.h"
 
 std::map<Tank::Type, float> tankSizeMap = {

@@ -1,8 +1,8 @@
 #include "../fig/GlfwWindow.h"
 #include "../fig/globals.h"
 
-#include "../logic/Hq.h"
-#include "../logic/Turbine.h"
+#include "../logic/structures/Hq.h"
+#include "../logic/structures/Turbine.h"
 #include "ColonyEventManager.h"
 
 ColonyEventManager::ColonyEventManager(glm::mat4& view,

@@ -1,7 +1,7 @@
 #ifndef ABSTRACT_PLANT_BUILDER_H
 #define ABSTRACT_PLANT_BUILDER_H
 
-#include "../Barrier.h"
+#include "../structures/Barrier.h"
 #include "AbstractUnitBuilder.h"
 
 class AbstractPlantBuilder : public AbstractUnitBuilder

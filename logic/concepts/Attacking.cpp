@@ -1,5 +1,5 @@
 #include "Attacking.h"
-#include "../AttackUnit.h"
+#include "../units/AttackUnit.h"
 
 template<typename T>
 Attacking<T>::Attacking(fig::Shader& textureShader, Shell::Size sh, AttackUnitView* view) :

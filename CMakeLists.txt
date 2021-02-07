@@ -13,44 +13,12 @@ add_executable(colony
   logic/Control.h
   logic/Game.cpp
   logic/Game.h
-  logic/Hq.cpp
-  logic/Hq.h
   logic/Panel.cpp
   logic/Panel.h
   logic/PanelItem.cpp
   logic/PanelItem.h
   logic/Shell.cpp
   logic/Shell.h
-  logic/Tank.cpp
-  logic/Tank.h
-  logic/TankFactory.cpp
-  logic/TankFactory.h
-  logic/VehicleGroup.cpp
-  logic/VehicleGroup.h
-  logic/AbstractPlant.cpp
-  logic/AbstractPlant.h
-  logic/AttackUnit.cpp
-  logic/AttackUnit.h
-  logic/Barrier.cpp
-  logic/Barrier.h
-  logic/EnergyStructure.cpp
-  logic/EnergyStructure.h
-  logic/GroundStructure.cpp
-  logic/GroundStructure.h
-  logic/NonAttackUnit.cpp
-  logic/NonAttackUnit.h
-  logic/Plant.cpp
-  logic/Plant.h
-  logic/Shroud.cpp
-  logic/Shroud.h
-  logic/Structure.cpp
-  logic/Structure.h
-  logic/Tree.cpp
-  logic/Tree.h
-  logic/Turbine.cpp
-  logic/Turbine.h
-  logic/Unit.cpp
-  logic/Unit.h
   logic/concepts/Moving.cpp
   logic/concepts/Moving.h
   logic/concepts/Attacking.cpp
@@ -75,6 +43,38 @@ add_executable(colony
   logic/builders/TankBuilder.h
   logic/builders/HqBuilder.cpp
   logic/builders/HqBuilder.h
+  logic/structures/Plant.cpp
+  logic/structures/Plant.h
+  logic/structures/EnergyStructure.cpp
+  logic/structures/EnergyStructure.h
+  logic/structures/GroundStructure.cpp
+  logic/structures/GroundStructure.h
+  logic/structures/AbstractPlant.cpp
+  logic/structures/AbstractPlant.h
+  logic/structures/TankFactory.cpp
+  logic/structures/TankFactory.h
+  logic/structures/Hq.cpp
+  logic/structures/Hq.h
+  logic/structures/Shroud.cpp
+  logic/structures/Shroud.h
+  logic/structures/Structure.cpp
+  logic/structures/Structure.h
+  logic/structures/Tree.cpp
+  logic/structures/Tree.h
+  logic/structures/Turbine.cpp
+  logic/structures/Turbine.h
+  logic/structures/Barrier.cpp
+  logic/structures/Barrier.h
+  logic/units/NonAttackUnit.cpp
+  logic/units/NonAttackUnit.h
+  logic/units/Unit.cpp
+  logic/units/Unit.h
+  logic/units/Tank.cpp
+  logic/units/Tank.h
+  logic/units/VehicleGroup.cpp
+  logic/units/VehicleGroup.h
+  logic/units/AttackUnit.cpp
+  logic/units/AttackUnit.h
   figImpl/ColonyEventManager.cpp
   figImpl/ColonyEventManager.h
   figImpl/globals.h

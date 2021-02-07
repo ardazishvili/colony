@@ -3,11 +3,11 @@
 
 #include <glm/glm.hpp>
 
-#include "../fig/Terrain.h"
-#include "../view/BarrierView.h"
-#include "AbstractPlant.h"
-#include "EnergyStructure.h"
-#include "Shroud.h"
+#include "../../fig/Terrain.h"
+#include "../../view/BarrierView.h"
+#include "../structures/AbstractPlant.h"
+#include "../structures/EnergyStructure.h"
+#include "../structures/Shroud.h"
 
 using EnergyStructures = std::vector<EnergyStructure*>;
 class Barrier : public EnergyStructure

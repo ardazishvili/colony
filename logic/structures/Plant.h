@@ -3,7 +3,7 @@
 
 #include <glm/glm.hpp>
 
-#include "../view/PlantView.h"
+#include "../../view/PlantView.h"
 #include "AbstractPlant.h"
 
 class Plant : public AbstractPlant

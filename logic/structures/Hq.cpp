@@ -1,8 +1,8 @@
 #include "Hq.h"
-#include "../figImpl/ColonyEventManager.h"
-#include "builders/BarrierBuilder.h"
-#include "builders/TankFactoryBuilder.h"
-#include "builders/TurbineBuilder.h"
+#include "../../figImpl/ColonyEventManager.h"
+#include "../builders/BarrierBuilder.h"
+#include "../builders/TankFactoryBuilder.h"
+#include "../builders/TurbineBuilder.h"
 
 const int Hq::HQ_HP = 500;
 

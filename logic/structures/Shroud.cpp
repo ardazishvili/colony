@@ -1,7 +1,7 @@
 #include "Shroud.h"
 #include "Barrier.h"
 
-#include "../view/ShroudView.h"
+#include "../../view/ShroudView.h"
 
 Shroud::Shroud(fig::Shader& textureShader,
                fig::Shader& linesShader,

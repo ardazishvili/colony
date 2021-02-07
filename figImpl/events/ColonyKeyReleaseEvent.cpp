@@ -1,6 +1,6 @@
 #include "ColonyKeyReleaseEvent.h"
-#include "../../logic/Hq.h"
-#include "../../logic/Turbine.h"
+#include "../../logic/structures/Hq.h"
+#include "../../logic/structures/Turbine.h"
 #include "../ColonyEventManager.h"
 
 ColonyKeyReleaseEvent::ColonyKeyReleaseEvent(int key, int scancode, int mods) :

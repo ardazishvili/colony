@@ -10,7 +10,7 @@
 #include "../fig/math/AStar.h"
 
 #include "../logic/Game.h"
-#include "../logic/Tank.h"
+#include "../logic/units/Tank.h"
 
 class ColonyWindow;
 class ColonyEventManager : public fig::EventManager

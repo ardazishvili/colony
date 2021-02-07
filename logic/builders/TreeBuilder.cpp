@@ -1,6 +1,6 @@
 #include "TreeBuilder.h"
 #include "../Game.h"
-#include "../Tree.h"
+#include "../structures/Tree.h"
 
 TreeBuilder::TreeBuilder(fig::Shader& shader, Game* game, Barrier& barrier, fig::Terrain* terrain) :
   AbstractPlantBuilder(shader, game, barrier, terrain)

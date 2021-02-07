@@ -7,11 +7,11 @@
 #include <GLFW/glfw3.h>
 
 #include "../fig/Terrain.h"
-#include "AbstractPlant.h"
-#include "AttackUnit.h"
-#include "Barrier.h"
 #include "Control.h"
-#include "VehicleGroup.h"
+#include "structures/AbstractPlant.h"
+#include "structures/Barrier.h"
+#include "units/AttackUnit.h"
+#include "units/VehicleGroup.h"
 
 class Tank;
 class AbstractStructureBuilder;

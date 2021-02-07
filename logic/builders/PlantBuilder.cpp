@@ -1,6 +1,6 @@
 #include "PlantBuilder.h"
 #include "../Game.h"
-#include "../Plant.h"
+#include "../structures/Plant.h"
 
 PlantBuilder::PlantBuilder(fig::Shader& shader, Game* game, Barrier& barrier, fig::Terrain* terrain) :
   AbstractPlantBuilder(shader, game, barrier, terrain)

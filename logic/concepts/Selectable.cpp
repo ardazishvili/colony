@@ -1,6 +1,6 @@
 #include "Selectable.h"
-#include "../AttackUnit.h"
-#include "../GroundStructure.h"
+#include "../structures/GroundStructure.h"
+#include "../units/AttackUnit.h"
 
 template<typename T>
 Selectable<T>::Selectable(SelectableView* view) : _view(view)

@@ -1,5 +1,5 @@
 #include "Turbine.h"
-#include "Game.h"
+#include "../Game.h"
 
 const int Turbine::TURBINE_HP = 200;
 

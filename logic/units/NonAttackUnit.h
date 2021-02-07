@@ -1,7 +1,7 @@
 #ifndef NON_ATTACK_UNIT_H
 #define NON_ATTACK_UNIT_H
 
-#include "../view/UnitView.h"
+#include "../../view/UnitView.h"
 #include "Unit.h"
 
 class NonAttackUnit

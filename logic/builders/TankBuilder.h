@@ -3,8 +3,8 @@
 
 #include "../../fig/shader/Shader.h"
 
-#include "../Tank.h"
-#include "../TankFactory.h"
+#include "../structures/TankFactory.h"
+#include "../units/Tank.h"
 #include "AbstractUnitBuilder.h"
 
 class TankBuilder : public AbstractUnitBuilder

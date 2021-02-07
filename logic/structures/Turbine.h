@@ -3,7 +3,7 @@
 
 #include "EnergyStructure.h"
 
-#include "../view/TurbineView.h"
+#include "../../view/TurbineView.h"
 
 class Turbine : public EnergyStructure
 {

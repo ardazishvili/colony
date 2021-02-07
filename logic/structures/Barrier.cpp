@@ -1,8 +1,8 @@
-#include "../fig/globals.h"
+#include "../../fig/globals.h"
 
+#include "../builders/PlantBuilder.h"
+#include "../builders/TreeBuilder.h"
 #include "Barrier.h"
-#include "builders/PlantBuilder.h"
-#include "builders/TreeBuilder.h"
 
 const int Barrier::BARRIER_HP = 200;
 

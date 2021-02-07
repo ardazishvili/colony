@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "../view/AbstractPlantView.h"
+#include "../../view/AbstractPlantView.h"
 
 class AbstractPlant
 {

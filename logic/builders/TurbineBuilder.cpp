@@ -1,7 +1,7 @@
 #include "../../figImpl/ColonyEventManager.h"
 
 #include "../Game.h"
-#include "../Turbine.h"
+#include "../structures/Turbine.h"
 #include "TurbineBuilder.h"
 
 TurbineBuilder::TurbineBuilder(Game* game,

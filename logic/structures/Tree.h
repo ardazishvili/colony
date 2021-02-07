@@ -1,7 +1,7 @@
 #ifndef TREE_H
 #define TREE_H
 
-#include "../view/TreeView.h"
+#include "../../view/TreeView.h"
 #include "AbstractPlant.h"
 
 class Tree : public AbstractPlant

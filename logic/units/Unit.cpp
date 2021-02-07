@@ -1,4 +1,4 @@
-#include "../fig/globals.h"
+#include "../../fig/globals.h"
 
 #include "AttackUnit.h"
 #include "NonAttackUnit.h"

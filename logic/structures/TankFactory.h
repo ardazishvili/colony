@@ -1,10 +1,10 @@
 #ifndef TANK_FACTORY_H
 #define TANK_FACTORY_H
 
+#include "../units/Tank.h"
 #include "GroundStructure.h"
-#include "Tank.h"
 
-#include "../view/TankFactoryView.h"
+#include "../../view/TankFactoryView.h"
 
 class Game;
 

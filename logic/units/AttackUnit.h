@@ -1,11 +1,11 @@
 #ifndef ATTACK_UNIT_H
 #define ATTACK_UNIT_H
 
-#include "../view/AttackUnitView.h"
+#include "../../view/AttackUnitView.h"
+#include "../concepts/Attacking.h"
+#include "../concepts/Moving.h"
+#include "../concepts/Selectable.h"
 #include "Unit.h"
-#include "concepts/Attacking.h"
-#include "concepts/Moving.h"
-#include "concepts/Selectable.h"
 
 class AttackUnit
   : public Buildable

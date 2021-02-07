@@ -5,9 +5,9 @@
 #include "../fig/shader/Shader.h"
 
 #include "Panel.h"
-#include "TankFactory.h"
 #include "builders/AbstractStructureBuilder.h"
 #include "builders/AbstractUnitBuilder.h"
+#include "structures/TankFactory.h"
 
 class Control
 {

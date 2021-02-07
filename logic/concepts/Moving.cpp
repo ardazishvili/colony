@@ -1,5 +1,5 @@
 #include "Moving.h"
-#include "../AttackUnit.h"
+#include "../units/AttackUnit.h"
 
 template<typename T>
 const float Moving<T>::MOVE_STOP_TOL = 0.02;

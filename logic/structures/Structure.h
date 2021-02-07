@@ -1,10 +1,10 @@
 #ifndef STRUCTURE_H
 #define STRUCTURE_H
 
-#include "concepts/Buildable.h"
-#include "concepts/Selectable.h"
+#include "../concepts/Buildable.h"
+#include "../concepts/Selectable.h"
 
-#include "../view/StructureView.h"
+#include "../../view/StructureView.h"
 
 enum class BuildStage { SetPosition, SetAngle, Done };
 

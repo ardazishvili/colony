@@ -1,9 +1,9 @@
 #ifndef HQ_H
 #define HQ_H
 
-#include "../fig//math/AStar.h"
-#include "../fig/Terrain.h"
-#include "../view/HqView.h"
+#include "../../fig/Terrain.h"
+#include "../../fig/math/AStar.h"
+#include "../../view/HqView.h"
 #include "GroundStructure.h"
 
 struct AStar;
