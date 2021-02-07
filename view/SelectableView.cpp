@@ -1,13 +1,14 @@
+#include "../figImpl/globals.h"
+
 #include "SelectableView.h"
 
-SelectableView::SelectableView(fig::Shader& shader,
-                               glm::vec3 position,
+SelectableView::SelectableView(glm::vec3 position,
                                float selectionRadius,
                                HealthBarParams hbp,
                                fig::TexturePackType texturesType) :
-  View(shader, position),
-  _selectionRadius(selectionRadius), _healthBar(shader.camera(),
-                                                shader,
+  View(position),
+  _selectionRadius(selectionRadius), _healthBar(SHADERS_MAP[ShaderType::TEXTURE]->camera(),
+                                                *SHADERS_MAP[ShaderType::TEXTURE],
                                                 position.x + hbp.xOffset,
                                                 position.y + hbp.yOffset,
                                                 position.x + hbp.width,

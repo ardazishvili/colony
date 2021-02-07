@@ -3,7 +3,7 @@
 #include "../figImpl/globals.h"
 #include "AbstractPlantView.h"
 
-AbstractPlantView::AbstractPlantView(fig::Shader& shader, glm::vec3 position) : View(shader, position)
+AbstractPlantView::AbstractPlantView(glm::vec3 position) : View(position)
 {
 }
 

@@ -19,7 +19,7 @@ using StructureBuilders = std::vector<std::unique_ptr<AbstractStructureBuilder>>
 class Buildable
 {
 public:
-  Buildable(fig::Shader& textureShader, fig::Shader& linesShader, SelectableView* view);
+  Buildable(SelectableView* view);
   bool isDestroyed() const;
   bool isUnderFire() const;
   void takeDamage(Shell::Size shellSize);
@@ -37,8 +37,6 @@ protected:
   float _health;
   float _maxHealth;
   Status _status;
-  fig::Shader& _textureShader;
-  fig::Shader& _linesShader;
   SelectableView* _view;
 };
 

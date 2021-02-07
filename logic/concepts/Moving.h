@@ -9,7 +9,7 @@ template<typename T>
 class Moving
 {
 public:
-  Moving(fig::Shader& linesShader, UnitView* view, float speed);
+  Moving(UnitView* view, float speed);
   virtual ~Moving() = default;
   Moving(const Moving&) = delete;
   Moving(Moving&&) = delete;

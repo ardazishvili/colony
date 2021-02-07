@@ -9,7 +9,7 @@
 class ShellView : public View
 {
 public:
-  ShellView(fig::Shader& shader, glm::vec3 position);
+  ShellView(glm::vec3 position);
   void draw() override;
   void move(glm::vec2 moveIncrement);
 };

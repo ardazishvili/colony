@@ -12,7 +12,7 @@ class TankFactory : public GroundStructure
 {
 public:
   TankFactory() = delete;
-  TankFactory(fig::Shader& textureShader, fig::Shader& linesShader, fig::AStar* router, glm::vec3 position);
+  TankFactory(fig::AStar* router, glm::vec3 position);
 
   void createTank(Game* game, Tank::Type tankType, HealthLevel healthLevel, Shell::Size shellSize);
   UnitBuilders getUnitBuilders(Game* game) override;

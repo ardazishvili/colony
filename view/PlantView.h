@@ -6,7 +6,7 @@
 class PlantView : public AbstractPlantView
 {
 public:
-  PlantView(fig::Shader& shader, glm::vec3 position);
+  PlantView(glm::vec3 position);
   void draw() override;
 };
 

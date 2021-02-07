@@ -8,11 +8,7 @@ class Shroud : public NonAttackUnit
 {
 public:
   Shroud() = delete;
-  Shroud(fig::Shader& textureShader,
-         fig::Shader& linesShader,
-         fig::AStar* router,
-         glm::vec3 position,
-         Barrier& barrier);
+  Shroud(fig::AStar* router, glm::vec3 position, Barrier& barrier);
   void render() override;
   bool setUp() const;
   glm::vec3 positionFlat() const;

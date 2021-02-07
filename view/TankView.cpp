@@ -1,6 +1,5 @@
 #include "../fig/globals.h"
 
-#include "../figImpl/globals.h"
 #include "../logic/concepts/Buildable.h"
 #include "TankView.h"
 
@@ -10,9 +9,8 @@ float TankView::TANK_HEALTH_BAR_WIDTH = 0.5;
 float TankView::TANK_HEALTH_BAR_HEIGHT = 0.04;
 std::map<Status, unsigned int> tankTexturesMap;
 
-TankView::TankView(fig::Shader& shader, glm::vec3 position, float tankTypeScaling) :
-  AttackUnitView(shader,
-                 position,
+TankView::TankView(glm::vec3 position, float tankTypeScaling) :
+  AttackUnitView(position,
                  0.38,
                  { 0, 0, TANK_HEALTH_BAR_WIDTH, TANK_HEALTH_BAR_HEIGHT },
                  fig::TexturePackType::Initial),

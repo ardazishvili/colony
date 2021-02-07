@@ -3,12 +3,8 @@
 
 const int Turbine::TURBINE_HP = 200;
 
-Turbine::Turbine(fig::Shader& textureShader, fig::Shader& linesShader, Game* game, glm::vec3 position) :
-  EnergyStructure(textureShader,
-                  linesShader,
-                  std::make_unique<TurbineView>(textureShader,
-                                                linesShader,
-                                                position,
+Turbine::Turbine(Game* game, glm::vec3 position) :
+  EnergyStructure(std::make_unique<TurbineView>(position,
                                                 game->getNearestShroudPositionFlat(position),
                                                 game->getNearestShroudPositionGlobe(position))),
   _game(game)

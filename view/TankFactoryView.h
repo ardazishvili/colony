@@ -6,7 +6,7 @@
 class TankFactoryView : public StructureView
 {
 public:
-  TankFactoryView(fig::Shader& shader, glm::vec3 position);
+  TankFactoryView(glm::vec3 position);
   void draw() override;
 
 private:

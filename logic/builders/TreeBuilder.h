@@ -6,7 +6,7 @@
 class TreeBuilder : public AbstractPlantBuilder
 {
 public:
-  TreeBuilder(fig::Shader& shader, Game* game, Barrier& barrier, fig::Terrain* terrain);
+  TreeBuilder(Game* game, Barrier& barrier, fig::Terrain* terrain);
   void create() override;
   fig::MenuTextures getPreviewType() override;
 };

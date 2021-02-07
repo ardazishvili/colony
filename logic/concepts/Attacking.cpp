@@ -2,8 +2,7 @@
 #include "../units/AttackUnit.h"
 
 template<typename T>
-Attacking<T>::Attacking(fig::Shader& textureShader, Shell::Size sh, AttackUnitView* view) :
-  _textureShader(textureShader), _shellSize(sh), _view(view)
+Attacking<T>::Attacking(Shell::Size sh, AttackUnitView* view) : _shellSize(sh), _view(view)
 {
   _target = nullptr;
   reload();
@@ -24,11 +23,8 @@ void Attacking<T>::shootTarget()
   std::cout << "_view= " << _view << std::endl;
   _view->rotateGun(getTargetAngle());
   // TODO magic number = tank length
-  _shells.emplace_back(_textureShader,
-                       glm::vec3(_view->position().x, _view->position().y, 0.5f),
-                       glm::radians(angle),
-                       getTargetDistance(),
-                       _shellSize);
+  _shells.emplace_back(
+    glm::vec3(_view->position().x, _view->position().y, 0.5f), glm::radians(angle), getTargetDistance(), _shellSize);
   _target->takeDamage(_shellSize);
   reload();
 }

@@ -2,12 +2,11 @@
 
 #include "StructureView.h"
 
-StructureView::StructureView(fig::Shader& shader,
-                             glm::vec3 position,
+StructureView::StructureView(glm::vec3 position,
                              float selectionRadius,
                              HealthBarParams healthBarParams,
                              fig::TexturePackType texturesType) :
-  SelectableView(shader, position, selectionRadius, healthBarParams, texturesType)
+  SelectableView(position, selectionRadius, healthBarParams, texturesType)
 {
 }
 

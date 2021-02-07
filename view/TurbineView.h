@@ -8,11 +8,7 @@
 class TurbineView : public StructureView
 {
 public:
-  TurbineView(fig::Shader& textureShader,
-              fig::Shader& linesShader,
-              glm::vec3 position,
-              glm::vec3 shroudPositionFlat,
-              glm::vec3 shroudPositionGlobe);
+  TurbineView(glm::vec3 position, glm::vec3 shroudPositionFlat, glm::vec3 shroudPositionGlobe);
   void draw() override;
   void initBeam();
 

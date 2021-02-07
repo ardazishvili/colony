@@ -9,7 +9,7 @@
 class BarrierView : public StructureView
 {
 public:
-  BarrierView(fig::Shader& textureShader, fig::Shader& linesShader, glm::vec3 position, fig::Terrain* terrain);
+  BarrierView(glm::vec3 position, fig::Terrain* terrain);
   void draw() override;
   float radius() const;
   void grow(std::shared_ptr<fig::LivingArea> area);

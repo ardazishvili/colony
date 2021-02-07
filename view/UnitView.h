@@ -6,8 +6,7 @@
 class UnitView : public SelectableView
 {
 public:
-  UnitView(fig::Shader& shader,
-           glm::vec3 position,
+  UnitView(glm::vec3 position,
            float selectionRadius,
            HealthBarParams healthBarParams,
            fig::TexturePackType texturesType);

@@ -9,10 +9,7 @@ class NonAttackUnit
   , public Unit<NonAttackUnit>
 {
 public:
-  NonAttackUnit(fig::Shader& textureShader,
-                fig::Shader& linesShader,
-                std::unique_ptr<UnitView> view,
-                fig::AStar* router);
+  NonAttackUnit(std::unique_ptr<UnitView> view, fig::AStar* router);
 
 protected:
   std::unique_ptr<UnitView> _view;

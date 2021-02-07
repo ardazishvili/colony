@@ -7,7 +7,7 @@
 class Tree : public AbstractPlant
 {
 public:
-  Tree(fig::Shader& shader, glm::vec3 position);
+  Tree(glm::vec3 position);
 };
 
 #endif

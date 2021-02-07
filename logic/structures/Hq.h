@@ -11,13 +11,7 @@ class Hq : public GroundStructure
 {
 public:
   Hq() = delete;
-  Hq(Game* game,
-     ColonyEventManager* eventManager,
-     fig::Shader& textureShader,
-     fig::Shader& linesShader,
-     fig::AStar* router,
-     glm::vec3 position,
-     fig::Terrain* terrain);
+  Hq(Game* game, ColonyEventManager* eventManager, fig::AStar* router, glm::vec3 position, fig::Terrain* terrain);
 
   UnitBuilders getUnitBuilders(Game* game) override;
   StructureBuilders getStructureBuilders() override;

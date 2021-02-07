@@ -8,7 +8,7 @@
 class View
 {
 public:
-  View(fig::Shader& shader, glm::vec3 position);
+  View(glm::vec3 position);
   virtual ~View() = default;
   View(const View&) = delete;
   View(View&&) = delete;

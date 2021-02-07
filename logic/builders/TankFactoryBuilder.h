@@ -8,11 +8,7 @@
 class TankFactoryBuilder : public AbstractStructureBuilder
 {
 public:
-  TankFactoryBuilder(Game* game,
-                     ColonyEventManager* eventManager,
-                     fig::Shader& textureShader,
-                     fig::Shader& linesShader,
-                     fig::AStar* router);
+  TankFactoryBuilder(Game* game, ColonyEventManager* eventManager, fig::AStar* router);
   ~TankFactoryBuilder();
 
   void create() override;

@@ -12,3 +12,4 @@ fig::Application<SpdBackend>* gApp()
 }
 bool flatView = true;
 Config CONFIG = Config(std::filesystem::current_path().string() + "/config.json");
+std::unordered_map<ShaderType, std::unique_ptr<fig::Shader>> SHADERS_MAP;

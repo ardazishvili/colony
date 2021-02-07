@@ -13,7 +13,7 @@ public:
   enum class Size { Small, Medium, Big };
 
   Shell() = delete;
-  Shell(fig::Shader& shader, glm::vec3 position, float angle, float distance, Size size = Size::Small);
+  Shell(glm::vec3 position, float angle, float distance, Size size = Size::Small);
   ~Shell();
   void update();
   bool isDone();

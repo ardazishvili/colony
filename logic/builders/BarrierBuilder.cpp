@@ -3,20 +3,14 @@
 #include "../Game.h"
 #include "../structures/Barrier.h"
 
-BarrierBuilder::BarrierBuilder(Game* game,
-                               ColonyEventManager* eventManager,
-                               fig::Shader& textureShader,
-                               fig::Shader& linesShader,
-                               fig::Terrain* terrain,
-                               fig::AStar* astar) :
-  AbstractStructureBuilder(game, eventManager, textureShader, linesShader),
-  _terrain(terrain), _astar(astar)
+BarrierBuilder::BarrierBuilder(Game* game, ColonyEventManager* eventManager, fig::Terrain* terrain, fig::AStar* astar) :
+  AbstractStructureBuilder(game, eventManager), _terrain(terrain), _astar(astar)
 {
 }
 
 void BarrierBuilder::create()
 {
-  auto structure = std::make_shared<Barrier>(_textureShader, _linesShader, glm::vec3(), _terrain, _astar);
+  auto structure = std::make_shared<Barrier>(glm::vec3(), _terrain, _astar);
   _game->addStructure(structure);
   _game->addShroud(structure->shroud());
   _eventManager->setStructureToBuild(structure);

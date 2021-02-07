@@ -11,7 +11,7 @@ template<typename T>
 class Attacking
 {
 public:
-  Attacking(fig::Shader& textureShader, Shell::Size sh, AttackUnitView* view);
+  Attacking(Shell::Size sh, AttackUnitView* view);
   virtual ~Attacking() = default;
   Attacking(const Attacking&) = delete;
   Attacking(Attacking&&) = delete;
@@ -30,7 +30,6 @@ private:
   float getTargetDistance();
   void reload();
 
-  fig::Shader& _textureShader;
   Buildable* _target;
   AttackUnitView* _view;
   Timer _clock;

@@ -11,11 +11,11 @@ const glm::vec3 ShroudView::FLAT_OFFSET = glm::vec3(-12.0, 12.0, 12.0);
 const glm::vec3 ShroudView::GLOBE_OFFSET = glm::vec3(0, 0, 12.0);
 const float ShroudView::UP_SPEED = 0.09;
 
-ShroudView::ShroudView(fig::Shader& textureShader, fig::Shader& linesShader, glm::vec3 p, float barrierHeight) :
-  UnitView(textureShader, p, 0.38, { 0, 0, HEALTH_BAR_WIDTH, HEALTH_BAR_HEIGHT }, fig::TexturePackType::Initial),
-  _posFlat(p), _posGlobe(p),
-  _beamFlat(linesShader, p + FLAT_OFFSET, glm::vec3(p.x, p.y, p.z + barrierHeight), 0.05f, 5),
-  _beamGlobe(linesShader,
+ShroudView::ShroudView(glm::vec3 p, float barrierHeight) :
+  UnitView(p, 0.38, { 0, 0, HEALTH_BAR_WIDTH, HEALTH_BAR_HEIGHT }, fig::TexturePackType::Initial), _posFlat(p),
+  _posGlobe(p),
+  _beamFlat(*SHADERS_MAP[ShaderType::LINES], p + FLAT_OFFSET, glm::vec3(p.x, p.y, p.z + barrierHeight), 0.05f, 5),
+  _beamGlobe(*SHADERS_MAP[ShaderType::LINES],
              globeMapper(p + GLOBE_OFFSET),
              globeMapper(glm::vec3(p.x, p.y, p.z + barrierHeight)),
              0.05f,

@@ -7,7 +7,7 @@ float View::VIEW_SCALE = 0.5f;
 const float View::R = 4 * M_PI;
 const float View::S = 6 * M_PI;
 
-View::View(fig::Shader& shader, glm::vec3 position) : _shader(shader), _position(position)
+View::View(glm::vec3 position) : _shader(*SHADERS_MAP[ShaderType::TEXTURE]), _position(position)
 {
 }
 

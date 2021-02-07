@@ -6,7 +6,7 @@
 class TurbineBuilder : public AbstractStructureBuilder
 {
 public:
-  TurbineBuilder(Game* game, ColonyEventManager* eventManager, fig::Shader& textureShader, fig::Shader& linesShader);
+  TurbineBuilder(Game* game, ColonyEventManager* eventManager);
 
   void create() override;
   fig::MenuTextures getPreviewType() override;

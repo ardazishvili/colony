@@ -11,7 +11,7 @@ class GroundStructure
   , public Selectable<GroundStructure>
 {
 public:
-  GroundStructure(fig::Shader& textureShader, fig::Shader& linesShader, std::unique_ptr<StructureView> view);
+  GroundStructure(std::unique_ptr<StructureView> view);
   virtual UnitBuilders getUnitBuilders(Game* game) = 0;
   virtual StructureBuilders getStructureBuilders() = 0;
   void render() override;

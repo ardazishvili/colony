@@ -9,17 +9,12 @@ float TurbineView::TURBINE_SCALE_FACTOR = 0.4f;
 float TurbineView::TURBINE_MODEL_HEIGHT = 5.7;
 std::chrono::milliseconds TurbineView::TURBINE_CYCLE = std::chrono::milliseconds(30000);
 
-TurbineView::TurbineView(fig::Shader& textureShader,
-                         fig::Shader& linesShader,
-                         glm::vec3 p,
-                         glm::vec3 spFlat,
-                         glm::vec3 spGlobe) :
-  StructureView(textureShader,
-                p,
+TurbineView::TurbineView(glm::vec3 p, glm::vec3 spFlat, glm::vec3 spGlobe) :
+  StructureView(p,
                 0.75,
                 { -0.3, 0, TURBINE_HEALTH_BAR_WIDTH, TURBINE_HEALTH_BAR_HEIGHT },
                 fig::TexturePackType::PreBuild),
-  _linesShader(linesShader), _shroudPosFlat(spFlat), _shroudPosGlobe(spGlobe)
+  _linesShader(*SHADERS_MAP[ShaderType::LINES]), _shroudPosFlat(spFlat), _shroudPosGlobe(spGlobe)
 {
   _objScale = TURBINE_SCALE_FACTOR;
   _model = fig::modelLoader->models()[fig::Models::Turbine];

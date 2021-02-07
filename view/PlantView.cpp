@@ -3,7 +3,7 @@
 
 #include "PlantView.h"
 
-PlantView::PlantView(fig::Shader& shader, glm::vec3 position) : AbstractPlantView(shader, position)
+PlantView::PlantView(glm::vec3 position) : AbstractPlantView(position)
 {
   _model = fig::modelLoader->models()[fig::Models::Plant];
   _objScale = 0.01;

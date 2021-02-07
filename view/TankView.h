@@ -6,7 +6,7 @@
 class TankView : public AttackUnitView
 {
 public:
-  TankView(fig::Shader& shader, glm::vec3 position, float tankTypeScaling);
+  TankView(glm::vec3 position, float tankTypeScaling);
   void draw() override;
   void move(glm::vec3 newPosition) override;
   void rotateBody(float degreeAngle) override;

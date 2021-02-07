@@ -8,7 +8,7 @@
 class Turbine : public EnergyStructure
 {
 public:
-  Turbine(fig::Shader& textureShader, fig::Shader& linesShader, Game* game, glm::vec3 position);
+  Turbine(Game* game, glm::vec3 position);
   UnitBuilders getUnitBuilders(Game* game) override;
   StructureBuilders getStructureBuilders() override;
   void commit() override;

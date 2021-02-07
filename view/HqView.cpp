@@ -6,12 +6,8 @@
 float HqView::HQ_HEALTH_BAR_WIDTH = 1.2f;
 float HqView::HQ_HEALTH_BAR_HEIGHT = 0.15f;
 
-HqView::HqView(fig::Shader& shader, glm::vec3 position) :
-  StructureView(shader,
-                position,
-                0.75,
-                { -0.3, 0, HQ_HEALTH_BAR_WIDTH, HQ_HEALTH_BAR_HEIGHT },
-                fig::TexturePackType::PreBuild)
+HqView::HqView(glm::vec3 position) :
+  StructureView(position, 0.75, { -0.3, 0, HQ_HEALTH_BAR_WIDTH, HQ_HEALTH_BAR_HEIGHT }, fig::TexturePackType::PreBuild)
 {
   _model = fig::modelLoader->models()[fig::Models::Hq];
   _model->setActiveTexturesPack(fig::TexturePackType::PreBuild);

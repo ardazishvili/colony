@@ -6,9 +6,8 @@
 float TankFactoryView::TANK_FACTORY_HEALTH_BAR_WIDTH = 1.2f;
 float TankFactoryView::TANK_FACTORY_HEALTH_BAR_HEIGHT = 0.15f;
 
-TankFactoryView::TankFactoryView(fig::Shader& shader, glm::vec3 position) :
-  StructureView(shader,
-                position,
+TankFactoryView::TankFactoryView(glm::vec3 position) :
+  StructureView(position,
                 1.41 / 2,
                 { -0.3, 0, TANK_FACTORY_HEALTH_BAR_WIDTH, TANK_FACTORY_HEALTH_BAR_HEIGHT },
                 fig::TexturePackType::PreBuild)

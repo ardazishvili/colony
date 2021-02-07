@@ -9,12 +9,7 @@ struct AStar;
 class HqBuilder : public AbstractStructureBuilder
 {
 public:
-  HqBuilder(Game* game,
-            ColonyEventManager* eventManager,
-            fig::Shader& textureShader,
-            fig::Shader& linesShader,
-            fig::Terrain* terrain,
-            fig::AStar* router);
+  HqBuilder(Game* game, ColonyEventManager* eventManager, fig::Terrain* terrain, fig::AStar* router);
   ~HqBuilder();
 
   void create() override;

@@ -6,7 +6,7 @@
 class AbstractPlantView : public View
 {
 public:
-  AbstractPlantView(fig::Shader& shader, glm::vec3 position);
+  AbstractPlantView(glm::vec3 position);
   virtual void draw();
 };
 

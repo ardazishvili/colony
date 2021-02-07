@@ -31,11 +31,11 @@ public:
   std::function<void(std::unique_ptr<fig::Event> event)> onEvent();
 
 private:
-  std::unique_ptr<fig::PhongShader> _lampShader;
-  std::unique_ptr<fig::PhongShader> _colorShader;
-  std::unique_ptr<fig::PhongShader> _colorNonFlatShader;
-  std::unique_ptr<fig::PhongShader> _textureShader;
-  std::unique_ptr<fig::LinesShader> _linesShader;
+  /* std::unique_ptr<fig::PhongShader> _lampShader; */
+  /* std::unique_ptr<fig::PhongShader> _colorShader; */
+  /* std::unique_ptr<fig::PhongShader> _colorNonFlatShader; */
+  /* std::unique_ptr<fig::PhongShader> _textureShader; */
+  /* std::unique_ptr<fig::LinesShader> _linesShader; */
   std::unique_ptr<fig::SkyboxShader> _skyboxShader;
   std::unique_ptr<fig::AStar> _astar;
 

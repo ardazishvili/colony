@@ -4,56 +4,71 @@
 
 #include "../fig/globals.h" // modelLoader
 #include "../figImpl/ColonyEventManager.h"
-#include "../figImpl/globals.h" // flatView
 
 void ColonyGameLayer::init()
 {
   auto shaders_dir = std::filesystem::current_path().string() + "/shaders";
-  _colorShader = std::make_unique<fig::PhongShader>(_light,
-                                                    *_camera,
-                                                    _view,
-                                                    _projection,
-                                                    shaders_dir + "/vertex_color.vs",
-                                                    shaders_dir + "/fragment_color.fs",
-                                                    flatView);
-  _colorNonFlatShader = std::make_unique<fig::PhongShader>(_light,
-                                                           *_camera,
-                                                           _view,
-                                                           _projection,
-                                                           shaders_dir + "/vertex_color_nonflat.vs",
-                                                           shaders_dir + "/fragment_color_nonflat.fs",
-                                                           flatView);
-  _textureShader = std::make_unique<fig::PhongShader>(_light,
-                                                      *_camera,
-                                                      _view,
-                                                      _projection,
-                                                      shaders_dir + "/vertex_objects.vs",
-                                                      shaders_dir + "/fragment_objects.fs",
-                                                      flatView);
-  _lampShader = std::make_unique<fig::PhongShader>(_light,
-                                                   *_camera,
-                                                   _view,
-                                                   _projection,
-                                                   shaders_dir + "/vertex_light.vs",
-                                                   shaders_dir + "/fragment_light.fs",
-                                                   flatView);
-  _light->setShader(_lampShader.get());
-  _skyboxShader = std::make_unique<fig::SkyboxShader>(
-    _light, *_camera, _view, _projection, shaders_dir + "/vertex_skybox.vs", shaders_dir + "/fragment_skybox.fs");
-  _linesShader = std::make_unique<fig::LinesShader>(
-    _light, *_camera, _view, _projection, shaders_dir + "/vertex_lines.vs", shaders_dir + "/fragment_lines.fs");
-  fig::modelLoader = std::make_unique<fig::ModelLoader>(*_textureShader);
+  SHADERS_MAP.emplace(ShaderType::COLOR,
+                      std::make_unique<fig::PhongShader>(_light,
+                                                         *_camera,
+                                                         _view,
+                                                         _projection,
+                                                         shaders_dir + "/vertex_color.vs",
+                                                         shaders_dir + "/fragment_color.fs",
+                                                         flatView));
+  SHADERS_MAP.emplace(ShaderType::COLOR_NON_FLAT,
+                      std::make_unique<fig::PhongShader>(_light,
+                                                         *_camera,
+                                                         _view,
+                                                         _projection,
+                                                         shaders_dir + "/vertex_color_nonflat.vs",
+                                                         shaders_dir + "/fragment_color_nonflat.fs",
+                                                         flatView));
+  SHADERS_MAP.emplace(ShaderType::TEXTURE,
+                      std::make_unique<fig::PhongShader>(_light,
+                                                         *_camera,
+                                                         _view,
+                                                         _projection,
+                                                         shaders_dir + "/vertex_objects.vs",
+                                                         shaders_dir + "/fragment_objects.fs",
+                                                         flatView));
+  SHADERS_MAP.emplace(ShaderType::LAMP,
+                      std::make_unique<fig::PhongShader>(_light,
+                                                         *_camera,
+                                                         _view,
+                                                         _projection,
+                                                         shaders_dir + "/vertex_light.vs",
+                                                         shaders_dir + "/fragment_light.fs",
+                                                         flatView));
+  SHADERS_MAP.emplace(
+    ShaderType::SKYBOX,
+    std::make_unique<fig::SkyboxShader>(
+      _light, *_camera, _view, _projection, shaders_dir + "/vertex_skybox.vs", shaders_dir + "/fragment_skybox.fs"));
+
+  SHADERS_MAP.emplace(
+    ShaderType::LINES,
+    std::make_unique<fig::LinesShader>(
+      _light, *_camera, _view, _projection, shaders_dir + "/vertex_lines.vs", shaders_dir + "/fragment_lines.fs"));
+
+  _light->setShader(SHADERS_MAP[ShaderType::LAMP].get());
+  fig::modelLoader = std::make_unique<fig::ModelLoader>(*SHADERS_MAP[ShaderType::TEXTURE]);
   fig::modelLoader->load();
 
   auto xScale = 2.85f;
   auto yScale = 2.15f;
   auto zScale = 2.0f;
-  _terrain = std::make_unique<fig::Terrain>(
-    *_colorShader, *_camera, -10.0f * xScale, -10.0f * yScale, 10.0f * xScale, 10.0f * yScale, 128, zScale);
+  _terrain = std::make_unique<fig::Terrain>(*SHADERS_MAP[ShaderType::COLOR],
+                                            *_camera,
+                                            -10.0f * xScale,
+                                            -10.0f * yScale,
+                                            10.0f * xScale,
+                                            10.0f * yScale,
+                                            128,
+                                            zScale);
   _game = std::make_unique<Game>(_view, _projection);
   _game->addTerrain(_terrain.get());
 
-  auto mapObstacles = fig::makeObstaclesSegment(*_colorNonFlatShader,
+  auto mapObstacles = fig::makeObstaclesSegment(*SHADERS_MAP[ShaderType::COLOR_NON_FLAT],
                                                 _terrain.get(),
                                                 glm::vec2(-10 * xScale + 0.01, -10 * yScale + 0.01),
                                                 glm::vec2(10 * xScale - 0.01, 10 * yScale - 0.01));
@@ -65,21 +80,21 @@ void ColonyGameLayer::init()
                                                        _window,
                                                        _game.get(),
                                                        *_camera,
-                                                       *_textureShader,
-                                                       *_colorShader,
-                                                       *_colorNonFlatShader,
-                                                       *_linesShader,
+                                                       *SHADERS_MAP[ShaderType::TEXTURE],
+                                                       *SHADERS_MAP[ShaderType::COLOR],
+                                                       *SHADERS_MAP[ShaderType::COLOR_NON_FLAT],
+                                                       *SHADERS_MAP[ShaderType::LINES],
                                                        _terrain.get(),
                                                        mapObstacles,
                                                        _astar.get());
 
-  createTank(_game.get(), *_textureShader, *_linesShader, _astar.get(), _terrain.get()->getXYZ(glm::vec2(0.0, 0.0f)));
-  createTank(_game.get(), *_textureShader, *_linesShader, _astar.get(), _terrain.get()->getXYZ(glm::vec2(5.0, 5.0f)));
-  createTank(_game.get(), *_textureShader, *_linesShader, _astar.get(), _terrain.get()->getXYZ(glm::vec2(-5.0, -5.0f)));
-  createTank(_game.get(), *_textureShader, *_linesShader, _astar.get(), _terrain.get()->getXYZ(glm::vec2(0.0, 5.0f)));
-  createTank(_game.get(), *_textureShader, *_linesShader, _astar.get(), _terrain.get()->getXYZ(glm::vec2(0.0, -5.0f)));
+  createTank(_game.get(), _astar.get(), _terrain.get()->getXYZ(glm::vec2(0.0, 0.0f)));
+  createTank(_game.get(), _astar.get(), _terrain.get()->getXYZ(glm::vec2(5.0, 5.0f)));
+  createTank(_game.get(), _astar.get(), _terrain.get()->getXYZ(glm::vec2(-5.0, -5.0f)));
+  createTank(_game.get(), _astar.get(), _terrain.get()->getXYZ(glm::vec2(0.0, 5.0f)));
+  createTank(_game.get(), _astar.get(), _terrain.get()->getXYZ(glm::vec2(0.0, -5.0f)));
 
-  _skybox = std::make_unique<fig::Skybox>(*_skyboxShader);
+  _skybox = std::make_unique<fig::Skybox>(*SHADERS_MAP[ShaderType::SKYBOX]);
 }
 
 void ColonyGameLayer::update()

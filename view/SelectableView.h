@@ -18,8 +18,7 @@ struct HealthBarParams
 class SelectableView : public View
 {
 public:
-  SelectableView(fig::Shader& shader,
-                 glm::vec3 posidion,
+  SelectableView(glm::vec3 posidion,
                  float selectionRadius,
                  HealthBarParams healthBarParams,
                  fig::TexturePackType texturesType);

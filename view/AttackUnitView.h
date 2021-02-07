@@ -6,8 +6,7 @@
 class AttackUnitView : public UnitView
 {
 public:
-  AttackUnitView(fig::Shader& shader,
-                 glm::vec3 position,
+  AttackUnitView(glm::vec3 position,
                  float selectionRadius,
                  HealthBarParams healthBarParams,
                  fig::TexturePackType texturesType);

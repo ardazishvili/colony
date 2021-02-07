@@ -1,7 +1,6 @@
 #include "Buildable.h"
 
-Buildable::Buildable(fig::Shader& textureShader, fig::Shader& linesShader, SelectableView* view) :
-  _textureShader(textureShader), _linesShader(linesShader), _view(view)
+Buildable::Buildable(SelectableView* view) : _view(view)
 {
 }
 

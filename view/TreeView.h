@@ -6,7 +6,7 @@
 class TreeView : public AbstractPlantView
 {
 public:
-  TreeView(fig::Shader& shader, glm::vec3 position);
+  TreeView(glm::vec3 position);
   void draw() override;
 };
 

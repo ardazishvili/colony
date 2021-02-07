@@ -2,7 +2,7 @@
 
 #include "TreeView.h"
 
-TreeView::TreeView(fig::Shader& shader, glm::vec3 position) : AbstractPlantView(shader, position)
+TreeView::TreeView(glm::vec3 position) : AbstractPlantView(position)
 {
   _model = fig::modelLoader->models()[fig::Models::Tree];
   _objScale = 0.03;

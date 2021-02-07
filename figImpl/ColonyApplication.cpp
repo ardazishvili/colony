@@ -6,7 +6,6 @@
 #include "ColonyGameLayer.h"
 #include "ColonyGuiLayer.h"
 #include "events/ColonyEventFabric.h"
-#include "globals.h"
 
 using namespace std::placeholders;
 

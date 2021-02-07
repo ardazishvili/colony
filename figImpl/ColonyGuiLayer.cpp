@@ -5,7 +5,6 @@
 #include "../fig/globals.h"
 
 #include "../figImpl/ColonyEventManager.h"
-#include "globals.h"
 
 #include "ColonyGuiLayer.h"
 

@@ -4,8 +4,8 @@
 
 #include "AbstractPlantBuilder.h"
 
-AbstractPlantBuilder::AbstractPlantBuilder(fig::Shader& shader, Game* game, Barrier& barrier, fig::Terrain* terrain) :
-  AbstractUnitBuilder(game), _shader(shader), _game(game), _barrier(barrier), _terrain(terrain)
+AbstractPlantBuilder::AbstractPlantBuilder(Game* game, Barrier& barrier, fig::Terrain* terrain) :
+  AbstractUnitBuilder(game), _game(game), _barrier(barrier), _terrain(terrain)
 {
 }
 

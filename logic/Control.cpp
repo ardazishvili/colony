@@ -14,8 +14,7 @@ Control::Control(Game* game,
   _unitPanel(window, Panel::Type::Units, textureShader), _textureShader(textureShader), _linesShader(linesShader),
   _router(router)
 {
-  std::unique_ptr<AbstractBuilder> hqBuilder =
-    std::make_unique<HqBuilder>(_game, _eventManager, textureShader, linesShader, terrain, _router);
+  std::unique_ptr<AbstractBuilder> hqBuilder = std::make_unique<HqBuilder>(_game, _eventManager, terrain, _router);
   auto hqPanelItem = std::make_unique<PanelItem>(std::move(hqBuilder));
   _structurePanel.addItem(std::move(hqPanelItem));
 }

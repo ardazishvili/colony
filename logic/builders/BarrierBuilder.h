@@ -8,12 +8,7 @@
 class BarrierBuilder : public AbstractStructureBuilder
 {
 public:
-  BarrierBuilder(Game* game,
-                 ColonyEventManager* eventManager,
-                 fig::Shader& textureShader,
-                 fig::Shader& linesShader,
-                 fig::Terrain* terrain,
-                 fig::AStar* astar);
+  BarrierBuilder(Game* game, ColonyEventManager* eventManager, fig::Terrain* terrain, fig::AStar* astar);
 
   void create() override;
   fig::MenuTextures getPreviewType() override;

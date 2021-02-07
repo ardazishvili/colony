@@ -5,8 +5,8 @@ template<typename T>
 const float Moving<T>::MOVE_STOP_TOL = 0.02;
 
 template<typename T>
-Moving<T>::Moving(fig::Shader& linesShader, UnitView* view, float speed) :
-  _linesShader(linesShader), _view(view), _speed(speed), _destination(-1, -1)
+Moving<T>::Moving(UnitView* view, float speed) :
+  _linesShader(*SHADERS_MAP[ShaderType::LINES]), _view(view), _speed(speed), _destination(-1, -1)
 {
 }
 

@@ -10,13 +10,12 @@ float BarrierView::BARRIER_HEALTH_BAR_HEIGHT = 0.15f;
 float BarrierView::BARRIER_SCALE_INCREMENT = 1.0f;
 float BarrierView::BARRIER_INIT_SCALE = 1.0f;
 
-BarrierView::BarrierView(fig::Shader& textureShader, fig::Shader& linesShader, glm::vec3 p, fig::Terrain* terrain) :
-  StructureView(textureShader,
-                p,
+BarrierView::BarrierView(glm::vec3 p, fig::Terrain* terrain) :
+  StructureView(p,
                 BARRIER_INIT_SCALE,
                 { -0.3, 0, BARRIER_HEALTH_BAR_WIDTH, BARRIER_HEALTH_BAR_HEIGHT },
                 fig::TexturePackType::Initial),
-  _terrain(terrain), _linesShader(linesShader)
+  _terrain(terrain), _linesShader(*SHADERS_MAP[ShaderType::LINES])
 {
   _model = fig::modelLoader->models()[fig::Models::Barrier];
   _model->setActiveTexturesPack(fig::TexturePackType::PreBuild);

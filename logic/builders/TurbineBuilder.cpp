@@ -4,17 +4,14 @@
 #include "../structures/Turbine.h"
 #include "TurbineBuilder.h"
 
-TurbineBuilder::TurbineBuilder(Game* game,
-                               ColonyEventManager* eventManager,
-                               fig::Shader& textureShader,
-                               fig::Shader& linesShader) :
-  AbstractStructureBuilder(game, eventManager, textureShader, linesShader)
+TurbineBuilder::TurbineBuilder(Game* game, ColonyEventManager* eventManager) :
+  AbstractStructureBuilder(game, eventManager)
 {
 }
 
 void TurbineBuilder::create()
 {
-  auto structure = std::make_shared<Turbine>(_textureShader, _linesShader, _game, glm::vec3());
+  auto structure = std::make_shared<Turbine>(_game, glm::vec3());
   _game->addStructure(structure);
   _eventManager->setStructureToBuild(structure);
   _eventManager->setStructureToBuildStage(BuildStage::SetPosition);

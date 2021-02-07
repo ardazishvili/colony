@@ -6,8 +6,7 @@
 class StructureView : public SelectableView
 {
 public:
-  StructureView(fig::Shader& shader,
-                glm::vec3 position,
+  StructureView(glm::vec3 position,
                 float selectionRadius,
                 HealthBarParams healthBarParams,
                 fig::TexturePackType texturesType);
