@@ -1,7 +1,7 @@
 #include "BarrierBuilder.h"
-#include "../figImpl/ColonyEventManager.h"
-#include "Barrier.h"
-#include "Game.h"
+#include "../../figImpl/ColonyEventManager.h"
+#include "../Barrier.h"
+#include "../Game.h"
 
 BarrierBuilder::BarrierBuilder(Game* game,
                                ColonyEventManager* eventManager,

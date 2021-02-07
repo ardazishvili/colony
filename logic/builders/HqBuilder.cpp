@@ -1,7 +1,7 @@
-#include "../figImpl/ColonyEventManager.h"
+#include "../../figImpl/ColonyEventManager.h"
 
-#include "Game.h"
-#include "Hq.h"
+#include "../Game.h"
+#include "../Hq.h"
 #include "HqBuilder.h"
 
 HqBuilder::HqBuilder(Game* game,

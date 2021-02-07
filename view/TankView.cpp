@@ -1,7 +1,7 @@
 #include "../fig/globals.h"
 
 #include "../figImpl/globals.h"
-#include "../logic/Buildable.h"
+#include "../logic/concepts/Buildable.h"
 #include "TankView.h"
 
 float TankView::TANK_GUN_ANGLE_INCREMENT = 1.5;

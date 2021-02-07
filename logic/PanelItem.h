@@ -2,7 +2,7 @@
 #define PANEL_ITEM_H
 
 #include "../fig/ModelLoader.h"
-#include "AbstractBuilder.h"
+#include "builders/AbstractBuilder.h"
 
 class PanelItem
 {

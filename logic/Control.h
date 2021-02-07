@@ -4,10 +4,10 @@
 #include "../fig/Window.h"
 #include "../fig/shader/Shader.h"
 
-#include "AbstractStructureBuilder.h"
-#include "AbstractUnitBuilder.h"
 #include "Panel.h"
 #include "TankFactory.h"
+#include "builders/AbstractStructureBuilder.h"
+#include "builders/AbstractUnitBuilder.h"
 
 class Control
 {

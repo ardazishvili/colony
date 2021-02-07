@@ -5,7 +5,7 @@
 
 #include <glm/glm.hpp>
 
-#include "../fig/ModelLoader.h"
+#include "../../fig/ModelLoader.h"
 
 class Game;
 class BuildableStructure;

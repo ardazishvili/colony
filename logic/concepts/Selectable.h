@@ -1,8 +1,8 @@
 #ifndef SELECTABLE_H
 #define SELECTABLE_H
 
-#include "../fig/LinesObject.h"
-#include "../view/SelectableView.h"
+#include "../../fig/LinesObject.h"
+#include "../../view/SelectableView.h"
 
 template<typename T>
 class Selectable

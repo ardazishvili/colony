@@ -6,10 +6,10 @@
 
 #include <glm/glm.hpp>
 
-#include "../view/SelectableView.h"
-#include "AbstractStructureBuilder.h"
-#include "AbstractUnitBuilder.h"
-#include "Shell.h"
+#include "../../view/SelectableView.h"
+#include "../Shell.h"
+#include "../builders/AbstractStructureBuilder.h"
+#include "../builders/AbstractUnitBuilder.h"
 
 class Game;
 

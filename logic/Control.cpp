@@ -1,6 +1,6 @@
 #include "Control.h"
-#include "HqBuilder.h"
-#include "TankFactoryBuilder.h"
+#include "builders/HqBuilder.h"
+#include "builders/TankFactoryBuilder.h"
 
 Control::Control(Game* game,
                  ColonyEventManager* eventManager,

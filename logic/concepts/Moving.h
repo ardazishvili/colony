@@ -1,9 +1,9 @@
 #ifndef MOVING_H
 #define MOVING_H
 
-#include "../fig/Path.h"
-#include "../fig/Terrain.h"
-#include "../view/UnitView.h"
+#include "../../fig/Path.h"
+#include "../../fig/Terrain.h"
+#include "../../view/UnitView.h"
 
 template<typename T>
 class Moving

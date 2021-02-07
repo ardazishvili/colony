@@ -2,10 +2,10 @@
 #define ATTACK_UNIT_H
 
 #include "../view/AttackUnitView.h"
-#include "Attacking.h"
-#include "Moving.h"
-#include "Selectable.h"
 #include "Unit.h"
+#include "concepts/Attacking.h"
+#include "concepts/Moving.h"
+#include "concepts/Selectable.h"
 
 class AttackUnit
   : public Buildable

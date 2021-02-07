@@ -1,11 +1,11 @@
 #ifndef TANK_BUILDER_H
 #define TANK_BUILDER_H
 
-#include "../fig/shader/Shader.h"
+#include "../../fig/shader/Shader.h"
 
+#include "../Tank.h"
+#include "../TankFactory.h"
 #include "AbstractUnitBuilder.h"
-#include "Tank.h"
-#include "TankFactory.h"
 
 class TankBuilder : public AbstractUnitBuilder
 {

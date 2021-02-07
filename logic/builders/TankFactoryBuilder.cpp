@@ -1,7 +1,7 @@
-#include "../figImpl/ColonyEventManager.h"
+#include "../../figImpl/ColonyEventManager.h"
 
-#include "Game.h"
-#include "TankFactory.h"
+#include "../Game.h"
+#include "../TankFactory.h"
 #include "TankFactoryBuilder.h"
 
 TankFactoryBuilder::TankFactoryBuilder(Game* game,

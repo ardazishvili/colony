@@ -1,8 +1,8 @@
 #ifndef STRUCTURE_H
 #define STRUCTURE_H
 
-#include "Buildable.h"
-#include "Selectable.h"
+#include "concepts/Buildable.h"
+#include "concepts/Selectable.h"
 
 #include "../view/StructureView.h"
 
