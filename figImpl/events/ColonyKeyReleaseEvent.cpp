@@ -1,4 +1,5 @@
 #include "ColonyKeyReleaseEvent.h"
+#include "../../logic/structures/Barrier.h"
 #include "../../logic/structures/Hq.h"
 #include "../../logic/structures/Turbine.h"
 #include "../ColonyEventManager.h"

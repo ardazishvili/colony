@@ -1,8 +1,5 @@
-#include "../fig/Circle.h"
-#include "../fig/globals.h"
-
-#include "../figImpl/ColonyEventManager.h"
 #include "Game.h"
+#include "structures/Barrier.h"
 
 Game::Game(glm::mat4& view, glm::mat4& projection) : _view(view), _projection(projection)
 {
@@ -173,13 +170,11 @@ bool Game::panelIsEmpty(Panel::Type type)
 
 glm::vec3 Game::getNearestShroudPositionFlat(glm::vec3 p) const
 {
-  const Shroud* shroud = getNearestShroud(p);
   return getNearestShroud(p)->positionFlat();
 }
 
 glm::vec3 Game::getNearestShroudPositionGlobe(glm::vec3 p) const
 {
-  const Shroud* shroud = getNearestShroud(p);
   return getNearestShroud(p)->positionGlobe();
 }
 

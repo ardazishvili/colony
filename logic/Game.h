@@ -5,9 +5,13 @@
 #include <vector>
 
 #include "../fig/Terrain.h"
+
 #include "Control.h"
+
 #include "structures/AbstractPlant.h"
-#include "structures/Barrier.h"
+#include "structures/EnergyStructure.h"
+#include "structures/Shroud.h"
+
 #include "units/AttackUnit.h"
 #include "units/VehicleGroup.h"
 
