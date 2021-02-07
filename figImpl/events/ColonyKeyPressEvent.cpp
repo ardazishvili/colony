@@ -1,6 +1,8 @@
 #include "ColonyKeyPressEvent.h"
 #include "../ColonyEventManager.h"
 
+#include <GLFW/glfw3.h>
+
 ColonyKeyPressEvent::ColonyKeyPressEvent(int key, int scancode, int mods) : KeyboardPressEvent(key, scancode, mods)
 {
 }

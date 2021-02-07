@@ -1,6 +1,8 @@
 #include "ColonyMouseReleaseEvent.h"
 #include "../ColonyEventManager.h"
 
+#include <GLFW/glfw3.h>
+
 ColonyMouseReleaseEvent::ColonyMouseReleaseEvent(int button) : MouseReleaseEvent(button)
 {
 }

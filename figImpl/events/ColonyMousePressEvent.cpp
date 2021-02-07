@@ -1,6 +1,8 @@
 #include "ColonyMousePressEvent.h"
 #include "../ColonyEventManager.h"
 
+#include <GLFW/glfw3.h>
+
 ColonyMousePressedEvent::ColonyMousePressedEvent(int button) : MousePressEvent(button)
 {
 }

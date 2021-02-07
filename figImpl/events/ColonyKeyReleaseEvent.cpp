@@ -3,6 +3,8 @@
 #include "../../logic/structures/Turbine.h"
 #include "../ColonyEventManager.h"
 
+#include <GLFW/glfw3.h>
+
 ColonyKeyReleaseEvent::ColonyKeyReleaseEvent(int key, int scancode, int mods) :
   KeyboardReleaseEvent(key, scancode, mods)
 {

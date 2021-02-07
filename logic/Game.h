@@ -4,8 +4,6 @@
 #include <memory>
 #include <vector>
 
-#include <GLFW/glfw3.h>
-
 #include "../fig/Terrain.h"
 #include "Control.h"
 #include "structures/AbstractPlant.h"

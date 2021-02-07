@@ -1,8 +1,6 @@
+#include <chrono>
 #include <functional>
 #include <random>
-
-#include <GL/glew.h> // Initialize with glewInit()
-#include <GLFW/glfw3.h>
 
 #include "AbstractPlantBuilder.h"
 
@@ -13,7 +11,7 @@ AbstractPlantBuilder::AbstractPlantBuilder(fig::Shader& shader, Game* game, Barr
 
 glm::vec2 AbstractPlantBuilder::generateUniformPosition() const
 {
-  std::mt19937 generator(glfwGetTime() * 1000);
+  std::mt19937 generator(std::chrono::system_clock::now().time_since_epoch().count());
   std::uniform_real_distribution<float> dReal(0, 2 * M_PI);
   auto getRandomAngle = std::bind(dReal, generator);
   auto randomAngle = getRandomAngle();

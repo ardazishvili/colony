@@ -1,8 +1,6 @@
 #ifndef PANEL_H
 #define PANEL_H
 
-#include <GLFW/glfw3.h>
-
 #include "../fig/Texture.h"
 #include "../fig/Window.h"
 #include "PanelItem.h"
