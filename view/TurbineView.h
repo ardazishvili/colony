@@ -13,7 +13,6 @@ public:
   void initBeam();
 
 private:
-  fig::Shader& _linesShader;
   Timer _timer;
   std::unique_ptr<fig::Beam> _beamFlat;
   std::unique_ptr<fig::Beam> _beamGlobe;

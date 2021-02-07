@@ -14,7 +14,7 @@ TurbineView::TurbineView(glm::vec3 p, glm::vec3 spFlat, glm::vec3 spGlobe) :
                 0.75,
                 { -0.3, 0, TURBINE_HEALTH_BAR_WIDTH, TURBINE_HEALTH_BAR_HEIGHT },
                 fig::TexturePackType::PreBuild),
-  _linesShader(*SHADERS_MAP[ShaderType::LINES]), _shroudPosFlat(spFlat), _shroudPosGlobe(spGlobe)
+  _shroudPosFlat(spFlat), _shroudPosGlobe(spGlobe)
 {
   _objScale = TURBINE_SCALE_FACTOR;
   _model = fig::modelLoader->models()[fig::Models::Turbine];
@@ -60,13 +60,13 @@ void TurbineView::draw()
 void TurbineView::initBeam()
 {
   _beamFlat = std::make_unique<fig::Beam>(
-    _linesShader,
+    *SHADERS_MAP[ShaderType::LINES],
     glm::vec3(_position.x, _position.y, _position.z + TURBINE_MODEL_HEIGHT * VIEW_SCALE * TURBINE_SCALE_FACTOR - 0.1),
     _shroudPosFlat,
     0.06f,
     10);
   _beamGlobe = std::make_unique<fig::Beam>(
-    _linesShader,
+    *SHADERS_MAP[ShaderType::LINES],
     globeMapper(glm::vec3(
       _position.x, _position.y, _position.z + TURBINE_MODEL_HEIGHT * VIEW_SCALE * TURBINE_SCALE_FACTOR - 0.1)),
     globeMapper(_shroudPosGlobe),

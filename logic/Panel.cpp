@@ -6,7 +6,7 @@
 
 using namespace std::string_literals;
 
-Panel::Panel(fig::Window* window, Type type, fig::Shader& shader) : _window(window), _type(type), _shader(shader)
+Panel::Panel(fig::Window* window, Type type) : _window(window), _type(type)
 {
 }
 

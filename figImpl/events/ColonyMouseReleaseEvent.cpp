@@ -33,11 +33,11 @@ void ColonyMouseReleaseEvent::handleMouseReleased(fig::EventManager* eventManage
 
     auto bl = m->_selection.bottomLeft();
     auto tr = m->_selection.topRight();
-    m->_heightsSegment = fig::makeHeightsSegment(m->_colorNonFlatShader,
+    m->_heightsSegment = fig::makeHeightsSegment(*SHADERS_MAP[ShaderType::COLOR_NON_FLAT],
                                                  m->_terrain,
                                                  glm::vec2(std::min(bl.x, tr.x), std::min(bl.y, tr.y)),
                                                  glm::vec2(std::max(bl.x, tr.x), std::max(bl.y, tr.y)));
-    m->_obstaclesSegment = fig::makeObstaclesSegment(m->_colorNonFlatShader,
+    m->_obstaclesSegment = fig::makeObstaclesSegment(*SHADERS_MAP[ShaderType::COLOR_NON_FLAT],
                                                      m->_terrain,
                                                      glm::vec2(std::min(bl.x, tr.x), std::min(bl.y, tr.y)),
                                                      glm::vec2(std::max(bl.x, tr.x), std::max(bl.y, tr.y)));

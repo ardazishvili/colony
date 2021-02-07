@@ -2,7 +2,6 @@
 #define SHELL_VIEW_H
 
 #include "../fig/Model.h"
-#include "../fig/shader/Shader.h"
 
 #include "View.h"
 

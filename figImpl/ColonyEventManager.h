@@ -21,10 +21,6 @@ public:
                      fig::Window* window,
                      Game* game,
                      fig::Camera& camera,
-                     fig::Shader& textureShader,
-                     fig::Shader& colorShader,
-                     fig::Shader& colorNonFlatShader,
-                     fig::Shader& linesShader,
                      fig::Terrain* terrain,
                      std::shared_ptr<fig::ObstaclesSegment> mo,
                      fig::AStar* astar);
@@ -38,10 +34,6 @@ private:
   fig::Window* _window;
   fig::Camera& _camera;
   Game* _game;
-  fig::Shader& _textureShader;
-  fig::Shader& _colorShader;
-  fig::Shader& _colorNonFlatShader;
-  fig::Shader& _linesShader;
   AttackUnit* _tankSelected{ nullptr };
   VehicleGroup _tanksSelected;
   AttackUnit* _tankUnderAttack{ nullptr };

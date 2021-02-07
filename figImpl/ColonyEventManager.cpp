@@ -10,26 +10,19 @@ ColonyEventManager::ColonyEventManager(glm::mat4& view,
                                        fig::Window* window,
                                        Game* game,
                                        fig::Camera& camera,
-                                       fig::Shader& textureShader,
-                                       fig::Shader& colorShader,
-                                       fig::Shader& colorNonFlatShader,
-                                       fig::Shader& linesShader,
                                        fig::Terrain* terrain,
                                        std::shared_ptr<fig::ObstaclesSegment> mo,
                                        fig::AStar* astar) :
   _view(view),
-  _projection(projection), _window(window), _camera(camera), _game(game), _textureShader(textureShader),
-  _colorShader(colorShader), _colorNonFlatShader(colorNonFlatShader), _linesShader(linesShader), _terrain(terrain),
-  _selection(linesShader, camera), _mapObstacles(mo), _astar(astar)
+  _projection(projection), _window(window), _camera(camera), _game(game), _terrain(terrain),
+  _selection(*SHADERS_MAP[ShaderType::LINES], camera), _mapObstacles(mo), _astar(astar)
 {
   // TODO downcast
-  _game->setControl(std::make_unique<Control>(_game, this, _window, textureShader, linesShader, _terrain, _astar));
+  _game->setControl(std::make_unique<Control>(_game, this, _window, _terrain, _astar));
 }
 
 void ColonyEventManager::tick()
 {
-  _textureShader.use();
-  _textureShader.configure();
   if (_selectionActive) {
     _selection.render();
   }

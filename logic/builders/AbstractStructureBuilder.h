@@ -10,16 +10,13 @@ class AbstractStructureBuilder : public AbstractBuilder
 {
 public:
   AbstractStructureBuilder(Game* game, ColonyEventManager* eventManager) :
-    AbstractBuilder(game), _eventManager(eventManager), _textureShader(*SHADERS_MAP[ShaderType::TEXTURE]),
-    _linesShader(*SHADERS_MAP[ShaderType::LINES])
+    AbstractBuilder(game), _eventManager(eventManager)
   {
   }
   virtual ~AbstractStructureBuilder() = default;
 
 protected:
   ColonyEventManager* _eventManager;
-  fig::Shader& _textureShader;
-  fig::Shader& _linesShader;
 };
 
 #endif

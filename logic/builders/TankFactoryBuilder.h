@@ -1,8 +1,6 @@
 #ifndef TANK_FACTORY_BUILDER_H
 #define TANK_FACTORY_BUILDER_H
 
-#include "../../fig/shader/Shader.h"
-
 #include "AbstractStructureBuilder.h"
 
 class TankFactoryBuilder : public AbstractStructureBuilder

@@ -1,9 +1,12 @@
 #include <filesystem>
 
-#include "ColonyGameLayer.h"
-
 #include "../fig/globals.h" // modelLoader
+#include "../fig/shader/LinesShader.h"
+#include "../fig/shader/PhongShader.h"
+#include "../fig/shader/SkyboxShader.h"
+
 #include "../figImpl/ColonyEventManager.h"
+#include "ColonyGameLayer.h"
 
 void ColonyGameLayer::init()
 {
@@ -75,18 +78,8 @@ void ColonyGameLayer::init()
   _astar =
     std::make_unique<fig::AStar>(mapObstacles->vertices(), mapObstacles->obstacles(), mapObstacles->dimensions());
   // TODO downcast
-  _eventManager = std::make_shared<ColonyEventManager>(_view,
-                                                       _projection,
-                                                       _window,
-                                                       _game.get(),
-                                                       *_camera,
-                                                       *SHADERS_MAP[ShaderType::TEXTURE],
-                                                       *SHADERS_MAP[ShaderType::COLOR],
-                                                       *SHADERS_MAP[ShaderType::COLOR_NON_FLAT],
-                                                       *SHADERS_MAP[ShaderType::LINES],
-                                                       _terrain.get(),
-                                                       mapObstacles,
-                                                       _astar.get());
+  _eventManager = std::make_shared<ColonyEventManager>(
+    _view, _projection, _window, _game.get(), *_camera, _terrain.get(), mapObstacles, _astar.get());
 
   createTank(_game.get(), _astar.get(), _terrain.get()->getXYZ(glm::vec2(0.0, 0.0f)));
   createTank(_game.get(), _astar.get(), _terrain.get()->getXYZ(glm::vec2(5.0, 5.0f)));

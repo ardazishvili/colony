@@ -5,8 +5,7 @@ template<typename T>
 const float Moving<T>::MOVE_STOP_TOL = 0.02;
 
 template<typename T>
-Moving<T>::Moving(UnitView* view, float speed) :
-  _linesShader(*SHADERS_MAP[ShaderType::LINES]), _view(view), _speed(speed), _destination(-1, -1)
+Moving<T>::Moving(UnitView* view, float speed) : _view(view), _speed(speed), _destination(-1, -1)
 {
 }
 
@@ -34,7 +33,7 @@ template<typename T>
 void Moving<T>::setRoute(glm::vec3 endPoint)
 {
   T* derived = static_cast<T*>(this);
-  derived->_path = fig::makePath(_linesShader, derived->_router, _view->position(), endPoint);
+  derived->_path = fig::makePath(*SHADERS_MAP[ShaderType::LINES], derived->_router, _view->position(), endPoint);
   if (derived->_path != nullptr) {
     _movingRoute = derived->_path->route();
     startMoving(_movingRoute.at(_movingRoute.size() - 1));

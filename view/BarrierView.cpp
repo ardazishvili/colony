@@ -15,7 +15,7 @@ BarrierView::BarrierView(glm::vec3 p, fig::Terrain* terrain) :
                 BARRIER_INIT_SCALE,
                 { -0.3, 0, BARRIER_HEALTH_BAR_WIDTH, BARRIER_HEALTH_BAR_HEIGHT },
                 fig::TexturePackType::Initial),
-  _terrain(terrain), _linesShader(*SHADERS_MAP[ShaderType::LINES])
+  _terrain(terrain)
 {
   _model = fig::modelLoader->models()[fig::Models::Barrier];
   _model->setActiveTexturesPack(fig::TexturePackType::PreBuild);

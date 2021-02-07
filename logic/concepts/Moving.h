@@ -27,7 +27,6 @@ protected:
   float getMouseAngle(int mouseX, int mouseY);
 
   UnitView* _view;
-  fig::Shader& _linesShader;
   float _speed;
   glm::vec2 _moveIncrement{ 0, 0 };
   glm::vec2 _destination;

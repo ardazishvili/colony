@@ -5,13 +5,10 @@
 Control::Control(Game* game,
                  ColonyEventManager* eventManager,
                  fig::Window* window,
-                 fig::Shader& textureShader,
-                 fig::Shader& linesShader,
                  fig::Terrain* terrain,
                  fig::AStar* router) :
   _game(game),
-  _eventManager(eventManager), _structurePanel(window, Panel::Type::Structures, textureShader),
-  _unitPanel(window, Panel::Type::Units, textureShader), _textureShader(textureShader), _linesShader(linesShader),
+  _eventManager(eventManager), _structurePanel(window, Panel::Type::Structures), _unitPanel(window, Panel::Type::Units),
   _router(router)
 {
   std::unique_ptr<AbstractBuilder> hqBuilder = std::make_unique<HqBuilder>(_game, _eventManager, terrain, _router);
