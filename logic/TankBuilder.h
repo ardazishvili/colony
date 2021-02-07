@@ -1,7 +1,7 @@
 #ifndef TANK_BUILDER_H
 #define TANK_BUILDER_H
 
-#include "../fig/Shader.h"
+#include "../fig/shader/Shader.h"
 
 #include "AbstractUnitBuilder.h"
 #include "Tank.h"

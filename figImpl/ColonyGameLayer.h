@@ -6,11 +6,11 @@
 #include "../fig/Application.h"
 #include "../fig/EventManager.h"
 #include "../fig/GameLayer.h"
-#include "../fig/LinesShader.h"
-#include "../fig/PhongShader.h"
 #include "../fig/Skybox.h"
-#include "../fig/SkyboxShader.h"
 #include "../fig/Terrain.h"
+#include "../fig/shader/LinesShader.h"
+#include "../fig/shader/PhongShader.h"
+#include "../fig/shader/SkyboxShader.h"
 
 #include "../logic/Game.h"
 

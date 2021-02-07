@@ -1,8 +1,8 @@
 #ifndef CONTROL_H
 #define CONTROL_H
 
-#include "../fig/Shader.h"
 #include "../fig/Window.h"
+#include "../fig/shader/Shader.h"
 
 #include "AbstractStructureBuilder.h"
 #include "AbstractUnitBuilder.h"

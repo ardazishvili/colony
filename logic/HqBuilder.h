@@ -1,8 +1,8 @@
 #ifndef HQ_BUILDER_H
 #define HQ_BUILDER_H
 
-#include "../fig/Shader.h"
 #include "../fig/Terrain.h"
+#include "../fig/shader/Shader.h"
 #include "AbstractStructureBuilder.h"
 
 struct AStar;
