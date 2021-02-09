@@ -9,7 +9,7 @@ class NonAttackUnit
   , public Unit<NonAttackUnit>
 {
 public:
-  NonAttackUnit(std::unique_ptr<UnitView> view, fig::AStar* router);
+  NonAttackUnit(std::unique_ptr<UnitView> view);
 
 protected:
   std::unique_ptr<UnitView> _view;

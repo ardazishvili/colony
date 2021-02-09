@@ -21,21 +21,20 @@ std::map<Tank::Type, float> speedMap = { { Tank::Type::Light, 0.05f },
                                          { Tank::Type::Medium, 0.033f },
                                          { Tank::Type::Heavy, 0.02f } };
 
-Tank::Tank(fig::AStar* router, glm::vec3 position, Type type, HealthLevel healthLevel, Shell::Size sh) :
-  AttackUnit(std::make_unique<TankView>(position, tankSizeMap[type]), router, sh, speedMap[type])
+Tank::Tank(glm::vec3 position, Type type, HealthLevel healthLevel, Shell::Size sh) :
+  AttackUnit(std::make_unique<TankView>(position, tankSizeMap[type]), sh, speedMap[type])
 {
   _health = healthLevelMap[healthLevel] * tankHitPointsMap[type];
   _maxHealth = _health;
 }
 
 std::shared_ptr<Tank> createTank(Game* game,
-                                 fig::AStar* router,
                                  glm::vec3 position,
                                  Tank::Type type,
                                  HealthLevel health,
                                  Shell::Size shellSize)
 {
-  auto newTank = std::make_shared<Tank>(router, position, type, health, shellSize);
+  auto newTank = std::make_shared<Tank>(position, type, health, shellSize);
   game->addTank(newTank);
   return newTank;
 }

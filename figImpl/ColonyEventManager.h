@@ -7,7 +7,6 @@
 #include "../fig/ObstaclesSegment.h"
 #include "../fig/RectangleShape.h"
 #include "../fig/events/Event.h"
-#include "../fig/math/AStar.h"
 
 #include "../logic/Game.h"
 #include "../logic/units/Tank.h"
@@ -22,8 +21,7 @@ public:
                      Game* game,
                      fig::Camera& camera,
                      fig::Terrain* terrain,
-                     std::shared_ptr<fig::ObstaclesSegment> mo,
-                     fig::AStar* astar);
+                     std::shared_ptr<fig::ObstaclesSegment> mo);
   void tick();
   void setStructureToBuild(std::shared_ptr<GroundStructure> structure);
   void setStructureToBuildStage(BuildStage stage);
@@ -50,7 +48,6 @@ private:
   std::shared_ptr<fig::HeightsSegment> _heightsSegment;
   std::shared_ptr<fig::ObstaclesSegment> _obstaclesSegment;
   std::shared_ptr<fig::ObstaclesSegment> _mapObstacles;
-  fig::AStar* _astar;
 
   friend class ColonyKeyPressEvent;
   friend class ColonyKeyReleaseEvent;

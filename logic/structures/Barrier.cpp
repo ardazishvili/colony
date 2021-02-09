@@ -6,8 +6,8 @@
 
 const int Barrier::BARRIER_HP = 200;
 
-Barrier::Barrier(glm::vec3 position, fig::Terrain* terrain, fig::AStar* router) :
-  EnergyStructure(std::make_unique<BarrierView>(position, terrain)), _shroud(router, position, *this), _terrain(terrain)
+Barrier::Barrier(glm::vec3 position, fig::Terrain* terrain) :
+  EnergyStructure(std::make_unique<BarrierView>(position, terrain)), _shroud(position, *this), _terrain(terrain)
 {
 
   _health = BARRIER_HP;

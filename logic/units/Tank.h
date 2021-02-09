@@ -15,8 +15,7 @@ public:
   enum class Type { Light, Medium, Heavy };
 
   Tank() = delete;
-  Tank(fig::AStar* router,
-       glm::vec3 position,
+  Tank(glm::vec3 position,
        Type type = Type::Light,
        HealthLevel healthLevel = HealthLevel::High,
        Shell::Size shellSize = Shell::Size::Small);
@@ -26,7 +25,6 @@ private:
 };
 
 std::shared_ptr<Tank> createTank(Game* game,
-                                 fig::AStar* router,
                                  glm::vec3 position,
                                  Tank::Type type = Tank::Type::Light,
                                  HealthLevel health = HealthLevel::High,

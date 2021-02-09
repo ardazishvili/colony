@@ -3,8 +3,7 @@
 
 const int TankFactory::TANK_FACTORY_HP = 200;
 
-TankFactory::TankFactory(fig::AStar* router, glm::vec3 position) :
-  GroundStructure(std::make_unique<TankFactoryView>(position)), _router(router)
+TankFactory::TankFactory(glm::vec3 position) : GroundStructure(std::make_unique<TankFactoryView>(position))
 {
   std::cout << "position.x= " << position.x << std::endl;
   std::cout << "position.y= " << position.y << std::endl;
@@ -15,7 +14,7 @@ TankFactory::TankFactory(fig::AStar* router, glm::vec3 position) :
 void TankFactory::createTank(Game* game, Tank::Type tankType, HealthLevel healthLevel, Shell::Size shellSize)
 {
   auto p = position();
-  auto tank = ::createTank(game, _router, position(), tankType, healthLevel, shellSize);
+  auto tank = ::createTank(game, position(), tankType, healthLevel, shellSize);
   auto d = 3.0f;
   auto tankDestination =
     glm::vec3(p.x - d * ::cos(glm::radians(_view->angle())), p.y - d * ::sin(glm::radians(_view->angle())), p.z);

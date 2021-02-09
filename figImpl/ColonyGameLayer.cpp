@@ -75,17 +75,16 @@ void ColonyGameLayer::init()
                                                 _terrain.get(),
                                                 glm::vec2(-10 * xScale + 0.01, -10 * yScale + 0.01),
                                                 glm::vec2(10 * xScale - 0.01, 10 * yScale - 0.01));
-  _astar =
-    std::make_unique<fig::AStar>(mapObstacles->vertices(), mapObstacles->obstacles(), mapObstacles->dimensions());
+  ASTAR = std::make_unique<fig::AStar>(mapObstacles->vertices(), mapObstacles->obstacles(), mapObstacles->dimensions());
   // TODO downcast
   _eventManager = std::make_shared<ColonyEventManager>(
-    _view, _projection, _window, _game.get(), *_camera, _terrain.get(), mapObstacles, _astar.get());
+    _view, _projection, _window, _game.get(), *_camera, _terrain.get(), mapObstacles);
 
-  createTank(_game.get(), _astar.get(), _terrain.get()->getXYZ(glm::vec2(0.0, 0.0f)));
-  createTank(_game.get(), _astar.get(), _terrain.get()->getXYZ(glm::vec2(5.0, 5.0f)));
-  createTank(_game.get(), _astar.get(), _terrain.get()->getXYZ(glm::vec2(-5.0, -5.0f)));
-  createTank(_game.get(), _astar.get(), _terrain.get()->getXYZ(glm::vec2(0.0, 5.0f)));
-  createTank(_game.get(), _astar.get(), _terrain.get()->getXYZ(glm::vec2(0.0, -5.0f)));
+  createTank(_game.get(), _terrain.get()->getXYZ(glm::vec2(0.0, 0.0f)));
+  createTank(_game.get(), _terrain.get()->getXYZ(glm::vec2(5.0, 5.0f)));
+  createTank(_game.get(), _terrain.get()->getXYZ(glm::vec2(-5.0, -5.0f)));
+  createTank(_game.get(), _terrain.get()->getXYZ(glm::vec2(0.0, 5.0f)));
+  createTank(_game.get(), _terrain.get()->getXYZ(glm::vec2(0.0, -5.0f)));
 
   _skybox = std::make_unique<fig::Skybox>(*SHADERS_MAP[ShaderType::SKYBOX]);
 }

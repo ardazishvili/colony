@@ -5,7 +5,7 @@
 #include "Unit.h"
 
 template<typename T>
-Unit<T>::Unit(fig::AStar* router, View* view) : _router(router), _view(view)
+Unit<T>::Unit(View* view) : _view(view)
 {
 }
 
@@ -13,8 +13,8 @@ template<typename T>
 void Unit<T>::render()
 {
   _view->draw();
-  if (_path != nullptr) {
-    _path->render();
+  if (_path.has_value()) {
+    _path.value().render();
   }
 }
 

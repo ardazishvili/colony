@@ -12,7 +12,7 @@ class TankFactory : public GroundStructure
 {
 public:
   TankFactory() = delete;
-  TankFactory(fig::AStar* router, glm::vec3 position);
+  TankFactory(glm::vec3 position);
 
   void createTank(Game* game, Tank::Type tankType, HealthLevel healthLevel, Shell::Size shellSize);
   UnitBuilders getUnitBuilders(Game* game) override;
@@ -26,7 +26,6 @@ private:
                       Shell::Size shellSize);
 
   static const int TANK_FACTORY_HP;
-  fig::AStar* _router{ nullptr };
 };
 
 #endif

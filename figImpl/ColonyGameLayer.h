@@ -28,8 +28,6 @@ public:
   std::function<void(std::unique_ptr<fig::Event> event)> onEvent();
 
 private:
-  std::unique_ptr<fig::AStar> _astar;
-
   fig::Window* _window;
   fig::Camera* _camera;
   fig::Light* _light;

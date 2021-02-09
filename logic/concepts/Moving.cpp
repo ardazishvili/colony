@@ -1,5 +1,6 @@
 #include "Moving.h"
 #include "../units/AttackUnit.h"
+#include <optional>
 
 template<typename T>
 const float Moving<T>::MOVE_STOP_TOL = 0.02;
@@ -33,11 +34,13 @@ template<typename T>
 void Moving<T>::setRoute(glm::vec3 endPoint)
 {
   T* derived = static_cast<T*>(this);
-  derived->_path = fig::makePath(*SHADERS_MAP[ShaderType::LINES], derived->_router, _view->position(), endPoint);
-  if (derived->_path != nullptr) {
+  auto p = fig::makePath(*SHADERS_MAP[ShaderType::LINES], ASTAR.get(), _view->position(), endPoint);
+  if (p.has_value()) {
+    derived->_path.emplace(std::move(p.value()));
     _movingRoute = derived->_path->route();
     startMoving(_movingRoute.at(_movingRoute.size() - 1));
   } else {
+    derived->_path = std::nullopt;
     std::cout << "No path to endpoint!" << std::endl;
   }
 }

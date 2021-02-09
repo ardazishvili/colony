@@ -2,16 +2,11 @@
 #include "builders/HqBuilder.h"
 #include "builders/TankFactoryBuilder.h"
 
-Control::Control(Game* game,
-                 ColonyEventManager* eventManager,
-                 fig::Window* window,
-                 fig::Terrain* terrain,
-                 fig::AStar* router) :
-  _game(game),
-  _eventManager(eventManager), _structurePanel(window, Panel::Type::Structures), _unitPanel(window, Panel::Type::Units),
-  _router(router)
+Control::Control(Game* game, ColonyEventManager* eventManager, fig::Window* window, fig::Terrain* terrain) :
+  _game(game), _eventManager(eventManager), _structurePanel(window, Panel::Type::Structures),
+  _unitPanel(window, Panel::Type::Units)
 {
-  std::unique_ptr<AbstractBuilder> hqBuilder = std::make_unique<HqBuilder>(_game, _eventManager, terrain, _router);
+  std::unique_ptr<AbstractBuilder> hqBuilder = std::make_unique<HqBuilder>(_game, _eventManager, terrain);
   auto hqPanelItem = std::make_unique<PanelItem>(std::move(hqBuilder));
   _structurePanel.addItem(std::move(hqPanelItem));
 }

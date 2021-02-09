@@ -4,11 +4,10 @@
 #include "../../fig/Terrain.h"
 #include "AbstractStructureBuilder.h"
 
-struct AStar;
 class HqBuilder : public AbstractStructureBuilder
 {
 public:
-  HqBuilder(Game* game, ColonyEventManager* eventManager, fig::Terrain* terrain, fig::AStar* router);
+  HqBuilder(Game* game, ColonyEventManager* eventManager, fig::Terrain* terrain);
   ~HqBuilder();
 
   void create() override;
@@ -16,7 +15,6 @@ public:
 
 private:
   fig::Terrain* _terrain;
-  fig::AStar* _router;
 };
 
 #endif

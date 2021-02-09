@@ -11,14 +11,13 @@ ColonyEventManager::ColonyEventManager(glm::mat4& view,
                                        Game* game,
                                        fig::Camera& camera,
                                        fig::Terrain* terrain,
-                                       std::shared_ptr<fig::ObstaclesSegment> mo,
-                                       fig::AStar* astar) :
+                                       std::shared_ptr<fig::ObstaclesSegment> mo) :
   _view(view),
   _projection(projection), _window(window), _camera(camera), _game(game), _terrain(terrain),
-  _selection(*SHADERS_MAP[ShaderType::LINES], camera), _mapObstacles(mo), _astar(astar)
+  _selection(*SHADERS_MAP[ShaderType::LINES], camera), _mapObstacles(mo)
 {
   // TODO downcast
-  _game->setControl(std::make_unique<Control>(_game, this, _window, _terrain, _astar));
+  _game->setControl(std::make_unique<Control>(_game, this, _window, _terrain));
 }
 
 void ColonyEventManager::tick()

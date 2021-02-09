@@ -6,14 +6,11 @@
 class TankFactoryBuilder : public AbstractStructureBuilder
 {
 public:
-  TankFactoryBuilder(Game* game, ColonyEventManager* eventManager, fig::AStar* router);
+  TankFactoryBuilder(Game* game, ColonyEventManager* eventManager);
   ~TankFactoryBuilder();
 
   void create() override;
   fig::MenuTextures getPreviewType() override;
-
-private:
-  fig::AStar* _router;
 };
 
 #endif

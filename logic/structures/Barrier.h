@@ -13,7 +13,7 @@ using EnergyStructures = std::vector<EnergyStructure*>;
 class Barrier : public EnergyStructure
 {
 public:
-  Barrier(glm::vec3 position, fig::Terrain* terrain, fig::AStar* router);
+  Barrier(glm::vec3 position, fig::Terrain* terrain);
   void render() override;
   UnitBuilders getUnitBuilders(Game* game) override;
   StructureBuilders getStructureBuilders() override;

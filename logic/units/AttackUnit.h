@@ -15,7 +15,7 @@ class AttackUnit
   , public Selectable<AttackUnit>
 {
 public:
-  AttackUnit(std::unique_ptr<AttackUnitView> view, fig::AStar* router, Shell::Size sh, float speed);
+  AttackUnit(std::unique_ptr<AttackUnitView> view, Shell::Size sh, float speed);
   void render() override;
 
 protected:

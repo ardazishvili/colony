@@ -29,8 +29,8 @@ void ColonyKeyReleaseEvent::process(fig::Camera* camera, fig::EventManager* even
     std::cout << "X pressed" << std::endl;
     if (em->_structureToBuild == nullptr) {
       em->_structureToBuildStage = BuildStage::SetAngle;
-      auto tankFactory = std::make_shared<TankFactory>(
-        em->_astar, fig::EventManager::unProject(em->_window, em->_view, em->_projection));
+      auto tankFactory =
+        std::make_shared<TankFactory>(fig::EventManager::unProject(em->_window, em->_view, em->_projection));
       em->_game->addStructure(tankFactory);
       em->_structureToBuild = tankFactory;
     } else {
@@ -43,7 +43,7 @@ void ColonyKeyReleaseEvent::process(fig::Camera* camera, fig::EventManager* even
     if (em->_structureToBuild == nullptr) {
       em->_structureToBuildStage = BuildStage::SetAngle;
       auto hq = std::make_shared<Hq>(
-        em->_game, em, em->_astar, fig::EventManager::unProject(em->_window, em->_view, em->_projection), em->_terrain);
+        em->_game, em, fig::EventManager::unProject(em->_window, em->_view, em->_projection), em->_terrain);
       em->_game->addStructure(hq);
       em->_structureToBuild = hq;
     } else {
@@ -55,8 +55,8 @@ void ColonyKeyReleaseEvent::process(fig::Camera* camera, fig::EventManager* even
     std::cout << "B pressed" << std::endl;
     if (em->_structureToBuild == nullptr) {
       em->_structureToBuildStage = BuildStage::SetAngle;
-      auto b = std::make_shared<Barrier>(
-        fig::EventManager::unProject(em->_window, em->_view, em->_projection), em->_terrain, em->_astar);
+      auto b =
+        std::make_shared<Barrier>(fig::EventManager::unProject(em->_window, em->_view, em->_projection), em->_terrain);
       em->_game->addStructure(b);
       em->_game->addShroud(b->shroud());
       em->_structureToBuild = b;

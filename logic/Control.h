@@ -11,7 +11,7 @@
 class Control
 {
 public:
-  Control(Game* game, ColonyEventManager* eventManager, fig::Window* window, fig::Terrain* terrain, fig::AStar* router);
+  Control(Game* game, ColonyEventManager* eventManager, fig::Window* window, fig::Terrain* terrain);
   void display();
   void populateUnitPanel(Game* game, GroundStructure* buildable);
   void populateStructurePanel(GroundStructure* buildable);
@@ -27,7 +27,6 @@ private:
   ColonyEventManager* _eventManager;
   Panel _structurePanel;
   Panel _unitPanel;
-  fig::AStar* _router;
 };
 
 #endif

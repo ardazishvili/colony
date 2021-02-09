@@ -4,12 +4,14 @@
 #include "../../fig/Path.h"
 
 #include "../concepts/Buildable.h"
+#include <memory>
+#include <optional>
 
 template<typename T>
 class Unit
 {
 public:
-  Unit(fig::AStar* router, View* view);
+  Unit(View* view);
   virtual ~Unit() = default;
   Unit(const Unit&) = delete;
   Unit(Unit&&) = delete;
@@ -19,8 +21,7 @@ public:
   void render();
 
 protected:
-  std::shared_ptr<fig::Path> _path;
-  fig::AStar* _router;
+  std::optional<fig::Path> _path = std::nullopt;
   View* _view;
 };
 

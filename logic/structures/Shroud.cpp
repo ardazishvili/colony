@@ -3,8 +3,8 @@
 
 #include "../../view/ShroudView.h"
 
-Shroud::Shroud(fig::AStar* router, glm::vec3 position, Barrier& barrier) :
-  NonAttackUnit(std::make_unique<ShroudView>(position, barrier.radius()), router), _barrier(barrier)
+Shroud::Shroud(glm::vec3 position, Barrier& barrier) :
+  NonAttackUnit(std::make_unique<ShroudView>(position, barrier.radius())), _barrier(barrier)
 {
 }
 
