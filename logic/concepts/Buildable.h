@@ -1,24 +1,22 @@
-#ifndef BUILDABLE_H
-#define BUILDABLE_H
+#pragma once
 
+#include <glm/glm.hpp>
 #include <memory>
 #include <vector>
 
-#include <glm/glm.hpp>
-
-#include "../../view/SelectableView.h"
-#include "../Shell.h"
-#include "../builders/AbstractStructureBuilder.h"
-#include "../builders/AbstractUnitBuilder.h"
+#include "logic/Shell.h"
+#include "logic/builders/AbstractStructureBuilder.h"
+#include "logic/builders/AbstractUnitBuilder.h"
+#include "view/SelectableView.h"
 
 class Game;
 
 using UnitBuilders = std::vector<std::unique_ptr<AbstractUnitBuilder>>;
-using StructureBuilders = std::vector<std::unique_ptr<AbstractStructureBuilder>>;
+using StructureBuilders =
+    std::vector<std::unique_ptr<AbstractStructureBuilder>>;
 
-class Buildable
-{
-public:
+class Buildable {
+ public:
   Buildable(SelectableView* view);
   bool isDestroyed() const;
   bool isUnderFire() const;
@@ -32,12 +30,10 @@ public:
   Buildable& operator=(const Buildable&) = delete;
   Buildable& operator=(Buildable&&) = delete;
 
-protected:
+ protected:
   void updateHealthBar();
   float _health;
   float _maxHealth;
   Status _status;
   SelectableView* _view;
 };
-
-#endif

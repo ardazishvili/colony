@@ -1,17 +1,16 @@
+#include "logic/builders/AbstractPlantBuilder.h"
+
 #include <chrono>
 #include <functional>
 #include <random>
 
-#include "AbstractPlantBuilder.h"
+AbstractPlantBuilder::AbstractPlantBuilder(Barrier& barrier,
+                                           fig::Terrain& terrain)
+    : AbstractUnitBuilder(), _barrier(barrier), _terrain(terrain) {}
 
-AbstractPlantBuilder::AbstractPlantBuilder(Game* game, Barrier& barrier, fig::Terrain* terrain) :
-  AbstractUnitBuilder(game), _game(game), _barrier(barrier), _terrain(terrain)
-{
-}
-
-glm::vec2 AbstractPlantBuilder::generateUniformPosition() const
-{
-  std::mt19937 generator(std::chrono::system_clock::now().time_since_epoch().count());
+glm::vec2 AbstractPlantBuilder::generateUniformPosition() const {
+  std::mt19937 generator(
+      std::chrono::system_clock::now().time_since_epoch().count());
   std::uniform_real_distribution<float> dReal(0, 2 * M_PI);
   auto getRandomAngle = std::bind(dReal, generator);
   auto randomAngle = getRandomAngle();

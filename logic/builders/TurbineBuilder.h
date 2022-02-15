@@ -1,15 +1,11 @@
-#ifndef TURBINE_BUILDER_H
-#define TURBINE_BUILDER_H
+#pragma once
 
-#include "AbstractStructureBuilder.h"
+#include "logic/builders/AbstractStructureBuilder.h"
 
-class TurbineBuilder : public AbstractStructureBuilder
-{
-public:
-  TurbineBuilder(Game* game, ColonyEventManager* eventManager);
+class TurbineBuilder : public AbstractStructureBuilder {
+ public:
+  TurbineBuilder(ColonyEventManager* eventManager);
 
-  void create() override;
+  void addToGame(Game& game) override;
   fig::MenuTextures getPreviewType() override;
 };
-
-#endif

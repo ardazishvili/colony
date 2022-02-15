@@ -1,14 +1,10 @@
-#ifndef COLONY_MOUSE_MOVE_EVENT_H
-#define COLONY_MOUSE_MOVE_EVENT_H
+#pragma once
 
-#include "../../fig/events/Event.h"
+#include "fig/events/Event.h"
 
-class ColonyMouseMoveEvent : public fig::MouseMoveEvent
-{
-public:
+class ColonyMouseMoveEvent : public fig::MouseMoveEvent {
+ public:
   ColonyMouseMoveEvent(double xpos, double ypos);
 
   void process(fig::Camera* camera, fig::EventManager* eventManager) override;
 };
-
-#endif

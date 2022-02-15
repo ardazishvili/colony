@@ -1,19 +1,15 @@
-#ifndef SETTINGS_GUI_H
-#define SETTINGS_GUI_H
+#pragma once
 
-class SettingsGui
-{
-public:
+class SettingsGui {
+ public:
   SettingsGui(int windowWidth, int windowHeight);
   void show();
   void toggle();
 
-private:
+ private:
   bool _visible = false;
   int _width = 600;
   int _height = 400;
   int _windowWidth;
   int _windowHeight;
 };
-
-#endif

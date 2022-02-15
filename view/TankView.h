@@ -1,27 +1,23 @@
-#ifndef TANK_VIEW_H
-#define TANK_VIEW_H
+#pragma once
 
-#include "AttackUnitView.h"
+#include "view/AttackUnitView.h"
 
-class TankView : public AttackUnitView
-{
-public:
+class TankView : public AttackUnitView {
+ public:
   TankView(glm::vec3 position, float tankTypeScaling);
   void draw() override;
   void move(glm::vec3 newPosition) override;
   void rotateBody(float degreeAngle) override;
   void rotateGun(float degreeAngle) override;
 
-private:
+ private:
   void updateGun();
 
-  float _targetGunAngle{ 1.001f };  // TODO animation issue
-  float _currentGunAngle{ 0.001f }; // TODO animation issue
+  float _targetGunAngle{1.001f};   // TODO animation issue
+  float _currentGunAngle{0.001f};  // TODO animation issue
   float _tankTypeScaleFactor;
-  static float TANK_GUN_ANGLE_INCREMENT;
-  static float TANK_GUN_ANGLE_TOLERANCE;
-  static float TANK_HEALTH_BAR_WIDTH;
-  static float TANK_HEALTH_BAR_HEIGHT;
+  static constexpr float TANK_GUN_ANGLE_INCREMENT = 1.5;
+  static constexpr float TANK_GUN_ANGLE_TOLERANCE = 1.5;
+  static constexpr float TANK_HEALTH_BAR_WIDTH = 0.5;
+  static constexpr float TANK_HEALTH_BAR_HEIGHT = 0.04;
 };
-
-#endif

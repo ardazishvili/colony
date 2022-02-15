@@ -1,142 +1,19 @@
 cmake_minimum_required(VERSION 3.10)
-set (CMAKE_CXX_STANDARD 17)
+set (CMAKE_CXX_STANDARD 20)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
 project(Colony)
 
-add_subdirectory(fig)
+find_package(spdlog CONFIG REQUIRED)
 
-include_directories(fig/third/logging/spdlog/include)
-include_directories(fig/third/json/json/single_include)
 link_directories(fig/cbuild)
-add_executable(colony
-  logic/Control.cpp
-  logic/Control.h
-  logic/Game.cpp
-  logic/Game.h
-  logic/Panel.cpp
-  logic/Panel.h
-  logic/PanelItem.cpp
-  logic/PanelItem.h
-  logic/Shell.cpp
-  logic/Shell.h
-  logic/concepts/Moving.cpp
-  logic/concepts/Moving.h
-  logic/concepts/Attacking.cpp
-  logic/concepts/Attacking.h
-  logic/concepts/Selectable.cpp
-  logic/concepts/Selectable.h
-  logic/concepts/Buildable.cpp
-  logic/concepts/Buildable.h
-  logic/builders/TurbineBuilder.cpp
-  logic/builders/TurbineBuilder.h
-  logic/builders/TreeBuilder.cpp
-  logic/builders/TreeBuilder.h
-  logic/builders/PlantBuilder.cpp
-  logic/builders/PlantBuilder.h
-  logic/builders/BarrierBuilder.cpp
-  logic/builders/BarrierBuilder.h
-  logic/builders/AbstractPlantBuilder.cpp
-  logic/builders/AbstractPlantBuilder.h
-  logic/builders/TankFactoryBuilder.cpp
-  logic/builders/TankFactoryBuilder.h
-  logic/builders/TankBuilder.cpp
-  logic/builders/TankBuilder.h
-  logic/builders/HqBuilder.cpp
-  logic/builders/HqBuilder.h
-  logic/structures/Plant.cpp
-  logic/structures/Plant.h
-  logic/structures/EnergyStructure.cpp
-  logic/structures/EnergyStructure.h
-  logic/structures/GroundStructure.cpp
-  logic/structures/GroundStructure.h
-  logic/structures/AbstractPlant.cpp
-  logic/structures/AbstractPlant.h
-  logic/structures/TankFactory.cpp
-  logic/structures/TankFactory.h
-  logic/structures/Hq.cpp
-  logic/structures/Hq.h
-  logic/structures/Shroud.cpp
-  logic/structures/Shroud.h
-  logic/structures/Structure.cpp
-  logic/structures/Structure.h
-  logic/structures/Tree.cpp
-  logic/structures/Tree.h
-  logic/structures/Turbine.cpp
-  logic/structures/Turbine.h
-  logic/structures/Barrier.cpp
-  logic/structures/Barrier.h
-  logic/units/NonAttackUnit.cpp
-  logic/units/NonAttackUnit.h
-  logic/units/Unit.cpp
-  logic/units/Unit.h
-  logic/units/Tank.cpp
-  logic/units/Tank.h
-  logic/units/VehicleGroup.cpp
-  logic/units/VehicleGroup.h
-  logic/units/AttackUnit.cpp
-  logic/units/AttackUnit.h
-  figImpl/ColonyEventManager.cpp
-  figImpl/ColonyEventManager.h
-  figImpl/globals.h
-  figImpl/globals.cpp
-  figImpl/ColonyApplication.h
-  figImpl/ColonyApplication.cpp
-  figImpl/events/ColonyEventFabric.cpp
-  figImpl/events/ColonyEventFabric.h
-  figImpl/events/ColonyKeyPressEvent.cpp
-  figImpl/events/ColonyKeyPressEvent.h
-  figImpl/events/ColonyKeyReleaseEvent.cpp
-  figImpl/events/ColonyKeyReleaseEvent.h
-  figImpl/events/ColonyKeyRepeatEvent.cpp
-  figImpl/events/ColonyKeyRepeatEvent.h
-  figImpl/events/ColonyMouseMoveEvent.cpp
-  figImpl/events/ColonyMouseMoveEvent.h
-  figImpl/events/ColonyMousePressEvent.cpp
-  figImpl/events/ColonyMousePressEvent.h
-  figImpl/events/ColonyMouseReleaseEvent.cpp
-  figImpl/events/ColonyMouseReleaseEvent.h
-  figImpl/events/ColonyMouseScrollEvent.cpp
-  figImpl/events/ColonyMouseScrollEvent.h
-  figImpl/ColonyGameLayer.h
-  figImpl/ColonyGameLayer.cpp
-  figImpl/ColonyGuiLayer.h
-  figImpl/ColonyGuiLayer.cpp
-  figImpl/SettingsGui.h
-  figImpl/SettingsGui.cpp
-  main.cpp
-  view/AbstractPlantView.cpp
-  view/AbstractPlantView.h
-  view/AttackUnitView.cpp
-  view/AttackUnitView.h
-  view/BarrierView.cpp
-  view/BarrierView.h
-  view/PlantView.cpp
-  view/PlantView.h
-  view/SelectableView.cpp
-  view/SelectableView.h
-  view/ShroudView.cpp
-  view/ShroudView.h
-  view/StructureView.cpp
-  view/StructureView.h
-  view/TreeView.cpp
-  view/TreeView.h
-  view/TurbineView.cpp
-  view/TurbineView.h
-  view/UnitView.cpp
-  view/UnitView.h
-  view/HqView.cpp
-  view/HqView.h
-  view/ShellView.cpp
-  view/ShellView.h
-  view/TankFactoryView.cpp
-  view/TankFactoryView.h
-  view/TankView.cpp
-  view/TankView.h
-  view/View.cpp
-  view/View.h
-  )
 
-target_link_libraries(colony fig glfw dl GL GLEW assimp pthread)
+file(GLOB_RECURSE SOURCE_FILES figImpl/*.cpp helpers/*.cpp logic/*.cpp view/*.cpp main.cp main.cpp)
+file(GLOB_RECURSE HEADER_FILES figImpl/*.h helpers/*.h logic/*.h view/*.h)
+add_executable(colony ${SOURCE_FILES} ${HEADER_FILES})
+target_include_directories(colony PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(colony PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/fig)
+
+target_link_libraries(colony fig glfw dl GL GLEW assimp pthread spdlog::spdlog)
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY shaders DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY config.json DESTINATION ${CMAKE_BINARY_DIR})

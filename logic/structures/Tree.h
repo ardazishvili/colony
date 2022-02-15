@@ -1,13 +1,9 @@
-#ifndef TREE_H
-#define TREE_H
+#pragma once
 
-#include "../../view/TreeView.h"
-#include "AbstractPlant.h"
+#include "logic/structures/AbstractPlant.h"
+#include "view/TreeView.h"
 
-class Tree : public AbstractPlant
-{
-public:
+class Tree : public AbstractPlant {
+ public:
   Tree(glm::vec3 position);
 };
-
-#endif

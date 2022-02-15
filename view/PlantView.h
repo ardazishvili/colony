@@ -1,13 +1,9 @@
-#ifndef PLANT_VIEW_H
-#define PLANT_VIEW_H
+#pragma once
 
-#include "AbstractPlantView.h"
+#include "view/AbstractPlantView.h"
 
-class PlantView : public AbstractPlantView
-{
-public:
+class PlantView : public AbstractPlantView {
+ public:
   PlantView(glm::vec3 position);
   void draw() override;
 };
-
-#endif

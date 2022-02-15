@@ -1,18 +1,12 @@
-#ifndef NON_ATTACK_UNIT_H
-#define NON_ATTACK_UNIT_H
+#pragma once
 
-#include "../../view/UnitView.h"
-#include "Unit.h"
+#include "logic/units/Unit.h"
+#include "view/UnitView.h"
 
-class NonAttackUnit
-  : public Buildable
-  , public Unit<NonAttackUnit>
-{
-public:
-  NonAttackUnit(std::unique_ptr<UnitView> view, fig::AStar* router);
+class NonAttackUnit : public Buildable, public Unit<NonAttackUnit> {
+ public:
+  NonAttackUnit(std::unique_ptr<UnitView> view, fig::AStar& router);
 
-protected:
+ protected:
   std::unique_ptr<UnitView> _view;
 };
-
-#endif

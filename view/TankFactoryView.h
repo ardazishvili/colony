@@ -1,17 +1,13 @@
-#ifndef TANK_FACTORY_VIEW_H
-#define TANK_FACTORY_VIEW_H
+#pragma once
 
-#include "StructureView.h"
+#include "view/StructureView.h"
 
-class TankFactoryView : public StructureView
-{
-public:
+class TankFactoryView : public StructureView {
+ public:
   TankFactoryView(glm::vec3 position);
   void draw() override;
 
-private:
+ private:
   static float TANK_FACTORY_HEALTH_BAR_WIDTH;
   static float TANK_FACTORY_HEALTH_BAR_HEIGHT;
 };
-
-#endif

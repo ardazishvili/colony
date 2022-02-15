@@ -1,16 +1,11 @@
-#ifndef ATTACK_UNIT_VIEW_H
-#define ATTACK_UNIT_VIEW_H
+#pragma once
 
-#include "UnitView.h"
+#include "view/UnitView.h"
 
-class AttackUnitView : public UnitView
-{
-public:
-  AttackUnitView(glm::vec3 position,
-                 float selectionRadius,
+class AttackUnitView : public UnitView {
+ public:
+  AttackUnitView(glm::vec3 position, float selectionRadius,
                  HealthBarParams healthBarParams,
                  fig::TexturePackType texturesType);
   virtual void rotateGun(float degreeAngle) = 0;
 };
-
-#endif

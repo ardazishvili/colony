@@ -1,9 +1,10 @@
-#include "../fig/globals.h"
+#include "view/ShroudView.h"
 
-#include "../figImpl/globals.h"
-#include "ShroudView.h"
+#include "fig/globals.h"
+#include "figImpl/globals.h"
 
-const std::chrono::milliseconds ShroudView::CYCLE = std::chrono::milliseconds(1000);
+const std::chrono::milliseconds ShroudView::CYCLE =
+    std::chrono::milliseconds(1000);
 float ShroudView::HEALTH_BAR_WIDTH = 0.5;
 float ShroudView::HEALTH_BAR_HEIGHT = 0.04;
 // z coordinate MUST be equal for FLAT and GLOBE offsets
@@ -11,16 +12,16 @@ const glm::vec3 ShroudView::FLAT_OFFSET = glm::vec3(-12.0, 12.0, 12.0);
 const glm::vec3 ShroudView::GLOBE_OFFSET = glm::vec3(0, 0, 12.0);
 const float ShroudView::UP_SPEED = 0.09;
 
-ShroudView::ShroudView(glm::vec3 p, float barrierHeight) :
-  UnitView(p, 0.38, { 0, 0, HEALTH_BAR_WIDTH, HEALTH_BAR_HEIGHT }, fig::TexturePackType::Initial), _posFlat(p),
-  _posGlobe(p),
-  _beamFlat(*SHADERS_MAP[ShaderType::LINES], p + FLAT_OFFSET, glm::vec3(p.x, p.y, p.z + barrierHeight), 0.05f, 5),
-  _beamGlobe(*SHADERS_MAP[ShaderType::LINES],
-             globeMapper(p + GLOBE_OFFSET),
-             globeMapper(glm::vec3(p.x, p.y, p.z + barrierHeight)),
-             0.05f,
-             5)
-{
+ShroudView::ShroudView(glm::vec3 p, float barrierHeight)
+    : UnitView(p, 0.38, {0, 0, HEALTH_BAR_WIDTH, HEALTH_BAR_HEIGHT},
+               fig::TexturePackType::Initial),
+      _posFlat(p),
+      _posGlobe(p),
+      _beamFlat(*SHADERS_MAP[ShaderType::LINES], p + FLAT_OFFSET,
+                glm::vec3(p.x, p.y, p.z + barrierHeight), 0.05f, 5),
+      _beamGlobe(*SHADERS_MAP[ShaderType::LINES], globeMapper(p + GLOBE_OFFSET),
+                 globeMapper(glm::vec3(p.x, p.y, p.z + barrierHeight)), 0.05f,
+                 5) {
   _model = fig::modelLoader->models()[fig::Models::Shroud];
   _model->setActiveTexturesPack(fig::TexturePackType::Initial);
   _hasAnimation = true;
@@ -28,8 +29,7 @@ ShroudView::ShroudView(glm::vec3 p, float barrierHeight) :
   _healthBar.setTexture(fig::assets_dir + "/red.png");
 }
 
-void ShroudView::draw()
-{
+void ShroudView::draw() {
   float p;
   if (_animate) {
     if (_timer.elapsed() >= CYCLE) {
@@ -57,19 +57,27 @@ void ShroudView::draw()
   if (!flatView) {
     auto sp = globeMapper(_posGlobe);
     model = glm::translate(model, sp);
-    model = glm::rotate(model, glm::radians(_angle + 90), glm::vec3(glm::normalize(position())));
-    model = glm::rotate(model, _posGlobe.x * std::sqrt(2.0f) / R, glm::vec3(0, 0, 1));
-    model = glm::rotate(model,
-                        -static_cast<float>(2 * atan(_posGlobe.y / (R * (1 + sqrt(2) / 2.0f)))) +
-                          static_cast<float>(M_PI / 2),
-                        glm::vec3(0, 1, 0));
+    model = glm::rotate(model, glm::radians(_angle + 90),
+                        glm::vec3(glm::normalize(position())));
+    model = glm::rotate(model, _posGlobe.x * std::sqrt(2.0f) / R,
+                        glm::vec3(0, 0, 1));
+    model =
+        glm::rotate(model,
+                    -static_cast<float>(
+                        2 * atan(_posGlobe.y / (R * (1 + sqrt(2) / 2.0f)))) +
+                        static_cast<float>(M_PI / 2),
+                    glm::vec3(0, 1, 0));
   } else {
     auto xFactor = ::abs(FLAT_OFFSET.z / FLAT_OFFSET.x);
     auto yFactor = ::abs(FLAT_OFFSET.z / FLAT_OFFSET.y);
-    _posFlat.x = std::max(_position.x + FLAT_OFFSET.x, _posFlat.x - UP_SPEED / xFactor);
-    _posFlat.y = std::min(_position.y + FLAT_OFFSET.y, _posFlat.y + UP_SPEED / yFactor);
+    _posFlat.x =
+        std::max(_position.x + FLAT_OFFSET.x, _posFlat.x - UP_SPEED / xFactor);
+    _posFlat.y =
+        std::min(_position.y + FLAT_OFFSET.y, _posFlat.y + UP_SPEED / yFactor);
     glm::vec3 co = _posFlat - _position;
-    float oyAngle = -M_PI / 2 + ::abs(::atan(co.z / ::sqrt(::pow(co.x, 2) + ::pow(co.y, 2))));
+    float oyAngle =
+        -M_PI / 2 +
+        ::abs(::atan(co.z / ::sqrt(::pow(co.x, 2) + ::pow(co.y, 2))));
     float ozAngle = M_PI / 2 - ::atan(co.z / co.y);
     model = glm::translate(model, _posFlat);
     model = glm::rotate(model, -ozAngle, glm::vec3(0.0f, 0.0f, 1.0f));
@@ -84,23 +92,13 @@ void ShroudView::draw()
     drawBeam();
   }
 }
-glm::vec3 ShroudView::positionFlat() const
-{
-  return _posFlat;
-}
+glm::vec3 ShroudView::positionFlat() const { return _posFlat; }
 
-glm::vec3 ShroudView::positionGlobe() const
-{
-  return _posGlobe;
-}
+glm::vec3 ShroudView::positionGlobe() const { return _posGlobe; }
 
-void ShroudView::startAnimation()
-{
-  _animate = true;
-}
+void ShroudView::startAnimation() { _animate = true; }
 
-void ShroudView::drawBeam()
-{
+void ShroudView::drawBeam() {
   if (!flatView) {
     _beamGlobe.render();
   } else {
@@ -108,12 +106,8 @@ void ShroudView::drawBeam()
   }
 }
 
-bool ShroudView::setUp() const
-{
-  return _setUp;
-}
+bool ShroudView::setUp() const { return _setUp; }
 
-bool ShroudView::onOrbit() const
-{
+bool ShroudView::onOrbit() const {
   return (_posFlat.z == _position.z + FLAT_OFFSET.z);
 }

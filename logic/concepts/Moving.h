@@ -1,14 +1,13 @@
-#ifndef MOVING_H
-#define MOVING_H
+#pragma once
 
-#include "../../fig/Path.h"
-#include "../../fig/Terrain.h"
-#include "../../view/UnitView.h"
+#include "fig/Path.h"
+#include "fig/Terrain.h"
+#include "helpers/crtp_helper.h"
+#include "view/UnitView.h"
 
-template<typename T>
-class Moving
-{
-public:
+template <typename T>
+class Moving : public crtp<T, Moving> {
+ public:
   Moving(UnitView* view, float speed);
   virtual ~Moving() = default;
   Moving(const Moving&) = delete;
@@ -19,20 +18,18 @@ public:
   void move();
   bool isMoving();
   void setRoute(glm::vec3 endPoint);
-  void setTerrain(fig::Terrain* terrain);
+  void setTerrain(fig::Terrain& terrain);
 
-protected:
+ protected:
   void startMoving(glm::vec2 endPoint);
   void stopMoving();
   float getMouseAngle(int mouseX, int mouseY);
 
   UnitView* _view;
   float _speed;
-  glm::vec2 _moveIncrement{ 0, 0 };
+  glm::vec2 _moveIncrement{0, 0};
   glm::vec2 _destination;
   fig::Terrain* _terrain;
   fig::APath _movingRoute;
   static const float MOVE_STOP_TOL;
 };
-
-#endif

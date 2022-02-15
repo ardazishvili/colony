@@ -1,24 +1,24 @@
-#ifndef COLONY_GAME_LAYER_H
-#define COLONY_GAME_LAYER_H
+#pragma once
 
 #include <memory>
 
-#include "../fig/Application.h"
-#include "../fig/EventManager.h"
-#include "../fig/GameLayer.h"
-#include "../fig/Skybox.h"
-#include "../fig/Terrain.h"
-
-#include "../logic/Game.h"
+#include "fig/Application.h"
+#include "fig/EventManager.h"
+#include "fig/GameLayer.h"
+#include "fig/Skybox.h"
+#include "fig/Terrain.h"
+#include "logic/Game.h"
 
 class Window;
 class Camera;
-class ColonyGameLayer : public fig::GameLayer
-{
-public:
-  ColonyGameLayer(const fig::AppEnv& env) :
-    _window(env.window), _camera(env.camera), _light(env.light), _view(env.view), _projection(env.projection)
-  {
+class ColonyGameLayer : public fig::GameLayer {
+ public:
+  ColonyGameLayer(const fig::AppEnv& env)
+      : _window(env.window),
+        _camera(env.camera),
+        _light(env.light),
+        _view(env.view),
+        _projection(env.projection) {
     init();
   }
   void init() override;
@@ -27,7 +27,7 @@ public:
 
   std::function<void(std::unique_ptr<fig::Event> event)> onEvent();
 
-private:
+ private:
   std::unique_ptr<fig::AStar> _astar;
 
   fig::Window* _window;
@@ -43,5 +43,3 @@ private:
 
   std::function<void(std::unique_ptr<fig::Event> event)> _onEvent;
 };
-
-#endif

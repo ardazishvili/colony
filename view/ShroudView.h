@@ -1,13 +1,10 @@
-#ifndef SHROUD_VIEW_H
-#define SHROUD_VIEW_H
+#pragma once
 
-#include "../fig/Beam.h"
+#include "fig/Beam.h"
+#include "view/UnitView.h"
 
-#include "UnitView.h"
-
-class ShroudView : public UnitView
-{
-public:
+class ShroudView : public UnitView {
+ public:
   ShroudView(glm::vec3 position, float barrierHeight);
   void draw() override;
   void drawBeam();
@@ -20,15 +17,15 @@ public:
   bool setUp() const;
   bool onOrbit() const;
 
-private:
+ private:
   std::shared_ptr<fig::Model> _model;
   Timer _timer;
-  bool _animate{ false };
-  bool _setUp{ false };
+  bool _animate{false};
+  bool _setUp{false};
   fig::Beam _beamFlat;
   fig::Beam _beamGlobe;
-  glm::vec3 _posGlobe{ 0.0f };
-  glm::vec3 _posFlat{ 0.0f };
+  glm::vec3 _posGlobe{0.0f};
+  glm::vec3 _posFlat{0.0f};
 
   static float HEALTH_BAR_WIDTH;
   static float HEALTH_BAR_HEIGHT;
@@ -37,5 +34,3 @@ private:
   static const glm::vec3 GLOBE_OFFSET;
   static const float UP_SPEED;
 };
-
-#endif
