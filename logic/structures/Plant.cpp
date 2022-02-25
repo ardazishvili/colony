@@ -1,5 +1,4 @@
-#include "Plant.h"
+#include "logic/structures/Plant.h"
 
-Plant::Plant(glm::vec3 position) : AbstractPlant(std::make_unique<PlantView>(position))
-{
-}
+Plant::Plant(glm::vec3 position)
+    : AbstractPlant(std::make_unique<PlantView>(position)) {}

@@ -1,19 +1,16 @@
-#ifndef TANK_FACTORY_BUILDER_H
-#define TANK_FACTORY_BUILDER_H
+#pragma once
 
-#include "AbstractStructureBuilder.h"
+#include "fig/math/AStar.h"
+#include "logic/builders/AbstractStructureBuilder.h"
 
-class TankFactoryBuilder : public AbstractStructureBuilder
-{
-public:
-  TankFactoryBuilder(Game* game, ColonyEventManager* eventManager, fig::AStar* router);
+class TankFactoryBuilder : public AbstractStructureBuilder {
+ public:
+  TankFactoryBuilder(ColonyEventManager* eventManager, fig::AStar& router);
   ~TankFactoryBuilder();
 
-  void create() override;
+  void addToGame(Game& game) override;
   fig::MenuTextures getPreviewType() override;
 
-private:
-  fig::AStar* _router;
+ private:
+  fig::AStar& _router;
 };
-
-#endif

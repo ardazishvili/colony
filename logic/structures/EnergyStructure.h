@@ -1,13 +1,8 @@
-#ifndef ENERGY_STRUCTURE_H
-#define ENERGY_STRUCTURE_H
+#pragma once
 
-#include "GroundStructure.h"
+#include "logic/structures/GroundStructure.h"
 
-class EnergyStructure : public GroundStructure
-{
-
-public:
+class EnergyStructure : public GroundStructure {
+ public:
   EnergyStructure(std::unique_ptr<StructureView> view);
 };
-
-#endif

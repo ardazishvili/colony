@@ -1,27 +1,22 @@
-#include "../../figImpl/ColonyEventManager.h"
-
-#include "../Game.h"
-#include "../structures/TankFactory.h"
 #include "TankFactoryBuilder.h"
 
-TankFactoryBuilder::TankFactoryBuilder(Game* game, ColonyEventManager* eventManager, fig::AStar* router) :
-  AbstractStructureBuilder(game, eventManager), _router(router)
-{
-}
+#include "figImpl/ColonyEventManager.h"
+#include "logic/Game.h"
+#include "logic/structures/TankFactory.h"
 
-void TankFactoryBuilder::create()
-{
+TankFactoryBuilder::TankFactoryBuilder(ColonyEventManager* eventManager,
+                                       fig::AStar& router)
+    : AbstractStructureBuilder(eventManager), _router(router) {}
+
+void TankFactoryBuilder::addToGame(Game& game) {
   auto structure = std::make_shared<TankFactory>(_router, glm::vec3());
-  _game->addStructure(structure);
+  game.addStructure(structure);
   _eventManager->setStructureToBuild(structure);
   _eventManager->setStructureToBuildStage(BuildStage::SetPosition);
 }
 
-fig::MenuTextures TankFactoryBuilder::getPreviewType()
-{
+fig::MenuTextures TankFactoryBuilder::getPreviewType() {
   return fig::MenuTextures::TankFactory;
 }
 
-TankFactoryBuilder::~TankFactoryBuilder()
-{
-}
+TankFactoryBuilder::~TankFactoryBuilder() {}

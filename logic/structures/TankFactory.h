@@ -1,32 +1,26 @@
-#ifndef TANK_FACTORY_H
-#define TANK_FACTORY_H
+#pragma once
 
-#include "../units/Tank.h"
-#include "GroundStructure.h"
-
-#include "../../view/TankFactoryView.h"
+#include "logic/Game.h"
+#include "logic/structures/GroundStructure.h"
+#include "logic/units/Tank.h"
+#include "view/TankFactoryView.h"
 
 class Game;
 
-class TankFactory : public GroundStructure
-{
-public:
+class TankFactory : public GroundStructure {
+ public:
   TankFactory() = delete;
-  TankFactory(fig::AStar* router, glm::vec3 position);
+  TankFactory(fig::AStar& router, glm::vec3 position);
 
-  void createTank(Game* game, Tank::Type tankType, HealthLevel healthLevel, Shell::Size shellSize);
-  UnitBuilders getUnitBuilders(Game* game) override;
+  void createTank(Game& game, Tank::Type tankType, HealthLevel healthLevel,
+                  Shell::Size shellSize);
+  UnitBuilders getUnitBuilders() override;
   StructureBuilders getStructureBuilders() override;
 
-private:
-  void addUnitBuilder(Game* game,
-                      UnitBuilders& builders,
-                      Tank::Type type,
-                      HealthLevel healthLevel,
-                      Shell::Size shellSize);
+ private:
+  void addUnitBuilder(UnitBuilders& builders, Tank::Type type,
+                      HealthLevel healthLevel, Shell::Size shellSize);
 
   static const int TANK_FACTORY_HP;
-  fig::AStar* _router{ nullptr };
+  fig::AStar& _router;
 };
-
-#endif

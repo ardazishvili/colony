@@ -1,23 +1,22 @@
 #include "BarrierBuilder.h"
-#include "../../figImpl/ColonyEventManager.h"
-#include "../Game.h"
-#include "../structures/Barrier.h"
 
-BarrierBuilder::BarrierBuilder(Game* game, ColonyEventManager* eventManager, fig::Terrain* terrain, fig::AStar* astar) :
-  AbstractStructureBuilder(game, eventManager), _terrain(terrain), _astar(astar)
-{
-}
+#include "figImpl/ColonyEventManager.h"
+#include "logic/structures/Barrier.h"
 
-void BarrierBuilder::create()
-{
+BarrierBuilder::BarrierBuilder(ColonyEventManager* eventManager,
+                               fig::Terrain& terrain, fig::AStar& astar)
+    : AbstractStructureBuilder(eventManager),
+      _terrain(terrain),
+      _astar(astar) {}
+
+void BarrierBuilder::addToGame(Game& game) {
   auto structure = std::make_shared<Barrier>(glm::vec3(), _terrain, _astar);
-  _game->addStructure(structure);
-  _game->addShroud(structure->shroud());
+  game.addStructure(structure);
+  game.addShroud(structure->shroud());
   _eventManager->setStructureToBuild(structure);
   _eventManager->setStructureToBuildStage(BuildStage::SetPosition);
 }
 
-fig::MenuTextures BarrierBuilder::getPreviewType()
-{
+fig::MenuTextures BarrierBuilder::getPreviewType() {
   return fig::MenuTextures::Barrier;
 }

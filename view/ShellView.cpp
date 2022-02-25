@@ -1,15 +1,12 @@
-#include "../fig/globals.h"
+#include "view/ShellView.h"
 
-#include "ShellView.h"
+#include "fig/globals.h"
 
-ShellView::ShellView(glm::vec3 position) : View(position)
-{
+ShellView::ShellView(glm::vec3 position) : View(position) {
   _model = fig::modelLoader->models()[fig::Models::Shell];
 }
 
-void ShellView::draw()
-{
-
+void ShellView::draw() {
   auto model = glm::mat4(1.0f);
   model = glm::translate(model, _position);
   model = glm::scale(model, glm::vec3(0.6f, 0.6f, 0.6f));
@@ -19,8 +16,7 @@ void ShellView::draw()
   _model->render();
 }
 
-void ShellView::move(glm::vec2 moveIncrement)
-{
+void ShellView::move(glm::vec2 moveIncrement) {
   _position.x += moveIncrement.x;
   _position.y += moveIncrement.y;
 }

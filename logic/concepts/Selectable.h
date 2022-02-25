@@ -1,13 +1,12 @@
-#ifndef SELECTABLE_H
-#define SELECTABLE_H
+#pragma once
 
-#include "../../fig/LinesObject.h"
-#include "../../view/SelectableView.h"
+#include "fig/LinesObject.h"
+#include "helpers/crtp_helper.h"
+#include "view/SelectableView.h"
 
-template<typename T>
-class Selectable
-{
-public:
+template <typename T>
+class Selectable : public crtp<T, Selectable> {
+ public:
   Selectable(SelectableView* view);
   virtual ~Selectable() = default;
   Selectable(const Selectable&) = delete;
@@ -20,8 +19,6 @@ public:
   void select();
   void deselect();
 
-private:
+ private:
   SelectableView* _view;
 };
-
-#endif

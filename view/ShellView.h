@@ -1,16 +1,11 @@
-#ifndef SHELL_VIEW_H
-#define SHELL_VIEW_H
+#pragma
 
-#include "../fig/Model.h"
+#include "fig/Model.h"
+#include "view/View.h"
 
-#include "View.h"
-
-class ShellView : public View
-{
-public:
+class ShellView : public View {
+ public:
   ShellView(glm::vec3 position);
   void draw() override;
   void move(glm::vec2 moveIncrement);
 };
-
-#endif

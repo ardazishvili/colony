@@ -1,39 +1,33 @@
-#include "Selectable.h"
-#include "../structures/GroundStructure.h"
-#include "../units/AttackUnit.h"
+#include "logic/concepts/Selectable.h"
 
-template<typename T>
-Selectable<T>::Selectable(SelectableView* view) : _view(view)
-{
-}
+#include "logic/structures/GroundStructure.h"
+#include "logic/units/AttackUnit.h"
 
-template<typename T>
-void Selectable<T>::select()
-{
-  T* derived = static_cast<T*>(this);
-  derived->_status = Status::Selected;
+template <typename T>
+Selectable<T>::Selectable(SelectableView* view) : _view(view) {}
+
+template <typename T>
+void Selectable<T>::select() {
+  this->wrapped()._status = Status::Selected;
   _view->setTexture(Status::Selected);
 }
 
-template<typename T>
-void Selectable<T>::deselect()
-{
-  T* derived = static_cast<T*>(this);
-  if (derived->_status != Status::Destroyed) {
-    derived->_status = Status::None;
+template <typename T>
+void Selectable<T>::deselect() {
+  T& wrapped = this->wrapped();
+  if (wrapped._status != Status::Destroyed) {
+    wrapped._status = Status::None;
     _view->setTexture(Status::None);
   }
 }
 
-template<typename T>
-bool Selectable<T>::isUnderCursor(const glm::vec3& mousePoint)
-{
+template <typename T>
+bool Selectable<T>::isUnderCursor(const glm::vec3& mousePoint) {
   return _view->contain(mousePoint);
 }
 
-template<typename T>
-bool Selectable<T>::isInsideArea(fig::Points area)
-{
+template <typename T>
+bool Selectable<T>::isInsideArea(fig::Points area) {
   auto tmp = _view->position();
   assert(area.size() == 4);
   auto m = glm::vec2(tmp.x, tmp.y);
@@ -43,8 +37,10 @@ bool Selectable<T>::isInsideArea(fig::Points area)
   glm::vec2 am = m - a;
   glm::vec2 ab = b - a;
   glm::vec2 ad = d - a;
-  const bool cond1 = (0.0f < glm::dot(am, ab)) && (glm::dot(am, ab) < glm::dot(ab, ab));
-  const bool cond2 = (0.0f < glm::dot(am, ad)) && (glm::dot(am, ad) < glm::dot(ad, ad));
+  const bool cond1 =
+      (0.0f < glm::dot(am, ab)) && (glm::dot(am, ab) < glm::dot(ab, ab));
+  const bool cond2 =
+      (0.0f < glm::dot(am, ad)) && (glm::dot(am, ad) < glm::dot(ad, ad));
   return cond1 && cond2;
 }
 

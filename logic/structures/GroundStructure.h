@@ -1,26 +1,21 @@
-#ifndef GROUND_STRUCTURE_H
-#define GROUND_STRUCTURE_H
+#pragma once
 
-#include "../concepts/Buildable.h"
-#include "../concepts/Selectable.h"
-#include "Structure.h"
+#include "logic/concepts/Buildable.h"
+#include "logic/concepts/Selectable.h"
+#include "logic/structures/Structure.h"
 
-class GroundStructure
-  : public Buildable
-  , public Structure<GroundStructure>
-  , public Selectable<GroundStructure>
-{
-public:
+class GroundStructure : public Buildable,
+                        public Structure<GroundStructure>,
+                        public Selectable<GroundStructure> {
+ public:
   GroundStructure(std::unique_ptr<StructureView> view);
-  virtual UnitBuilders getUnitBuilders(Game* game) = 0;
+  virtual UnitBuilders getUnitBuilders() = 0;
   virtual StructureBuilders getStructureBuilders() = 0;
   void render() override;
 
-protected:
+ protected:
   friend Selectable;
   friend Structure;
 
   std::unique_ptr<StructureView> _view;
 };
-
-#endif

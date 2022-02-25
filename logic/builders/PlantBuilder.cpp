@@ -1,26 +1,24 @@
 #include "PlantBuilder.h"
-#include "../Game.h"
-#include "../structures/Plant.h"
 
-PlantBuilder::PlantBuilder(Game* game, Barrier& barrier, fig::Terrain* terrain) :
-  AbstractPlantBuilder(game, barrier, terrain)
-{
-}
+#include "logic/Game.h"
+#include "logic/structures/Plant.h"
 
-void PlantBuilder::create()
-{
+PlantBuilder::PlantBuilder(Barrier& barrier, fig::Terrain& terrain)
+    : AbstractPlantBuilder(barrier, terrain) {}
+
+void PlantBuilder::addToGame(Game& game) {
   auto randomPos = generateUniformPosition();
   auto pos = _barrier.position();
   pos.x += randomPos.x;
   pos.y += randomPos.y;
-  pos.z = _terrain->getXYZ(glm::vec2(pos.x, pos.y)).z + fig::Terrain::SUBTERRAIN_OFFSET;
+  pos.z = _terrain.getXYZ(glm::vec2(pos.x, pos.y)).z +
+          fig::Terrain::SUBTERRAIN_OFFSET;
   auto plant = std::make_shared<Plant>(pos);
 
   _barrier.addPlant(plant);
-  _game->addPlant(plant);
+  game.addPlant(plant);
 }
 
-fig::MenuTextures PlantBuilder::getPreviewType()
-{
+fig::MenuTextures PlantBuilder::getPreviewType() {
   return fig::MenuTextures::Plant;
 }

@@ -1,21 +1,15 @@
-#include "../fig/globals.h"
+#include "view/TankView.h"
 
-#include "../logic/concepts/Buildable.h"
-#include "TankView.h"
+#include "fig/globals.h"
+#include "logic/concepts/Buildable.h"
 
-float TankView::TANK_GUN_ANGLE_INCREMENT = 1.5;
-float TankView::TANK_GUN_ANGLE_TOLERANCE = 1.5;
-float TankView::TANK_HEALTH_BAR_WIDTH = 0.5;
-float TankView::TANK_HEALTH_BAR_HEIGHT = 0.04;
 std::map<Status, unsigned int> tankTexturesMap;
 
-TankView::TankView(glm::vec3 position, float tankTypeScaling) :
-  AttackUnitView(position,
-                 0.38,
-                 { 0, 0, TANK_HEALTH_BAR_WIDTH, TANK_HEALTH_BAR_HEIGHT },
-                 fig::TexturePackType::Initial),
-  _tankTypeScaleFactor(tankTypeScaling)
-{
+TankView::TankView(glm::vec3 position, float tankTypeScaling)
+    : AttackUnitView(position, 0.38,
+                     {0, 0, TANK_HEALTH_BAR_WIDTH, TANK_HEALTH_BAR_HEIGHT},
+                     fig::TexturePackType::Initial),
+      _tankTypeScaleFactor(tankTypeScaling) {
   _objScale = tankTypeScaling;
   _model = fig::modelLoader->models()[fig::Models::Tank];
   _hasAnimation = true;
@@ -23,8 +17,7 @@ TankView::TankView(glm::vec3 position, float tankTypeScaling) :
   _healthBar.setTexture(fig::assets_dir + "/red.png");
 }
 
-void TankView::draw()
-{
+void TankView::draw() {
   _shader.use();
   updateGun();
   auto percent = _currentGunAngle / 360.0f;
@@ -48,18 +41,11 @@ void TankView::draw()
   showHealthBar();
 }
 
-void TankView::move(glm::vec3 newPosition)
-{
-  _position = newPosition;
-}
+void TankView::move(glm::vec3 newPosition) { _position = newPosition; }
 
-void TankView::rotateBody(float degreeAngle)
-{
-  _angle = -degreeAngle;
-}
+void TankView::rotateBody(float degreeAngle) { _angle = -degreeAngle; }
 
-void TankView::rotateGun(float degreeAngle)
-{
+void TankView::rotateGun(float degreeAngle) {
   _targetGunAngle = degreeAngle - _angle;
   if (_targetGunAngle > 360.0f) {
     _targetGunAngle -= 360.0f;
@@ -70,8 +56,7 @@ void TankView::rotateGun(float degreeAngle)
   }
 }
 
-void TankView::updateGun()
-{
+void TankView::updateGun() {
   auto delta = _targetGunAngle - _currentGunAngle;
   if (delta < -180.0f) {
     if (_currentGunAngle > 180.0f) {

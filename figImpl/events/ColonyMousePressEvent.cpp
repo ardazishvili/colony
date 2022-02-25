@@ -1,14 +1,14 @@
-#include "ColonyMousePressEvent.h"
-#include "../ColonyEventManager.h"
+#include "figImpl/events/ColonyMousePressEvent.h"
 
 #include <GLFW/glfw3.h>
 
-ColonyMousePressedEvent::ColonyMousePressedEvent(int button) : MousePressEvent(button)
-{
-}
+#include "figImpl/ColonyEventManager.h"
 
-void ColonyMousePressedEvent::process(fig::Camera* camera, fig::EventManager* eventManager)
-{
+ColonyMousePressedEvent::ColonyMousePressedEvent(int button)
+    : MousePressEvent(button) {}
+
+void ColonyMousePressedEvent::process(fig::Camera* camera,
+                                      fig::EventManager* eventManager) {
   if (_button == GLFW_MOUSE_BUTTON_MIDDLE) {
     handleMousePressedMiddle(eventManager);
   }
@@ -20,8 +20,8 @@ void ColonyMousePressedEvent::process(fig::Camera* camera, fig::EventManager* ev
   }
 }
 
-void ColonyMousePressedEvent::handleMousePressedLeft(fig::EventManager* eventManager)
-{
+void ColonyMousePressedEvent::handleMousePressedLeft(
+    fig::EventManager* eventManager) {
   // TODO downcast
   auto m = dynamic_cast<ColonyEventManager*>(eventManager);
 
@@ -33,26 +33,26 @@ void ColonyMousePressedEvent::handleMousePressedLeft(fig::EventManager* eventMan
   m->_obstaclesSegment.reset();
   m->_selection.setStart(tmp);
 
-  m->_tankSelected = m->_game->getAttackUnit(c, true);
-  m->_structureSelected = m->_game->getStructure(c);
+  m->_tankSelected = m->_game.getAttackUnit(c, true);
+  m->_structureSelected = m->_game.getStructure(c);
   if (!m->_structureSelected) {
-    m->_structureSelected = m->_game->getStructure(c);
-    if (!m->_structureSelected && m->_game->panelIsEmpty(Panel::Type::Units)) {
-      m->_game->clearPanel(Panel::Type::Units);
+    m->_structureSelected = m->_game.getStructure(c);
+    if (!m->_structureSelected && m->_game.panelIsEmpty(Panel::Type::Units)) {
+      m->_game.clearPanel(Panel::Type::Units);
     }
   }
 }
 
-void ColonyMousePressedEvent::handleMousePressedRight(fig::EventManager* eventManager)
-{
+void ColonyMousePressedEvent::handleMousePressedRight(
+    fig::EventManager* eventManager) {
   // TODO downcast
   auto m = dynamic_cast<ColonyEventManager*>(eventManager);
 
   auto c = fig::EventManager::unProject(m->_window, m->_view, m->_projection);
   // TODO remove copypaste for one tank and group of tanks
   if (m->_tankSelected) {
-    m->_tankUnderAttack = m->_game->getAttackUnit(c);
-    m->_structureUnderAttack = m->_game->getStructure(c);
+    m->_tankUnderAttack = m->_game.getAttackUnit(c);
+    m->_structureUnderAttack = m->_game.getStructure(c);
     if (m->_tankUnderAttack) {
       m->_tankSelected->startShooting(m->_tankUnderAttack);
     } else if (m->_structureUnderAttack) {
@@ -61,16 +61,18 @@ void ColonyMousePressedEvent::handleMousePressedRight(fig::EventManager* eventMa
       m->_tankSelected->setRoute(c);
     }
   }
-  if (m->_structureToBuild && (m->_structureToBuildStage == BuildStage::SetPosition)) {
+  if (m->_structureToBuild &&
+      (m->_structureToBuildStage == BuildStage::SetPosition)) {
     std::cout << "setting position" << std::endl;
     m->_structureToBuildStage = BuildStage::SetAngle;
-  } else if (m->_structureToBuild && (m->_structureToBuildStage == BuildStage::SetAngle)) {
+  } else if (m->_structureToBuild &&
+             (m->_structureToBuildStage == BuildStage::SetAngle)) {
     std::cout << "setting angle" << std::endl;
     m->_structureToBuild->commit();
     m->_structureToBuild = nullptr;
   } else if (!m->_tanksSelected.empty()) {
-    m->_tankUnderAttack = m->_game->getAttackUnit(c);
-    m->_structureUnderAttack = m->_game->getStructure(c);
+    m->_tankUnderAttack = m->_game.getAttackUnit(c);
+    m->_structureUnderAttack = m->_game.getStructure(c);
     if (m->_tankUnderAttack) {
       m->_tanksSelected.startShooting(m->_tankUnderAttack);
     } else if (m->_structureUnderAttack) {
@@ -81,13 +83,13 @@ void ColonyMousePressedEvent::handleMousePressedRight(fig::EventManager* eventMa
   }
 }
 
-void ColonyMousePressedEvent::handleMousePressedMiddle(fig::EventManager* eventManager)
-{
+void ColonyMousePressedEvent::handleMousePressedMiddle(
+    fig::EventManager* eventManager) {
   // TODO downcast
   auto m = dynamic_cast<ColonyEventManager*>(eventManager);
 
   m->pressMouse(fig::MouseButton::MIDDLE);
   double xpos, ypos;
-  m->_window->getCursorPos(&xpos, &ypos);
+  m->_window.getCursorPos(&xpos, &ypos);
   m->_middleLastPressed = glm::vec2(xpos, ypos);
 }

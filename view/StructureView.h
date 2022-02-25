@@ -1,21 +1,16 @@
-#ifndef STRUCTURE_VIEW_H
-#define STRUCTURE_VIEW_H
+#pragma once
 
-#include "SelectableView.h"
+#include "view/SelectableView.h"
 
-class StructureView : public SelectableView
-{
-public:
-  StructureView(glm::vec3 position,
-                float selectionRadius,
+class StructureView : public SelectableView {
+ public:
+  StructureView(glm::vec3 position, float selectionRadius,
                 HealthBarParams healthBarParams,
                 fig::TexturePackType texturesType);
 
   void rotate(float degreeAngle);
   void move(glm::vec3 position);
 
-protected:
+ protected:
   void showHealthBar() override;
 };
-
-#endif

@@ -1,28 +1,24 @@
-#ifndef ATTACK_UNIT_H
-#define ATTACK_UNIT_H
+#pragma once
 
-#include "../../view/AttackUnitView.h"
-#include "../concepts/Attacking.h"
-#include "../concepts/Moving.h"
-#include "../concepts/Selectable.h"
-#include "Unit.h"
+#include "logic/concepts/Attacking.h"
+#include "logic/concepts/Moving.h"
+#include "logic/concepts/Selectable.h"
+#include "logic/units/Unit.h"
+#include "view/AttackUnitView.h"
 
-class AttackUnit
-  : public Buildable
-  , public Unit<AttackUnit>
-  , public Attacking<AttackUnit>
-  , public Moving<AttackUnit>
-  , public Selectable<AttackUnit>
-{
-public:
-  AttackUnit(std::unique_ptr<AttackUnitView> view, fig::AStar* router, Shell::Size sh, float speed);
+class AttackUnit : public Buildable,
+                   public Unit<AttackUnit>,
+                   public Attacking<AttackUnit>,
+                   public Moving<AttackUnit>,
+                   public Selectable<AttackUnit> {
+ public:
+  AttackUnit(std::unique_ptr<AttackUnitView> view, fig::AStar& router,
+             Shell::Size sh, float speed);
   void render() override;
 
-protected:
+ protected:
   friend Attacking;
   friend Moving;
   friend Selectable;
   std::unique_ptr<AttackUnitView> _view;
 };
-
-#endif

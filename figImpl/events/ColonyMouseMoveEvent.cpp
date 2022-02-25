@@ -1,15 +1,16 @@
-#include "ColonyMouseMoveEvent.h"
-#include "../ColonyEventManager.h"
+#include "figImpl/events/ColonyMouseMoveEvent.h"
 
-ColonyMouseMoveEvent::ColonyMouseMoveEvent(double xpos, double ypos) : MouseMoveEvent(xpos, ypos)
-{
-}
+#include "figImpl/ColonyEventManager.h"
 
-void ColonyMouseMoveEvent::process(fig::Camera* camera, fig::EventManager* eventManager)
-{
+ColonyMouseMoveEvent::ColonyMouseMoveEvent(double xpos, double ypos)
+    : MouseMoveEvent(xpos, ypos) {}
+
+void ColonyMouseMoveEvent::process(fig::Camera* camera,
+                                   fig::EventManager* eventManager) {
   // TODO downcast
   auto m = dynamic_cast<ColonyEventManager*>(eventManager);
-  if (m->isKeyPressed(fig::KeyButton::LEFT_SHIFT) && m->isMousePressed(fig::MouseButton::MIDDLE)) {
+  if (m->isKeyPressed(fig::KeyButton::LEFT_SHIFT) &&
+      m->isMousePressed(fig::MouseButton::MIDDLE)) {
     auto deltaX = _xpos - m->_middleLastPressed.x;
     auto deltaY = _ypos - m->_middleLastPressed.y;
 
@@ -42,7 +43,8 @@ void ColonyMouseMoveEvent::process(fig::Camera* camera, fig::EventManager* event
   }
 
   auto c = fig::EventManager::unProject(m->_window, m->_view, m->_projection);
-  if (m->_structureToBuild && (m->_structureToBuildStage == BuildStage::SetAngle)) {
+  if (m->_structureToBuild &&
+      (m->_structureToBuildStage == BuildStage::SetAngle)) {
     float structureX = m->_structureToBuild->position().x;
     float structureY = m->_structureToBuild->position().y;
     float radianAngle = ::atan((structureY - c.y) / (structureX - c.x));
@@ -52,13 +54,16 @@ void ColonyMouseMoveEvent::process(fig::Camera* camera, fig::EventManager* event
     }
 
     m->_structureToBuild->setAngle(degreeAngle);
-  } else if (m->_structureToBuild && (m->_structureToBuildStage == BuildStage::SetPosition)) {
-    auto position = fig::EventManager::unProject(m->_window, m->_view, m->_projection);
-    auto [maxX, maxY] = m->_terrain->getMaxXy();
+  } else if (m->_structureToBuild &&
+             (m->_structureToBuildStage == BuildStage::SetPosition)) {
+    auto position =
+        fig::EventManager::unProject(m->_window, m->_view, m->_projection);
+    auto [maxX, maxY] = m->_terrain.getMaxXy();
     if (::abs(position.x) > maxX || ::abs(position.y) > maxY) {
       position = glm::vec3(maxX, maxY, 0.0f);
     }
-    m->_structureToBuild->setPosition(m->_terrain->getXYZ(glm::vec2(position.x, position.y)));
+    m->_structureToBuild->setPosition(
+        m->_terrain.getXYZ(glm::vec2(position.x, position.y)));
   }
   if (m->_selectionActive) {
     auto tmp = c;

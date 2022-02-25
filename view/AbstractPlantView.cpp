@@ -1,23 +1,16 @@
-#include "../fig/globals.h"
+#include "view/AbstractPlantView.h"
 
-#include "../figImpl/globals.h"
-#include "AbstractPlantView.h"
+#include "fig/globals.h"
+#include "figImpl/globals.h"
 
-AbstractPlantView::AbstractPlantView(glm::vec3 position) : View(position)
-{
-}
+AbstractPlantView::AbstractPlantView(glm::vec3 position) : View(position) {}
 
-void AbstractPlantView::draw()
-{
+void AbstractPlantView::draw() {
   _shader.use();
   _shader.configure();
   _shader.setBool("animated", false);
   auto model = glm::mat4(1.0f);
-  if (!flatView) {
-    model = globeModel();
-  } else {
-    model = flatModel();
-  }
+  model = flatView ? flatModel() : globeModel();
   _shader.setTransformation("model", glm::value_ptr(model));
   _model->render();
 }

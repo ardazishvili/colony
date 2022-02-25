@@ -1,19 +1,15 @@
-#ifndef COLONY_MOUSE_PRESS_EVENT_H
-#define COLONY_MOUSE_PRESS_EVENT_H
+#pragma once
 
-#include "../../fig/events/Event.h"
+#include "fig/events/Event.h"
 
-class ColonyMousePressedEvent : public fig::MousePressEvent
-{
-public:
+class ColonyMousePressedEvent : public fig::MousePressEvent {
+ public:
   ColonyMousePressedEvent(int button);
 
   void process(fig::Camera* camera, fig::EventManager* eventManager) override;
 
-private:
+ private:
   void handleMousePressedLeft(fig::EventManager* m);
   void handleMousePressedRight(fig::EventManager* m);
   void handleMousePressedMiddle(fig::EventManager* m);
 };
-
-#endif

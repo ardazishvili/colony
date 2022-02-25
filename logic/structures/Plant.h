@@ -1,15 +1,11 @@
-#ifndef PLANT_H
-#define PLANT_H
+#pragma once
 
 #include <glm/glm.hpp>
 
-#include "../../view/PlantView.h"
-#include "AbstractPlant.h"
+#include "logic/structures/AbstractPlant.h"
+#include "view/PlantView.h"
 
-class Plant : public AbstractPlant
-{
-public:
+class Plant : public AbstractPlant {
+ public:
   Plant(glm::vec3 position);
 };
-
-#endif

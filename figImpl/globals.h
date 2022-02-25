@@ -1,8 +1,9 @@
-#include "../fig/Application.h"
-#include "../fig/Config.h"
-#include "../fig/SpdBackend.h"
 #include <memory>
 #include <unordered_map>
+
+#include "fig/Application.h"
+#include "fig/Config.h"
+#include "fig/SpdBackend.h"
 
 enum class ShaderType { TEXTURE, COLOR, COLOR_NON_FLAT, LAMP, LINES, SKYBOX };
 

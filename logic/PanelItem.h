@@ -1,19 +1,15 @@
-#ifndef PANEL_ITEM_H
-#define PANEL_ITEM_H
+#pragma once
 
-#include "../fig/ModelLoader.h"
-#include "builders/AbstractBuilder.h"
+#include "fig/ModelLoader.h"
+#include "logic/builders/AbstractBuilder.h"
 
-class PanelItem
-{
-public:
+class PanelItem {
+ public:
   PanelItem(std::unique_ptr<AbstractBuilder> builder);
   GLuint texture() const;
   AbstractBuilder* getBuilder();
 
-private:
+ private:
   std::unique_ptr<AbstractBuilder> _builder;
   GLuint _textureId;
 };
-
-#endif

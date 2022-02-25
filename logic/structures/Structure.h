@@ -1,32 +1,33 @@
-#ifndef STRUCTURE_H
-#define STRUCTURE_H
+#pragma once
 
-#include "../concepts/Buildable.h"
-#include "../concepts/Selectable.h"
-
-#include "../../view/StructureView.h"
+#include "helpers/crtp_helper.h"
+#include "logic/concepts/Buildable.h"
+#include "logic/concepts/Selectable.h"
+#include "view/StructureView.h"
 
 enum class BuildStage { SetPosition, SetAngle, Done };
 
-template<typename T>
-class Structure
-{
-public:
+template <typename T>
+class Structure : public crtp<T, Structure> {
+ public:
   Structure(StructureView* view);
-  virtual ~Structure() = default;
   Structure(const Structure&) = delete;
   Structure(Structure&&) = delete;
   Structure& operator=(const Structure&) = delete;
   Structure& operator=(Structure&&) = delete;
+
+  virtual ~Structure() = default;
 
   virtual void commit();
   void setAngle(float angle);
   void setPosition(glm::vec3 position);
   void render();
 
-protected:
-  BuildStage _stage{ BuildStage::SetPosition };
+ protected:
+  BuildStage _stage{BuildStage::SetPosition};
   StructureView* _view;
-};
 
-#endif
+ private:
+  Structure() = default;
+  friend T;
+};

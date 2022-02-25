@@ -1,23 +1,23 @@
-#ifndef VEHICLE_GROUP_H
-#define VEHICLE_GROUP_H
+#pragma once
 
+#include <memory>
 #include <vector>
 
-#include "Tank.h"
+#include "logic/units/AttackUnit.h"
+#include "logic/units/Tank.h"
 
-class VehicleGroup
-{
-public:
+class VehicleGroup {
+ public:
+  using Selected = std::vector<std::shared_ptr<AttackUnit>>;
+
   VehicleGroup() = default;
+  VehicleGroup(Selected c) : _selected(std::move(c)){};
   void add(AttackUnit* unit);
   bool empty() const;
   void startShooting(Buildable* target);
   void setRoute(glm::vec3 destination);
   void clear();
 
-private:
-  using Selected = std::vector<AttackUnit*>;
+ private:
   Selected _selected;
 };
-
-#endif

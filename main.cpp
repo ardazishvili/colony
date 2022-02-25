@@ -1,10 +1,8 @@
 #include "fig/Core.h"
-
 #include "figImpl/ColonyApplication.h"
 #include "figImpl/globals.h"
 
-auto main(int argc, char** argv) -> int
-{
+auto main(int argc, char** argv) -> int {
   try {
     auto app = gApp();
     app->run();

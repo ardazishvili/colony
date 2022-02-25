@@ -1,29 +1,21 @@
-#ifndef TANK_BUILDER_H
-#define TANK_BUILDER_H
+#pragma once
 
-#include "../structures/TankFactory.h"
-#include "../units/Tank.h"
-#include "AbstractUnitBuilder.h"
+#include "logic/builders/AbstractUnitBuilder.h"
+#include "logic/structures/TankFactory.h"
+#include "logic/units/Tank.h"
 
-class TankBuilder : public AbstractUnitBuilder
-{
-public:
-  TankBuilder(Game* game,
-              TankFactory& _tankFactory,
-              Tank::Type tankType,
-              HealthLevel healthLevel,
-              Shell::Size shellSize);
+class TankBuilder : public AbstractUnitBuilder {
+ public:
+  TankBuilder(TankFactory& _tankFactory, Tank::Type tankType,
+              HealthLevel healthLevel, Shell::Size shellSize);
   ~TankBuilder();
 
-  void create() override;
+  void addToGame(Game& game) override;
   fig::MenuTextures getPreviewType() override;
 
-private:
+ private:
   Tank::Type _type;
   HealthLevel _healthLevel;
   Shell::Size _shellSize;
-  Game* _game;
   TankFactory& _tankFactory;
 };
-
-#endif

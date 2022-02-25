@@ -1,23 +1,21 @@
-#ifndef COLONY_GUI_LAYER_H
-#define COLONY_GUI_LAYER_H
+#pragma once
 
 #include <chrono>
 
-#include "../fig/Application.h"
-#include "../fig/GuiLayer.h"
-#include "../fig/ImGuiBackend.h"
+#include "fig/Application.h"
+#include "fig/GuiLayer.h"
+#include "fig/ImGuiBackend.h"
+#include "figImpl/SettingsGui.h"
 
-#include "SettingsGui.h"
-#include <chrono>
-
-class ColonyGuiLayer : public fig::GuiLayer
-{
-public:
-  ColonyGuiLayer(const fig::AppEnv& env) :
-    GuiLayer(env.window, std::make_unique<fig::ImGuiBackend>()),
-    _settingsGui(env.window->width(), env.window->height()), _camera(env.camera), _light(env.light), _view(env.view),
-    _projection(env.projection)
-  {
+class ColonyGuiLayer : public fig::GuiLayer {
+ public:
+  ColonyGuiLayer(const fig::AppEnv& env)
+      : GuiLayer(env.window, std::make_unique<fig::ImGuiBackend>()),
+        _settingsGui(env.window->width(), env.window->height()),
+        _camera(env.camera),
+        _light(env.light),
+        _view(env.view),
+        _projection(env.projection) {
     init();
   }
   ~ColonyGuiLayer();
@@ -25,7 +23,7 @@ public:
   void update() override;
   void render() override;
 
-private:
+ private:
   void showDebug();
 
   SettingsGui _settingsGui;
@@ -37,5 +35,3 @@ private:
   double _prev_time = 0.0;
   int _fps = 0;
 };
-
-#endif

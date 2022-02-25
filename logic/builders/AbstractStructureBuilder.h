@@ -1,22 +1,14 @@
-#ifndef ABSTRACT_STRUCTURE_BUILDER_H
-#define ABSTRACT_STRUCTURE_BUILDER_H
+#pragma once
 
-#include "../../figImpl/globals.h"
-
-#include "AbstractBuilder.h"
+#include "figImpl/globals.h"
+#include "logic/builders/AbstractBuilder.h"
 
 class ColonyEventManager;
-class AbstractStructureBuilder : public AbstractBuilder
-{
-public:
-  AbstractStructureBuilder(Game* game, ColonyEventManager* eventManager) :
-    AbstractBuilder(game), _eventManager(eventManager)
-  {
-  }
-  virtual ~AbstractStructureBuilder() = default;
+class AbstractStructureBuilder : public AbstractBuilder {
+ public:
+  AbstractStructureBuilder(ColonyEventManager* eventManager)
+      : AbstractBuilder(), _eventManager(eventManager) {}
 
-protected:
+ protected:
   ColonyEventManager* _eventManager;
 };
-
-#endif

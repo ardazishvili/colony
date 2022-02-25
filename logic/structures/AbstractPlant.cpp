@@ -1,15 +1,8 @@
-#include "AbstractPlant.h"
+#include "logic/structures/AbstractPlant.h"
 
-AbstractPlant::AbstractPlant(std::unique_ptr<AbstractPlantView> view) : _view(std::move(view))
-{
-}
+AbstractPlant::AbstractPlant(std::unique_ptr<AbstractPlantView> view)
+    : _view(std::move(view)) {}
 
-void AbstractPlant::render()
-{
-  _view->draw();
-}
+void AbstractPlant::render() { _view->draw(); }
 
-glm::vec2 AbstractPlant::position()
-{
-  return _view->position();
-}
+glm::vec2 AbstractPlant::position() { return _view->position(); }

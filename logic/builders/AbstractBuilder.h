@@ -1,33 +1,18 @@
-#ifndef ABSTRACT_BUILDER_H
-#define ABSTRACT_BUILDER_H
+#pragma once
 
-#include "memory"
-
-#include <glm/glm.hpp>
-
-#include "../../fig/ModelLoader.h"
+#include "fig/types.h"
 
 class Game;
-class BuildableStructure;
 
-class AbstractBuilder
-{
-public:
-  AbstractBuilder(Game* game) : _game(game)
-  {
-  }
-
-  virtual void create() = 0;
-  virtual fig::MenuTextures getPreviewType() = 0;
-
-  ~AbstractBuilder() = default;
+class AbstractBuilder {
+ public:
+  AbstractBuilder() = default;
   AbstractBuilder(const AbstractBuilder&) = delete;
   AbstractBuilder(AbstractBuilder&&) = delete;
   AbstractBuilder& operator=(const AbstractBuilder&) = delete;
   AbstractBuilder& operator=(AbstractBuilder&&) = delete;
+  virtual ~AbstractBuilder() = default;
 
-protected:
-  Game* _game;
+  virtual void addToGame(Game& game) = 0;
+  virtual fig::MenuTextures getPreviewType() = 0;
 };
-
-#endif

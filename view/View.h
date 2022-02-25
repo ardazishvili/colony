@@ -1,13 +1,11 @@
-#ifndef VIEW_H
-#define VIEW_H
+#pragma once
 
 #include <memory>
 
-#include "../fig/Model.h"
+#include "fig/Model.h"
 
-class View
-{
-public:
+class View {
+ public:
   View(glm::vec3 position);
   virtual ~View() = default;
   View(const View&) = delete;
@@ -26,17 +24,15 @@ public:
 
   static float VIEW_SCALE;
 
-protected:
+ protected:
   glm::vec3 globeMapper(glm::vec3 p) const;
-  bool _hasAnimation{ false };
+  bool _hasAnimation{false};
   std::shared_ptr<fig::Model> _model;
   fig::Shader& _shader;
   glm::vec3 _position;
-  float _angle{ 0.0f };
-  float _objScale{ 1.0f };
+  float _angle{0.0f};
+  float _objScale{1.0f};
 
-  static const float R;
-  static const float S;
+  static constexpr float R = 4 * M_PI;
+  static constexpr float S = 6 * M_PI;
 };
-
-#endif

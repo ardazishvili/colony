@@ -1,22 +1,20 @@
-#ifndef HQ_BUILDER_H
-#define HQ_BUILDER_H
+#pragma once
 
-#include "../../fig/Terrain.h"
-#include "AbstractStructureBuilder.h"
+#include "fig/Terrain.h"
+#include "fig/math/AStar.h"
+#include "logic/builders/AbstractStructureBuilder.h"
 
 struct AStar;
-class HqBuilder : public AbstractStructureBuilder
-{
-public:
-  HqBuilder(Game* game, ColonyEventManager* eventManager, fig::Terrain* terrain, fig::AStar* router);
+class HqBuilder : public AbstractStructureBuilder {
+ public:
+  HqBuilder(ColonyEventManager* eventManager, fig::Terrain& terrain,
+            fig::AStar& router);
   ~HqBuilder();
 
-  void create() override;
+  void addToGame(Game& game) override;
   fig::MenuTextures getPreviewType() override;
 
-private:
-  fig::Terrain* _terrain;
-  fig::AStar* _router;
+ private:
+  fig::Terrain& _terrain;
+  fig::AStar& _router;
 };
-
-#endif

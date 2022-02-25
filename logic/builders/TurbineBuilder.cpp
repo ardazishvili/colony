@@ -1,23 +1,19 @@
-#include "../../figImpl/ColonyEventManager.h"
-
-#include "../Game.h"
-#include "../structures/Turbine.h"
 #include "TurbineBuilder.h"
 
-TurbineBuilder::TurbineBuilder(Game* game, ColonyEventManager* eventManager) :
-  AbstractStructureBuilder(game, eventManager)
-{
-}
+#include "figImpl/ColonyEventManager.h"
+#include "logic/Game.h"
+#include "logic/structures/Turbine.h"
 
-void TurbineBuilder::create()
-{
-  auto structure = std::make_shared<Turbine>(_game, glm::vec3());
-  _game->addStructure(structure);
+TurbineBuilder::TurbineBuilder(ColonyEventManager* eventManager)
+    : AbstractStructureBuilder(eventManager) {}
+
+void TurbineBuilder::addToGame(Game& game) {
+  auto structure = std::make_shared<Turbine>(game, glm::vec3());
+  game.addStructure(structure);
   _eventManager->setStructureToBuild(structure);
   _eventManager->setStructureToBuildStage(BuildStage::SetPosition);
 }
 
-fig::MenuTextures TurbineBuilder::getPreviewType()
-{
+fig::MenuTextures TurbineBuilder::getPreviewType() {
   return fig::MenuTextures::Turbine;
 }
