@@ -1,5 +1,6 @@
 #include "view/BarrierView.h"
 
+#include "ModelLoader.h"
 #include "fig/Circle.h"
 #include "fig/globals.h"
 #include "fig/third/gui/imgui/imgui.h"
@@ -16,7 +17,7 @@ BarrierView::BarrierView(glm::vec3 p, fig::Terrain* terrain)
           {-0.3, 0, BARRIER_HEALTH_BAR_WIDTH, BARRIER_HEALTH_BAR_HEIGHT},
           fig::TexturePackType::Initial),
       _terrain(terrain) {
-  _model = fig::modelLoader->models()[fig::Models::Barrier];
+  _model = fig::modelLoader->getModel(fig::ModelType::Barrier);
   _model->setActiveTexturesPack(fig::TexturePackType::PreBuild);
   _healthBar.setOffsetZ(1.3f);
   _healthBar.setTexture(fig::assets_dir + "/red.png");
@@ -64,7 +65,7 @@ void BarrierView::draw() {
 
 float BarrierView::radius() const { return _scaleFactor; }
 
-void BarrierView::grow(std::shared_ptr<fig::LivingArea> area) {
+void BarrierView::grow(fig::LivingArea* area) {
   _growFuture = std::async(std::launch::async, [this, area]() {
     auto finalScale = _scaleFactor + BARRIER_SCALE_INCREMENT;
     while (_scaleFactor < finalScale) {

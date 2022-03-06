@@ -21,6 +21,6 @@ class TankFactory : public GroundStructure {
   void addUnitBuilder(UnitBuilders& builders, Tank::Type type,
                       HealthLevel healthLevel, Shell::Size shellSize);
 
-  static const int TANK_FACTORY_HP;
+  static constexpr int TANK_FACTORY_HP = 200;
   fig::AStar& _router;
 };

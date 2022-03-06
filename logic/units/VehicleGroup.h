@@ -8,11 +8,11 @@
 
 class VehicleGroup {
  public:
-  using Selected = std::vector<std::shared_ptr<AttackUnit>>;
+  using Selected = std::vector<AttackUnit*>;
 
   VehicleGroup() = default;
-  VehicleGroup(Selected c) : _selected(std::move(c)){};
-  void add(AttackUnit* unit);
+  VehicleGroup(Selected c) : _selected(c){};
+  void add(AttackUnit* unit) { _selected.push_back(unit); };
   bool empty() const;
   void startShooting(Buildable* target);
   void setRoute(glm::vec3 destination);

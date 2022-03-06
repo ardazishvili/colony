@@ -2,6 +2,8 @@
 
 #include <GLFW/glfw3.h>
 
+#include <memory>
+
 #include "figImpl/ColonyEventManager.h"
 #include "logic/structures/Barrier.h"
 #include "logic/structures/Hq.h"
@@ -30,11 +32,11 @@ void ColonyKeyReleaseEvent::process(fig::Camera* camera,
     std::cout << "X pressed" << std::endl;
     if (em->_structureToBuild == nullptr) {
       em->_structureToBuildStage = BuildStage::SetAngle;
-      auto tankFactory = std::make_shared<TankFactory>(
+      auto tankFactory = std::make_unique<TankFactory>(
           em->_astar, fig::EventManager::unProject(em->_window, em->_view,
                                                    em->_projection));
-      em->_game.addStructure(tankFactory);
-      em->_structureToBuild = tankFactory;
+      em->setStructureToBuild(tankFactory.get());
+      em->_game.addStructure(std::move(tankFactory));
     } else {
       em->_structureToBuild->commit();
       em->_structureToBuild = nullptr;
@@ -44,12 +46,12 @@ void ColonyKeyReleaseEvent::process(fig::Camera* camera,
     std::cout << "C pressed" << std::endl;
     if (em->_structureToBuild == nullptr) {
       em->_structureToBuildStage = BuildStage::SetAngle;
-      auto hq = std::make_shared<Hq>(
+      auto hq = std::make_unique<Hq>(
           em, em->_astar,
           fig::EventManager::unProject(em->_window, em->_view, em->_projection),
           em->_terrain);
-      em->_game.addStructure(hq);
-      em->_structureToBuild = hq;
+      em->setStructureToBuild(hq.get());
+      em->_game.addStructure(std::move(hq));
     } else {
       em->_structureToBuild->commit();
       em->_structureToBuild = nullptr;
@@ -59,12 +61,12 @@ void ColonyKeyReleaseEvent::process(fig::Camera* camera,
     std::cout << "B pressed" << std::endl;
     if (em->_structureToBuild == nullptr) {
       em->_structureToBuildStage = BuildStage::SetAngle;
-      auto b = std::make_shared<Barrier>(
+      auto barrier = std::make_unique<Barrier>(
           fig::EventManager::unProject(em->_window, em->_view, em->_projection),
           em->_terrain, em->_astar);
-      em->_game.addStructure(b);
-      em->_game.addShroud(b->shroud());
-      em->_structureToBuild = b;
+      em->_game.addShroud(barrier->shroud());
+      em->setStructureToBuild(barrier.get());
+      em->_game.addStructure(std::move(barrier));
     } else {
       em->_structureToBuild->commit();
       em->_structureToBuild = nullptr;
@@ -74,11 +76,11 @@ void ColonyKeyReleaseEvent::process(fig::Camera* camera,
     std::cout << "T pressed" << std::endl;
     if (em->_structureToBuild == nullptr) {
       em->_structureToBuildStage = BuildStage::SetAngle;
-      auto b = std::make_shared<Turbine>(
+      auto turbine = std::make_unique<Turbine>(
           em->_game, fig::EventManager::unProject(em->_window, em->_view,
                                                   em->_projection));
-      em->_game.addStructure(b);
-      em->_structureToBuild = b;
+      em->setStructureToBuild(turbine.get());
+      em->_game.addStructure(std::move(turbine));
     } else {
       em->_structureToBuild->commit();
       em->_structureToBuild = nullptr;

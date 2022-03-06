@@ -18,7 +18,6 @@ class ShroudView : public UnitView {
   bool onOrbit() const;
 
  private:
-  std::shared_ptr<fig::Model> _model;
   Timer _timer;
   bool _animate{false};
   bool _setUp{false};

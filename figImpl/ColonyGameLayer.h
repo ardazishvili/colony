@@ -25,7 +25,7 @@ class ColonyGameLayer : public fig::GameLayer {
   void update() override;
   void render() override;
 
-  std::function<void(std::unique_ptr<fig::Event> event)> onEvent();
+  std::function<void(std::unique_ptr<fig::Event>)> onEvent();
 
  private:
   std::unique_ptr<fig::AStar> _astar;
@@ -33,7 +33,7 @@ class ColonyGameLayer : public fig::GameLayer {
   fig::Window* _window;
   fig::Camera* _camera;
   fig::Light* _light;
-  std::shared_ptr<fig::EventManager> _eventManager;
+  std::unique_ptr<fig::EventManager> _eventManager;
   std::unique_ptr<fig::Terrain> _terrain;
   std::unique_ptr<fig::Skybox> _skybox;
   std::unique_ptr<Game> _game;
@@ -41,5 +41,5 @@ class ColonyGameLayer : public fig::GameLayer {
   glm::mat4& _view;
   glm::mat4& _projection;
 
-  std::function<void(std::unique_ptr<fig::Event> event)> _onEvent;
+  std::function<void(std::unique_ptr<fig::Event>)> _onEvent;
 };

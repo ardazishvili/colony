@@ -11,7 +11,7 @@ TurbineView::TurbineView(glm::vec3 p, glm::vec3 spFlat, glm::vec3 spGlobe)
       _shroudPosFlat(spFlat),
       _shroudPosGlobe(spGlobe) {
   _objScale = TURBINE_SCALE_FACTOR;
-  _model = fig::modelLoader->models()[fig::Models::Turbine];
+  _model = fig::modelLoader->getModel(fig::ModelType::Turbine);
   _model->setActiveTexturesPack(fig::TexturePackType::PreBuild);
   _healthBar.setOffsetZ(1.3f);
   _healthBar.setTexture(fig::assets_dir + "/red.png");

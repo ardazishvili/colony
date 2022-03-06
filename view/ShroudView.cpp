@@ -22,7 +22,7 @@ ShroudView::ShroudView(glm::vec3 p, float barrierHeight)
       _beamGlobe(*SHADERS_MAP[ShaderType::LINES], globeMapper(p + GLOBE_OFFSET),
                  globeMapper(glm::vec3(p.x, p.y, p.z + barrierHeight)), 0.05f,
                  5) {
-  _model = fig::modelLoader->models()[fig::Models::Shroud];
+  _model = fig::modelLoader->getModel(fig::ModelType::Shroud);
   _model->setActiveTexturesPack(fig::TexturePackType::Initial);
   _hasAnimation = true;
   _healthBar.setOffsetZ(p.z + 0.3);

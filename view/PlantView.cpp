@@ -4,7 +4,7 @@
 #include "fig/globals.h"
 
 PlantView::PlantView(glm::vec3 position) : AbstractPlantView(position) {
-  _model = fig::modelLoader->models()[fig::Models::Plant];
+  _model = fig::modelLoader->getModel(fig::ModelType::Plant);
   _objScale = 0.01;
 }
 

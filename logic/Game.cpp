@@ -4,15 +4,15 @@
 #include <bits/ranges_base.h>
 
 #include <iterator>
+#include <memory>
 #include <nlohmann/detail/input/input_adapters.hpp>
 #include <vector>
 
 #include "helpers/templates.h"
+#include "logic/concepts/Selectable.h"
 #include "logic/structures/Barrier.h"
 #include "logic/units/AttackUnit.h"
 #include "logic/units/VehicleGroup.h"
-
-Game::Game() {}
 
 void Game::tick() {
   for (auto& tank : _attack_units) {
@@ -35,21 +35,28 @@ void Game::tick() {
   _control->display();
 }
 
-void Game::addTank(std::shared_ptr<Tank> tank) {
+void Game::addTank(std::unique_ptr<Tank> tank) {
   tank->setTerrain(*_terrain);
-  _attack_units.push_back(tank);
+  _attack_units.push_back(std::move(tank));
 }
 
-void Game::addStructure(std::shared_ptr<GroundStructure> buildable) {
-  _structures.push_back(buildable);
+void Game::addTankAndDestination(std::unique_ptr<Tank> tank,
+                                 glm::vec3 destination) {
+  tank->setTerrain(*_terrain);
+  tank->setRoute(destination);
+  _attack_units.push_back(std::move(tank));
+}
+
+void Game::addStructure(std::unique_ptr<GroundStructure> buildable) {
+  _structures.push_back(std::move(buildable));
 }
 
 void Game::addPlant(std::shared_ptr<AbstractPlant> plant) {
   _plants.push_back(plant);
 }
 
-void Game::addShroud(std::shared_ptr<Shroud> shroud) {
-  _shrouds.push_back(shroud);
+void Game::addShroud(std::unique_ptr<Shroud> shroud) {
+  _shrouds.push_back(std::move(shroud));
 }
 
 void Game::addTerrain(fig::Terrain* terrain) { _terrain = terrain; }
@@ -86,12 +93,14 @@ VehicleGroup Game::getVehicleGroup(fig::Points area) {
   auto f = [&area](const auto& unit) {
     return unit->isInsideArea(area) && !unit->isDestroyed();
   };
-  auto filtered = _attack_units | std::views::filter(f);
-
-  std::vector<ranges::range_value_t<decltype(filtered)>> selected;
-  ranges::copy(filtered, std::back_inserter(selected));
-  select(selected);
-  return VehicleGroup(selected);
+  VehicleGroup::Selected group;
+  ranges::for_each(_attack_units, [f, &group](const auto& unit) {
+    if (f(unit)) {
+      group.push_back(unit.get());
+    }
+  });
+  select(group);
+  return VehicleGroup(group);
 }
 
 Buildable* Game::getStructure(const glm::vec3& mousePoint) {

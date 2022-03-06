@@ -20,7 +20,7 @@ void Moving<T>::move() {
   T& wrapped = this->wrapped();
   if (destinationIsReached || wrapped.isDestroyed()) {
     _movingRoute.pop_back();
-    wrapped._path->popLine();
+    wrapped._path.value()->popLine();
     if (!_movingRoute.empty()) {
       startMoving(_movingRoute.at(_movingRoute.size() - 1));
     } else {
@@ -34,8 +34,8 @@ void Moving<T>::setRoute(glm::vec3 endPoint) {
   T& wrapped = this->wrapped();
   wrapped._path = fig::makePath(*SHADERS_MAP[ShaderType::LINES],
                                 wrapped._router, _view->position(), endPoint);
-  if (wrapped._path != nullptr) {
-    _movingRoute = wrapped._path->route();
+  if (wrapped._path.has_value()) {
+    _movingRoute = wrapped._path.value()->route();
     startMoving(_movingRoute.at(_movingRoute.size() - 1));
   } else {
     std::cout << "No path to endpoint!" << std::endl;

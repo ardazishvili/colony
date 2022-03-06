@@ -2,8 +2,6 @@
 
 #include "logic/builders/TankBuilder.h"
 
-const int TankFactory::TANK_FACTORY_HP = 200;
-
 TankFactory::TankFactory(fig::AStar& router, glm::vec3 position)
     : GroundStructure(std::make_unique<TankFactoryView>(position)),
       _router(router) {
@@ -16,13 +14,12 @@ TankFactory::TankFactory(fig::AStar& router, glm::vec3 position)
 void TankFactory::createTank(Game& game, Tank::Type tankType,
                              HealthLevel healthLevel, Shell::Size shellSize) {
   auto p = position();
-  auto tank =
-      ::createTank(game, _router, position(), tankType, healthLevel, shellSize);
   auto d = 3.0f;
   auto tankDestination =
       glm::vec3(p.x - d * ::cos(glm::radians(_view->angle())),
                 p.y - d * ::sin(glm::radians(_view->angle())), p.z);
-  tank->setRoute(tankDestination);
+  ::createTank(game, _router, position(), tankDestination, tankType,
+               healthLevel, shellSize);
 }
 
 UnitBuilders TankFactory::getUnitBuilders() {
@@ -39,9 +36,8 @@ UnitBuilders TankFactory::getUnitBuilders() {
 void TankFactory::addUnitBuilder(UnitBuilders& builders, Tank::Type type,
                                  HealthLevel healthLevel,
                                  Shell::Size shellSize) {
-  std::unique_ptr<AbstractUnitBuilder> builder =
-      std::make_unique<TankBuilder>(*this, type, healthLevel, shellSize);
-  builders.push_back(std::move(builder));
+  builders.push_back(
+      std::make_unique<TankBuilder>(*this, type, healthLevel, shellSize));
 }
 
 StructureBuilders TankFactory::getStructureBuilders() {

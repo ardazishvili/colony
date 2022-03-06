@@ -1,5 +1,7 @@
 #include "TankFactoryBuilder.h"
 
+#include <memory>
+
 #include "figImpl/ColonyEventManager.h"
 #include "logic/Game.h"
 #include "logic/structures/TankFactory.h"
@@ -9,10 +11,12 @@ TankFactoryBuilder::TankFactoryBuilder(ColonyEventManager* eventManager,
     : AbstractStructureBuilder(eventManager), _router(router) {}
 
 void TankFactoryBuilder::addToGame(Game& game) {
-  auto structure = std::make_shared<TankFactory>(_router, glm::vec3());
-  game.addStructure(structure);
-  _eventManager->setStructureToBuild(structure);
+  auto structure = std::make_unique<TankFactory>(_router, glm::vec3());
+
+  _eventManager->setStructureToBuild(structure.get());
   _eventManager->setStructureToBuildStage(BuildStage::SetPosition);
+
+  game.addStructure(std::move(structure));
 }
 
 fig::MenuTextures TankFactoryBuilder::getPreviewType() {

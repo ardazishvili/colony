@@ -21,17 +21,13 @@ UnitBuilders Hq::getUnitBuilders() { return UnitBuilders(); }
 
 StructureBuilders Hq::getStructureBuilders() {
   StructureBuilders builders = StructureBuilders();
-  std::unique_ptr<AbstractStructureBuilder> tfBuilder =
-      std::make_unique<TankFactoryBuilder>(_eventManager, _router);
-  builders.push_back(std::move(tfBuilder));
+  builders.push_back(
+      std::make_unique<TankFactoryBuilder>(_eventManager, _router));
 
-  std::unique_ptr<AbstractStructureBuilder> bBuilder =
-      std::make_unique<BarrierBuilder>(_eventManager, _terrain, _router);
-  builders.push_back(std::move(bBuilder));
+  builders.push_back(
+      std::make_unique<BarrierBuilder>(_eventManager, _terrain, _router));
 
-  std::unique_ptr<AbstractStructureBuilder> tBuilder =
-      std::make_unique<TurbineBuilder>(_eventManager);
-  builders.push_back(std::move(tBuilder));
+  builders.push_back(std::make_unique<TurbineBuilder>(_eventManager));
 
   return builders;
 }

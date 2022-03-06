@@ -1,5 +1,6 @@
 #include "view/HqView.h"
 
+#include "ModelLoader.h"
 #include "fig/globals.h"
 #include "figImpl/globals.h"
 
@@ -10,7 +11,7 @@ HqView::HqView(glm::vec3 position)
     : StructureView(position, 0.75,
                     {-0.3, 0, HQ_HEALTH_BAR_WIDTH, HQ_HEALTH_BAR_HEIGHT},
                     fig::TexturePackType::PreBuild) {
-  _model = fig::modelLoader->models()[fig::Models::Hq];
+  _model = fig::modelLoader->getModel(fig::ModelType::Hq);
   _model->setActiveTexturesPack(fig::TexturePackType::PreBuild);
   _healthBar.setOffsetZ(1.3f);
   _healthBar.setTexture(fig::assets_dir + "/red.png");

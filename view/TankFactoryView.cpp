@@ -11,7 +11,7 @@ TankFactoryView::TankFactoryView(glm::vec3 position)
                     {-0.3, 0, TANK_FACTORY_HEALTH_BAR_WIDTH,
                      TANK_FACTORY_HEALTH_BAR_HEIGHT},
                     fig::TexturePackType::PreBuild) {
-  _model = fig::modelLoader->models()[fig::Models::TankFactory];
+  _model = fig::modelLoader->getModel(fig::ModelType::TankFactory);
   _model->setActiveTexturesPack(fig::TexturePackType::PreBuild);
   _healthBar.setOffsetZ(1.3f);
   _healthBar.setTexture(fig::assets_dir + "/red.png");

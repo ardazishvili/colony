@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "fig/Camera.h"
 #include "fig/EventManager.h"
 #include "fig/HeightsSegment.h"
@@ -16,11 +18,21 @@ class ColonyEventManager : public fig::EventManager {
   ColonyEventManager(glm::mat4& view, glm::mat4& projection,
                      fig::Window& window, Game& game, fig::Camera& camera,
                      fig::Terrain& terrain,
-                     std::shared_ptr<fig::ObstaclesSegment> mo,
+                     std::unique_ptr<fig::ObstaclesSegment> mapObstacles,
                      fig::AStar& astar);
   void tick();
-  void setStructureToBuild(std::shared_ptr<GroundStructure> structure);
+  void setStructureToBuild(GroundStructure* structure);
   void setStructureToBuildStage(BuildStage stage);
+
+  void clearHeightSegment() { _heightsSegment.reset(); }
+  void setHeightSegment(std::unique_ptr<fig::HeightsSegment> segment) {
+    _heightsSegment = std::move(segment);
+  }
+
+  void clearObstaclesSegment() { _obstaclesSegment.reset(); }
+  void setObstaclesSegment(std::unique_ptr<fig::ObstaclesSegment> segment) {
+    _obstaclesSegment = std::move(segment);
+  }
 
  private:
   glm::mat4& _view;
@@ -33,7 +45,7 @@ class ColonyEventManager : public fig::EventManager {
   AttackUnit* _tankUnderAttack{nullptr};
   Buildable* _structureSelected{nullptr};
   Buildable* _barrierSelected{nullptr};
-  std::shared_ptr<GroundStructure> _structureToBuild{nullptr};
+  GroundStructure* _structureToBuild{nullptr};
   BuildStage _structureToBuildStage;
   Buildable* _structureUnderAttack{nullptr};
 
@@ -41,9 +53,9 @@ class ColonyEventManager : public fig::EventManager {
   fig::RectangleShape _selection;
   bool _selectionActive{false};
 
-  std::shared_ptr<fig::HeightsSegment> _heightsSegment;
-  std::shared_ptr<fig::ObstaclesSegment> _obstaclesSegment;
-  std::shared_ptr<fig::ObstaclesSegment> _mapObstacles;
+  std::unique_ptr<fig::HeightsSegment> _heightsSegment;
+  std::unique_ptr<fig::ObstaclesSegment> _obstaclesSegment;
+  std::unique_ptr<fig::ObstaclesSegment> _mapObstacles;
   fig::AStar& _astar;
 
   friend class ColonyKeyPressEvent;

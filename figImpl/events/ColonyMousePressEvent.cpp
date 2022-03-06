@@ -21,24 +21,26 @@ void ColonyMousePressedEvent::process(fig::Camera* camera,
 }
 
 void ColonyMousePressedEvent::handleMousePressedLeft(
-    fig::EventManager* eventManager) {
+    fig::EventManager* manager) {
   // TODO downcast
-  auto m = dynamic_cast<ColonyEventManager*>(eventManager);
+  auto eventManager = dynamic_cast<ColonyEventManager*>(manager);
 
-  auto c = fig::EventManager::unProject(m->_window, m->_view, m->_projection);
-  m->_selectionActive = true;
+  auto c = fig::EventManager::unProject(
+      eventManager->_window, eventManager->_view, eventManager->_projection);
+  eventManager->_selectionActive = true;
   auto tmp = c;
   tmp.z += 0.3;
-  m->_heightsSegment.reset();
-  m->_obstaclesSegment.reset();
-  m->_selection.setStart(tmp);
+  eventManager->clearHeightSegment();
+  eventManager->_obstaclesSegment.reset();
+  eventManager->_selection.setStart(tmp);
 
-  m->_tankSelected = m->_game.getAttackUnit(c, true);
-  m->_structureSelected = m->_game.getStructure(c);
-  if (!m->_structureSelected) {
-    m->_structureSelected = m->_game.getStructure(c);
-    if (!m->_structureSelected && m->_game.panelIsEmpty(Panel::Type::Units)) {
-      m->_game.clearPanel(Panel::Type::Units);
+  eventManager->_tankSelected = eventManager->_game.getAttackUnit(c, true);
+  eventManager->_structureSelected = eventManager->_game.getStructure(c);
+  if (!eventManager->_structureSelected) {
+    eventManager->_structureSelected = eventManager->_game.getStructure(c);
+    if (!eventManager->_structureSelected &&
+        eventManager->_game.panelIsEmpty(Panel::Type::Units)) {
+      eventManager->_game.clearPanel(Panel::Type::Units);
     }
   }
 }

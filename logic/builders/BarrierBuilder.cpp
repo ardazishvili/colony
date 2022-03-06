@@ -1,5 +1,7 @@
 #include "BarrierBuilder.h"
 
+#include <memory>
+
 #include "figImpl/ColonyEventManager.h"
 #include "logic/structures/Barrier.h"
 
@@ -10,11 +12,13 @@ BarrierBuilder::BarrierBuilder(ColonyEventManager* eventManager,
       _astar(astar) {}
 
 void BarrierBuilder::addToGame(Game& game) {
-  auto structure = std::make_shared<Barrier>(glm::vec3(), _terrain, _astar);
-  game.addStructure(structure);
-  game.addShroud(structure->shroud());
-  _eventManager->setStructureToBuild(structure);
+  auto structure = std::make_unique<Barrier>(glm::vec3(), _terrain, _astar);
+
+  _eventManager->setStructureToBuild(structure.get());
   _eventManager->setStructureToBuildStage(BuildStage::SetPosition);
+
+  game.addShroud(structure->shroud());
+  game.addStructure(std::move(structure));
 }
 
 fig::MenuTextures BarrierBuilder::getPreviewType() {

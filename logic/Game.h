@@ -15,15 +15,15 @@
 class Tank;
 class AbstractStructureBuilder;
 
-using Shrouds = std::vector<std::shared_ptr<Shroud>>;
+using Shrouds = std::vector<std::unique_ptr<Shroud>>;
 
 class Game {
  public:
-  Game();
   void tick();
-  void addTank(std::shared_ptr<Tank> tank);
-  void addStructure(std::shared_ptr<GroundStructure> buildable);
-  void addShroud(std::shared_ptr<Shroud> shroud);
+  void addTank(std::unique_ptr<Tank> tank);
+  void addTankAndDestination(std::unique_ptr<Tank> tank, glm::vec3 destination);
+  void addStructure(std::unique_ptr<GroundStructure> buildable);
+  void addShroud(std::unique_ptr<Shroud> shroud);
   void addPlant(std::shared_ptr<AbstractPlant> plant);
   void addTerrain(fig::Terrain* terrain);
   void setControl(std::unique_ptr<Control> control);

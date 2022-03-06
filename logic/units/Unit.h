@@ -1,5 +1,8 @@
 #pragma once
 
+#include <memory>
+#include <optional>
+
 #include "fig/Path.h"
 #include "helpers/crtp_helper.h"
 #include "logic/concepts/Buildable.h"
@@ -17,7 +20,7 @@ class Unit : public crtp<T, Unit> {
   void render();
 
  protected:
-  std::shared_ptr<fig::Path> _path;
+  std::optional<std::unique_ptr<fig::Path>> _path;
   fig::AStar& _router;
   View* _view;
 };

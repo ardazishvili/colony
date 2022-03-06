@@ -1,6 +1,7 @@
 #include "figImpl/ColonyGameLayer.h"
 
 #include <filesystem>
+#include <memory>
 
 #include "fig/globals.h"  // modelLoader
 #include "fig/shader/LinesShader.h"
@@ -64,16 +65,16 @@ void ColonyGameLayer::init() {
   _astar = std::make_unique<fig::AStar>(mapObstacles->vertices(),
                                         mapObstacles->obstacles(),
                                         mapObstacles->dimensions());
-  // TODO downcast
-  _eventManager = std::make_shared<ColonyEventManager>(
-      _view, _projection, *_window, *_game, *_camera, *_terrain, mapObstacles,
-      *_astar);
+  _eventManager = std::make_unique<ColonyEventManager>(
+      _view, _projection, *_window, *_game, *_camera, *_terrain,
+      std::move(mapObstacles), *_astar);
 
   std::map<double, double> tankCoordinates = {
       {0.0, 0.0f}, {5.0, 5.0f}, {-5.0, -5.0f}, {0.0, 5.0f}, {0.0, -5.0f},
   };
   for (auto [x, y] : tankCoordinates) {
-    createTank(*_game, *_astar, _terrain->getXYZ(glm::vec2(x, y)));
+    auto position = _terrain->getXYZ(glm::vec2(x, y));
+    createTank(*_game, *_astar, position);
   }
 
   _skybox = std::make_unique<fig::Skybox>(*SHADERS_MAP[ShaderType::SKYBOX]);
@@ -96,8 +97,7 @@ void ColonyGameLayer::render() {
   _terrain.get()->renderSub();
 }
 
-std::function<void(std::unique_ptr<fig::Event> event)>
-ColonyGameLayer::onEvent() {
+std::function<void(std::unique_ptr<fig::Event>)> ColonyGameLayer::onEvent() {
   return [this](std::unique_ptr<fig::Event> event) {
     event->process(_camera, _eventManager.get());
   };

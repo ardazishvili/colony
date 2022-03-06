@@ -10,8 +10,8 @@ Unit<T>::Unit(fig::AStar& router, View* view) : _router(router), _view(view) {}
 template <typename T>
 void Unit<T>::render() {
   _view->draw();
-  if (_path != nullptr) {
-    _path->render();
+  if (_path) {
+    _path.value()->render();
   }
 }
 

@@ -13,9 +13,8 @@ Control::Control(Game& game, ColonyEventManager* eventManager,
       _eventManager(eventManager),
       _structurePanel(window, game, Panel::Type::Structures),
       _unitPanel(window, game, Panel::Type::Units) {
-  std::unique_ptr<AbstractBuilder> hqBuilder =
-      std::make_unique<HqBuilder>(_eventManager, terrain, router);
-  auto hqPanelItem = std::make_unique<PanelItem>(std::move(hqBuilder));
+  auto hqPanelItem = std::make_unique<PanelItem>(
+      std::make_unique<HqBuilder>(_eventManager, terrain, router));
   _structurePanel.addItem(std::move(hqPanelItem));
 }
 
@@ -43,14 +42,12 @@ void Control::clearUnitPanel() { _unitPanel.clear(); }
 void Control::clearStructurePanel() { _structurePanel.clear(); }
 
 void Control::addToUnitPanel(std::unique_ptr<AbstractUnitBuilder> builder) {
-  auto panelItem = std::make_unique<PanelItem>(std::move(builder));
-  _unitPanel.addItem(std::move(panelItem));
+  _unitPanel.addItem(std::make_unique<PanelItem>(std::move(builder)));
 }
 
 void Control::addToStructurePanel(
     std::unique_ptr<AbstractStructureBuilder> builder) {
-  auto panelItem = std::make_unique<PanelItem>(std::move(builder));
-  _structurePanel.addItem(std::move(panelItem));
+  _structurePanel.addItem(std::make_unique<PanelItem>(std::move(builder)));
 }
 
 bool Control::panelIsEmpty(Panel::Type type) const {

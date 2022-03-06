@@ -32,14 +32,14 @@ void ColonyMouseReleaseEvent::handleMouseReleased(
   if (m->isKeyPressed(fig::KeyButton::LEFT_SHIFT)) {
     auto bl = m->_selection.bottomLeft();
     auto tr = m->_selection.topRight();
-    m->_heightsSegment = fig::makeHeightsSegment(
+    m->setHeightSegment(fig::makeHeightsSegment(
         *SHADERS_MAP[ShaderType::COLOR_NON_FLAT], m->_terrain,
         glm::vec2(std::min(bl.x, tr.x), std::min(bl.y, tr.y)),
-        glm::vec2(std::max(bl.x, tr.x), std::max(bl.y, tr.y)));
-    m->_obstaclesSegment = fig::makeObstaclesSegment(
+        glm::vec2(std::max(bl.x, tr.x), std::max(bl.y, tr.y))));
+    m->setObstaclesSegment(fig::makeObstaclesSegment(
         *SHADERS_MAP[ShaderType::COLOR_NON_FLAT], m->_terrain,
         glm::vec2(std::min(bl.x, tr.x), std::min(bl.y, tr.y)),
-        glm::vec2(std::max(bl.x, tr.x), std::max(bl.y, tr.y)));
+        glm::vec2(std::max(bl.x, tr.x), std::max(bl.y, tr.y))));
   } else {
     m->_tanksSelected = m->_game.getVehicleGroup(m->_selection.getPoints());
   }
