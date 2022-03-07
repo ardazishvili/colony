@@ -18,7 +18,6 @@ ColonyEventManager::ColonyEventManager(
       _selection(*SHADERS_MAP[ShaderType::LINES], camera),
       _mapObstacles(std::move(mapObstacles)),
       _astar(astar) {
-  // TODO downcast
   _game.setControl(
       std::make_unique<Control>(_game, this, _window, _terrain, _astar));
 }
