@@ -1,5 +1,7 @@
 #include "Barrier.h"
 
+#include <memory>
+
 #include "fig/globals.h"
 #include "logic/builders/PlantBuilder.h"
 #include "logic/builders/TreeBuilder.h"
@@ -22,7 +24,7 @@ void Barrier::render() {
       if (_livingArea != nullptr) {
         if (_clock.elapsed() >= _bioUpdateTime) {
           fig::logger.log("updating area...");
-          _terrain.updateLivingArea(_livingArea);
+          _terrain.updateLivingArea(_livingArea.get());
           _clock.reload();
         }
       }
@@ -34,13 +36,8 @@ void Barrier::render() {
 
 UnitBuilders Barrier::getUnitBuilders() {
   auto builders = UnitBuilders();
-  std::unique_ptr<AbstractUnitBuilder> pb =
-      std::make_unique<PlantBuilder>(*this, _terrain);
-  builders.push_back(std::move(pb));
-
-  std::unique_ptr<AbstractUnitBuilder> tb =
-      std::make_unique<TreeBuilder>(*this, _terrain);
-  builders.push_back(std::move(tb));
+  builders.push_back(std::make_unique<PlantBuilder>(*this, _terrain));
+  builders.push_back(std::make_unique<TreeBuilder>(*this, _terrain));
 
   return builders;
 }
@@ -68,7 +65,7 @@ void Barrier::addEnergyStructure(EnergyStructure* es) {
   _energyStructures.push_back(es);
   // TODO downcast
   BarrierView* v = dynamic_cast<BarrierView*>(_view.get());
-  v->grow(_livingArea);
+  v->grow(_livingArea.get());
 }
 
 float Barrier::radius() const {
@@ -77,6 +74,6 @@ float Barrier::radius() const {
   return v->radius();
 }
 
-std::shared_ptr<Shroud> Barrier::shroud() {
-  return std::shared_ptr<Shroud>(&_shroud);
+std::unique_ptr<Shroud> Barrier::shroud() {
+  return std::unique_ptr<Shroud>(&_shroud);
 }

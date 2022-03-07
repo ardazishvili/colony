@@ -10,7 +10,7 @@ class BarrierView : public StructureView {
   BarrierView(glm::vec3 position, fig::Terrain* terrain);
   void draw() override;
   float radius() const;
-  void grow(std::shared_ptr<fig::LivingArea> area);
+  void grow(fig::LivingArea* area);
 
  private:
   float _scaleFactor{BARRIER_INIT_SCALE};

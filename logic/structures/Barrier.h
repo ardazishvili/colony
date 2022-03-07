@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <memory>
 
 #include "fig/Terrain.h"
 #include "helpers/aliases.h"
@@ -20,14 +21,14 @@ class Barrier : public EnergyStructure {
   void addEnergyStructure(EnergyStructure* es);
   void commit() override;
   float radius() const;
-  std::shared_ptr<Shroud> shroud();
+  std::unique_ptr<Shroud> shroud();
 
  private:
   Shroud _shroud;
 
   float _radius{1.0f};
   fig::Terrain& _terrain;
-  std::shared_ptr<fig::LivingArea> _livingArea{nullptr};
+  std::unique_ptr<fig::LivingArea> _livingArea{nullptr};
   EnergyStructures _energyStructures;
   Plants _plants;
   Timer _clock;

@@ -8,7 +8,7 @@
 ColonyEventManager::ColonyEventManager(
     glm::mat4& view, glm::mat4& projection, fig::Window& window, Game& game,
     fig::Camera& camera, fig::Terrain& terrain,
-    std::shared_ptr<fig::ObstaclesSegment> mo, fig::AStar& astar)
+    std::unique_ptr<fig::ObstaclesSegment> mapObstacles, fig::AStar& astar)
     : _view(view),
       _projection(projection),
       _window(window),
@@ -16,7 +16,7 @@ ColonyEventManager::ColonyEventManager(
       _game(game),
       _terrain(terrain),
       _selection(*SHADERS_MAP[ShaderType::LINES], camera),
-      _mapObstacles(mo),
+      _mapObstacles(std::move(mapObstacles)),
       _astar(astar) {
   // TODO downcast
   _game.setControl(
@@ -36,8 +36,7 @@ void ColonyEventManager::tick() {
   _game.tick();
 }
 
-void ColonyEventManager::setStructureToBuild(
-    std::shared_ptr<GroundStructure> structure) {
+void ColonyEventManager::setStructureToBuild(GroundStructure* structure) {
   _structureToBuild = structure;
 }
 

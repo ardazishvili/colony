@@ -3,7 +3,7 @@
 #include "fig/globals.h"
 
 ShellView::ShellView(glm::vec3 position) : View(position) {
-  _model = fig::modelLoader->models()[fig::Models::Shell];
+  _model = fig::modelLoader->getModel(fig::ModelType::Shell);
 }
 
 void ShellView::draw() {

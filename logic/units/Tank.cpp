@@ -1,5 +1,8 @@
 #include "logic/units/Tank.h"
 
+#include <glm/detail/type_vec.hpp>
+#include <memory>
+
 #include "fig/globals.h"
 #include "logic/Game.h"
 
@@ -29,11 +32,16 @@ Tank::Tank(fig::AStar& router, glm::vec3 position, Type type,
   _maxHealth = _health;
 }
 
-std::shared_ptr<Tank> createTank(Game& game, fig::AStar& router,
-                                 glm::vec3 position, Tank::Type type,
-                                 HealthLevel health, Shell::Size shellSize) {
-  auto newTank =
-      std::make_shared<Tank>(router, position, type, health, shellSize);
-  game.addTank(newTank);
-  return newTank;
+void createTank(Game& game, fig::AStar& router, glm::vec3 position,
+                Tank::Type type, HealthLevel health, Shell::Size shellSize) {
+  game.addTank(
+      std::make_unique<Tank>(router, position, type, health, shellSize));
+}
+
+void createTank(Game& game, fig::AStar& router, glm::vec3 position,
+                glm::vec3 destination, Tank::Type type, HealthLevel health,
+                Shell::Size shellSize) {
+  game.addTankAndDestination(
+      std::make_unique<Tank>(router, position, type, health, shellSize),
+      destination);
 }

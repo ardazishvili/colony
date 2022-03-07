@@ -27,7 +27,7 @@ class View {
  protected:
   glm::vec3 globeMapper(glm::vec3 p) const;
   bool _hasAnimation{false};
-  std::shared_ptr<fig::Model> _model;
+  fig::Model* _model;
   fig::Shader& _shader;
   glm::vec3 _position;
   float _angle{0.0f};

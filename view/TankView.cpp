@@ -1,5 +1,6 @@
 #include "view/TankView.h"
 
+#include "ModelLoader.h"
 #include "fig/globals.h"
 #include "logic/concepts/Buildable.h"
 
@@ -11,7 +12,7 @@ TankView::TankView(glm::vec3 position, float tankTypeScaling)
                      fig::TexturePackType::Initial),
       _tankTypeScaleFactor(tankTypeScaling) {
   _objScale = tankTypeScaling;
-  _model = fig::modelLoader->models()[fig::Models::Tank];
+  _model = fig::modelLoader->getModel(fig::ModelType::Tank);
   _hasAnimation = true;
   _healthBar.setOffsetZ(position.z + 0.3);
   _healthBar.setTexture(fig::assets_dir + "/red.png");
