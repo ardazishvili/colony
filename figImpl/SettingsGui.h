@@ -1,5 +1,8 @@
 #pragma once
 
+#include "Config.h"
+#include "Core.h"
+
 class SettingsGui {
  public:
   SettingsGui(int windowWidth, int windowHeight);

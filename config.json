@@ -1,11 +1,18 @@
 {
-    "window_height": 1080,
-    "window_width": 1920,
-    "panel_width": 300,
-    "panel_icon_size": 80,
-    "settings_icon_size": 32,
-    "show_log": false,
-    "move_speed": 0.5,
-    "rotation_speed": 0.5,
-    "screen_sizes": ["1920x1080", "800x600"]
+  "window_height": 1080,
+  "window_width": 1920,
+  "panel_width": 300,
+  "panel_icon_size": 80,
+  "settings_icon_size": 32,
+  "show_log": false,
+  "move_speed": 0.5,
+  "rotation_speed": 0.5,
+  "screen_sizes": ["1920x1080", "800x600"],
+  "controls" : {
+    "Build Barrier" : "B",
+    "Build Turbine" : "T",
+    "Build Hq" : "C",
+    "Create tank" : "Z",
+    "Build tank factory" : "X"
+  }
 }
